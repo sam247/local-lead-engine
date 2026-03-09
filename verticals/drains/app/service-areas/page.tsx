@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { locations } from "@/lib/data";
-import type { Location } from "engine";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -38,7 +37,7 @@ export const metadata: Metadata = {
 };
 
 export default function ServiceAreasPage() {
-  const majorCities = MAJOR_CITY_IDS.map((id) => locations.find((l) => l.id === id)).filter((l): l is Location => l != null);
+  const majorCities = MAJOR_CITY_IDS.map((id) => locations.find((l) => l.id === id)).filter((l): l is (typeof locations)[number] => l != null);
 
   return (
     <>
