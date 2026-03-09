@@ -81,6 +81,8 @@ export default async function LocationRoute({ params }: Props) {
   const otherServices = services.filter((s) => s.id !== service.id);
   const serviceImage = getHeroImage({ serviceSlug: service.slug });
 
+  const introParagraph = `We provide ${service.title} across ${location.name} and ${location.area}. Our team offers expert diagnosis, repair, and maintenance for residential and commercial properties, with 24/7 emergency cover and free no-obligation quotes.`;
+
   return (
     <LocationPage
       service={service}
@@ -98,6 +100,8 @@ export default async function LocationRoute({ params }: Props) {
       trustSectionTitle={`Trusted Drain Engineers in ${location.name}`}
       trustPoints={trustPoints}
       diagnosisGuidePath="/collapsed-drains-complete-guide"
+      introParagraph={introParagraph}
+      nearbyAreasDescription={`Compare our ${service.title} in nearby areas.`}
     />
   );
 }

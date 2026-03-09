@@ -1,6 +1,6 @@
 export { BreadcrumbNav, type BreadcrumbNavProps, type BreadcrumbItem } from "./BreadcrumbNav";
 export { LocationPage, type LocationPageProps } from "./LocationPage";
-export { HubPage, type HubPageProps, type CrossSection } from "./HubPage";
+export { HubPage, type HubPageProps, type CrossSection, type PillarGuideLink } from "./HubPage";
 export { InfoPage, type InfoPageProps, type RelatedPageLink } from "./InfoPage";
 export { NearMePage, type NearMePageProps } from "./NearMePage";
 export { PillarGuide, type PillarGuideProps, type PillarGuideSection } from "./PillarGuide";

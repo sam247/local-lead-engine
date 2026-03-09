@@ -11,6 +11,11 @@ export interface CrossSection {
   pages: { slug: string; title: string; intro: string; basePath: string }[];
 }
 
+export interface PillarGuideLink {
+  title: string;
+  href: string;
+}
+
 export interface HubPageProps {
   hub: HubData;
   pages: InfoPageData[];
@@ -21,6 +26,8 @@ export interface HubPageProps {
   companyInfo: CompanyInfo;
   baseUrl: string;
   contactPath?: string;
+  /** Optional links to major pillar guides (e.g. Collapsed Drains Complete Guide). */
+  pillarGuides?: PillarGuideLink[];
 }
 
 export function HubPage({
@@ -33,6 +40,7 @@ export function HubPage({
   companyInfo,
   baseUrl,
   contactPath = "/contact",
+  pillarGuides,
 }: HubPageProps) {
   return (
     <>
@@ -116,6 +124,29 @@ export function HubPage({
           </div>
         </section>
       ))}
+      {pillarGuides && pillarGuides.length > 0 && (
+        <section className="bg-secondary/50 py-12">
+          <div className="container">
+            <h2 className="mb-6 text-center font-display text-2xl font-bold">Featured guides</h2>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {pillarGuides.map((guide) => (
+                <Link
+                  key={guide.href}
+                  href={guide.href}
+                  className="group rounded-lg border border-border bg-background p-6 transition-all hover:border-primary hover:shadow-lg"
+                >
+                  <h3 className="font-display text-lg font-semibold group-hover:text-primary">
+                    {guide.title}
+                  </h3>
+                  <span className="mt-2 inline-flex items-center text-sm text-primary">
+                    Read guide <ArrowRight className="ml-1 h-4 w-4" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
       <section className="bg-secondary py-12">
         <div className="container">
           <h2 className="mb-8 text-center font-display text-2xl font-bold">Related Services</h2>

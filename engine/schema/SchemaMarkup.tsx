@@ -18,6 +18,7 @@ export interface SchemaMarkupProps {
     serviceName?: string;
     serviceDescription?: string;
     areaServed?: string;
+    serviceType?: string;
     geo?: { lat: number; lng: number };
   };
 }
@@ -70,6 +71,7 @@ export function SchemaMarkup({ type, companyInfo, baseUrl, data = {} }: SchemaMa
           "@type": "Place",
           name: data.areaServed || "London",
         },
+        ...(data.serviceType && { serviceType: data.serviceType }),
         url: data.url ? `${baseUrl}${data.url}` : undefined,
       };
       break;
@@ -89,6 +91,15 @@ export function SchemaMarkup({ type, companyInfo, baseUrl, data = {} }: SchemaMa
           areaServed: {
             "@type": "Place",
             name: data.areaServed,
+          },
+        }),
+        ...(data.serviceType && { serviceType: data.serviceType }),
+        ...(companyInfo.aggregateRating && {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: companyInfo.aggregateRating.ratingValue,
+            reviewCount: companyInfo.aggregateRating.reviewCount,
+            bestRating: companyInfo.aggregateRating.bestRating ?? 5,
           },
         }),
       };

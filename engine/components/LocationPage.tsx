@@ -40,6 +40,10 @@ export interface LocationPageProps {
   diagnosisGuidePath?: string;
   /** Show map embed in sidebar. Default true when location has coordinates. */
   showMap?: boolean;
+  /** Optional intro paragraph describing the service in this location (above main content). */
+  introParagraph?: string;
+  /** Optional description for the "Nearby Areas We Serve" block (e.g. "Compare our {service} in nearby areas"). */
+  nearbyAreasDescription?: string;
 }
 
 export function LocationPage({
@@ -58,6 +62,8 @@ export function LocationPage({
   trustPoints,
   diagnosisGuidePath,
   showMap = true,
+  introParagraph,
+  nearbyAreasDescription,
 }: LocationPageProps) {
   const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
   return (
@@ -69,6 +75,7 @@ export function LocationPage({
         data={{
           areaServed: `${location.name}, ${location.area}`,
           geo: { lat: location.lat, lng: location.lng },
+          serviceType: service.title,
         }}
       />
       <SchemaMarkup
@@ -147,9 +154,13 @@ export function LocationPage({
               <h2 className="mb-4 font-display text-2xl font-bold">
                 {service.title} Services in {location.name}
               </h2>
-              <p className="mb-6 text-muted-foreground">
-                Expert {service.title.toLowerCase()} services to residential and commercial clients in {location.name}, {location.area}. Our experienced engineers deliver fast, reliable solutions tailored to your property&apos;s specific needs.
-              </p>
+              {introParagraph ? (
+                <p className="mb-6 text-muted-foreground">{introParagraph}</p>
+              ) : (
+                <p className="mb-6 text-muted-foreground">
+                  Expert {service.title.toLowerCase()} services to residential and commercial clients in {location.name}, {location.area}. Our experienced engineers deliver fast, reliable solutions tailored to your property&apos;s specific needs.
+                </p>
+              )}
               <p className="mb-8 text-muted-foreground">{service.description}</p>
 
               {location.nearbyTowns && location.nearbyTowns.length > 0 && (
@@ -296,6 +307,11 @@ export function LocationPage({
           <h2 className="mb-6 font-display text-2xl font-bold text-center">
             Nearby Areas We Serve
           </h2>
+          {nearbyAreasDescription && (
+            <p className="mb-4 text-center text-sm text-muted-foreground">
+              {nearbyAreasDescription}
+            </p>
+          )}
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
             {nearbyLocations.slice(0, 8).map((loc) => (
               <Link

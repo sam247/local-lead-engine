@@ -54,6 +54,10 @@ export function getHubPageProps(category: string) {
   const heroAlt =
     categoryAltText[category] || `${hub.title} - drainage services`;
   const crossSections = categorisePages(category);
+  const pillarGuides = [
+    { title: "Collapsed Drains Complete Guide", href: "/collapsed-drains-complete-guide" },
+    { title: "CCTV Drain Survey Guide", href: "/drain-survey" },
+  ];
   return {
     hub,
     pages,
@@ -63,5 +67,6 @@ export function getHubPageProps(category: string) {
     keyServices,
     companyInfo: verticalConfig.companyInfo,
     baseUrl: verticalConfig.baseUrl,
+    pillarGuides,
   };
 }

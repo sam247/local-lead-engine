@@ -13,5 +13,10 @@ export const verticalConfig: VerticalConfig = {
     address: companyInfo.address,
     hours: companyInfo.hours,
     social: companyInfo.social,
+    aggregateRating: {
+      ratingValue: 4.9,
+      reviewCount: 120,
+      bestRating: 5,
+    },
   },
 };

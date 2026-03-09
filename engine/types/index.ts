@@ -9,6 +9,11 @@ export interface CompanyInfo {
     twitter?: string;
     facebook?: string;
   };
+  aggregateRating?: {
+    ratingValue: number;
+    reviewCount: number;
+    bestRating?: number;
+  };
 }
 
 export interface Service {

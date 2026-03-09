@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { services, locations } from "@/lib/data";
 import { getHeroImage } from "@/lib/images";
+import { verticalConfig } from "@/config";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight, AlertTriangle } from "lucide-react";
-import { BreadcrumbNav } from "engine";
+import { BreadcrumbNav, SchemaMarkup as EngineSchemaMarkup } from "engine";
 import InspectionCTA from "@/components/sections/InspectionCTA";
 import MidContentCTA from "@/components/sections/MidContentCTA";
 import FAQSchema from "@/components/sections/FAQSchema";
@@ -149,7 +150,18 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
 
   return (
     <>
-      <SchemaMarkup type="Service" data={{ serviceName: service.title, serviceDescription: service.description, url: `/services/${service.slug}` }} />
+      <EngineSchemaMarkup
+        type="Service"
+        companyInfo={verticalConfig.companyInfo}
+        baseUrl={verticalConfig.baseUrl}
+        data={{
+          serviceName: service.title,
+          serviceDescription: service.description,
+          url: `/services/${service.slug}`,
+          areaServed: "London and surrounding areas",
+          serviceType: service.title,
+        }}
+      />
       <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Services", url: "/services" }, { name: service.title, url: `/services/${service.slug}` }] }} />
       <section className="relative bg-primary py-16 md:py-24">
         <div className="absolute inset-0">
