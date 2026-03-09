@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -31,13 +32,14 @@ const Header = () => {
       <div className="container flex h-16 items-center justify-between md:h-20">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded bg-primary">
-            <span className="font-display text-lg font-bold text-primary-foreground">MD</span>
-          </div>
-          <div className="hidden sm:block">
-            <span className="font-display text-lg font-bold text-foreground">Mainline</span>
-            <span className="ml-1 text-muted-foreground">Drains</span>
-          </div>
+          <Image
+            src="/logo_black.svg"
+            alt="Mainline Drains"
+            width={140}
+            height={40}
+            className="h-8 w-auto sm:h-10"
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
 import { companyInfo, services, locations } from "@/lib/data";
 
@@ -13,12 +14,13 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded bg-primary-foreground">
-                <span className="font-display text-lg font-bold text-primary">MD</span>
-              </div>
-              <div>
-                <span className="font-display text-lg font-bold">Mainline Drains</span>
-              </div>
+              <Image
+                src="/logo_white.svg"
+                alt="Mainline Drains"
+                width={140}
+                height={40}
+                className="h-8 w-auto sm:h-10"
+              />
             </div>
             <p className="mb-6 text-sm text-primary-foreground/80">
               Expert drain repair and drainage solutions across London. 24/7 emergency response, CCTV surveys and professional drain relining.
