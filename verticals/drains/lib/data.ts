@@ -8,6 +8,7 @@ export const services = [
     id: "drain-collapse-repair",
     slug: "drain-collapse-repair",
     title: "Drain Collapse Repair",
+    titleSingular: "Drain Collapse Repair",
     shortDescription: "Fast, professional repair of collapsed and damaged drains.",
     description: "A collapsed drain can cause serious damage to your property if left untreated. Our drain collapse repair service provides a complete solution — from initial CCTV diagnosis through to full excavation and replacement of the damaged pipework. We work quickly to minimise disruption and restore proper drainage flow.",
     benefits: [
@@ -31,6 +32,7 @@ export const services = [
     id: "drain-relining",
     slug: "drain-relining",
     title: "Drain Relining",
+    titleSingular: "Drain Relining",
     shortDescription: "No-dig drain repair using advanced relining technology.",
     description: "Drain relining is a trenchless repair method that creates a new pipe within the existing damaged drain. A resin-saturated liner is inserted into the pipe and cured in place, forming a seamless, jointless new pipe. This no-dig approach is faster, less disruptive, and often more cost-effective than traditional excavation.",
     benefits: [
@@ -54,6 +56,7 @@ export const services = [
     id: "cctv-drain-surveys",
     slug: "cctv-drain-surveys",
     title: "CCTV Drain Surveys",
+    titleSingular: "CCTV Drain Survey",
     shortDescription: "Detailed camera inspections to diagnose drainage problems.",
     description: "Our CCTV drain surveys use state-of-the-art camera technology to inspect the interior of your drains and sewers. We provide detailed reports with footage showing the exact condition of your pipes, identifying blockages, cracks, root ingress, collapses, and other defects — essential for accurate diagnosis and repair planning.",
     benefits: [
@@ -77,6 +80,7 @@ export const services = [
     id: "drain-excavation",
     slug: "drain-excavation",
     title: "Drain Excavation",
+    titleSingular: "Drain Excavation",
     shortDescription: "Full excavation and replacement of damaged drain runs.",
     description: "When a drain is too severely damaged for relining, excavation and replacement is the most effective solution. Our team carefully excavates to expose the damaged pipework, removes it completely, and installs brand-new drainage pipes. We handle all reinstatement work to leave your property looking as it did before.",
     benefits: [
@@ -100,6 +104,7 @@ export const services = [
     id: "emergency-drainage",
     slug: "emergency-drainage",
     title: "Emergency Drainage",
+    titleSingular: "Emergency Drainage",
     shortDescription: "24/7 emergency response for urgent drainage problems.",
     description: "Drainage emergencies don't wait for business hours. Our emergency drainage service operates 24 hours a day, 7 days a week, providing rapid response to flooding, sewage backups, and critical drain failures. We arrive fast with fully equipped vehicles to diagnose and resolve your emergency quickly.",
     benefits: [
@@ -123,6 +128,7 @@ export const services = [
     id: "blocked-drains",
     slug: "blocked-drains",
     title: "Blocked Drains",
+    titleSingular: "Blocked Drain",
     shortDescription: "Fast unblocking of drains using high-pressure jetting.",
     description: "Blocked drains are one of the most common drainage problems. Whether caused by fat, grease, wet wipes, tree roots, or debris buildup, we use high-pressure water jetting and specialist equipment to clear even the most stubborn blockages. We also investigate the cause to help prevent recurrence.",
     benefits: [
@@ -146,6 +152,7 @@ export const services = [
     id: "drain-jetting",
     slug: "drain-jetting",
     title: "Drain Jetting",
+    titleSingular: "Drain Jetting",
     shortDescription: "High-pressure water jetting to clear and clean drains.",
     description: "Our drain jetting service uses high-pressure water jets at up to 4,000 PSI to blast away blockages, grease, scale, and debris from inside your pipes. It's the most effective method for restoring full flow to blocked or slow-running drains, and leaves pipes cleaner than any other method. Ideal for both preventative maintenance and emergency unblocking.",
     benefits: [
@@ -169,6 +176,7 @@ export const services = [
     id: "drain-root-removal",
     slug: "drain-root-removal",
     title: "Drain Root Removal",
+    titleSingular: "Drain Root Removal",
     shortDescription: "Specialist removal of tree roots from drains and sewers.",
     description: "Tree roots are one of the most damaging forces affecting underground drainage. Roots seek out moisture and nutrients, penetrating pipe joints and cracks, eventually blocking or collapsing the pipe entirely. Our root removal service uses mechanical cutting and high-pressure jetting to clear root ingress, followed by relining to prevent regrowth.",
     benefits: [
@@ -192,6 +200,7 @@ export const services = [
     id: "drain-unblocking",
     slug: "drain-unblocking",
     title: "Drain Unblocking",
+    titleSingular: "Drain Unblocking",
     shortDescription: "Professional drain unblocking for homes and businesses.",
     description: "Whether it's a slow-draining sink, an overflowing toilet, or a completely blocked outside drain, our engineers have the tools and experience to clear any blockage fast. We use a combination of rodding, high-pressure jetting, and electro-mechanical equipment depending on the nature of the blockage.",
     benefits: [
@@ -215,6 +224,7 @@ export const services = [
     id: "drain-pipe-replacement",
     slug: "drain-pipe-replacement",
     title: "Drain Pipe Replacement",
+    titleSingular: "Drain Pipe Replacement",
     shortDescription: "Full replacement of damaged, cracked or collapsed drain pipes.",
     description: "When a drain pipe is beyond repair — whether due to age, collapse, or severe cracking — full pipe replacement is the definitive solution. We excavate, remove the old pipework, and install new high-quality plastic drainage pipes with correct falls and connections. All surfaces are reinstated to their original condition.",
     benefits: [
@@ -238,6 +248,7 @@ export const services = [
     id: "commercial-drainage",
     slug: "commercial-drainage",
     title: "Commercial Drainage",
+    titleSingular: "Commercial Drainage",
     shortDescription: "Drainage services for businesses, restaurants and commercial properties.",
     description: "We provide comprehensive drainage solutions for commercial clients including offices, restaurants, retail premises, schools, and industrial sites. From planned maintenance contracts to emergency callouts, we keep your business running with minimal downtime. Our commercial team understands the urgency of business drainage issues.",
     benefits: [
@@ -437,7 +448,7 @@ export const blogPosts = [
   },
   {
     id: "drain-relining-vs-excavation",
-    title: "Drain Relining vs Excavation: Which Is Right for You?",
+    title: "Drain Relining vs Excavation: Which Repair Is Better?",
     excerpt: "A detailed comparison of no-dig relining and traditional excavation to help you choose the best repair method.",
     date: "2024-01-08",
     image: "/placeholder.svg",
@@ -445,7 +456,7 @@ export const blogPosts = [
   },
   {
     id: "cctv-drain-survey-guide",
-    title: "What to Expect from a CCTV Drain Survey",
+    title: "What Happens During a CCTV Drain Survey",
     excerpt: "Everything you need to know about CCTV drain surveys — what they reveal and why they're essential before buying a property.",
     date: "2023-12-20",
     image: "/placeholder.svg",
@@ -453,7 +464,7 @@ export const blogPosts = [
   },
   {
     id: "preventing-blocked-drains",
-    title: "How to Prevent Blocked Drains: A Homeowner's Guide",
+    title: "How To Prevent Blocked Drains At Home",
     excerpt: "Simple steps you can take to keep your drains flowing freely and avoid costly emergency callouts.",
     date: "2023-12-12",
     image: "/placeholder.svg",
@@ -461,7 +472,7 @@ export const blogPosts = [
   },
   {
     id: "tree-root-drain-damage",
-    title: "How Tree Roots Destroy Your Drains (And What to Do About It)",
+    title: "Tree Roots In Drains: Causes And Solutions",
     excerpt: "Why tree roots are one of the biggest threats to underground drainage and how to protect your pipes.",
     date: "2023-12-01",
     image: "/placeholder.svg",
@@ -469,7 +480,7 @@ export const blogPosts = [
   },
   {
     id: "emergency-drainage-what-to-do",
-    title: "Drainage Emergency? Here's What to Do First",
+    title: "What To Do In A Drainage Emergency",
     excerpt: "A step-by-step guide on what to do when you have a drainage emergency to minimise damage and costs.",
     date: "2023-11-25",
     image: "/placeholder.svg",

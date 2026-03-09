@@ -18,7 +18,7 @@ const StickyEmergencyBar = () => {
             <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="gap-2" onClick={() => trackEvent("call_button_click")}>
               <Phone className="h-4 w-4" />
               <span className="md:hidden">Call Now</span>
-              <span className="hidden md:inline">Call Now – {companyInfo.phone}</span>
+              <span className="hidden md:inline">Call Now</span>
             </a>
           </Button>
           <Button size="sm" asChild className="flex-1 md:flex-none">

@@ -95,7 +95,7 @@ export default function DrainSurveyCostPage() {
               </div>
               <div className="rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">Contact Us</h3>
-                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-primary hover:underline"><Phone className="h-4 w-4" /> {companyInfo.phone}</a>
+                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-primary hover:underline"><Phone className="h-4 w-4" /> Call Now</a>
                 <Button asChild className="mt-4 w-full"><Link href="/contact">Get a Free Quote</Link></Button>
               </div>
               <div className="rounded-lg bg-secondary p-6">

@@ -8,7 +8,7 @@ import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "Mainline Drains | Expert Drain Repair & Drainage Solutions",
-  description: "24/7 emergency drainage, drain collapse repair, CCTV surveys and relining across London. Trusted local drainage experts.",
+  description: "24/7 emergency drainage, drain collapse repair, CCTV surveys and relining across the UK. Trusted local drainage experts.",
   icons: {
     icon: "/favicon.ico",
     apple: "/favicon.ico",

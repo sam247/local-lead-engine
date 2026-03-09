@@ -178,7 +178,7 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
               ]}
               variant="inverse"
             />
-            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">{service.title}</h1>
+            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">{service.titleSingular ?? service.title}</h1>
             <p className="text-lg text-primary-foreground/80">{service.shortDescription}</p>
           </div>
         </div>

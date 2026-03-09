@@ -39,7 +39,7 @@ export default function ContactPage() {
                   <Phone className="h-5 w-5 shrink-0 text-primary" />
                   <div>
                     <h3 className="font-display font-semibold">Phone</h3>
-                    <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="text-sm text-muted-foreground hover:text-primary">{companyInfo.phone}</a>
+                    <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="text-sm text-muted-foreground hover:text-primary">Call Now</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 rounded-lg border p-5">

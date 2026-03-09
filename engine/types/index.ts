@@ -20,6 +20,8 @@ export interface Service {
   id: string;
   slug: string;
   title: string;
+  /** Optional singular form for metadata and H1 (e.g. "CCTV Drain Survey"). Falls back to title. */
+  titleSingular?: string;
   shortDescription: string;
   description: string;
   benefits: string[];

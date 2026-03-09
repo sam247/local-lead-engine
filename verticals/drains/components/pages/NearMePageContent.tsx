@@ -35,7 +35,7 @@ export default function NearMePageContent({ serviceSlug }: NearMePageContentProp
                 <Link href="/contact">Get a Free Quote</Link>
               </Button>
               <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-primary-foreground">
-                <Phone className="h-5 w-5" /> {companyInfo.phone}
+                <Phone className="h-5 w-5" /> Call Now
               </a>
             </div>
           </div>

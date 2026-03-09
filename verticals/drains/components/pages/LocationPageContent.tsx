@@ -88,7 +88,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
                 <Link href="/contact">Get a Free Quote</Link>
               </Button>
               <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-primary-foreground">
-                <Phone className="h-5 w-5" /> {companyInfo.phone}
+                <Phone className="h-5 w-5" /> Call Now
               </a>
             </div>
           </div>
@@ -162,7 +162,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
                 <h3 className="mb-4 font-display text-lg font-bold">Contact Us</h3>
                 <div className="space-y-3">
                   <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-primary hover:underline">
-                    <Phone className="h-4 w-4" /> {companyInfo.phone}
+                    <Phone className="h-4 w-4" /> Call Now
                   </a>
                   <a href={`mailto:${companyInfo.email}`} className="flex items-center gap-2 text-primary hover:underline">
                     <Mail className="h-4 w-4" /> {companyInfo.email}

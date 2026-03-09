@@ -77,7 +77,7 @@ export default function DoINeedADrainSurveyPage() {
                   <Link href="/contact">Book a Survey</Link>
                 </Button>
                 <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 font-medium text-primary">
-                  <Phone className="h-5 w-5" /> {companyInfo.phone}
+                  <Phone className="h-5 w-5" /> Call Now
                 </a>
               </div>
             </div>

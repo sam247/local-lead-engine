@@ -15,7 +15,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 export const metadata: Metadata = {
   title: "Our Services | Mainline Drains",
-  description: "Comprehensive drainage services including drain collapse repair, relining, CCTV surveys, excavation, jetting, root removal and emergency drainage across London.",
+  description: "Comprehensive drainage services including drain collapse repair, relining, CCTV surveys, excavation, jetting, root removal and emergency drainage across the UK.",
   alternates: { canonical: "https://mainlinedrains.co.uk/services" },
 };
 

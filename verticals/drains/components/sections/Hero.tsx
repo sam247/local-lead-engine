@@ -64,10 +64,10 @@ const Hero = () => {
           {/* Left — Copy & CTAs */}
           <div className="animate-fade-in">
             <h1 className="mb-5 font-display text-3xl font-bold tracking-tight text-primary-foreground md:text-4xl lg:text-5xl">
-              Expert Drain Repair &amp; Drainage Solutions Across London
+              Expert Drain Repair &amp; Drainage Solutions Across the UK
             </h1>
             <p className="mb-8 text-base text-primary-foreground/80 md:text-lg">
-              24/7 emergency drainage, drain collapse repair, CCTV surveys and relining for residential and commercial properties.
+              24/7 emergency drainage services including drain collapse repair, CCTV drain surveys and pipe relining for residential and commercial properties.
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -77,7 +77,7 @@ const Hero = () => {
                   Call Now
                 </a>
               </Button>
-              <Button variant="outline" size="lg" asChild className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+              <Button variant="outline" size="lg" asChild className="border-primary-foreground/30 text-primary hover:bg-primary-foreground/10">
                 <Link href="/contact">
                   Request Inspection
                   <ArrowRight className="ml-2 h-4 w-4" />

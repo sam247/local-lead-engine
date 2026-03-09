@@ -66,6 +66,7 @@ export function LocationPage({
   nearbyAreasDescription,
 }: LocationPageProps) {
   const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
+  const displayTitle = service.titleSingular ?? service.title;
   return (
     <>
       <SchemaMarkup
@@ -94,7 +95,7 @@ export function LocationPage({
         companyInfo={companyInfo}
         baseUrl={baseUrl}
         data={{
-          breadcrumbs: locationBreadcrumbs(service.title, service.slug, location.name, serviceSlug, locationSlug),
+          breadcrumbs: locationBreadcrumbs(displayTitle, service.slug, location.name, serviceSlug, locationSlug),
         }}
       />
 
@@ -102,7 +103,7 @@ export function LocationPage({
         <div className="absolute inset-0">
           <img
             src={serviceImage}
-            alt={`${service.title} engineer working in ${location.name}, ${location.area}`}
+            alt={`${displayTitle} engineer working in ${location.name}, ${location.area}`}
             className="h-full w-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-primary/60" />
@@ -110,11 +111,11 @@ export function LocationPage({
         <div className="container relative">
           <div className="mx-auto max-w-3xl text-center">
             <BreadcrumbNav
-              items={locationBreadcrumbs(service.title, service.slug, location.name, serviceSlug, locationSlug)}
+              items={locationBreadcrumbs(displayTitle, service.slug, location.name, serviceSlug, locationSlug)}
               variant="inverse"
             />
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">
-              {service.title} in {location.name}
+              {displayTitle} in {location.name}
             </h1>
             <p className="text-lg text-primary-foreground/80">
               Trusted {service.title.toLowerCase()} experts serving {location.name} and {location.area}.
@@ -127,7 +128,7 @@ export function LocationPage({
                 href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}
                 className="flex items-center gap-2 text-primary-foreground"
               >
-                <Phone className="h-5 w-5" /> {companyInfo.phone}
+                <Phone className="h-5 w-5" /> Call Now
               </a>
             </div>
           </div>
@@ -152,7 +153,7 @@ export function LocationPage({
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <h2 className="mb-4 font-display text-2xl font-bold">
-                {service.title} Services in {location.name}
+                {displayTitle} Services in {location.name}
               </h2>
               {introParagraph ? (
                 <p className="mb-6 text-muted-foreground">{introParagraph}</p>
@@ -182,7 +183,7 @@ export function LocationPage({
               )}
 
               <h3 className="mb-4 font-display text-xl font-bold">
-                Why Choose Us for {service.title} in {location.name}?
+                Why Choose Us for {displayTitle} in {location.name}?
               </h3>
               <ul className="mb-8 space-y-2">
                 <li className="flex items-center gap-2">
@@ -216,7 +217,7 @@ export function LocationPage({
                 </div>
               )}
 
-              <h3 className="mb-4 font-display text-xl font-bold">Our {service.title} Process</h3>
+              <h3 className="mb-4 font-display text-xl font-bold">Our {displayTitle} Process</h3>
               <ol className="mb-8 space-y-3">
                 {service.process.map((step, i) => (
                   <li key={i} className="flex gap-3">
@@ -249,7 +250,7 @@ export function LocationPage({
                     href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}
                     className="flex items-center gap-2 text-primary hover:underline"
                   >
-                    <Phone className="h-4 w-4" /> {companyInfo.phone}
+                    <Phone className="h-4 w-4" /> Call Now
                   </a>
                   <a
                     href={`mailto:${companyInfo.email}`}
@@ -300,7 +301,7 @@ export function LocationPage({
         </div>
       </section>
 
-      <FAQSchema items={localFaqs} title={`${service.title} FAQs for ${location.name}`} />
+      <FAQSchema items={localFaqs} title={`${displayTitle} FAQs for ${location.name}`} />
 
       <section className="bg-secondary/50 py-12">
         <div className="container">
@@ -319,7 +320,7 @@ export function LocationPage({
                 href={`/${service.slug}/${loc.id}`}
                 className="text-primary hover:underline"
               >
-                {service.title} in {loc.name}
+                {displayTitle} in {loc.name}
               </Link>
             ))}
           </div>
@@ -348,7 +349,7 @@ export function LocationPage({
       <section className="bg-primary py-16">
         <div className="container text-center">
           <h2 className="mb-4 font-display text-3xl font-bold text-primary-foreground">
-            Need {service.title} in {location.name}?
+            Need {displayTitle} in {location.name}?
           </h2>
           <p className="mb-6 text-primary-foreground/80">
             Contact us today for a free, no-obligation quote.

@@ -30,7 +30,7 @@ const CTABanner = () => {
               className="flex items-center gap-2 transition-colors hover:text-primary-foreground">
               
               <Phone className="h-5 w-5" />
-              {companyInfo.phone}
+              Call Now
             </a>
             <a
               href={`mailto:${companyInfo.email}`}

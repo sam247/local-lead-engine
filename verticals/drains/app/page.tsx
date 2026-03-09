@@ -15,8 +15,8 @@ import InspectionCTA from "@/components/sections/InspectionCTA";
 import CostEstimator from "@/components/sections/CostEstimator";
 
 export const metadata: Metadata = {
-  title: "Mainline Drains | Expert Drain Repair & Drainage Solutions London",
-  description: "London's trusted drainage experts. 24/7 emergency drain repair, CCTV surveys, drain relining and blocked drain clearance across London.",
+  title: "Mainline Drains | Expert Drain Repair & Drainage Solutions Across the UK",
+  description: "Trusted drainage experts across the UK. 24/7 emergency drain repair, CCTV surveys, drain relining and blocked drain clearance.",
   alternates: { canonical: "https://mainlinedrains.co.uk" },
 };
 

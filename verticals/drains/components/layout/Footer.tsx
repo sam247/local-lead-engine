@@ -23,7 +23,7 @@ const Footer = () => {
               />
             </div>
             <p className="mb-6 text-sm text-primary-foreground/80">
-              Expert drain repair and drainage solutions across London. 24/7 emergency response, CCTV surveys and professional drain relining.
+              Expert drain repair and drainage solutions across the UK. 24/7 emergency response, CCTV surveys and professional drain relining.
             </p>
             <div className="flex gap-4">
               <a href={companyInfo.social.linkedin} className="text-primary-foreground/60 transition-colors hover:text-primary-foreground" aria-label="LinkedIn">
@@ -100,8 +100,9 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
-                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  {companyInfo.phone}
+                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  <Phone className="h-4 w-4 shrink-0" />
+                  Call Now
                 </a>
               </li>
               <li className="flex items-start gap-3">
@@ -146,6 +147,7 @@ const Footer = () => {
           </p>
           <div className="flex gap-6">
             <Link href="/about" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">About</Link>
+            <Link href="/service-areas" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Service Areas</Link>
             <Link href="/projects" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Projects</Link>
             <Link href="/blog" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Blog</Link>
             <Link href="/privacy" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Privacy</Link>

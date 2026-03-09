@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { blogPosts } from "@/lib/data";
 import { blogImages } from "@/lib/images";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -31,22 +32,24 @@ export default function BlogPage() {
         <div className="container">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {blogPosts.map((post, index) => (
-              <Card key={post.id} className="group overflow-hidden">
-                <div className="aspect-video overflow-hidden">
-                  <img src={blogImages[index % blogImages.length]} alt={post.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                </div>
-                <CardHeader>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary">{post.category}</Badge>
-                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                      <Calendar className="h-3 w-3" />
-                      {new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
-                    </span>
+              <Link key={post.id} href={`/blog/${post.id}`}>
+                <Card className="group overflow-hidden transition-all hover:shadow-lg">
+                  <div className="aspect-video overflow-hidden">
+                    <img src={blogImages[index % blogImages.length]} alt={post.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                   </div>
-                  <CardTitle className="font-display text-lg">{post.title}</CardTitle>
-                  <CardDescription>{post.excerpt}</CardDescription>
-                </CardHeader>
-              </Card>
+                  <CardHeader>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="secondary">{post.category}</Badge>
+                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <Calendar className="h-3 w-3" />
+                        {new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                      </span>
+                    </div>
+                    <CardTitle className="font-display text-lg group-hover:text-primary">{post.title}</CardTitle>
+                    <CardDescription>{post.excerpt}</CardDescription>
+                  </CardHeader>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>

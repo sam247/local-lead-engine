@@ -24,7 +24,7 @@ const InspectionCTA = () => {
               className="inline-flex items-center justify-center gap-2 rounded-md border border-primary px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
             >
               <Phone className="h-4 w-4" />
-              {companyInfo.phone}
+              Call Now
             </a>
           </div>
         </div>

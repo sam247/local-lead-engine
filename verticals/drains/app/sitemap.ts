@@ -6,6 +6,7 @@ import { verticalConfig } from "@/config";
 const staticPaths = [
   "",
   "/about",
+  "/service-areas",
   "/services",
   "/contact",
   "/projects",

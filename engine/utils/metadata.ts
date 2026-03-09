@@ -6,7 +6,8 @@ export function buildLocationMetadata(
   location: Location,
   config: VerticalConfig
 ): Metadata {
-  const title = `${service.title} in ${location.name} | ${config.siteName}`;
+  const displayTitle = service.titleSingular ?? service.title;
+  const title = `${displayTitle} in ${location.name} | ${config.siteName}`;
   const description = `Professional ${service.title.toLowerCase()} services in ${location.name}, ${location.area}. Trusted local drainage experts. 24/7 emergency response. Free quotes available.`;
   return {
     title,

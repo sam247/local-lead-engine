@@ -43,7 +43,7 @@ const PostcodeCheck = () => {
         <p className="mt-2 text-sm text-muted-foreground">
           Not sure about your area? Call us on{" "}
           <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="inline-flex items-center gap-1 font-medium text-primary hover:underline">
-            <Phone className="h-3 w-3" /> {companyInfo.phone}
+            <Phone className="h-3 w-3" /> Call Now
           </a>{" "}
           to check.
         </p>
