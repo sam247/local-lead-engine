@@ -17,9 +17,9 @@ const Footer = () => {
               <Image
                 src="/logo_white.svg"
                 alt="Mainline Drains"
-                width={140}
-                height={40}
-                className="h-8 w-auto sm:h-10"
+                width={84}
+                height={24}
+                className="h-5 w-auto sm:h-6"
               />
             </div>
             <p className="mb-6 text-sm text-primary-foreground/80">
