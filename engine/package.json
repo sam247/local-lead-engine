@@ -1,0 +1,32 @@
+{
+  "name": "engine",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./components": "./components/index.ts",
+    "./schema": "./schema/index.ts",
+    "./tools": "./tools/index.ts",
+    "./utils": "./utils/index.ts",
+    "./types": "./types/index.ts"
+  },
+  "peerDependencies": {
+    "next": ">=14",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.577.0",
+    "tailwind-merge": "^3.5.0",
+    "@radix-ui/react-slot": "^1.2.4",
+    "class-variance-authority": "^0.7.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  }
+}

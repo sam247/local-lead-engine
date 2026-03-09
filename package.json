@@ -1,0 +1,10 @@
+{
+  "name": "local-lead-engine",
+  "private": true,
+  "workspaces": ["engine", "verticals/drains"],
+  "scripts": {
+    "dev": "npm run dev --workspace=verticals-drains",
+    "build": "npm run build --workspace=verticals-drains",
+    "start": "npm run start --workspace=verticals-drains"
+  }
+}
