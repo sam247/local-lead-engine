@@ -29,6 +29,7 @@ export function BreadcrumbNav({
       <ol
         className={cn(
           "flex flex-wrap items-center gap-1.5 text-sm sm:gap-2",
+          isInverse && "justify-center",
           isInverse
             ? "text-primary-foreground/80 [&_a]:text-primary-foreground/80 [&_a:hover]:text-primary-foreground [&_span]:text-primary-foreground"
             : "text-muted-foreground [&_a]:transition-colors [&_a:hover]:text-foreground [&_span]:font-medium [&_span]:text-foreground"
