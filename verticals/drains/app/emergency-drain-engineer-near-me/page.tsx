@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { services, locations } from "@/lib/data";
-import { serviceImages } from "@/lib/images";
+import { getHeroImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
 import { NearMePage } from "engine";
 import type { Metadata } from "next";
@@ -25,7 +25,7 @@ export default function NearMeRoute() {
   const service = services.find((s) => s.slug === serviceSlug);
   if (!service) notFound();
   const otherServices = services.filter((s) => s.slug !== service.slug);
-  const serviceImage = serviceImages[service.slug] ?? "/images/services/emergency-drainage.jpg";
+  const serviceImage = getHeroImage({ serviceSlug: service.slug });
   return (
     <NearMePage
       service={service}

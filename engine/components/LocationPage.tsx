@@ -4,7 +4,21 @@ import { CheckCircle, Phone, Mail, ArrowRight } from "lucide-react";
 import { SchemaMarkup } from "../schema/SchemaMarkup";
 import { FAQSchema, type FAQItem } from "../schema/FAQSchema";
 import { InspectionCTA } from "./InspectionCTA";
+import { BreadcrumbNav } from "./BreadcrumbNav";
+import { MapEmbed } from "./MapEmbed";
 import type { Service, Location, CompanyInfo } from "../types";
+
+const locationBreadcrumbs = (
+  serviceTitle: string,
+  serviceSlug: string,
+  locationName: string,
+  serviceSlugParam: string,
+  locationSlugParam: string
+) => [
+  { name: "Home", url: "/" },
+  { name: serviceTitle, url: `/services/${serviceSlug}` },
+  { name: `${serviceTitle} in ${locationName}`, url: `/${serviceSlugParam}/${locationSlugParam}` },
+];
 
 export interface LocationPageProps {
   service: Service;
@@ -19,6 +33,13 @@ export interface LocationPageProps {
   baseUrl: string;
   serviceImage: string;
   contactPath?: string;
+  /** Optional trust section: title and bullet points (e.g. "Trusted Drain Engineers in Camden"). */
+  trustSectionTitle?: string;
+  trustPoints?: string[];
+  /** Path to diagnosis tool page (e.g. /collapsed-drains-complete-guide). Button links to path#diagnosis. */
+  diagnosisGuidePath?: string;
+  /** Show map embed in sidebar. Default true when location has coordinates. */
+  showMap?: boolean;
 }
 
 export function LocationPage({
@@ -33,7 +54,12 @@ export function LocationPage({
   baseUrl,
   serviceImage,
   contactPath = "/contact",
+  trustSectionTitle,
+  trustPoints,
+  diagnosisGuidePath,
+  showMap = true,
 }: LocationPageProps) {
+  const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
   return (
     <>
       <SchemaMarkup
@@ -61,11 +87,7 @@ export function LocationPage({
         companyInfo={companyInfo}
         baseUrl={baseUrl}
         data={{
-          breadcrumbs: [
-            { name: "Home", url: "/" },
-            { name: service.title, url: `/services/${service.slug}` },
-            { name: `${service.title} in ${location.name}`, url: `/${serviceSlug}/${locationSlug}` },
-          ],
+          breadcrumbs: locationBreadcrumbs(service.title, service.slug, location.name, serviceSlug, locationSlug),
         }}
       />
 
@@ -80,6 +102,10 @@ export function LocationPage({
         </div>
         <div className="container relative">
           <div className="mx-auto max-w-3xl text-center">
+            <BreadcrumbNav
+              items={locationBreadcrumbs(service.title, service.slug, location.name, serviceSlug, locationSlug)}
+              variant="inverse"
+            />
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">
               {service.title} in {location.name}
             </h1>
@@ -100,6 +126,19 @@ export function LocationPage({
           </div>
         </div>
       </section>
+
+      {diagnosisGuidePath && (
+        <section className="border-b border-border bg-secondary/30 py-6">
+          <div className="container">
+            <div className="mx-auto flex max-w-3xl flex-col items-center justify-center gap-4 text-center sm:flex-row sm:gap-6">
+              <p className="text-muted-foreground">Not sure what&apos;s wrong with your drains?</p>
+              <Button asChild variant="outline" size="sm">
+                <Link href={`${diagnosisGuidePath}#diagnosis`}>Use our free diagnosis tool</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="section-padding">
         <div className="container">
@@ -152,6 +191,20 @@ export function LocationPage({
                 </li>
               </ul>
 
+              {trustSectionTitle && trustPoints && trustPoints.length > 0 && (
+                <div className="mb-8 rounded-lg border border-border bg-secondary/50 p-6">
+                  <h3 className="mb-4 font-display text-xl font-bold">{trustSectionTitle}</h3>
+                  <ul className="space-y-2">
+                    {trustPoints.map((point, i) => (
+                      <li key={i} className="flex items-center gap-2">
+                        <CheckCircle className="h-5 w-5 shrink-0 text-primary" />
+                        <span className="text-muted-foreground">{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               <h3 className="mb-4 font-display text-xl font-bold">Our {service.title} Process</h3>
               <ol className="mb-8 space-y-3">
                 {service.process.map((step, i) => (
@@ -168,6 +221,16 @@ export function LocationPage({
             </div>
 
             <div className="space-y-6">
+              {showMapEmbed && (
+                <div className="rounded-lg overflow-hidden">
+                  <MapEmbed
+                    lat={location.lat}
+                    lng={location.lng}
+                    height={250}
+                    title={`Map of ${location.name}, ${location.area}`}
+                  />
+                </div>
+              )}
               <div className="rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">Contact Us</h3>
                 <div className="space-y-3">
@@ -227,6 +290,44 @@ export function LocationPage({
       </section>
 
       <FAQSchema items={localFaqs} title={`${service.title} FAQs for ${location.name}`} />
+
+      <section className="bg-secondary/50 py-12">
+        <div className="container">
+          <h2 className="mb-6 font-display text-2xl font-bold text-center">
+            Nearby Areas We Serve
+          </h2>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            {nearbyLocations.slice(0, 8).map((loc) => (
+              <Link
+                key={loc.id}
+                href={`/${service.slug}/${loc.id}`}
+                className="text-primary hover:underline"
+              >
+                {service.title} in {loc.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding pt-0">
+        <div className="container">
+          <h2 className="mb-6 font-display text-2xl font-bold text-center">
+            Other Services in {location.name}
+          </h2>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            {otherServices.map((s) => (
+              <Link
+                key={s.id}
+                href={`/${s.slug}/${location.id}`}
+                className="text-primary hover:underline"
+              >
+                {s.title} in {location.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="bg-primary py-16">
         <div className="container text-center">

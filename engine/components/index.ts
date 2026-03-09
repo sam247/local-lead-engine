@@ -1,8 +1,10 @@
+export { BreadcrumbNav, type BreadcrumbNavProps, type BreadcrumbItem } from "./BreadcrumbNav";
 export { LocationPage, type LocationPageProps } from "./LocationPage";
 export { HubPage, type HubPageProps, type CrossSection } from "./HubPage";
 export { InfoPage, type InfoPageProps, type RelatedPageLink } from "./InfoPage";
 export { NearMePage, type NearMePageProps } from "./NearMePage";
 export { PillarGuide, type PillarGuideProps, type PillarGuideSection } from "./PillarGuide";
+export { MapEmbed, type MapEmbedProps } from "./MapEmbed";
 export { InspectionCTA, type InspectionCTAProps } from "./InspectionCTA";
 export { MidContentCTA, type MidContentCTAProps } from "./MidContentCTA";
 export { CTABanner, type CTABannerProps } from "./CTABanner";

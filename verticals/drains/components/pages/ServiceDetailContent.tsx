@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { services, locations } from "@/lib/data";
-import { serviceImages } from "@/lib/images";
+import { getHeroImage } from "@/lib/images";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight, AlertTriangle } from "lucide-react";
+import { BreadcrumbNav } from "engine";
 import InspectionCTA from "@/components/sections/InspectionCTA";
 import MidContentCTA from "@/components/sections/MidContentCTA";
 import FAQSchema from "@/components/sections/FAQSchema";
@@ -144,7 +145,7 @@ interface ServiceDetailContentProps {
 export default function ServiceDetailContent({ service }: ServiceDetailContentProps) {
   const symptoms = serviceSymptomLinks[service.slug] || [];
   const faqs = serviceFaqs[service.slug] || [];
-  const imageSrc = serviceImages[service.slug];
+  const imageSrc = getHeroImage({ serviceSlug: service.slug });
 
   return (
     <>
@@ -157,6 +158,14 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
         </div>
         <div className="container relative">
           <div className="mx-auto max-w-3xl text-center">
+            <BreadcrumbNav
+              items={[
+                { name: "Home", url: "/" },
+                { name: "Services", url: "/services" },
+                { name: service.title, url: `/services/${service.slug}` },
+              ]}
+              variant="inverse"
+            />
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">{service.title}</h1>
             <p className="text-lg text-primary-foreground/80">{service.shortDescription}</p>
           </div>
@@ -203,6 +212,21 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
               <InspectionCTA />
             </div>
             <div className="space-y-6">
+              <div className="rounded-lg bg-secondary p-6">
+                <h3 className="mb-4 font-display text-lg font-bold">Related Drain Services</h3>
+                <ul className="space-y-2">
+                  {services
+                    .filter((s) => s.slug !== service.slug)
+                    .slice(0, 6)
+                    .map((s) => (
+                      <li key={s.id}>
+                        <Link href={`/services/${s.slug}`} className="text-sm text-primary hover:underline">
+                          {s.title}
+                        </Link>
+                      </li>
+                    ))}
+                </ul>
+              </div>
               <div className="rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">Areas We Cover</h3>
                 <div className="grid grid-cols-2 gap-2">

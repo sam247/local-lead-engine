@@ -1,5 +1,7 @@
 const base = "/images";
 
+const DEFAULT_HERO_SERVICE_SLUG = "drain-collapse-repair";
+
 export const serviceImages: Record<string, string> = {
   "drain-collapse-repair": `${base}/services/drain-collapse-repair.jpg`,
   "drain-relining": `${base}/services/drain-relining.jpg`,
@@ -31,3 +33,23 @@ export const blogImages = [
 
 export const heroBg = `${base}/hero-bg.jpg`;
 export const aboutTeam = `${base}/about-team.jpg`;
+
+/**
+ * Resolves hero image path by service slug, then by category (via categoryImages), then default.
+ * Use for location pages (serviceSlug), hub/info pages (category), or fallback.
+ */
+export function getHeroImage(options: {
+  serviceSlug?: string;
+  category?: string;
+  categoryImagesMap?: Record<string, string>;
+}): string {
+  const { serviceSlug, category, categoryImagesMap } = options;
+  if (serviceSlug && serviceImages[serviceSlug]) {
+    return serviceImages[serviceSlug];
+  }
+  if (category && categoryImagesMap) {
+    const slug = categoryImagesMap[category];
+    if (slug && serviceImages[slug]) return serviceImages[slug];
+  }
+  return serviceImages[DEFAULT_HERO_SERVICE_SLUG] ?? `${base}/services/${DEFAULT_HERO_SERVICE_SLUG}.jpg`;
+}

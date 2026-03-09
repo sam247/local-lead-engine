@@ -6,7 +6,7 @@ import {
   categoryImages,
   categoryAltText,
 } from "@/lib/data";
-import { serviceImages } from "@/lib/images";
+import { getHeroImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
 import type { CrossSection } from "engine";
 
@@ -47,8 +47,10 @@ export function getHubPageProps(category: string) {
       s.slug
     )
   );
-  const heroImage =
-    serviceImages[categoryImages[category] || "cctv-drain-surveys"];
+  const heroImage = getHeroImage({
+    category,
+    categoryImagesMap: categoryImages,
+  });
   const heroAlt =
     categoryAltText[category] || `${hub.title} - drainage services`;
   const crossSections = categorisePages(category);

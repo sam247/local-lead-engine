@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { ArrowRight } from "lucide-react";
 import { SchemaMarkup } from "../schema/SchemaMarkup";
+import { BreadcrumbNav } from "./BreadcrumbNav";
 import { CTABanner } from "./CTABanner";
 import type { HubData, InfoPageData, Service, CompanyInfo } from "../types";
 
@@ -53,6 +54,13 @@ export function HubPage({
         </div>
         <div className="container relative">
           <div className="mx-auto max-w-3xl text-center">
+            <BreadcrumbNav
+              items={[
+                { name: "Home", url: "/" },
+                { name: hub.title, url: hub.basePath },
+              ]}
+              variant="inverse"
+            />
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">
               {hub.title}
             </h1>

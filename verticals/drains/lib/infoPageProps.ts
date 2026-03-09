@@ -7,7 +7,7 @@ import {
   categoryImages,
   categoryAltText,
 } from "@/lib/data";
-import { serviceImages } from "@/lib/images";
+import { getHeroImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
 import type { RelatedPageLink } from "engine";
 
@@ -18,8 +18,10 @@ export function getInfoPageProps(category: string, slug: string) {
   if (!hub || !page) return null;
 
   const otherPages = pages.filter((p) => p.slug !== page.slug).slice(0, 4);
-  const heroImage =
-    serviceImages[categoryImages[category] || "cctv-drain-surveys"];
+  const heroImage = getHeroImage({
+    category,
+    categoryImagesMap: categoryImages,
+  });
   const heroAlt =
     categoryAltText[category] || `${page.title} - professional drainage service`;
   const pageFaqs = [
@@ -64,5 +66,6 @@ export function getInfoPageProps(category: string, slug: string) {
     locations,
     hubPages,
     getCategoryPages,
+    relatedGuidesTitle: "Related Drain Guides",
   };
 }

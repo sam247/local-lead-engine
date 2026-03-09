@@ -6,6 +6,7 @@ import { FAQSchema, type FAQItem } from "../schema/FAQSchema";
 import { InspectionCTA } from "./InspectionCTA";
 import { MidContentCTA } from "./MidContentCTA";
 import { RelatedLinks } from "./RelatedLinks";
+import { BreadcrumbNav } from "./BreadcrumbNav";
 import { CTABanner } from "./CTABanner";
 import type { HubData, InfoPageData, Service, Location, CompanyInfo } from "../types";
 
@@ -29,6 +30,8 @@ export interface InfoPageProps {
   locations: Location[];
   hubPages: HubData[];
   getCategoryPages: (category: string) => InfoPageData[];
+  /** Title for the related guides block in sidebar. Default "Related Articles". */
+  relatedGuidesTitle?: string;
 }
 
 export function InfoPage({
@@ -46,7 +49,9 @@ export function InfoPage({
   locations,
   hubPages,
   getCategoryPages,
+  relatedGuidesTitle = "Related Articles",
 }: InfoPageProps) {
+  const relatedGuides = otherPages.slice(0, 5);
   return (
     <>
       <SchemaMarkup
@@ -78,16 +83,14 @@ export function InfoPage({
         </div>
         <div className="container relative">
           <div className="mx-auto max-w-3xl text-center">
-            <nav className="mb-4">
-              <Link
-                href={hub.basePath}
-                className="text-sm text-primary-foreground/60 hover:text-primary-foreground"
-              >
-                {hub.title}
-              </Link>
-              <span className="mx-2 text-primary-foreground/40">/</span>
-              <span className="text-sm text-primary-foreground/80">{page.title}</span>
-            </nav>
+            <BreadcrumbNav
+              items={[
+                { name: "Home", url: "/" },
+                { name: hub.title, url: hub.basePath },
+                { name: page.title, url: `${hub.basePath}/${page.slug}` },
+              ]}
+              variant="inverse"
+            />
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">
               {page.title}
             </h1>
@@ -178,11 +181,11 @@ export function InfoPage({
                 hubPages={hubPages}
                 getCategoryPages={getCategoryPages}
               />
-              {otherPages.length > 0 && (
+              {relatedGuides.length > 0 && (
                 <div className="rounded-lg bg-secondary p-6">
-                  <h3 className="mb-4 font-display text-lg font-bold">Related Articles</h3>
+                  <h3 className="mb-4 font-display text-lg font-bold">{relatedGuidesTitle}</h3>
                   <div className="space-y-2">
-                    {otherPages.map((p) => (
+                    {relatedGuides.map((p) => (
                       <Link
                         key={p.slug}
                         href={`${hub.basePath}/${p.slug}`}

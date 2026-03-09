@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Phone, MapPin } from "lucide-react";
 import { SchemaMarkup } from "../schema/SchemaMarkup";
+import { BreadcrumbNav } from "./BreadcrumbNav";
 import { InspectionCTA } from "./InspectionCTA";
 import type { Service, Location, CompanyInfo } from "../types";
 
@@ -57,6 +58,13 @@ export function NearMePage({
         </div>
         <div className="container relative">
           <div className="mx-auto max-w-3xl text-center">
+            <BreadcrumbNav
+              items={[
+                { name: "Home", url: "/" },
+                { name: pageTitle, url: pagePath },
+              ]}
+              variant="inverse"
+            />
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">
               {pageTitle}
             </h1>
