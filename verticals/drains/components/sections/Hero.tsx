@@ -64,10 +64,10 @@ const Hero = () => {
           {/* Left — Copy & CTAs */}
           <div className="animate-fade-in">
             <h1 className="mb-5 font-display text-3xl font-bold tracking-tight text-primary-foreground md:text-4xl lg:text-5xl">
-              Expert Drain Repair &amp; Drainage Solutions Across the UK
+              Expert Drain Repair, Surveys &amp; Drainage Solutions Across the UK
             </h1>
             <p className="mb-8 text-base text-primary-foreground/80 md:text-lg">
-              24/7 emergency drainage services including drain collapse repair, CCTV drain surveys and pipe relining for residential and commercial properties.
+              24/7 emergency drainage services including drain collapse repair, CCTV drain surveys, complete drain excavation and pipe relining for residential and commercial properties.
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
