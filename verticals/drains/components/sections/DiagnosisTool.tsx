@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { trackEvent } from "engine";
 import { Stethoscope, CheckSquare, Square } from "lucide-react";
 
 const symptoms = [
@@ -134,7 +135,11 @@ const DiagnosisTool = () => {
   const [showResult, setShowResult] = useState(false);
 
   const toggle = (id: string) => {
-    setSelected((prev) => prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]);
+    setSelected((prev) => {
+      const next = prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id];
+      if (prev.length === 0 && next.length === 1) trackEvent("diagnosis_started");
+      return next;
+    });
     setShowResult(false);
   };
 
@@ -171,7 +176,13 @@ const DiagnosisTool = () => {
       </div>
 
       {!showResult && selected.length > 0 && (
-        <Button onClick={() => setShowResult(true)} className="w-full">
+        <Button
+          onClick={() => {
+            trackEvent("diagnosis_completed");
+            setShowResult(true);
+          }}
+          className="w-full"
+        >
           Get Diagnosis
         </Button>
       )}

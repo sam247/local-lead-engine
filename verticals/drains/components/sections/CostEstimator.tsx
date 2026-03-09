@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { trackEvent } from "engine";
 import { Calculator } from "lucide-react";
 
 const problemTypes = [
@@ -123,7 +124,11 @@ const CostEstimator = () => {
             {depths.map((d) => (
               <button
                 key={d.id}
-                onClick={() => { setDepth(d.id); setStep(3); }}
+                onClick={() => {
+                  setDepth(d.id);
+                  setStep(3);
+                  trackEvent("cost_estimator_used");
+                }}
                 className="rounded-md border border-border p-3 text-left text-sm font-medium transition-colors hover:border-primary hover:bg-primary/5"
               >
                 {d.label}

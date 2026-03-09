@@ -15,6 +15,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { trackEvent } from "engine";
 import { cn } from "@/lib/utils";
 
 const Header = () => {
@@ -183,7 +184,7 @@ const Header = () => {
 
         {/* CTA Button */}
         <div className="hidden items-center gap-4 lg:flex">
-          <a href="tel:02012345678" className="flex items-center gap-2 text-sm font-medium text-primary">
+          <a href="tel:02012345678" className="flex items-center gap-2 text-sm font-medium text-primary" onClick={() => trackEvent("call_button_click")}>
             <Phone className="h-4 w-4" />
             020 1234 5678
           </a>
@@ -256,7 +257,7 @@ const Header = () => {
             
 
             <div className="mt-4 flex flex-col gap-3 border-t border-border pt-4">
-              <a href="tel:02012345678" className="flex items-center gap-2 text-sm font-medium text-primary">
+              <a href="tel:02012345678" className="flex items-center gap-2 text-sm font-medium text-primary" onClick={() => trackEvent("call_button_click")}>
                 <Phone className="h-4 w-4" />
                 020 1234 5678
               </a>

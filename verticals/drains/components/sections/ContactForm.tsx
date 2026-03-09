@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { trackEvent } from "engine";
 import { z } from "zod";
 
 const enquirySchema = z.object({
@@ -46,6 +47,7 @@ export default function ContactForm() {
       setSubmitting(false);
       return;
     }
+    trackEvent("lead_form_submit");
     setTimeout(() => {
       toast({ title: "Enquiry Received", description: "We'll get back to you within 1 hour. For emergencies, call us directly." });
       setFormData({});

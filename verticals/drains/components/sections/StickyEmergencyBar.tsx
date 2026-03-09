@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Phone, ArrowRight } from "lucide-react";
+import { trackEvent } from "engine";
 import { companyInfo } from "@/lib/data";
 
 const StickyEmergencyBar = () => {
@@ -12,7 +15,7 @@ const StickyEmergencyBar = () => {
         </span>
         <div className="flex w-full items-center gap-2 md:w-auto">
           <Button variant="highlight" size="sm" asChild className="flex-1 md:flex-none">
-            <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="gap-2">
+            <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="gap-2" onClick={() => trackEvent("call_button_click")}>
               <Phone className="h-4 w-4" />
               <span className="md:hidden">Call Now</span>
               <span className="hidden md:inline">Call Now – {companyInfo.phone}</span>
