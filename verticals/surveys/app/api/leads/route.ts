@@ -3,7 +3,7 @@ import { z } from "zod";
 import { Resend } from "resend";
 import { google } from "googleapis";
 
-const SERVICE_OPTIONS = ["Drain survey", "Blocked drain", "Drain repair", "Drain inspection", "Advice"] as const;
+const SERVICE_OPTIONS = ["Topographical survey", "Drone survey", "Measured building survey", "Utility survey", "Advice / not sure"] as const;
 
 const LeadInputSchema = z.object({
   name: z.string().trim().min(1).max(100),
@@ -13,7 +13,7 @@ const LeadInputSchema = z.object({
   town: z.string().trim().min(1).max(100),
   service: z.enum(SERVICE_OPTIONS),
   description: z.string().trim().min(1).max(2000),
-  source_site: z.literal("drains"),
+  source_site: z.literal("surveys"),
   utm_source: z.string().trim().max(100).optional(),
 });
 
@@ -48,11 +48,11 @@ function normalizePrivateKey(maybeEscaped: string): string {
 }
 
 function formatLeadId(n: number): string {
-  return `DRN-${String(n).padStart(3, "0")}`;
+  return `SRV-${String(n).padStart(3, "0")}`;
 }
 
 function parseLeadId(leadId: string): number | null {
-  const m = /^DRN-(\d{3,})$/.exec(leadId.trim());
+  const m = /^SRV-(\d{3,})$/.exec(leadId.trim());
   if (!m) return null;
   const n = Number(m[1]);
   return Number.isFinite(n) ? n : null;
@@ -106,7 +106,7 @@ async function appendLeadRow(
   const row = [
     lead.timestamp,
     lead.lead_id,
-    "drains",
+    "surveys",
     lead.source_site,
     lead.utm_source ?? "",
     lead.service,
@@ -131,7 +131,7 @@ async function appendLeadRow(
 }
 
 function buildEmailSubject(lead: { lead_id: string; town: string; service: string }) {
-  return `New Drain Lead – ${lead.lead_id} – ${lead.town} – ${lead.service}`;
+  return `New Survey Lead – ${lead.lead_id} – ${lead.town} – ${lead.service}`;
 }
 
 function buildEmailBody(lead: LeadInput & { lead_id: string; timestamp: string }) {
@@ -146,7 +146,7 @@ function buildEmailBody(lead: LeadInput & { lead_id: string; timestamp: string }
     `Town: ${lead.town}`,
     `Requested service: ${lead.service}`,
     "",
-    "Description of issue:",
+    "Description of project:",
     lead.description,
     "",
     `Source site: ${lead.source_site}`,

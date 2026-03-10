@@ -7,19 +7,19 @@ export const dynamic = "force-static";
 export const revalidate = false;
 
 const projects = [
-  { id: 1, title: "Residential Drain Collapse Repair", location: "Chelsea", category: "Drain Collapse Repair", image: projectImages[0] },
-  { id: 2, title: "Commercial CCTV Drainage Survey", location: "Canary Wharf", category: "CCTV Drain Surveys", image: projectImages[1] },
-  { id: 3, title: "Victorian Property Drain Relining", location: "Richmond", category: "Drain Relining", image: projectImages[2] },
-  { id: 4, title: "Emergency Sewer Repair", location: "Wimbledon", category: "Emergency Drainage", image: projectImages[3] },
-  { id: 5, title: "Blocked Drain Clearance", location: "Ealing", category: "Blocked Drains", image: projectImages[4] },
-  { id: 6, title: "Full Drain Excavation & Replacement", location: "Kensington", category: "Drain Excavation", image: projectImages[5] },
-  { id: 7, title: "Multi-Property Drain Survey", location: "Hammersmith", category: "CCTV Drain Surveys", image: projectImages[1] },
-  { id: 8, title: "Emergency Flooding Response", location: "Fulham", category: "Emergency Drainage", image: projectImages[0] },
+  { id: 1, title: "Topographical Site Survey for Planning", location: "Chelsea", category: "Topographical Survey", image: projectImages[0] },
+  { id: 2, title: "Measured Building Survey, Period Property", location: "Richmond", category: "Measured Building Survey", image: projectImages[1] },
+  { id: 3, title: "Drone Survey for Development Site", location: "Surrey", category: "Drone Survey", image: projectImages[2] },
+  { id: 4, title: "Utility Mapping Before Groundworks", location: "Wimbledon", category: "Utility Survey", image: projectImages[3] },
+  { id: 5, title: "Extension Design – Existing Building Survey", location: "Ealing", category: "Measured Building Survey", image: projectImages[4] },
+  { id: 6, title: "Drone Roof Inspection", location: "Kensington", category: "Drone Survey", image: projectImages[5] },
+  { id: 7, title: "Multi-Plot Topographical Survey", location: "Hammersmith", category: "Topographical Survey", image: projectImages[1] },
+  { id: 8, title: "Construction Progress Drone Survey", location: "Fulham", category: "Drone Survey", image: projectImages[0] },
 ];
 
 export const metadata: Metadata = {
   title: "Our Projects | Mainline Surveys",
-  description: "View our portfolio of completed drainage projects across London — drain repairs, CCTV surveys, relining and more.",
+  description: "Portfolio of land and drone surveying projects across London and the South East — topographical, measured building, utility and drone surveys.",
   alternates: { canonical: "https://mainlinesurveys.co.uk/projects" },
 };
 
@@ -31,7 +31,7 @@ export default function ProjectsPage() {
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">Our Projects</h1>
-            <p className="text-lg text-primary-foreground/80">A showcase of our completed drainage work across London.</p>
+            <p className="text-lg text-primary-foreground/80">A showcase of land and drone surveying projects across London and the South East.</p>
           </div>
         </div>
       </section>

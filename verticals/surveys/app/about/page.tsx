@@ -21,7 +21,7 @@ export default function AboutPage() {
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">About Mainline Surveys</h1>
-            <p className="text-lg text-primary-foreground/80">London&apos;s trusted drainage experts — fast, reliable, and available 24/7.</p>
+            <p className="text-lg text-primary-foreground/80">Land and drone surveying for planning, development and construction across London and the South East.</p>
           </div>
         </div>
       </section>
@@ -34,10 +34,10 @@ export default function AboutPage() {
                 Mainline Surveys connects architects, developers and property owners with qualified land and drone survey partners across the UK for planning, development and construction projects.
               </p>
               <p className="mb-4 text-muted-foreground">
-                We&apos;ve repaired over 15,000 drains across London, from emergency collapsed drain repairs in Chelsea to commercial drainage surveys in the City. Our reputation is built on fast response times, transparent pricing, and work that lasts.
+                We connect clients with RICS-linked survey partners who deliver topographical, measured building, utility and drone surveys for planning applications, extensions and development. Our reputation is built on clear scoping, transparent pricing and deliverables that fit straight into design workflows.
               </p>
               <p className="text-muted-foreground">
-                Today, our team of 30+ experienced drainage engineers operates 24/7, equipped with the latest CCTV, jetting, and relining technology to handle any drainage challenge.
+                Our network of qualified surveyors uses total stations, GNSS, laser scanning and drones to deliver accurate, planning-ready data across London and the South East.
               </p>
             </div>
             <div className="aspect-[4/3] overflow-hidden rounded-lg bg-muted">
@@ -51,10 +51,10 @@ export default function AboutPage() {
           <h2 className="mb-12 text-center font-display text-3xl font-bold">Our Values</h2>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {[
-              { icon: CheckCircle, title: "Reliability", desc: "24/7 when you need us most" },
+              { icon: CheckCircle, title: "Reliability", desc: "Clear turnaround and deliverables" },
               { icon: Shield, title: "Honesty", desc: "Transparent pricing, no hidden costs" },
-              { icon: Users, title: "Expertise", desc: "Skilled, certified engineers" },
-              { icon: Award, title: "Quality", desc: "Insurance-backed guarantees" },
+              { icon: Users, title: "Expertise", desc: "RICS-linked, qualified surveyors" },
+              { icon: Award, title: "Quality", desc: "Planning-ready CAD and BIM outputs" },
             ].map((item) => (
               <div key={item.title} className="text-center">
                 <item.icon className="mx-auto mb-4 h-12 w-12 text-primary" />
