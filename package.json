@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "engine",
-    "verticals/drains"
+    "verticals/drains",
+    "verticals/surveys"
   ],
   "scripts": {
     "dev": "npm run dev --workspace=verticals-drains",
