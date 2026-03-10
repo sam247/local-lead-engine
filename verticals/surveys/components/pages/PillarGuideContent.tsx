@@ -1,46 +1,30 @@
 import Link from "next/link";
-import { services, getCategoryPages, companyInfo } from "@/lib/data";
+import { services, getCategoryPages, companyInfo, faqs } from "@/lib/data";
 import { serviceImages } from "@/lib/images";
 import { Button } from "@/components/ui/button";
 import { Phone, ArrowRight } from "lucide-react";
 import InspectionCTA from "@/components/sections/InspectionCTA";
-import CostEstimator from "@/components/sections/CostEstimator";
-import DiagnosisTool from "@/components/sections/DiagnosisTool";
 import FAQSchema from "@/components/sections/FAQSchema";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 
-const sections = [
-  { id: "signs", title: "Signs of a Collapsed Drain" },
-  { id: "causes", title: "What Causes Drain Collapse" },
-  { id: "inspection", title: "How We Inspect Drains" },
-  { id: "repair", title: "Repair Methods" },
-  { id: "costs", title: "Typical Repair Costs" },
-  { id: "insurance", title: "Insurance & Claims" },
-  { id: "diagnosis", title: "Diagnosis Tool" },
-  { id: "estimator", title: "Cost Estimator" },
-];
-
-const guideFaqs = [
-  { question: "Can a collapsed drain fix itself?", answer: "No. A collapsed drain will only get worse over time as soil washes into the void and the damage spreads. Professional repair is always needed." },
-  { question: "How long does drain repair take?", answer: "Simple relining can be completed in a day. Excavation repairs typically take 1-3 days depending on depth and location. Emergency repairs often start the same day." },
-  { question: "Will insurance cover drain damage?", answer: "Many home insurance policies cover sudden drain collapse. Gradual deterioration is less commonly covered. We provide detailed CCTV reports to support your claim." },
-  { question: "How much does drain relining cost?", answer: "Drain relining typically costs £1,000-£4,000 depending on pipe diameter, length, and access difficulty. It's usually cheaper than excavation." },
-  { question: "Do I need a CCTV drain survey?", answer: "A CCTV survey is essential for accurate diagnosis. It reveals the exact nature, location and severity of any problem, allowing us to recommend the most appropriate repair." },
+const sectionIds = [
+  { id: "when-you-need", title: "When You Need a Survey" },
+  { id: "planning", title: "Planning & Development" },
+  { id: "technology", title: "Survey Technology" },
+  { id: "drone", title: "Drone Surveys" },
+  { id: "costs", title: "Survey Costs" },
+  { id: "need-help", title: "Not Sure? Decision Guide" },
 ];
 
 export default function PillarGuideContent() {
-  const collapsePages = getCategoryPages("collapse");
-  const causePages = getCategoryPages("causes");
-  const inspectionPages = getCategoryPages("inspection");
-  const repairPages = getCategoryPages("repair-methods");
+  const guidesPages = getCategoryPages("guides");
   const costPages = getCategoryPages("costs");
-  const insurancePages = getCategoryPages("insurance");
   const imageSrc = serviceImages["topographical-survey"];
 
   return (
     <>
-      <SchemaMarkup type="Article" data={{ title: "Collapsed Drains: The Complete Guide", description: "Comprehensive guide to collapsed drain signs, causes, repair methods, costs and insurance claims.", url: "/collapsed-drains-complete-guide" }} />
-      <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Collapsed Drains Guide", url: "/collapsed-drains-complete-guide" }] }} />
+      <SchemaMarkup type="Article" data={{ title: "Survey Guides", description: "When you need a survey, which type to choose, and how much it costs. Planning, development and construction.", url: "/collapsed-drains-complete-guide" }} />
+      <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Survey Guides", url: "/collapsed-drains-complete-guide" }] }} />
       <section className="relative bg-primary py-16 md:py-24">
         <div className="absolute inset-0">
           <img src={imageSrc} alt="" className="h-full w-full object-cover opacity-20" />
@@ -48,8 +32,8 @@ export default function PillarGuideContent() {
         </div>
         <div className="container relative">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">Collapsed Drains: The Complete Guide</h1>
-            <p className="mb-6 text-lg text-primary-foreground/80">Everything you need to know about identifying, diagnosing, repairing and claiming for collapsed drains.</p>
+            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">Survey Guides</h1>
+            <p className="mb-6 text-lg text-primary-foreground/80">When you need a survey, which type to choose, and how much it costs. Planning, development and construction.</p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button size="lg" variant="secondary" asChild>
                 <Link href="/contact">Get a Free Quote</Link>
@@ -64,8 +48,8 @@ export default function PillarGuideContent() {
       <section className="border-b border-border bg-secondary py-8">
         <div className="container">
           <h2 className="mb-4 font-display text-lg font-bold">In This Guide</h2>
-          <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-4">
-            {sections.map((s) => (
+          <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
+            {sectionIds.map((s) => (
               <a key={s.id} href={`#${s.id}`} className="flex items-center gap-2 text-sm text-primary hover:underline">
                 <ArrowRight className="h-3 w-3" /> {s.title}
               </a>
@@ -76,49 +60,49 @@ export default function PillarGuideContent() {
       <section className="section-padding">
         <div className="container">
           <div className="mx-auto max-w-4xl space-y-16">
-            <div id="signs">
-              <h2 className="mb-4 font-display text-3xl font-bold">Signs of a Collapsed Drain</h2>
-              <p className="mb-6 text-muted-foreground">A collapsed drain can go undetected for weeks, causing increasing damage. Key warning signs include slow drainage across multiple fixtures, foul sewage smells, sinkholes in the garden, recurring blockages, damp patches, and cracks in walls near drain runs.</p>
+            <div id="when-you-need">
+              <h2 className="mb-4 font-display text-3xl font-bold">When You Need a Survey</h2>
+              <p className="mb-6 text-muted-foreground">Planning applications, extensions, development and design work usually need accurate site information. Our guides explain when to commission a topographical, measured building, utility or drone survey.</p>
               <div className="grid gap-3 sm:grid-cols-2">
-                {collapsePages.slice(0, 4).map((p) => (
-                  <Link key={p.slug} href={`/drain-collapse/${p.slug}`} className="rounded border border-border p-3 text-sm transition-colors hover:border-primary">
+                {guidesPages.slice(0, 4).map((p) => (
+                  <Link key={p.slug} href={`/drainage-guides/${p.slug}`} className="rounded border border-border p-3 text-sm transition-colors hover:border-primary">
                     {p.title} <ArrowRight className="ml-1 inline h-3 w-3" />
                   </Link>
                 ))}
               </div>
             </div>
-            <div id="causes">
-              <h2 className="mb-4 font-display text-3xl font-bold">What Causes Drain Collapse</h2>
-              <p className="mb-6 text-muted-foreground">Drains collapse due to age-related deterioration of old clay pipes, tree root ingress cracking joints, ground movement from construction or subsidence, heavy vehicle loads above shallow pipes, and corrosion of metal pipework.</p>
+            <div id="planning">
+              <h2 className="mb-4 font-display text-3xl font-bold">Planning & Development</h2>
+              <p className="mb-6 text-muted-foreground">Survey requirements for planning permission, extensions and property development. Get the right scope from the start to avoid delays and refusals.</p>
               <div className="grid gap-3 sm:grid-cols-2">
-                {causePages.slice(0, 4).map((p) => (
-                  <Link key={p.slug} href={`/drain-causes/${p.slug}`} className="rounded border border-border p-3 text-sm transition-colors hover:border-primary">
+                {guidesPages.filter((p) => p.slug.includes("planning") || p.slug.includes("extension") || p.slug.includes("development") || p.slug.includes("architectural")).slice(0, 4).map((p) => (
+                  <Link key={p.slug} href={`/drainage-guides/${p.slug}`} className="rounded border border-border p-3 text-sm transition-colors hover:border-primary">
                     {p.title} <ArrowRight className="ml-1 inline h-3 w-3" />
                   </Link>
                 ))}
               </div>
             </div>
-            <div id="inspection">
-              <h2 className="mb-4 font-display text-3xl font-bold">How We Inspect Drains</h2>
-              <p className="mb-6 text-muted-foreground">CCTV drain surveys are the gold standard for diagnosing drainage problems. A high-resolution camera is fed through your pipes, revealing the exact condition, location and severity of any defects — without any digging.</p>
+            <div id="technology">
+              <h2 className="mb-4 font-display text-3xl font-bold">Survey Technology</h2>
+              <p className="mb-6 text-muted-foreground">How total stations, GNSS, laser scanning, GPR and drone mapping work. Understand the equipment and methods used by surveyors.</p>
               <div className="grid gap-3 sm:grid-cols-2">
-                {inspectionPages.slice(0, 4).map((p) => (
-                  <Link key={p.slug} href={`/drain-inspection/${p.slug}`} className="rounded border border-border p-3 text-sm transition-colors hover:border-primary">
+                {guidesPages.filter((p) => p.slug.includes("total-station") || p.slug.includes("gnss") || p.slug.includes("lidar") || p.slug.includes("gpr") || p.slug.includes("drone-mapping")).slice(0, 4).map((p) => (
+                  <Link key={p.slug} href={`/drainage-guides/${p.slug}`} className="rounded border border-border p-3 text-sm transition-colors hover:border-primary">
                     {p.title} <ArrowRight className="ml-1 inline h-3 w-3" />
                   </Link>
                 ))}
               </div>
             </div>
-            <div id="repair">
-              <h2 className="mb-4 font-display text-3xl font-bold">Repair Methods</h2>
-              <p className="mb-6 text-muted-foreground">The right repair method depends on the type and extent of damage. Options range from no-dig relining for partial damage to full excavation for severe collapses. We always recommend the most cost-effective solution.</p>
+            <div id="drone">
+              <h2 className="mb-4 font-display text-3xl font-bold">Drone Surveys</h2>
+              <p className="mb-6 text-muted-foreground">When to use drone surveys, how they work, accuracy and timescales. Drone surveys are ideal for large sites, roof inspections and progress monitoring.</p>
               <div className="grid gap-3 sm:grid-cols-2">
-                {repairPages.slice(0, 4).map((p) => (
-                  <Link key={p.slug} href={`/drain-repair-methods/${p.slug}`} className="rounded border border-border p-3 text-sm transition-colors hover:border-primary">
+                {guidesPages.filter((p) => p.slug.includes("drone")).slice(0, 4).map((p) => (
+                  <Link key={p.slug} href={`/drainage-guides/${p.slug}`} className="rounded border border-border p-3 text-sm transition-colors hover:border-primary">
                     {p.title} <ArrowRight className="ml-1 inline h-3 w-3" />
                   </Link>
                 ))}
-                {services.filter((s) => ["drain-relining", "drain-excavation", "drain-collapse-repair"].includes(s.slug)).map((s) => (
+                {services.filter((s) => s.slug === "drone-survey" || s.slug === "drone-topographical-survey").map((s) => (
                   <Link key={s.slug} href={`/services/${s.slug}`} className="rounded border border-primary/30 bg-primary/5 p-3 text-sm font-medium transition-colors hover:border-primary">
                     {s.title} <ArrowRight className="ml-1 inline h-3 w-3" />
                   </Link>
@@ -126,8 +110,8 @@ export default function PillarGuideContent() {
               </div>
             </div>
             <div id="costs">
-              <h2 className="mb-4 font-display text-3xl font-bold">Typical Repair Costs</h2>
-              <p className="mb-6 text-muted-foreground">Costs depend on the repair method, pipe depth, location, and extent of damage. A CCTV survey gives you the information needed for an accurate quote.</p>
+              <h2 className="mb-4 font-display text-3xl font-bold">Survey Costs</h2>
+              <p className="mb-6 text-muted-foreground">Typical UK cost ranges for topographical, measured building, utility and drone surveys. Costs depend on site size, complexity and deliverables.</p>
               <div className="mb-6 grid gap-3 sm:grid-cols-2">
                 {costPages.slice(0, 4).map((p) => (
                   <Link key={p.slug} href={`/drain-costs/${p.slug}`} className="rounded border border-border p-3 text-sm transition-colors hover:border-primary">
@@ -136,34 +120,30 @@ export default function PillarGuideContent() {
                 ))}
               </div>
             </div>
-            <div id="insurance">
-              <h2 className="mb-4 font-display text-3xl font-bold">Insurance & Claims</h2>
-              <p className="mb-6 text-muted-foreground">Many home insurance policies cover drain collapse repair. We help you through the claims process with detailed CCTV reports and documentation.</p>
+            <div id="need-help">
+              <h2 className="mb-4 font-display text-3xl font-bold">Not Sure Which Survey You Need?</h2>
+              <p className="mb-6 text-muted-foreground">Use our decision guide to find out which survey type fits your project, then request a free quote.</p>
               <div className="grid gap-3 sm:grid-cols-2">
-                {insurancePages.slice(0, 4).map((p) => (
-                  <Link key={p.slug} href={`/drain-insurance/${p.slug}`} className="rounded border border-border p-3 text-sm transition-colors hover:border-primary">
-                    {p.title} <ArrowRight className="ml-1 inline h-3 w-3" />
-                  </Link>
-                ))}
+                <Link href="/do-i-need-a-drain-survey" className="rounded border border-primary/30 bg-primary/5 p-3 text-sm font-medium transition-colors hover:border-primary">
+                  Do I Need a Land Survey? <ArrowRight className="ml-1 inline h-3 w-3" />
+                </Link>
+                <Link href="/drainage-faq" className="rounded border border-border p-3 text-sm transition-colors hover:border-primary">
+                  Survey FAQ <ArrowRight className="ml-1 inline h-3 w-3" />
+                </Link>
+                <Link href="/contact" className="rounded border border-border p-3 text-sm transition-colors hover:border-primary">
+                  Request a Quote <ArrowRight className="ml-1 inline h-3 w-3" />
+                </Link>
               </div>
             </div>
             <InspectionCTA />
-            <div id="diagnosis">
-              <h2 className="mb-4 font-display text-3xl font-bold">Diagnose Your Problem</h2>
-              <DiagnosisTool />
-            </div>
-            <div id="estimator">
-              <h2 className="mb-4 font-display text-3xl font-bold">Estimate Your Costs</h2>
-              <CostEstimator />
-            </div>
           </div>
         </div>
       </section>
-      <FAQSchema items={guideFaqs} title="Collapsed Drain FAQs" />
+      <FAQSchema items={faqs.slice(0, 5)} title="Survey FAQs" />
       <section className="bg-primary py-16">
         <div className="container text-center">
-          <h2 className="mb-4 font-display text-3xl font-bold text-primary-foreground">Need Expert Help with a Collapsed Drain?</h2>
-          <p className="mb-6 text-primary-foreground/80">Contact us for a free CCTV survey and no-obligation repair quote.</p>
+          <h2 className="mb-4 font-display text-3xl font-bold text-primary-foreground">Need a Survey Quote?</h2>
+          <p className="mb-6 text-primary-foreground/80">Contact us for a free, no-obligation quote. We'll match you with a qualified survey partner.</p>
           <Button size="lg" variant="secondary" asChild>
             <Link href="/contact">Get Your Free Quote</Link>
           </Button>

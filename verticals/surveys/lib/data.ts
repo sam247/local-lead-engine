@@ -513,37 +513,37 @@ export const companyInfo = {
   }
 };
 
-// Why choose us
+// Why choose us (survey-focused)
 export const whyChooseUs = [
   {
-    title: "24/7 Emergency Response",
-    description: "Round-the-clock availability for urgent drainage emergencies across London.",
-    icon: "Siren"
-  },
-  {
-    title: "CCTV Technology",
-    description: "State-of-the-art camera surveys for accurate diagnosis without excavation.",
-    icon: "Camera"
-  },
-  {
-    title: "No-Dig Solutions",
-    description: "Advanced drain relining technology that avoids costly and disruptive excavation.",
-    icon: "Layers"
-  },
-  {
-    title: "Transparent Pricing",
-    description: "Honest, upfront quotes with no hidden costs or surprise charges.",
-    icon: "PoundSterling"
-  },
-  {
-    title: "Insurance Backed",
-    description: "All work fully guaranteed and insurance-backed for your peace of mind.",
+    title: "RICS-Linked Partners",
+    description: "Survey work delivered by qualified, experienced land and measured building surveyors.",
     icon: "ShieldCheck"
   },
   {
-    title: "Local Expertise",
-    description: "Deep knowledge of London's drainage infrastructure and local regulations.",
+    title: "Planning-Ready Data",
+    description: "CAD and BIM deliverables that fit straight into design and planning workflows.",
+    icon: "Layers"
+  },
+  {
+    title: "Drone & Ground Survey",
+    description: "Total station, GNSS, laser scanning and drone surveys for the right fit for your site.",
+    icon: "Camera"
+  },
+  {
+    title: "Transparent Pricing",
+    description: "Clear quotes with no hidden costs. Fixed fees where scope allows.",
+    icon: "PoundSterling"
+  },
+  {
+    title: "London & South East",
+    description: "Coverage across London, Surrey, Kent, Essex and surrounding counties.",
     icon: "MapPin"
+  },
+  {
+    title: "Quick Turnaround",
+    description: "Efficient mobilisation and delivery so your programme stays on track.",
+    icon: "Siren"
   }
 ];
 
@@ -2172,3 +2172,80 @@ export const getCategoryPages = (category: string): InfoPageData[] => {
 export const getHubData = (category: string): HubData | undefined => {
   return hubPages.find((h) => h.category === category);
 };
+
+// Service detail page: related guide links per survey service (from guides data)
+export const relatedGuideLinksByService: Record<string, { slug: string; path: string; title: string }[]> = (() => {
+  const map: Record<string, { slug: string; path: string; title: string }[]> = {};
+  for (const g of guidesPages) {
+    for (const s of g.relatedServices) {
+      if (!map[s]) map[s] = [];
+      map[s].push({ slug: g.slug, path: `/drainage-guides/${g.slug}`, title: g.title });
+    }
+  }
+  return map;
+})();
+
+// Service detail page: FAQs per survey service slug
+export const serviceFaqsBySlug: Record<string, { question: string; answer: string }[]> = {
+  "topographical-survey": [
+    { question: "How much does a topographical survey cost?", answer: "Costs depend on site size and detail. Small residential plots typically range from around £600–£1,200 + VAT; larger sites £1,500–£4,000+. Our partners provide fixed quotes once scope is clear." },
+    { question: "How long does a topographical survey take?", answer: "On-site work is often one day for a typical dwelling plot; drawings are usually delivered within a few days to a week. Larger sites may need more time." },
+    { question: "Do I need a topographical survey for planning?", answer: "Most planning applications need an up-to-date topographical survey showing existing site levels and features. Your architect or planning consultant can confirm local requirements." },
+  ],
+  "measured-building-survey": [
+    { question: "How much does a measured building survey cost?", answer: "Costs depend on building size and deliverables. A typical house might be £800–£2,000 + VAT; larger or complex buildings more. We provide fixed quotes after a brief." },
+    { question: "What do I get from a measured building survey?", answer: "You receive accurate floor plans, elevations and sections in CAD (and optionally 3D/BIM). These form the base for design and planning." },
+    { question: "Do I need a measured building survey for an extension?", answer: "Yes, in most cases. It gives your architect reliable as-existing dimensions and reduces design risk and on-site surprises." },
+  ],
+  "utility-survey": [
+    { question: "How much does a utility survey cost?", answer: "Typical UK utility surveys range from around £500–£1,500+ depending on site size and detection depth. Quotes are provided after reviewing your site and scope." },
+    { question: "When do I need a utility survey?", answer: "Before excavation, piling or groundworks. It reduces the risk of striking buried services and supports CDM and design." },
+    { question: "What does a utility survey show?", answer: "Locations of buried pipes, cables and ducts where detectable, with quality levels. It does not replace trial holes where absolute certainty is required." },
+  ],
+  "utility-mapping-survey": [
+    { question: "What is the difference between utility survey and utility mapping?", answer: "Utility mapping is a coordinated survey that ties all detected services to a single topographical grid, often with levels and attributes. It is used for design and development." },
+    { question: "Does utility mapping include drainage?", answer: "Yes. Drainage runs, manholes and outfalls can be included where visible or detectable. For internal pipe condition you need a drainage specialist." },
+  ],
+  "boundary-survey": [
+    { question: "When do I need a boundary survey?", answer: "When building near the boundary, resolving disputes, or preparing legal or Land Registry documents. It clarifies the position of the physical boundary." },
+    { question: "How much does a boundary survey cost?", answer: "Costs depend on complexity and whether it is standalone or part of a larger topographical survey. Your surveyor will quote after a brief." },
+  ],
+  "laser-scanning-survey": [
+    { question: "When should I use laser scanning instead of a traditional measured survey?", answer: "Laser scanning is ideal for complex geometry, heritage buildings, and when you need 3D point clouds for BIM or clash detection." },
+    { question: "What format do I get from a laser scan survey?", answer: "Point clouds and, typically, 2D/3D CAD or Revit outputs. Format and level of detail are agreed at briefing." },
+  ],
+  "drone-survey": [
+    { question: "How accurate are drone surveys?", answer: "With proper ground control, drone surveys can achieve construction-grade accuracy (often within 20–50mm) for many applications. Your surveyor will state accuracy and limitations." },
+    { question: "How much does a drone survey cost?", answer: "Costs depend on area and deliverables. Drone surveys often cost less than traditional methods for large, open sites. See our drone survey cost guide." },
+    { question: "When should I use a drone survey?", answer: "Ideal for large sites, roof inspections, progress monitoring and volume calculations. For small urban plots or fine internal detail, ground survey may be better." },
+  ],
+  "drone-roof-inspection": [
+    { question: "Do I need scaffolding for a roof survey?", answer: "No. Drone roof inspections capture high-resolution imagery without scaffolding or cherry pickers, reducing cost and disruption." },
+    { question: "What do you deliver from a drone roof inspection?", answer: "Imagery, video and, where required, annotated reports or condition assessments. Deliverables are agreed at briefing." },
+  ],
+  "drone-building-inspection": [
+    { question: "What is the difference between drone roof and building inspection?", answer: "Roof inspection focuses on roof condition. Building inspection can include façades, high-level details and external envelope, often for condition or design." },
+  ],
+  "drone-topographical-survey": [
+    { question: "When is a drone topographical survey better than a ground survey?", answer: "For large, open or hard-to-access sites, drone surveys can be faster and cheaper while still meeting design accuracy when properly controlled." },
+    { question: "What deliverables do I get?", answer: "Typically orthophotos, contours, digital terrain models and volume reports, in CAD or GIS formats as agreed." },
+  ],
+  "drone-construction-survey": [
+    { question: "How often can you fly a construction site?", answer: "As often as the programme requires. Many clients use repeat drone surveys for progress, volumes and as-built verification." },
+    { question: "Do drone surveys integrate with our grid?", answer: "Yes. Control is set out in your project grid so deliverables align with design and other surveys." },
+  ],
+};
+
+// Guides index page: featured guides and near-me links (survey-focused). Icon keys mapped in component.
+export const guidesIndexFeatured: { title: string; description: string; href: string; iconKey: "BookOpen" | "HelpCircle" }[] = [
+  { title: "Survey Guides Overview", description: "When you need a survey, which type to choose, and how much it costs. Planning, development and construction.", href: "/collapsed-drains-complete-guide", iconKey: "BookOpen" },
+  { title: "Do I Need a Land Survey?", description: "Not sure if you need a professional survey? Use our decision guide to find out based on your project.", href: "/do-i-need-a-drain-survey", iconKey: "HelpCircle" },
+  { title: "Survey FAQ", description: "Answers to common questions about survey types, costs, planning and when to use drone or ground surveys.", href: "/drainage-faq", iconKey: "HelpCircle" },
+];
+
+export const guidesIndexNearMe = [
+  { title: "Topographical Survey Near Me", href: "/drain-collapse-near-me" },
+  { title: "Drone Survey Near Me", href: "/service-areas" },
+  { title: "Measured Building Survey Near Me", href: "/service-areas" },
+  { title: "Utility Survey Near Me", href: "/drain-unblocking-near-me" },
+];

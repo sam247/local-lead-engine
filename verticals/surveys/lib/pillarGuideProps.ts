@@ -5,105 +5,97 @@ import type { PillarGuideSection } from "engine";
 
 const guideFaqs = [
   {
-    question: "Can a collapsed drain fix itself?",
+    question: "Do I need a survey for planning permission?",
     answer:
-      "No. A collapsed drain will only get worse over time as soil washes into the void and the damage spreads. Professional repair is always needed.",
+      "Most planning applications need an up-to-date topographical survey and often a measured building survey of existing structures. Your architect or planning consultant can confirm local requirements.",
   },
   {
-    question: "How long does drain repair take?",
+    question: "How much does a topographical survey cost?",
     answer:
-      "Simple relining can be completed in a day. Excavation repairs typically take 1-3 days depending on depth and location. Emergency repairs often start the same day.",
+      "Costs depend on site size and detail. Small residential plots typically range from around £600–£1,200 + VAT; larger sites £1,500–£4,000+. Our partners provide fixed quotes once scope is clear.",
   },
   {
-    question: "Will insurance cover drain damage?",
+    question: "When should I use a drone survey?",
     answer:
-      "Many home insurance policies cover sudden drain collapse. Gradual deterioration is less commonly covered. We provide detailed CCTV reports to support your claim.",
+      "Drone surveys are ideal for large sites, roof inspections, progress monitoring and volume calculations. For small urban plots or fine internal detail, ground survey may be better.",
   },
   {
-    question: "How much does drain relining cost?",
+    question: "How long does a survey take?",
     answer:
-      "Drain relining typically costs £1,000-£4,000 depending on pipe diameter, length, and access difficulty. It's usually cheaper than excavation.",
+      "On-site work is often one day for a typical dwelling plot; drawings are usually delivered within a few days to a week. Larger or drone surveys may need more time for processing.",
   },
   {
-    question: "Do I need a CCTV drain survey?",
+    question: "Do you offer free quotes?",
     answer:
-      "A CCTV survey is essential for accurate diagnosis. It reveals the exact nature, location and severity of any problem, allowing us to recommend the most appropriate repair.",
+      "Yes. We provide free, no-obligation survey quotes. Share your site and requirements and we'll match you with a qualified survey partner.",
   },
 ];
 
 export function getCollapsedDrainsGuideProps() {
-  const collapsePages = getCategoryPages("collapse");
-  const causePages = getCategoryPages("causes");
-  const inspectionPages = getCategoryPages("inspection");
-  const repairPages = getCategoryPages("repair-methods");
+  const guidesPages = getCategoryPages("guides");
   const costPages = getCategoryPages("costs");
-  const insurancePages = getCategoryPages("insurance");
 
   const sections: PillarGuideSection[] = [
     {
-      id: "signs",
-      title: "Signs of a Collapsed Drain",
+      id: "when-you-need-a-survey",
+      title: "When You Need a Survey",
       intro:
-        "A collapsed drain can go undetected for weeks, causing increasing damage. Key warning signs include slow drainage across multiple fixtures, foul sewage smells, sinkholes in the garden, recurring blockages, damp patches, and cracks in walls near drain runs.",
-      links: collapsePages.slice(0, 4).map((p) => ({
+        "Planning applications, extensions, development and design work usually need accurate site information. Our guides explain when to commission a topographical, measured building, utility or drone survey.",
+      links: guidesPages.slice(0, 4).map((p) => ({
         label: p.title,
-        href: `/drain-collapse/${p.slug}`,
+        href: `/drainage-guides/${p.slug}`,
       })),
     },
     {
-      id: "causes",
-      title: "What Causes Drain Collapse",
+      id: "planning-and-development",
+      title: "Planning & Development",
       intro:
-        "Drains collapse due to age-related deterioration of old clay pipes, tree root ingress cracking joints, ground movement from construction or subsidence, heavy vehicle loads above shallow pipes, and corrosion of metal pipework.",
-      links: causePages.slice(0, 4).map((p) => ({
+        "Survey requirements for planning permission, extensions and property development. Get the right scope from the start to avoid delays and refusals.",
+      links: guidesPages.filter((p) => p.slug.includes("planning") || p.slug.includes("extension") || p.slug.includes("development")).slice(0, 4).map((p) => ({
         label: p.title,
-        href: `/drain-causes/${p.slug}`,
+        href: `/drainage-guides/${p.slug}`,
       })),
     },
     {
-      id: "inspection",
-      title: "How We Inspect Drains",
+      id: "survey-technology",
+      title: "Survey Technology",
       intro:
-        "CCTV drain surveys are the gold standard for diagnosing drainage problems. A high-resolution camera is fed through your pipes, revealing the exact condition, location and severity of any defects — without any digging.",
-      links: inspectionPages.slice(0, 4).map((p) => ({
+        "How total stations, GNSS, laser scanning, GPR and drone mapping work. Understand the equipment and methods used by surveyors.",
+      links: guidesPages.filter((p) => p.slug.includes("total-station") || p.slug.includes("gnss") || p.slug.includes("lidar") || p.slug.includes("gpr") || p.slug.includes("drone-mapping")).slice(0, 4).map((p) => ({
         label: p.title,
-        href: `/drain-inspection/${p.slug}`,
+        href: `/drainage-guides/${p.slug}`,
       })),
     },
     {
-      id: "repair",
-      title: "Repair Methods",
+      id: "drone-surveys",
+      title: "Drone Surveys",
       intro:
-        "The right repair method depends on the type and extent of damage. Options range from no-dig relining for partial damage to full excavation for severe collapses. We always recommend the most cost-effective solution.",
-      links: [
-        ...repairPages.slice(0, 4).map((p) => ({
-          label: p.title,
-          href: `/drain-repair-methods/${p.slug}`,
-        })),
-        { label: "Drain Relining", href: "/services/drain-relining" },
-        { label: "Drain Excavation", href: "/services/drain-excavation" },
-        { label: "Drain Collapse Repair", href: "/services/drain-collapse-repair" },
-      ],
+        "When to use drone surveys, how they work, accuracy and timescales. Drone surveys are ideal for large sites, roof inspections and progress monitoring.",
+      links: guidesPages.filter((p) => p.slug.includes("drone")).slice(0, 4).map((p) => ({
+        label: p.title,
+        href: `/drainage-guides/${p.slug}`,
+      })),
     },
     {
       id: "costs",
-      title: "Typical Repair Costs",
+      title: "Survey Costs",
       intro:
-        "Costs depend on the repair method, pipe depth, location, and extent of damage. A CCTV survey gives you the information needed for an accurate quote.",
+        "Typical UK cost ranges for topographical, measured building, utility and drone surveys. Costs depend on site size, complexity and deliverables.",
       links: costPages.slice(0, 4).map((p) => ({
         label: p.title,
         href: `/drain-costs/${p.slug}`,
       })),
     },
     {
-      id: "insurance",
-      title: "Insurance & Claims",
+      id: "need-help",
+      title: "Not Sure Which Survey You Need?",
       intro:
-        "Many home insurance policies cover drain collapse repair. We help you through the claims process with detailed CCTV reports and documentation.",
-      links: insurancePages.slice(0, 4).map((p) => ({
-        label: p.title,
-        href: `/drain-insurance/${p.slug}`,
-      })),
+        "Use our decision guide to find out which survey type fits your project, then request a free quote.",
+      links: [
+        { label: "Do I Need a Land Survey?", href: "/do-i-need-a-drain-survey" },
+        { label: "Survey FAQ", href: "/drainage-faq" },
+        { label: "Request a Quote", href: "/contact" },
+      ],
     },
   ];
 
@@ -120,8 +112,8 @@ export function getCollapsedDrainsGuideProps() {
     guideFaqs,
     companyInfo: verticalConfig.companyInfo,
     baseUrl: verticalConfig.baseUrl,
-    bottomCtaTitle: "Need Expert Help with a Collapsed Drain?",
+    bottomCtaTitle: "Need a Survey Quote?",
     bottomCtaBody:
-      "Contact us for a free CCTV survey and no-obligation repair quote.",
+      "Contact us for a free, no-obligation quote. We'll match you with a qualified survey partner.",
   };
 }

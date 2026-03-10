@@ -29,6 +29,72 @@ export function parseBodyWithLinks(body: string): Array<{ type: "text"; value: s
 }
 
 const articleContent: Record<string, BlogArticleContent> = {
+  "when-do-you-need-a-topographical-survey": {
+    sections: [
+      { heading: "Introduction", body: "A topographical survey is one of the most common survey types requested for planning, design and construction. It shows the existing site as it is: levels, boundaries, buildings, services and key features. This guide explains when you need a topographical survey and what you get. For [planning applications](/drainage-guides/survey-for-planning-permission), [extensions](/drainage-guides/survey-before-building-extension) and [development](/drainage-guides/survey-before-property-development), an up-to-date topo survey is usually the first step. Our partners deliver [topographical surveys](/services/topographical-survey) across London and the South East." },
+      { heading: "Planning and design", body: "Most planning applications need an accurate site plan. Architects and engineers use topographical data to position new buildings, drainage, access and landscaping. Without it, designs can be refused or delayed. A topographical survey gives you contours, spot levels, boundaries and above-ground features in CAD format, ready for your design team." },
+      { heading: "When to commission one", body: "Commission a topographical survey when you are preparing a planning application, before detailed design, when buying or selling land, or when you need as-built records. Site size and complexity determine cost and turnaround; our [cost guide](/drain-costs/topographical-survey-cost) outlines typical ranges." },
+    ],
+    faqs: [
+      { question: "How much does a topographical survey cost?", answer: "Costs depend on site size and detail. Small residential plots typically range from around £600–£1,200 + VAT; larger sites £1,500–£4,000+. Our partners provide fixed quotes once scope is clear." },
+      { question: "How long does a topographical survey take?", answer: "On-site work is often one day for a typical dwelling plot; drawings are usually delivered within a few days to a week." },
+    ],
+  },
+  "drone-surveys-vs-traditional-surveys": {
+    sections: [
+      { heading: "Introduction", body: "Drone surveys are increasingly used for large sites, roof inspections and progress monitoring, but they are not a drop-in replacement for every survey task. This article compares [drone surveys](/services/drone-survey) with traditional total station and GNSS methods so you can choose the right approach. [How drone surveys work](/drainage-guides/how-drone-surveys-work) and [when to use them](/drainage-guides/when-to-use-drone-surveys) are covered in our guides." },
+      { heading: "Where drones excel", body: "Drones cover large areas quickly, reduce working at height, and deliver orthophotos, contours and 3D models. They are ideal for open terrain, earthworks volumes, progress reporting and roof or façade inspection. With good ground control, accuracy can meet many construction tolerances." },
+      { heading: "Where traditional survey wins", body: "Total station and GNSS surveys still deliver the highest accuracy on hard detail, small urban sites and setting out. Dense tree cover, narrow streets and fine internal detail are better suited to ground-based methods. Many projects use both: drones for coverage, total stations for control and critical detail." },
+    ],
+    faqs: [
+      { question: "Are drone surveys accurate enough for construction?", answer: "With proper ground control, drone surveys can achieve construction-grade accuracy (often within 20–50mm) for many applications. Your surveyor will state accuracy and limitations in the report." },
+      { question: "When should I use a drone survey?", answer: "Ideal for large sites, roof inspections, progress monitoring and volume calculations. For small urban plots or fine internal detail, ground survey may be better." },
+    ],
+  },
+  "survey-requirements-for-planning-permission": {
+    sections: [
+      { heading: "Introduction", body: "Planning authorities expect accurate information about the existing site. This article outlines typical [survey requirements for planning](/drainage-guides/survey-for-planning-permission): topographical surveys, measured building surveys and, where relevant, utility or boundary information. Submitting drawings based on outdated maps is a common cause of delays." },
+      { heading: "What planners expect", body: "Most applications need a topographical survey showing levels, boundaries and key features. If you are altering an existing building, a [measured building survey](/services/measured-building-survey) is often required. Drainage, visibility and access may need to be shown on the same plan. Your architect or planning consultant can confirm local requirements." },
+      { heading: "Getting the right scope", body: "Request a survey quote with your red-line plan or site extent. Our partners deliver planning-ready CAD and PDFs so your application is supported by accurate, up-to-date data." },
+    ],
+    faqs: [
+      { question: "Do I need a survey for a householder application?", answer: "Many householder and extension applications need an accurate site plan; some authorities require a topographical and/or measured building survey. Check with your architect or the local authority." },
+      { question: "How much does a planning survey cost?", answer: "Costs depend on site size and deliverables. See our [topographical survey cost](/drain-costs/topographical-survey-cost) and [measured building survey cost](/drain-costs/measured-building-survey-cost) guides." },
+    ],
+  },
+  "how-much-does-a-land-survey-cost": {
+    sections: [
+      { heading: "Introduction", body: "Land survey costs in the UK depend on site size, complexity, level of detail and deliverables. This article gives typical ranges for [topographical](/drain-costs/topographical-survey-cost), [measured building](/drain-costs/measured-building-survey-cost), [utility](/drain-costs/utility-survey-cost) and [drone](/drain-costs/drone-survey-cost) surveys so you can budget and compare quotes." },
+      { heading: "What drives the cost", body: "Key factors include total area, feature density, contour interval, tree surveying, access, and whether you need 3D models or repeat visits. Tight deadlines or multiple phases can also affect price. Surveyors typically quote after reviewing your brief and site." },
+      { heading: "Getting a quote", body: "Share your red-line plan, planning drawings or site extent when requesting a quote. Our partners provide fixed fees where scope allows, with optional add-ons clearly set out." },
+    ],
+    faqs: [
+      { question: "Are quotes free?", answer: "Yes. We provide free, no-obligation survey quotes. Share your site and requirements and we'll match you with a survey partner." },
+      { question: "What is included in a typical survey quote?", answer: "Site visit, survey capture, processing and CAD (or agreed) deliverables, plus a short report. Exact scope is agreed at briefing." },
+    ],
+  },
+  "when-to-use-a-drone-survey": {
+    sections: [
+      { heading: "Introduction", body: "Drone surveys are best when they address a clear need: faster coverage, safer access, or regular monitoring. This article explains [when to use drone surveys](/drainage-guides/when-to-use-drone-surveys) and when ground-based methods may be better. Our [drone survey](/services/drone-survey) and [drone survey cost](/drain-costs/drone-survey-cost) pages give more detail." },
+      { heading: "Good fit for drones", body: "Large or open sites, roof and building inspections, earthworks and stockpile volumes, progress monitoring and visual reporting are all strong use cases. Drones can reduce time on site and often cost less than traditional survey for big areas." },
+      { heading: "When to choose ground survey", body: "Small urban plots, dense tree cover, fine internal detail and ultra-high precision setting out are often better served by total station or GNSS. Many projects combine both: drones for context and coverage, ground survey for control and critical detail." },
+    ],
+    faqs: [
+      { question: "How long does a drone survey take?", answer: "On-site flying can be under half a day for small to medium sites; processing typically 2–5 working days. Your surveyor will confirm turnaround when quoting." },
+      { question: "Do I need permission for a drone survey?", answer: "Yes. Flights are carried out by CAA-compliant, insured operators who handle airspace and site permissions." },
+    ],
+  },
+  "utility-survey-before-excavation": {
+    sections: [
+      { heading: "Introduction", body: "Striking buried services is dangerous and costly. A [utility survey](/services/utility-survey) before excavation locates pipes, cables and ducts where detectable, reducing risk and supporting CDM and design. This article explains why you need a utility survey before you dig and what you get." },
+      { heading: "Why it matters", body: "Existing records are often incomplete or wrong. A utility survey uses electromagnetic and GPR techniques to detect services that may not appear on plans. Results are plotted on a drawing with quality levels so designers and contractors know where to allow for trial holes or extra care." },
+      { heading: "When to commission one", body: "Before piling, groundworks, drainage runs or any significant excavation. For [utility mapping](/services/utility-mapping-survey) that ties all services to one grid, see our [utility survey cost](/drain-costs/utility-survey-cost) guide." },
+    ],
+    faqs: [
+      { question: "Does a utility survey find all services?", answer: "No. Detection depends on material, depth and site conditions. The report states limitations; trial holes may still be needed where certainty is required." },
+      { question: "How much does a utility survey cost?", answer: "Typical UK utility surveys range from around £500–£1,500+ depending on site size and detection depth." },
+    ],
+  },
   "signs-of-drain-collapse": {
     sections: [
       {
