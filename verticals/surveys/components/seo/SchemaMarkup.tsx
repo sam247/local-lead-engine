@@ -20,7 +20,7 @@ interface SchemaMarkupProps {
   };
 }
 
-const baseUrl = "https://mainlinedrains.co.uk";
+const baseUrl = "https://mainlinesurveys.co.uk";
 
 const localBusinessBase = {
   "@type": "LocalBusiness",

@@ -1,26 +1,24 @@
 import Link from "next/link";
-import { ArrowRight, AlertTriangle, Layers, Camera, Shovel, Siren, Ban } from "lucide-react";
+import { ArrowRight, Map, Building2, Waves, Network, Camera, AlertTriangle } from "lucide-react";
 import { services } from "@/lib/data";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Map,
+  Building2,
+  Waves,
+  Network,
+  SquareDashed: Map,
+  ScanLine: Camera,
+  Drone: Camera,
+  Building: Building2,
+  Mountain: Map,
+  Construction: Building2,
   AlertTriangle,
-  Layers,
-  Camera,
-  Shovel,
-  Siren,
-  Ban,
 };
 
-const prioritySlugs = ["drain-collapse-repair", "cctv-drain-surveys", "blocked-drains", "drain-excavation"];
-
-const serviceBenefits: Record<string, string[]> = {
-  "drain-collapse-repair": ["Emergency same-day response", "Full excavation & replacement", "Insurance-backed guarantees"],
-  "cctv-drain-surveys": ["Non-invasive camera inspection", "Detailed video reports", "Essential for homebuyers"],
-  "blocked-drains": ["High-pressure jetting", "Clears roots, fat & debris", "Prevents recurring blockages"],
-  "drain-excavation": ["Complete pipe replacement", "All depths and materials", "Professional surface reinstatement"],
-};
+const prioritySlugs = ["topographical-survey", "drone-survey", "measured-building-survey", "utility-survey"];
 
 const ServicesGrid = () => {
   const priorityServices = services.filter((s) => prioritySlugs.includes(s.slug));
@@ -33,17 +31,17 @@ const ServicesGrid = () => {
             What We Do
           </span>
           <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
-            Our Core Drainage Services
+            Land &amp; Drone Surveying Services
           </h2>
           <p className="text-muted-foreground">
-            Comprehensive drain repair and drainage solutions tailored to your property's needs.
+            Topographical, measured building, utility and drone surveys for planning, development and construction.
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
           {priorityServices.map((service, index) => {
             const Icon = iconMap[service.icon] || AlertTriangle;
-            const benefits = serviceBenefits[service.slug] || [];
+            const benefits = (service.benefits ?? []).slice(0, 3);
             return (
               <Card
                 key={service.id}

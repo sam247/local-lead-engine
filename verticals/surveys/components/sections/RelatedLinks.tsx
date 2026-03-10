@@ -10,7 +10,7 @@ interface RelatedLinksProps {
 
 const RelatedLinks = ({ relatedServices = [], category, currentSlug }: RelatedLinksProps) => {
   const matchedServices = services.filter((s) => relatedServices.includes(s.slug));
-  const firstServiceSlug = relatedServices[0] || "drain-collapse-repair";
+  const firstServiceSlug = relatedServices[0] || "topographical-survey";
   const featuredLocations = locations.slice(0, 6);
 
   // Find related hub pages based on services

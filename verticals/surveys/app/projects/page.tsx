@@ -18,9 +18,9 @@ const projects = [
 ];
 
 export const metadata: Metadata = {
-  title: "Our Projects | Mainline Drains",
+  title: "Our Projects | Mainline Surveys",
   description: "View our portfolio of completed drainage projects across London — drain repairs, CCTV surveys, relining and more.",
-  alternates: { canonical: "https://mainlinedrains.co.uk/projects" },
+  alternates: { canonical: "https://mainlinesurveys.co.uk/projects" },
 };
 
 export default function ProjectsPage() {

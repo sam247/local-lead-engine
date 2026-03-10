@@ -41,8 +41,8 @@ export default function HubPageContent({ category }: HubPageContentProps) {
   const keyServices = services.filter((s) =>
     ["drain-collapse-repair", "cctv-drain-surveys", "drain-excavation"].includes(s.slug)
   );
-  const heroImage = serviceImages[categoryImages[category] || "cctv-drain-surveys"];
-  const heroAlt = categoryAltText[category] || `${hub.title} - drainage services`;
+  const heroImage = serviceImages[categoryImages[category] || "topographical-survey"];
+  const heroAlt = categoryAltText[category] || `${hub.title} - survey services`;
   const crossSections = categorisePages(category);
 
   return (

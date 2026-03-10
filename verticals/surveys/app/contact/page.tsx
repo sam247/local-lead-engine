@@ -8,9 +8,9 @@ export const dynamic = "force-static";
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: "Contact Us | Mainline Drains",
-  description: "Get in touch with Mainline Drains for a free quote on drain repair, CCTV surveys and emergency drainage services across London.",
-  alternates: { canonical: "https://mainlinedrains.co.uk/contact" },
+  title: "Contact Us | Mainline Surveys",
+  description: "Get in touch for a survey quote. Land and drone surveying for planning, development and construction across the UK.",
+  alternates: { canonical: "https://mainlinesurveys.co.uk/contact" },
 };
 
 export default function ContactPage() {
@@ -21,7 +21,7 @@ export default function ContactPage() {
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">Contact Us</h1>
-            <p className="text-lg text-primary-foreground/80">Get in touch for a free, no-obligation quote — 24/7.</p>
+            <p className="text-lg text-primary-foreground/80">Get in touch for a survey quote. We’ll connect you with a qualified survey partner.</p>
           </div>
         </div>
       </section>

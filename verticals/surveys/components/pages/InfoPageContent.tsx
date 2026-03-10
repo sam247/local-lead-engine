@@ -22,8 +22,8 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
   if (!hub || !page) return null;
 
   const otherPages = pages.filter((p) => p.slug !== page.slug).slice(0, 4);
-  const heroImage = serviceImages[categoryImages[category] || "cctv-drain-surveys"];
-  const heroAlt = categoryAltText[category] || `${page.title} - professional drainage service`;
+  const heroImage = serviceImages[categoryImages[category] || "topographical-survey"];
+  const heroAlt = categoryAltText[category] || `${page.title} - professional survey`;
   const pageFaqs = [
     { question: `What are the signs of ${page.title.toLowerCase()}?`, answer: page.signs.slice(0, 3).join(". ") + "." },
     { question: `How do you diagnose ${page.title.toLowerCase()}?`, answer: page.diagnosis.slice(0, 200) + "..." },
@@ -68,7 +68,7 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
               </ul>
               <h2 className="mb-4 font-display text-2xl font-bold">How We Diagnose the Problem</h2>
               <p className="mb-4 text-muted-foreground">{page.diagnosis}</p>
-              <MidContentCTA message={`Think you might have ${page.title.toLowerCase()}? A CCTV inspection will confirm the diagnosis.`} />
+              <MidContentCTA message={`Need a survey for ${page.title.toLowerCase()}? Request a quote and we'll match you with a survey specialist.`} />
               <h2 className="mb-4 font-display text-2xl font-bold">How We Fix It</h2>
               <p className="mb-8 text-muted-foreground">{page.resolution}</p>
               {page.relatedPages && page.relatedPages.length > 0 && (

@@ -69,8 +69,8 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
       <section className="relative bg-primary py-16 md:py-24">
         <div className="absolute inset-0">
           <img
-            src={serviceImages[service.slug] ?? "/images/services/drain-collapse-repair.jpg"}
-            alt={`${service.title} engineer working in ${location.name}, ${location.area}`}
+            src={serviceImages[service.slug] ?? "/images/services/topographical-survey.jpg"}
+            alt={`${service.title} in ${location.name}, ${location.area}`}
             className="h-full w-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-primary/60" />
@@ -103,7 +103,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
                 {service.title} Services in {location.name}
               </h2>
               <p className="mb-6 text-muted-foreground">
-                Mainline Drains provides expert {service.title.toLowerCase()} services to residential and commercial clients in {location.name}, {location.area}. Our experienced drainage engineers deliver fast, reliable solutions tailored to your property&apos;s specific needs.
+                Mainline Surveys connects you with qualified survey partners for {service.title.toLowerCase()} in {location.name}, {location.area}. Professional land and drone surveying for architects, developers and property owners.
               </p>
               <p className="mb-8 text-muted-foreground">{service.description}</p>
 

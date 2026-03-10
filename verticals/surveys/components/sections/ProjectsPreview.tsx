@@ -5,12 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { projectImages } from "@/lib/images";
 
 const projects = [
-  { id: 1, title: "Residential Drain Collapse Repair", location: "Chelsea", image: projectImages[0], serviceType: "Drain Collapse Repair", serviceSlug: "drain-collapse-repair", description: "Emergency excavation and replacement of a collapsed Victorian clay drain beneath a residential garden." },
-  { id: 2, title: "Commercial CCTV Drain Survey", location: "Canary Wharf", image: projectImages[1], serviceType: "CCTV Drain Surveys", serviceSlug: "cctv-drain-surveys", description: "Full site drainage survey for a commercial office building prior to refurbishment works." },
-  { id: 3, title: "Victorian Property Drain Relining", location: "Richmond", image: projectImages[2], serviceType: "Drain Relining", serviceSlug: "drain-relining", description: "No-dig relining of cracked and root-damaged clay pipes beneath a Grade II listed property." },
-  { id: 4, title: "Emergency Sewer Repair", location: "Wimbledon", image: projectImages[3], serviceType: "Emergency Drainage", serviceSlug: "emergency-drainage", description: "Same-day emergency response to a sewage backup caused by a collapsed shared sewer." },
-  { id: 5, title: "Blocked Drain Clearance", location: "Ealing", image: projectImages[4], serviceType: "Blocked Drains", serviceSlug: "blocked-drains", description: "High-pressure jetting to clear a severe fat and grease blockage in a restaurant's drainage system." },
-  { id: 6, title: "Full Drain Excavation & Replacement", location: "Kensington", image: projectImages[5], serviceType: "Drain Excavation", serviceSlug: "drain-excavation", description: "Complete excavation and replacement of a 15-metre collapsed drain run beneath a driveway." },
+  { id: 1, title: "Topographical Site Survey", location: "Chelsea", image: projectImages[0], serviceType: "Topographical Survey", serviceSlug: "topographical-survey", description: "Full topographical survey for a residential redevelopment site to support planning and design." },
+  { id: 2, title: "Measured Building Survey", location: "Canary Wharf", image: projectImages[1], serviceType: "Measured Building Survey", serviceSlug: "measured-building-survey", description: "As-built floor plans, elevations and sections for a commercial office refurbishment." },
+  { id: 3, title: "Drone Survey for Development Site", location: "Richmond", image: projectImages[2], serviceType: "Drone Survey", serviceSlug: "drone-survey", description: "Drone survey and orthophoto for a multi-plot development site prior to planning submission." },
+  { id: 4, title: "Utility Mapping Survey", location: "Wimbledon", image: projectImages[3], serviceType: "Utility Mapping Survey", serviceSlug: "utility-mapping-survey", description: "Underground utility detection and mapping before excavation and foundation works." },
+  { id: 5, title: "Drone Roof Inspection", location: "Ealing", image: projectImages[4], serviceType: "Drone Roof Inspection", serviceSlug: "drone-roof-inspection", description: "Roof condition survey and imagery for a period property ahead of refurbishment." },
+  { id: 6, title: "Boundary Survey", location: "Kensington", image: projectImages[5], serviceType: "Boundary Survey", serviceSlug: "boundary-survey", description: "Boundary survey to clarify the extent of the title for an extension and party wall matters." },
 ];
 
 const ProjectsPreview = () => {
@@ -25,7 +25,7 @@ const ProjectsPreview = () => {
             Recent Projects
           </h2>
           <p className="text-muted-foreground">
-            Take a look at some of our recently completed drainage projects across London.
+            Take a look at some of our recently completed survey projects across London and the South East.
           </p>
         </div>
 

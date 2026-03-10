@@ -108,12 +108,12 @@ export function getCollapsedDrainsGuideProps() {
   ];
 
   const heroImage =
-    serviceImages["drain-collapse-repair"] ?? "/images/services/drain-collapse-repair.jpg";
+    serviceImages["topographical-survey"] ?? "/images/services/topographical-survey.jpg";
 
   return {
-    heroTitle: "Collapsed Drains: The Complete Guide",
+    heroTitle: "Survey Guides",
     heroSubtitle:
-      "Everything you need to know about identifying, diagnosing, repairing and claiming for collapsed drains.",
+      "When you need a survey, which type to choose, and how much it costs. Planning, development and construction.",
     heroImage,
     guidePath: "/collapsed-drains-complete-guide",
     sections,

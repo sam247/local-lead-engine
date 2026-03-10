@@ -7,8 +7,8 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
-  title: "Mainline Drains | Expert Drain Repair & Drainage Solutions",
-  description: "24/7 emergency drainage, drain collapse repair, CCTV surveys and relining across the UK. Trusted local drainage experts.",
+  title: "Mainline Surveys | Land & Drone Surveying Across the UK",
+  description: "Professional topographical, measured building, utility and drone surveys for architects, developers and property owners. Request a survey quote.",
   icons: {
     icon: "/favicon.ico",
     apple: "/favicon.ico",

@@ -175,8 +175,8 @@ export async function POST(req: Request) {
     const lead: LeadInput & { lead_id: string; timestamp: string } = { ...parsed.data, lead_id, timestamp };
 
     const resend = new Resend(requireEnv("RESEND_API_KEY"));
-    const emailTo = "leads@mainlinedrains.co.uk";
-    const emailFrom = "Mainline Drains <leads@mainlinedrains.co.uk>";
+    const emailTo = "leads@mainlinesurveys.co.uk";
+    const emailFrom = "Mainline Surveys <leads@mainlinesurveys.co.uk>";
 
     await resend.emails.send({
       to: emailTo,

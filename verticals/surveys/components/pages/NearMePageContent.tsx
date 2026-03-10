@@ -21,7 +21,7 @@ export default function NearMePageContent({ serviceSlug }: NearMePageContentProp
       <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: pageTitle, url: `/${serviceSlug}-near-me` }] }} />
       <section className="relative bg-primary py-16 md:py-24">
         <div className="absolute inset-0">
-          <img src={serviceImages[service.slug]} alt={`Professional ${service.title.toLowerCase()} engineer servicing drainage near your location`} className="h-full w-full object-cover opacity-20" />
+          <img src={serviceImages[service.slug]} alt={`Professional ${service.title.toLowerCase()} near your location`} className="h-full w-full object-cover opacity-20" />
           <div className="absolute inset-0 bg-primary/60" />
         </div>
         <div className="container relative">
@@ -60,7 +60,7 @@ export default function NearMePageContent({ serviceSlug }: NearMePageContentProp
           <div className="mx-auto max-w-3xl">
             <h2 className="mb-4 font-display text-2xl font-bold">About Our {service.title} Service</h2>
             <p className="mb-6 text-muted-foreground">{service.description}</p>
-            <h3 className="mb-3 font-display text-lg font-bold">Why Choose Mainline Drains?</h3>
+            <h3 className="mb-3 font-display text-lg font-bold">Why Choose Mainline Surveys?</h3>
             <ul className="mb-6 space-y-2">
               {service.benefits.map((b) => (
                 <li key={b} className="flex items-start gap-2 text-sm">

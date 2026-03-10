@@ -6,21 +6,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowRight, ArrowLeft, Phone, Ban, Wind, Droplets, TrendingDown, Search } from "lucide-react";
+import { ArrowRight, ArrowLeft, Phone, FileCheck, Home, Map, Camera, Search } from "lucide-react";
 import { heroBg } from "@/lib/images";
 import { companyInfo } from "@/lib/data";
 import { useToast } from "@/hooks/use-toast";
 import { trackEvent } from "engine";
 import { cn } from "@/lib/utils";
 
-const SERVICE_OPTIONS = ["Drain survey", "Blocked drain", "Drain repair", "Drain inspection", "Advice"] as const;
+const SERVICE_OPTIONS = ["Topographical survey", "Drone survey", "Measured building survey", "Utility survey", "Advice / not sure"] as const;
 
 const issueOptions = [
-  { id: "blocked-drain", label: "Blocked Drain", icon: Ban },
-  { id: "bad-smells", label: "Bad Smells", icon: Wind },
-  { id: "slow-drainage", label: "Slow Drainage", icon: Droplets },
-  { id: "ground-sinking", label: "Ground Sinking", icon: TrendingDown },
-  { id: "unsure", label: "Need Inspection", icon: Search },
+  { id: "planning", label: "Planning application", icon: FileCheck },
+  { id: "extension", label: "Extension design", icon: Home },
+  { id: "development", label: "Development feasibility", icon: Map },
+  { id: "drone", label: "Drone survey", icon: Camera },
+  { id: "unsure", label: "Not sure", icon: Search },
 ];
 
 const Hero = () => {
@@ -68,7 +68,7 @@ const Hero = () => {
       return;
     }
     if (!formData.details.trim()) {
-      toast({ title: "Please describe the issue", variant: "destructive" });
+      toast({ title: "Please describe your project or survey requirement", variant: "destructive" });
       return;
     }
     setSubmitting(true);
@@ -85,7 +85,7 @@ const Hero = () => {
           town: formData.town,
           service: formData.service,
           description: formData.details,
-          source_site: "drains",
+          source_site: "surveys",
           utm_source: utmSource,
         }),
       });
@@ -103,7 +103,7 @@ const Hero = () => {
       setStep(1);
       toast({
         title: "Thanks for your enquiry.",
-        description: "A drainage specialist will contact you shortly.",
+        description: "A survey specialist will contact you shortly.",
       });
     } catch {
       toast({
@@ -119,7 +119,7 @@ const Hero = () => {
   return (
     <section className="relative overflow-hidden bg-primary py-16 md:py-24 lg:py-28">
       <div className="absolute inset-0">
-        <img src={heroBg} alt="Professional drainage engineers at work" className="h-full w-full object-cover opacity-20" />
+        <img src={heroBg} alt="Land and drone surveying for planning and development" className="h-full w-full object-cover opacity-20" />
         <div className="absolute inset-0 bg-primary/70" />
       </div>
 
@@ -128,10 +128,13 @@ const Hero = () => {
           {/* Left — Copy & CTAs */}
           <div className="animate-fade-in">
             <h1 className="mb-5 font-display text-3xl font-bold tracking-tight text-primary-foreground md:text-4xl lg:text-5xl">
-              Expert Drain Repair, Surveys &amp; Drainage Solutions Across the UK
+              Professional Land &amp; Drone Surveys
             </h1>
+            <p className="mb-3 text-xl font-medium text-primary-foreground md:text-2xl">
+              Across London &amp; the South East
+            </p>
             <p className="mb-8 text-base text-primary-foreground/80 md:text-lg">
-              24/7 emergency drainage services including drain collapse repair, CCTV drain surveys, complete drain excavation and pipe relining for residential and commercial properties.
+              Topographical, measured building, utility and drone surveys for planning, development and construction. Request a survey quote or speak with a survey specialist.
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -143,7 +146,7 @@ const Hero = () => {
               </Button>
               <Button variant="outline" size="lg" asChild className="border-primary-foreground/30 text-primary hover:bg-primary-foreground/10">
                 <Link href="/contact">
-                  Request Inspection
+                  Request a Survey Quote
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -155,7 +158,7 @@ const Hero = () => {
             <div className="rounded-xl border border-primary-foreground/10 bg-background p-6 shadow-2xl md:p-8">
               <h2 className="mb-1 font-display text-xl font-bold text-foreground">Get a Free Quote</h2>
               <p className="mb-5 text-sm text-muted-foreground">
-                {step === 1 ? "Tell us about your issue." : "We'll call you back within 30 minutes."}
+                {step === 1 ? "Tell us about your project." : "We'll call you back within 30 minutes."}
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-3">
@@ -179,7 +182,7 @@ const Hero = () => {
 
                     {/* Symptom Selector Cards */}
                     <div>
-                      <p className="mb-2 text-xs font-medium text-muted-foreground">What issue are you experiencing?</p>
+                      <p className="mb-2 text-xs font-medium text-muted-foreground">What best describes your project?</p>
                       <div className="grid grid-cols-2 gap-2">
                         {issueOptions.map((option, i) => (
                           <button
@@ -223,7 +226,7 @@ const Hero = () => {
 
                     <Select value={formData.service} onValueChange={(v) => setFormData((p) => ({ ...p, service: v }))}>
                       <SelectTrigger>
-                        <SelectValue placeholder="What service do you need? *" />
+                        <SelectValue placeholder="What survey do you need? *" />
                       </SelectTrigger>
                       <SelectContent>
                         {SERVICE_OPTIONS.map((opt) => (
@@ -235,7 +238,7 @@ const Hero = () => {
                     </Select>
 
                     <Textarea
-                      placeholder="Describe the issue *"
+                      placeholder="Describe your project or survey requirement *"
                       value={formData.details}
                       onChange={(e) => setFormData((p) => ({ ...p, details: e.target.value }))}
                       className="min-h-[60px]"
@@ -259,7 +262,7 @@ const Hero = () => {
               </form>
 
               <p className="mt-3 text-center text-xs text-muted-foreground">
-                No obligation · No call-out charge · Free CCTV quote
+                No obligation · Free survey quote
               </p>
             </div>
           </div>

@@ -16,14 +16,14 @@ const Footer = () => {
             <div className="mb-4 flex items-center gap-2">
               <Image
                 src="/logo_white.svg"
-                alt="Mainline Drains"
+                alt="Mainline Surveys"
                 width={84}
                 height={24}
                 className="h-5 w-auto sm:h-6"
               />
             </div>
             <p className="mb-6 text-sm text-primary-foreground/80">
-              Expert drain repair and drainage solutions across the UK. 24/7 emergency response, CCTV surveys and professional drain relining.
+              Land and drone surveying across the UK. Topographical, measured building, utility and drone surveys for planning, development and construction.
             </p>
             <div className="flex gap-4">
               <a href={companyInfo.social.linkedin} className="text-primary-foreground/60 transition-colors hover:text-primary-foreground" aria-label="LinkedIn">
@@ -63,17 +63,17 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link href="/drainage-guides" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Drainage Guides
+                  Survey Guides
                 </Link>
               </li>
               <li>
                 <Link href="/drainage-faq" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Drainage FAQ
+                  Survey FAQ
                 </Link>
               </li>
               <li>
                 <Link href="/drain-survey-cost" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Cost Calculator
+                  Survey Costs
                 </Link>
               </li>
               <li>
@@ -128,7 +128,7 @@ const Footer = () => {
           <h4 className="mb-3 text-sm font-semibold text-primary-foreground/60">Areas We Cover</h4>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             {topLocations.map((loc) => (
-              <Link key={loc.id} href={`/drain-collapse-repair/${loc.id}`} className="text-sm text-primary-foreground/70 transition-colors hover:text-primary-foreground">
+              <Link key={loc.id} href={`/topographical-survey/${loc.id}`} className="text-sm text-primary-foreground/70 transition-colors hover:text-primary-foreground">
                 {loc.name}
               </Link>
             ))}

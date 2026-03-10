@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     (content?.sections[0]?.body.slice(0, 157).replace(/\[[^\]]*\]\([^)]*\)/g, "").trim() + "...") ||
     post.title;
   return {
-    title: `${post.title} | Mainline Drains`,
+    title: `${post.title} | Mainline Surveys`,
     description,
     alternates: { canonical: `${verticalConfig.baseUrl}/blog/${id}` },
   };

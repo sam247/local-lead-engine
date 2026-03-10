@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { trackEvent } from "engine";
 import { z } from "zod";
 
-const SERVICE_OPTIONS = ["Drain survey", "Blocked drain", "Drain repair", "Drain inspection", "Advice"] as const;
+const SERVICE_OPTIONS = ["Topographical survey", "Drone survey", "Measured building survey", "Utility survey", "Advice / not sure"] as const;
 
 const enquirySchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -20,7 +20,7 @@ const enquirySchema = z.object({
   town: z.string().trim().min(1, "Town is required").max(100),
   service: z.enum(SERVICE_OPTIONS, { message: "Please select a service" }),
   description: z.string().trim().min(1, "Please describe the issue").max(2000),
-  source_site: z.literal("drains"),
+  source_site: z.literal("surveys"),
 });
 
 type EnquiryData = z.infer<typeof enquirySchema>;
@@ -50,7 +50,7 @@ export default function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    const result = enquirySchema.safeParse({ ...formData, source_site: "drains" });
+    const result = enquirySchema.safeParse({ ...formData, source_site: "surveys" });
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};
       result.error.issues.forEach((err) => {
@@ -74,7 +74,7 @@ export default function ContactForm() {
       setErrors({});
       toast({
         title: "Thanks for your enquiry.",
-        description: "A drainage specialist will contact you shortly.",
+        description: "A survey specialist will contact you shortly.",
       });
     } catch {
       toast({
@@ -141,7 +141,7 @@ export default function ContactForm() {
           rows={4}
           value={formData.description || ""}
           onChange={(e) => updateField("description", e.target.value)}
-          placeholder="Describe your drainage issue..."
+          placeholder="Describe your project or survey requirement..."
           className={errors.description ? "border-destructive" : ""}
         />
         {errors.description && <p className="mt-1 text-xs text-destructive">{errors.description}</p>}

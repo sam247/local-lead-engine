@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 export const dynamic = "force-static";
 export const revalidate = false;
 
-const serviceSlug = "drain-collapse-repair";
+const serviceSlug = "topographical-survey";
 const pagePath = "/drain-collapse-near-me";
 
 export async function generateMetadata(): Promise<Metadata> {

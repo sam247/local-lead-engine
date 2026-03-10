@@ -11,7 +11,7 @@ export const revalidate = false;
 export const metadata: Metadata = {
   title: `Collapsed Drains: The Complete Guide | ${verticalConfig.siteName}`,
   description:
-    "Everything you need to know about collapsed drains — signs, causes, inspection methods, repair options, costs and insurance. Expert guide from Mainline Drains.",
+    "Everything you need to know about collapsed drains — signs, causes, inspection methods, repair options, costs and insurance. Expert guide from Mainline Surveys.",
   alternates: {
     canonical: `${verticalConfig.baseUrl}/collapsed-drains-complete-guide`,
   },

@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const dynamic = "force-static";
 export const revalidate = false;
 
-const PRIMARY_SERVICE_SLUG = "drain-collapse-repair";
+const PRIMARY_SERVICE_SLUG = "topographical-survey";
 
 const MAJOR_CITY_IDS = [
   "london",
@@ -31,9 +31,9 @@ const MAJOR_CITY_IDS = [
 ];
 
 export const metadata: Metadata = {
-  title: "Service Areas | Mainline Drains",
-  description: "Drainage services across the UK. Find drain repair, CCTV surveys and emergency drainage in your area.",
-  alternates: { canonical: "https://mainlinedrains.co.uk/service-areas" },
+  title: "Service Areas | Mainline Surveys",
+  description: "Land and drone survey services across the UK. Find topographical, measured building, utility and drone surveys in your area.",
+  alternates: { canonical: "https://mainlinesurveys.co.uk/service-areas" },
 };
 
 export default function ServiceAreasPage() {
@@ -45,10 +45,10 @@ export default function ServiceAreasPage() {
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">
-              Drainage Services Across the UK
+              Land &amp; Drone Survey Services Across the UK
             </h1>
             <p className="text-lg text-primary-foreground/80">
-              Expert drain repair, CCTV surveys and emergency drainage in towns and cities nationwide.
+              Topographical, measured building, utility and drone surveys in towns and cities nationwide.
             </p>
           </div>
         </div>
@@ -58,7 +58,7 @@ export default function ServiceAreasPage() {
         <div className="container">
           <h2 className="mb-6 font-display text-2xl font-bold">Major Cities</h2>
           <p className="mb-6 text-muted-foreground">
-            We provide drainage services across the UK. Select your area for local information and quotes.
+            We provide land and drone survey services across the UK. Select your area for local information and quotes.
           </p>
           <ul className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {majorCities.map((loc) => (
@@ -79,7 +79,7 @@ export default function ServiceAreasPage() {
         <div className="container">
           <h2 className="mb-4 font-display text-2xl font-bold">Browse by Location</h2>
           <p className="mb-4 text-muted-foreground">
-            View all areas we cover and find drainage services near you.
+            View all areas we cover and find survey services near you.
           </p>
           <Link
             href="/drain-collapse-near-me"

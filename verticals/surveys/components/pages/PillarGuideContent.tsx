@@ -35,7 +35,7 @@ export default function PillarGuideContent() {
   const repairPages = getCategoryPages("repair-methods");
   const costPages = getCategoryPages("costs");
   const insurancePages = getCategoryPages("insurance");
-  const imageSrc = serviceImages["drain-collapse-repair"];
+  const imageSrc = serviceImages["topographical-survey"];
 
   return (
     <>

@@ -50,32 +50,32 @@ export default async function LocationRoute({ params }: Props) {
       answer: `Yes, we provide comprehensive ${service.title.toLowerCase()} services throughout ${location.name} and surrounding areas in ${location.area}.`,
     },
     {
-      question: `How quickly can you respond to a drainage emergency in ${location.name}?`,
-      answer: `Our emergency team typically arrives in ${location.name} within 1-2 hours, operating 24/7 including weekends and bank holidays.`,
+      question: `How quickly can you carry out a ${service.title.toLowerCase()} in ${location.name}?`,
+      answer: `Turnaround depends on site size and scope. We typically schedule site visits within a few days and deliver drawings within a week for standard projects in ${location.name} and ${location.area}.`,
     },
     {
       question: `Do you offer free quotes in ${location.name}?`,
-      answer: `Absolutely. We provide free, no-obligation CCTV surveys and quotes for all ${location.name} drainage projects.`,
+      answer: `Yes. We provide free, no-obligation survey quotes for projects in ${location.name}. Share your site and requirements and we'll match you with a survey partner.`,
     },
     {
-      question: `How much does drain repair cost in ${location.name}?`,
-      answer: `Costs vary by job: simple repairs from around £1,500, with deeper or more complex work in ${location.name} and ${location.area} typically £3,000–£8,000+. We provide fixed-price quotes after a CCTV survey.`,
+      question: `How much does a ${service.title.toLowerCase()} cost in ${location.name}?`,
+      answer: `Costs depend on site size, complexity and deliverables. Our survey partners provide fixed quotes once scope is clear. See our cost guides for typical ranges.`,
     },
     {
-      question: `Do I need a drain survey in ${location.name}?`,
-      answer: `A CCTV drain survey is recommended before repair work in ${location.name}. It confirms the problem, extent, and best fix—and we use it to give you an accurate quote.`,
+      question: `Do I need a survey for planning in ${location.name}?`,
+      answer: `Most planning applications need an up-to-date topographical survey and often a measured building survey. Our partners in ${location.name} and ${location.area} deliver planning-ready drawings.`,
     },
     {
-      question: `Can tree roots cause blocked drains in ${location.name}?`,
-      answer: `Yes. Tree roots are a common cause of blockages and damage in ${location.name} and ${location.area}. We can remove roots and reline pipes to prevent regrowth.`,
+      question: `Can you do drone surveys in ${location.name}?`,
+      answer: `Yes. We connect you with qualified drone survey providers for ${location.name} and ${location.area} — ideal for large sites, roof inspections and progress monitoring.`,
     },
   ].slice(0, 5);
 
   const trustPoints = [
-    "Years of experience serving " + location.area,
-    "24/7 emergency availability",
-    "Fully insured engineers",
-    "CCTV inspection technology",
+    "Survey partners across " + location.area,
+    "Fixed-price quotes where possible",
+    "RICS-linked and qualified surveyors",
+    "CAD and BIM deliverables",
   ];
 
   const otherServices = services.filter((s) => s.id !== service.id);

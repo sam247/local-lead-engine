@@ -16,9 +16,9 @@ export async function generateMetadata({ params }: { params: Promise<{ serviceSl
   if (!service) return { title: "Not Found" };
   const displayTitle = service.titleSingular ?? service.title;
   return {
-    title: `${displayTitle} | Mainline Drains`,
+    title: `${displayTitle} | Mainline Surveys`,
     description: service.description.slice(0, 160),
-    alternates: { canonical: `https://mainlinedrains.co.uk/services/${service.slug}` },
+    alternates: { canonical: `https://mainlinesurveys.co.uk/services/${service.slug}` },
   };
 }
 

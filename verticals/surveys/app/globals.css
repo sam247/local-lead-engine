@@ -15,8 +15,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
 
-    /* Engineering green – primary accent #2F8F5B */
-    --primary: 145 50% 37%;
+    /* Dark hero/surfaces (same as drains); green is accent only via --highlight */
+    --primary: 0 0% 15%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 220 14% 96%;

@@ -11,13 +11,13 @@ const InspectionCTA = () => {
           <Search className="h-6 w-6 text-primary-foreground" />
         </div>
         <div className="flex-1">
-          <h3 className="mb-2 font-display text-xl font-bold">Need a Professional Drain Inspection?</h3>
+          <h3 className="mb-2 font-display text-xl font-bold">Request a Survey Quote</h3>
           <p className="mb-4 text-muted-foreground">
-            If you're experiencing persistent drainage issues, don't wait for the problem to worsen. Our engineers use CCTV technology to diagnose problems accurately — often within the same visit. Call us for emergency response or book a scheduled inspection.
+            Not sure which survey you need for your project? Our survey partners help you choose the right scope for planning, extensions and development. Speak with a survey specialist or request a fixed quote.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button variant="highlight" size="lg" asChild>
-              <Link href="/contact">Book an Inspection</Link>
+              <Link href="/contact">Request a Survey Quote</Link>
             </Button>
             <a
               href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}

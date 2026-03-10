@@ -6,13 +6,13 @@ export const dynamic = "force-static";
 export const revalidate = false;
 
 const steps = [
-  { icon: ClipboardList, title: "Homeowner Submits Enquiry", desc: "A homeowner describes their drainage issue and location through our website." },
+  { icon: ClipboardList, title: "Client Submits Enquiry", desc: "A client describes their project or survey requirement and location through our website." },
   { icon: MapPin, title: "We Match to Local Contractor", desc: "We route the enquiry to a qualified contractor covering that postcode area." },
   { icon: Handshake, title: "You Receive the Lead", desc: "You get full contact details and issue information to follow up directly." },
 ];
 
 const benefits = [
-  { icon: Users, title: "Real Homeowner Enquiries", desc: "Genuine leads from property owners needing drainage work — no cold calling." },
+  { icon: Users, title: "Real Enquiries", desc: "Genuine leads from architects, developers and property owners needing surveys — no cold calling." },
   { icon: TrendingUp, title: "Expand Your Coverage Area", desc: "Receive enquiries in postcodes you want to grow your business into." },
   { icon: ShieldCheck, title: "No Long-Term Contracts", desc: "Flexible arrangements with no tie-in periods or ongoing marketing fees." },
 ];
@@ -26,9 +26,9 @@ const exampleLead = [
 ];
 
 export const metadata: Metadata = {
-  title: "Drainage Contractors — Work With Us | Mainline Drains",
-  description: "Join our network of drainage contractors. Receive real homeowner enquiries for collapsed drains, blocked drains, drain surveys and repairs across London.",
-  alternates: { canonical: "https://mainlinedrains.co.uk/contractors" },
+  title: "Survey Partners — Work With Us | Mainline Surveys",
+  description: "Join our network of survey partners. Receive real enquiries for topographical, measured building, utility and drone surveys across London and the South East.",
+  alternates: { canonical: "https://mainlinesurveys.co.uk/contractors" },
 };
 
 export default function ContractorsPage() {
@@ -38,7 +38,7 @@ export default function ContractorsPage() {
         <div className="container text-center">
           <h1 className="mb-4 font-display text-3xl font-bold text-primary-foreground md:text-4xl lg:text-5xl">Drainage Contractors — Work With Us</h1>
           <p className="mx-auto max-w-2xl text-base text-primary-foreground/80 md:text-lg">
-            We receive enquiries every day from homeowners experiencing collapsed drains, blocked drains, and drainage emergencies. We&apos;re looking for reliable contractors to handle these leads.
+            We receive enquiries every day from architects, developers and property owners needing land and drone surveys for planning, extensions and development. We&apos;re looking for reliable survey partners to deliver these projects.
           </p>
         </div>
       </section>

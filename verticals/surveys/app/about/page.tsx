@@ -8,9 +8,9 @@ export const dynamic = "force-static";
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: "About Us | Mainline Drains",
-  description: "Learn about Mainline Drains - London's trusted drainage experts providing 24/7 drain repair, CCTV surveys and emergency drainage services.",
-  alternates: { canonical: "https://mainlinedrains.co.uk/about" },
+  title: "About Us | Mainline Surveys",
+  description: "Learn about Mainline Surveys — professional land and drone surveying for architects, developers and property owners across the UK.",
+  alternates: { canonical: "https://mainlinesurveys.co.uk/about" },
 };
 
 export default function AboutPage() {
@@ -20,7 +20,7 @@ export default function AboutPage() {
       <section className="bg-primary py-16 md:py-24">
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">About Mainline Drains</h1>
+            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">About Mainline Surveys</h1>
             <p className="text-lg text-primary-foreground/80">London&apos;s trusted drainage experts — fast, reliable, and available 24/7.</p>
           </div>
         </div>
@@ -31,7 +31,7 @@ export default function AboutPage() {
             <div>
               <h2 className="mb-4 font-display text-3xl font-bold">Our Story</h2>
               <p className="mb-4 text-muted-foreground">
-                Mainline Drains was founded with a simple mission: to provide London homeowners and businesses with honest, expert drainage services they can rely on — especially when they need help most.
+                Mainline Surveys connects architects, developers and property owners with qualified land and drone survey partners across the UK for planning, development and construction projects.
               </p>
               <p className="mb-4 text-muted-foreground">
                 We&apos;ve repaired over 15,000 drains across London, from emergency collapsed drain repairs in Chelsea to commercial drainage surveys in the City. Our reputation is built on fast response times, transparent pricing, and work that lasts.
@@ -41,7 +41,7 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="aspect-[4/3] overflow-hidden rounded-lg bg-muted">
-              <img src={aboutTeam} alt="Mainline Drains team" className="h-full w-full object-cover" />
+              <img src={aboutTeam} alt="Mainline Surveys team" className="h-full w-full object-cover" />
             </div>
           </div>
         </div>

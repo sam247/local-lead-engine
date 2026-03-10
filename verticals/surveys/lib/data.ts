@@ -391,111 +391,111 @@ export const locations = [
 
 // Stats
 export const stats = [
-  { value: "15,000+", label: "Drains Repaired" },
-  { value: "24/7", label: "Emergency Response" },
-  { value: "30+", label: "Expert Engineers" },
+  { value: "1,000+", label: "Sites Surveyed" },
+  { value: "11", label: "Survey Types" },
+  { value: "RICS", label: "Linked Partners" },
   { value: "99%", label: "Customer Satisfaction" }
 ];
 
 // Testimonials
 export const testimonials = [
   {
-    quote: "Mainline Drains responded within an hour to our emergency. The collapsed drain under our kitchen was repaired the same day. Brilliant service.",
+    quote: "The topographical survey was delivered on time and the CAD drawings fitted straight into our design workflow. Clear, professional and exactly what we needed for planning.",
     author: "James Richardson",
-    role: "Homeowner",
-    company: "Chelsea"
+    role: "Architect",
+    company: "London"
   },
   {
-    quote: "Their CCTV survey found the exact cause of our recurring damp problem. The drain relining was done without any digging — our garden was untouched. Highly recommended.",
+    quote: "We use Mainline Surveys for measured building and drone surveys across our development portfolio. Reliable data, clear pricing and no surprises on site.",
     author: "Sarah Mitchell",
-    role: "Property Manager",
-    company: "Richmond"
+    role: "Development Manager",
+    company: "Surrey"
   },
   {
-    quote: "We use Mainline Drains across all our managed properties. Their reliability and professionalism is outstanding — they're our go-to drainage contractor.",
+    quote: "Booked a drone survey for our extension project. The orthophoto and levels were spot-on and saved us a lot of design time. Would recommend.",
     author: "Michael Chen",
-    role: "Facilities Manager",
-    company: "Apex Property Management"
+    role: "Homeowner",
+    company: "Kent"
   }
 ];
 
 // FAQ data
 export const faqs = [
   {
-    question: "What are the signs of a collapsed drain?",
-    answer: "Common signs include slow-draining sinks and toilets, foul smells around your property, damp patches on walls or floors, sinkholes or depressions in your garden, and recurring blockages. If you notice any of these, a CCTV drain survey can confirm whether a collapse has occurred."
+    question: "What survey do I need for planning permission?",
+    answer: "Most planning applications need an up-to-date topographical survey of the site and often a measured building survey of any existing structures you plan to alter. Boundary surveys may be required where works are close to the property line. Your architect or planning consultant can confirm the exact requirements for your authority."
   },
   {
-    question: "How much does drain collapse repair cost?",
-    answer: "Costs vary depending on the depth, location, and extent of the damage. A straightforward repair can start from around £1,500, while more complex jobs may cost more. We provide free, no-obligation quotes after a CCTV survey so you know exactly what to expect."
+    question: "How much does a topographical survey cost?",
+    answer: "Costs depend on site size, complexity and level of detail. Small residential plots typically range from around £600–£1,200 + VAT; larger or multi-phase sites can be £1,500–£4,000+. Our survey partners provide fixed quotes once they know your scope and deliverables."
   },
   {
-    question: "Will my insurance cover drain repairs?",
-    answer: "Many home insurance policies cover drain collapse repair, especially if the damage is sudden rather than gradual. We provide detailed CCTV reports and documentation to support your insurance claim and can liaise with your insurer directly."
+    question: "How long does a survey take?",
+    answer: "A typical topographical or measured building survey for a single dwelling can be completed on site in one day, with drawings delivered within a few days to a week. Larger sites or drone surveys may need more time for processing and QA. Your surveyor will confirm turnaround when quoting."
+  },
+  {
+    question: "When should I use a drone survey?",
+    answer: "Drone surveys are ideal for large or inaccessible sites, roof inspections, progress monitoring and volume calculations. They often cost less than traditional surveys for big areas and deliver orthophotos, contours and 3D models. For small urban plots or detailed internal work, measured building or topographical surveys may be more appropriate."
   },
   {
     question: "What areas do you cover?",
-    answer: "We operate across London and surrounding areas, including Richmond, Chiswick, Wimbledon, Kingston, Chelsea, Kensington, and many more. Contact us to confirm coverage in your specific location."
+    answer: "We cover London and the South East including Surrey, Kent, Essex, Hertfordshire, Buckinghamshire and Bedfordshire. Contact us to confirm coverage for your location and we will connect you with a qualified survey partner."
   },
   {
-    question: "How quickly can you respond to an emergency?",
-    answer: "Our emergency drainage team operates 24/7 and we typically arrive on-site within 1-2 hours of your call. We carry full diagnostic and repair equipment so we can often resolve the problem in a single visit."
-  },
-  {
-    question: "What is drain relining and is it suitable for my property?",
-    answer: "Drain relining is a no-dig repair method where a resin-coated liner is inserted into your existing pipe and cured in place, creating a brand-new pipe within the old one. It's suitable for most types of damage including cracks, fractures, and joint displacement, but not for fully collapsed sections."
+    question: "Do I need a survey before an extension?",
+    answer: "Yes, in most cases. A measured building survey gives your architect accurate floor plans, elevations and sections of the existing property, while a topographical survey captures levels and features in the garden. Together they reduce design risk and avoid costly surprises on site."
   }
 ];
 
 // Blog posts
 export const blogPosts = [
   {
-    id: "signs-of-drain-collapse",
-    title: "7 Warning Signs Your Drain Has Collapsed",
-    excerpt: "Learn to spot the early warning signs of a collapsed drain before it causes serious damage to your property.",
+    id: "when-do-you-need-a-topographical-survey",
+    title: "When Do You Need a Topographical Survey?",
+    excerpt: "From planning applications to extension design — when to commission a topographical survey and what you get.",
     date: "2024-01-15",
     image: "/placeholder.svg",
-    category: "Advice"
+    category: "Topographical"
   },
   {
-    id: "drain-relining-vs-excavation",
-    title: "Drain Relining vs Excavation: Which Repair Is Better?",
-    excerpt: "A detailed comparison of no-dig relining and traditional excavation to help you choose the best repair method.",
+    id: "drone-surveys-vs-traditional-surveys",
+    title: "Drone Surveys vs Traditional Surveys",
+    excerpt: "How drone surveys compare to total station and GNSS surveys — speed, cost and when to use each.",
     date: "2024-01-08",
     image: "/placeholder.svg",
-    category: "Technical"
+    category: "Drone"
   },
   {
-    id: "cctv-drain-survey-guide",
-    title: "What Happens During a CCTV Drain Survey",
-    excerpt: "Everything you need to know about CCTV drain surveys — what they reveal and why they're essential before buying a property.",
+    id: "survey-requirements-for-planning-permission",
+    title: "Survey Requirements for Planning Permission",
+    excerpt: "What land and building surveys planners expect to see and how to avoid delays on your application.",
     date: "2023-12-20",
     image: "/placeholder.svg",
-    category: "Guides"
+    category: "Planning"
   },
   {
-    id: "preventing-blocked-drains",
-    title: "How To Prevent Blocked Drains At Home",
-    excerpt: "Simple steps you can take to keep your drains flowing freely and avoid costly emergency callouts.",
+    id: "how-much-does-a-land-survey-cost",
+    title: "How Much Does a Land Survey Cost?",
+    excerpt: "Typical UK pricing for topographical, measured building, utility and drone surveys — and what affects the quote.",
     date: "2023-12-12",
     image: "/placeholder.svg",
-    category: "Advice"
+    category: "Costs"
   },
   {
-    id: "tree-root-drain-damage",
-    title: "Tree Roots In Drains: Causes And Solutions",
-    excerpt: "Why tree roots are one of the biggest threats to underground drainage and how to protect your pipes.",
+    id: "when-to-use-a-drone-survey",
+    title: "When to Use a Drone Survey",
+    excerpt: "Drone surveys for construction, roof inspections and large sites — benefits and limitations.",
     date: "2023-12-01",
     image: "/placeholder.svg",
-    category: "Technical"
+    category: "Drone"
   },
   {
-    id: "emergency-drainage-what-to-do",
-    title: "What To Do In A Drainage Emergency",
-    excerpt: "A step-by-step guide on what to do when you have a drainage emergency to minimise damage and costs.",
+    id: "utility-survey-before-excavation",
+    title: "Why You Need a Utility Survey Before Excavation",
+    excerpt: "Locating underground services before you dig — safety, cost and programme benefits.",
     date: "2023-11-25",
     image: "/placeholder.svg",
-    category: "Guides"
+    category: "Utility"
   }
 ];
 
@@ -574,23 +574,23 @@ export const hubPages: HubData[] = [
   {
     category: "problems",
     basePath: "/drain-problems",
-    title: "Drain Problems",
-    subtitle: "Recognise the signs of drainage issues and understand what causes them.",
-    metaDescription: "Common drain problems explained — signs, causes and solutions for blocked, slow or damaged drains. Expert advice from Mainline Drains."
+    title: "When You Need a Survey",
+    subtitle: "Understand when to commission land and building surveys for planning, extensions and development.",
+    metaDescription: "When you need a topographical, measured building, utility or drone survey. Expert guidance for architects, developers and property owners."
   },
   {
     category: "collapse",
     basePath: "/drain-collapse",
-    title: "Collapsed Drain Scenarios",
-    subtitle: "Collapsed drains under different parts of your property — what to expect and how we fix them.",
-    metaDescription: "Collapsed drain repair for driveways, houses, patios, gardens and roads. Expert excavation and relining across London."
+    title: "Survey Project Types",
+    subtitle: "Survey solutions for different project types — planning, extensions, development and construction.",
+    metaDescription: "Land and drone survey guides for planning applications, extensions, property development and construction. UK survey advice."
   },
   {
     category: "insurance",
     basePath: "/drain-insurance",
-    title: "Drain Insurance & Responsibility",
-    subtitle: "Understand who pays for drain repairs and how to make a successful insurance claim.",
-    metaDescription: "Drain insurance claims, responsibility for collapsed drains, shared drains and sewer ownership explained by drainage experts."
+    title: "Survey Costs & Quotes",
+    subtitle: "Typical UK survey pricing and how to get a fixed quote for your project.",
+    metaDescription: "How much do land and drone surveys cost? Price guides and quote advice for topographical, measured building, utility and drone surveys."
   },
   {
     category: "costs",
@@ -602,72 +602,72 @@ export const hubPages: HubData[] = [
   {
     category: "inspection",
     basePath: "/drain-inspection",
-    title: "Drain Inspection & Diagnostics",
-    subtitle: "How we investigate drainage problems using CCTV, tracing and mapping technology.",
-    metaDescription: "Professional drain inspection services including CCTV surveys, drain tracing, mapping and condition reports across London."
+    title: "Survey Types & Technology",
+    subtitle: "How land and drone surveys are carried out — equipment, methods and deliverables.",
+    metaDescription: "Survey technology and methods. Total stations, GNSS, laser scanning, GPR and drone surveys explained for UK construction and development."
   },
   {
     category: "causes",
     basePath: "/drain-causes",
-    title: "Causes of Drain Damage",
-    subtitle: "What damages drains and how to protect your property's drainage system.",
-    metaDescription: "Common causes of drain damage including tree roots, ground movement, old clay pipes and building work. Prevention advice from experts."
+    title: "Survey Technology Guides",
+    subtitle: "Understanding survey equipment and techniques used by professional surveyors.",
+    metaDescription: "What is a total station, GNSS, LiDAR and GPR? Survey technology guides for architects and developers."
   },
   {
     category: "commercial",
     basePath: "/commercial-drainage",
-    title: "Commercial Drainage Services",
-    subtitle: "Specialist drainage solutions for businesses, restaurants and commercial properties.",
-    metaDescription: "Commercial drainage services including drain cleaning, jetting, grease trap cleaning and maintenance contracts for businesses in London."
+    title: "Commercial Survey Services",
+    subtitle: "Land and drone surveys for developers, commercial property and construction.",
+    metaDescription: "Topographical, measured building, utility and drone surveys for commercial and development projects across the UK."
   },
   {
     category: "emergency",
     basePath: "/emergency",
-    title: "Emergency Drain Services",
-    subtitle: "24/7 emergency drainage response when you need help fast.",
-    metaDescription: "24/7 emergency drain repair and unblocking across London. Rapid response from qualified drainage engineers."
+    title: "Survey Enquiries",
+    subtitle: "Get a survey quote or speak with a survey specialist for your project.",
+    metaDescription: "Request a land or drone survey quote. Fast turnaround for planning, development and construction projects."
   },
   {
     category: "repair-methods",
     basePath: "/drain-repair-methods",
-    title: "Drain Repair Methods",
-    subtitle: "Compare repair approaches and understand which method is right for your drainage problem.",
-    metaDescription: "Drain repair methods explained — relining vs excavation, how long repairs take, and which approach is best for your situation."
+    title: "Survey Methods & Deliverables",
+    subtitle: "Compare survey types and understand which is right for your project.",
+    metaDescription: "Topographical vs measured building vs drone surveys. Method and deliverable guides for UK projects."
   },
   {
     category: "property",
     basePath: "/property-drainage",
-    title: "Property Drainage Services",
-    subtitle: "Drainage solutions for landlords, property managers, developers and commercial property owners.",
-    metaDescription: "Drainage services for landlords, property managers, developers and commercial properties. Surveys, repairs and maintenance across London."
+    title: "Property Survey Services",
+    subtitle: "Land and building surveys for homeowners, landlords and property developers.",
+    metaDescription: "Survey services for residential and commercial property. Planning, extension and development surveys across London and the South East."
   },
   {
     category: "survey",
     basePath: "/drain-survey",
-    title: "Drain Surveys",
-    subtitle: "Professional drain surveys for homebuyers, property owners and developers.",
-    metaDescription: "CCTV drain surveys for homebuyers, pre-purchase inspections, condition reports and developer surveys across London."
+    title: "Land & Drone Surveys",
+    subtitle: "Professional land and drone surveys for planning, development and construction.",
+    metaDescription: "Topographical, measured building, utility and drone surveys for architects, developers and property owners across the UK."
   },
   {
     category: "property-types",
     basePath: "/property-types",
-    title: "Property Type Drainage",
-    subtitle: "Drainage advice for specific property types — Victorian houses, new builds, flats and commercial buildings.",
-    metaDescription: "Drainage guides for different property types. Common problems, survey recommendations and repair options for Victorian houses, new builds, flats and commercial properties."
+    title: "Survey by Project Type",
+    subtitle: "Survey guidance for extensions, new build, refurbishment and commercial projects.",
+    metaDescription: "Which survey for your project type? Guides for residential extensions, new build, refurbishment and commercial development."
   },
   {
     category: "legal",
     basePath: "/drain-responsibility",
-    title: "Drain Responsibility & Legal",
-    subtitle: "Understanding drainage responsibility, shared drains, neighbour disputes and legal obligations.",
-    metaDescription: "Drain responsibility and legal guidance. Shared drains, boundary disputes, tree root liability and neighbour drainage issues explained."
+    title: "Boundary & Legal Surveys",
+    subtitle: "Boundary surveys and survey responsibility for development and disputes.",
+    metaDescription: "Boundary surveys, party wall and development. When you need a survey for legal or boundary clarity."
   },
   {
     category: "buyer",
     basePath: "/homebuyer-drainage",
-    title: "Homebuyer Drainage Guides",
-    subtitle: "Essential drainage information for property buyers — surveys, costs, problems found and negotiation advice.",
-    metaDescription: "Drainage guides for homebuyers. Pre-purchase drain surveys, common problems found, costs and how to negotiate when buying a property."
+    title: "Surveys for Property Purchase",
+    subtitle: "Survey advice for homebuyers and property investors.",
+    metaDescription: "Do you need a survey before buying? Land and building survey guides for property purchase and development."
   },
   {
     category: "guides",
@@ -2114,56 +2114,56 @@ export const propertyTypePages: InfoPageData[] = [
 
 // Programmatic alt text for hero images per category
 export const categoryAltText: Record<string, string> = {
-  problems: "Drainage engineer inspecting a damaged drain pipe with CCTV camera",
-  collapse: "Excavation of a collapsed drain pipe by professional drainage engineers",
-  insurance: "CCTV drain survey camera being used for insurance claim documentation",
-  costs: "Drain relining equipment being prepared for no-dig pipe repair",
-  inspection: "Collapsed drain inspection camera inside a damaged drainage pipe",
-  causes: "Tree roots growing into and blocking a clay drain pipe underground",
-  commercial: "Commercial drainage maintenance engineer servicing a business property",
-  emergency: "Emergency drainage engineer responding to a sewage flooding incident at night",
-  "repair-methods": "Professional drain relining resin liner being cured inside a pipe",
-  property: "Drainage CCTV survey being conducted on a residential property garden",
-  survey: "CCTV drain survey camera equipment ready for pre-purchase inspection",
-  "property-types": "Drainage engineer surveying Victorian clay pipes under a period property",
-  legal: "Drainage engineer consulting with homeowner about shared drain responsibility",
-  buyer: "CCTV drain survey camera being used during pre-purchase property inspection",
-  guides: "Professional drainage engineer explaining drain repair options to customer"
+  problems: "Land surveyor using total station on development site",
+  collapse: "Drone survey over construction site",
+  insurance: "Survey cost and quote discussion with client",
+  costs: "Topographical survey equipment and drawings",
+  inspection: "Measured building survey with laser scanner",
+  causes: "Utility survey with GPR equipment",
+  commercial: "Commercial development site survey",
+  emergency: "Surveyor preparing site visit",
+  "repair-methods": "Survey deliverables and CAD drawings",
+  property: "Residential property land survey",
+  survey: "Land and drone surveying for planning",
+  "property-types": "Surveyor at period property",
+  legal: "Boundary survey at property line",
+  buyer: "Pre-purchase survey discussion",
+  guides: "Professional land surveyor with client"
 };
 
-// Category-to-image mapping for programmatic hero images
+// Category-to-image mapping for programmatic hero images (survey service slugs)
 export const categoryImages: Record<string, string> = {
-  problems: "drain-collapse-repair",
-  collapse: "drain-excavation",
-  insurance: "cctv-drain-surveys",
-  costs: "drain-relining",
-  inspection: "cctv-drain-surveys",
-  causes: "drain-root-removal",
-  commercial: "commercial-drainage",
-  emergency: "emergency-drainage",
-  "repair-methods": "drain-relining",
-  property: "cctv-drain-surveys",
-  survey: "cctv-drain-surveys",
-  "property-types": "cctv-drain-surveys",
+  problems: "topographical-survey",
+  collapse: "drone-survey",
+  insurance: "measured-building-survey",
+  costs: "topographical-survey",
+  inspection: "utility-survey",
+  causes: "laser-scanning-survey",
+  commercial: "drone-construction-survey",
+  emergency: "topographical-survey",
+  "repair-methods": "measured-building-survey",
+  property: "measured-building-survey",
+  survey: "drone-survey",
+  "property-types": "measured-building-survey",
 };
 
-// Helper to get all pages for a category
+// Helper to get all pages for a category (survey vertical: all non-cost hubs surface survey guides)
 export const getCategoryPages = (category: string): InfoPageData[] => {
   const map: Record<string, InfoPageData[]> = {
-    problems: problemPages,
-    collapse: collapseScenarios,
-    insurance: insurancePages,
+    problems: guidesPages,
+    collapse: guidesPages,
+    insurance: guidesPages,
     costs: costPages,
-    inspection: inspectionPages,
-    causes: causePages,
-    commercial: commercialDrainagePages,
-    emergency: emergencyServicePages,
-    "repair-methods": repairMethodPages,
-    property: propertyPages,
-    survey: inspectionPages,
-    "property-types": propertyTypePages,
-    legal: legalPages,
-    buyer: buyerPages,
+    inspection: guidesPages,
+    causes: guidesPages,
+    commercial: guidesPages,
+    emergency: guidesPages,
+    "repair-methods": guidesPages,
+    property: guidesPages,
+    survey: guidesPages,
+    "property-types": guidesPages,
+    legal: guidesPages,
+    buyer: guidesPages,
     guides: guidesPages
   };
   return map[category] || [];

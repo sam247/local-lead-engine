@@ -35,7 +35,7 @@ const Header = () => {
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/logo_black.svg"
-            alt="Mainline Drains"
+            alt="Mainline Surveys"
             width={84}
             height={24}
             className="h-5 w-auto sm:h-6"
@@ -46,31 +46,31 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
           <Link
-            href="/services/drain-collapse-repair"
+            href="/services/topographical-survey"
             className={cn(
               "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
-              isActive("/services/drain-collapse-repair") ? "text-primary" : "text-muted-foreground"
+              isActive("/services/topographical-survey") ? "text-primary" : "text-muted-foreground"
             )}
           >
-            Drain Collapse
+            Topographical
           </Link>
           <Link
-            href="/services/cctv-drain-surveys"
+            href="/services/drone-survey"
             className={cn(
               "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
-              isActive("/services/cctv-drain-surveys") ? "text-primary" : "text-muted-foreground"
+              isActive("/services/drone-survey") ? "text-primary" : "text-muted-foreground"
             )}
           >
-            Drain Surveys
+            Drone Survey
           </Link>
           <Link
-            href="/services/blocked-drains"
+            href="/services/measured-building-survey"
             className={cn(
               "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
-              isActive("/services/blocked-drains") ? "text-primary" : "text-muted-foreground"
+              isActive("/services/measured-building-survey") ? "text-primary" : "text-muted-foreground"
             )}
           >
-            Blocked Drains
+            Measured Building
           </Link>
 
           {/* Locations Dropdown */}
@@ -86,7 +86,7 @@ const Header = () => {
                       <li key={loc.id}>
                         <NavigationMenuLink asChild>
                           <Link
-                            href={`/drain-collapse-repair/${loc.id}`}
+                            href={`/topographical-survey/${loc.id}`}
                             className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent focus:bg-accent"
                           >
                             <div className="text-sm font-medium">{loc.name}</div>
@@ -124,17 +124,17 @@ const Header = () => {
                       <ul className="space-y-1">
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link href="/drainage-guides" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Drainage Guides</Link>
+                            <Link href="/drainage-guides" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Survey Guides</Link>
                           </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link href="/drainage-faq" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Drainage FAQ</Link>
+                            <Link href="/drainage-faq" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Survey FAQ</Link>
                           </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link href="/drain-survey-cost" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Cost Calculator</Link>
+                            <Link href="/drain-costs" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Survey Costs</Link>
                           </NavigationMenuLink>
                         </li>
                       </ul>
@@ -208,9 +208,9 @@ const Header = () => {
         <div className="border-t border-border bg-background lg:hidden">
           <nav className="container py-4">
             
-            <Link href="/services/drain-collapse-repair" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drain Collapse</Link>
-            <Link href="/services/cctv-drain-surveys" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drain Surveys</Link>
-            <Link href="/services/blocked-drains" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Blocked Drains</Link>
+            <Link href="/services/topographical-survey" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Topographical Survey</Link>
+            <Link href="/services/drone-survey" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drone Survey</Link>
+            <Link href="/services/measured-building-survey" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Measured Building Survey</Link>
 
             {/* Mobile Locations Accordion */}
             <div>
@@ -224,7 +224,7 @@ const Header = () => {
               {locationsOpen && (
                 <div className="ml-4 border-l border-border pl-4">
                   {topLocations.map((loc) => (
-                    <Link key={loc.id} href={`/drain-collapse-repair/${loc.id}`} className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>
+                    <Link key={loc.id} href={`/topographical-survey/${loc.id}`} className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>
                       {loc.name}
                     </Link>
                   ))}
@@ -246,9 +246,9 @@ const Header = () => {
               </button>
               {resourcesOpen && (
                 <div className="ml-4 border-l border-border pl-4">
-                  <Link href="/drainage-guides" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Drainage Guides</Link>
-                  <Link href="/drainage-faq" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Drainage FAQ</Link>
-                  <Link href="/drain-survey-cost" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Cost Calculator</Link>
+                  <Link href="/drainage-guides" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Survey Guides</Link>
+                  <Link href="/drainage-faq" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Survey FAQ</Link>
+                  <Link href="/drain-survey-cost" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Survey Costs</Link>
                   <Link href="/services" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>All Services</Link>
                 </div>
               )}

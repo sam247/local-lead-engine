@@ -3,6 +3,6 @@ import type { MetadataRoute } from "next";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: { userAgent: "*", allow: "/" },
-    sitemap: "https://mainlinedrains.co.uk/sitemap.xml",
+    sitemap: "https://mainlinesurveys.co.uk/sitemap.xml",
   };
 }
