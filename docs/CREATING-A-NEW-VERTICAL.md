@@ -91,7 +91,13 @@ The leads API must accept the new vertical’s form payload and write the correc
 
 ---
 
-## 7. Checklist before launch
+## 7. Vercel deployment rules (save build minutes)
+
+To avoid building a vertical when only another vertical (or unrelated files) changed, set **Ignored Build Step** or **Skip deployment** in each Vercel project. See **[docs/VERCEL-DEPLOYMENT-RULES.md](VERCEL-DEPLOYMENT-RULES.md)** for options: folder-based skip, custom scripts (`scripts/vercel-ignore-build-*.sh`), or Vercel’s automatic “skip unaffected projects”. Configure once per project in the Vercel dashboard (the Vercel MCP does not expose project settings updates).
+
+---
+
+## 8. Checklist before launch
 
 - [ ] All content in `lib/data.ts`, `data/guides.ts`, and `lib/blogArticleContent.ts` is for the new vertical only (no source-vertical copy).
 - [ ] Grep for source-vertical keywords (e.g. drain, CCTV, blockage) shows no user-facing leaks except intentional cross-links.
@@ -104,6 +110,6 @@ The leads API must accept the new vertical’s form payload and write the correc
 
 ---
 
-## 8. Summary
+## 9. Summary
 
 A new vertical is a **data and copy replacement** on top of a structural clone. Keep routing and components; replace every dataset, label, and CTA so that nothing from the source vertical appears. Pay special attention to the leads API (schema, vertical column, lead ID prefix, email copy) and to any hardcoded copy in layout, hero, CTAs, and index pages. A single missed reference can make hundreds of pages show the wrong vertical’s content.
