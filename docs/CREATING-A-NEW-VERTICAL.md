@@ -78,10 +78,40 @@ The leads API must accept the new vertical’s form payload and write the correc
 
 ---
 
-## 5. Analytics (GA4)
+## 5. Analytics (GA4) and events
 
-- Use a `GoogleAnalytics` component (or equivalent) that injects `gtag.js` via Next.js `Script` (e.g. `strategy="beforeInteractive"`).
-- For the new vertical, set the measurement ID: either in env as `NEXT_PUBLIC_GA_ID` or as a default in the component (e.g. `process.env.NEXT_PUBLIC_GA_ID || "G-GG2ENPBFFX"` for surveys).
+Use the same GA4 setup and event names as the source vertical (e.g. drains) so behaviour and reporting stay consistent.
+
+### 5.1 Base setup
+
+- **`components/GoogleAnalytics.tsx`**: Include this in the root layout (`app/layout.tsx`). It loads `gtag.js` and runs `gtag('config', GA_ID)` with `strategy="beforeInteractive"`.
+- **Measurement ID**: Set `NEXT_PUBLIC_GA_ID` in the project’s env (e.g. in Vercel). Optionally add a fallback in the component for the new vertical (e.g. `process.env.NEXT_PUBLIC_GA_ID || "G-XXXXXXXXXX"`) so the site works before env is set.
+- **`.env.example`**: Document the variable, e.g. `# NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX`.
+
+### 5.2 Event tracking (same as drains)
+
+Events are sent via the shared **`trackEvent`** helper from `engine` (see `engine/utils/trackEvent.ts`). It calls `window.gtag('event', eventName, params)`, so it uses whichever GA property is configured by the vertical’s `GoogleAnalytics` component.
+
+Keep the **same event names** on the new vertical so GA4 reports and audiences stay comparable. Current events:
+
+| Event name               | Where it fires |
+|--------------------------|----------------|
+| `lead_form_submit`       | Hero enquiry form and Contact page form, on valid submit before the API request. |
+| `call_button_click`      | Clicks on phone/tel links in Hero, Header (desktop + mobile), and StickyEmergencyBar. |
+| `cost_estimator_used`     | CostEstimator component when user submits the estimator (if the vertical uses it). |
+| `diagnosis_started`      | DiagnosisTool when the user selects the first option (if the vertical uses it). |
+| `diagnosis_completed`     | DiagnosisTool when the user completes the flow (if the vertical uses it). |
+
+**Components that call `trackEvent` (clone these behaviour when adding a new vertical):**
+
+- `components/sections/Hero.tsx` — `lead_form_submit`, `call_button_click` (on tel link).
+- `components/sections/ContactForm.tsx` — `lead_form_submit`.
+- `components/layout/Header.tsx` — `call_button_click` on both tel links.
+- `components/sections/StickyEmergencyBar.tsx` — `call_button_click` on tel link.
+- `components/sections/CostEstimator.tsx` — `cost_estimator_used` (if used).
+- `components/sections/DiagnosisTool.tsx` — `diagnosis_started`, `diagnosis_completed` (if used).
+
+No code changes are required for the new vertical if you cloned from a vertical that already has these calls; only ensure the new vertical has its own GA4 property and `NEXT_PUBLIC_GA_ID` (or default) set.
 
 ---
 
@@ -105,7 +135,7 @@ To avoid building a vertical when only another vertical (or unrelated files) cha
 - [ ] Leads API writes the correct `vertical` and lead ID prefix to the sheet and sends email to the new vertical’s address.
 - [ ] Config, metadata, and schema use the new site name and base URL.
 - [ ] About, Projects, pillar guide, and guides index use the new vertical’s copy and data.
-- [ ] GA4 measurement ID is set (env or default) for the new vertical.
+- [ ] GA4 measurement ID is set (env or default) for the new vertical; same GA4 events as source vertical (lead_form_submit, call_button_click, cost_estimator_used, diagnosis_started/completed) fire from Hero, ContactForm, Header, StickyEmergencyBar, and any CostEstimator/DiagnosisTool.
 - [ ] Build succeeds and key routes (home, one service, one location, guides index, contact, lead submit) work end-to-end.
 
 ---
