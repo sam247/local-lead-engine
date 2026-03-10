@@ -22,6 +22,7 @@ type LeadInput = z.infer<typeof LeadInputSchema>;
 const SHEET_HEADERS = [
   "timestamp",
   "lead_id",
+  "vertical",
   "source_site",
   "utm_source",
   "service",
@@ -69,7 +70,7 @@ async function getSheetsClient() {
 }
 
 async function ensureHeaderRow(sheets: ReturnType<typeof google.sheets>, spreadsheetId: string) {
-  const headerRange = "Sheet1!A1:N1";
+  const headerRange = "Sheet1!A1:O1";
   const existing = await sheets.spreadsheets.values.get({ spreadsheetId, range: headerRange });
   const row = existing.data.values?.[0] ?? [];
   const normalized = row.map((c) => String(c ?? "").trim());
@@ -105,6 +106,7 @@ async function appendLeadRow(
   const row = [
     lead.timestamp,
     lead.lead_id,
+    "drains",
     lead.source_site,
     lead.utm_source ?? "",
     lead.service,
@@ -121,7 +123,7 @@ async function appendLeadRow(
 
   await sheets.spreadsheets.values.append({
     spreadsheetId,
-    range: "Sheet1!A:N",
+    range: "Sheet1!A:O",
     valueInputOption: "RAW",
     insertDataOption: "INSERT_ROWS",
     requestBody: { values: [row] },
