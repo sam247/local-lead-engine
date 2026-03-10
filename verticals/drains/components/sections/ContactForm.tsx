@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -27,9 +27,20 @@ type EnquiryData = z.infer<typeof enquirySchema>;
 
 export default function ContactForm() {
   const { toast } = useToast();
+  const [utmSource, setUtmSource] = useState<string | undefined>(undefined);
   const [errors, setErrors] = useState<Partial<Record<keyof EnquiryData, string>>>({});
   const [formData, setFormData] = useState<Partial<EnquiryData>>({});
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const v = params.get("utm_source")?.trim();
+      setUtmSource(v || undefined);
+    } catch {
+      // ignore
+    }
+  }, []);
 
   const updateField = (field: keyof EnquiryData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -54,7 +65,7 @@ export default function ContactForm() {
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(result.data),
+        body: JSON.stringify({ ...result.data, utm_source: utmSource }),
       });
       if (!res.ok) {
         throw new Error("Request failed");

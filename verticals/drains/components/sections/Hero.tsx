@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +25,7 @@ const issueOptions = [
 
 const Hero = () => {
   const { toast } = useToast();
+  const [utmSource, setUtmSource] = useState<string | undefined>(undefined);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
@@ -37,6 +38,16 @@ const Hero = () => {
     details: "",
   });
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const v = params.get("utm_source")?.trim();
+      setUtmSource(v || undefined);
+    } catch {
+      // ignore
+    }
+  }, []);
 
   const handleContinue = () => {
     if (!formData.name || !formData.postcode || !formData.town) {
@@ -75,6 +86,7 @@ const Hero = () => {
           service: formData.service,
           description: formData.details,
           source_site: "drains",
+          utm_source: utmSource,
         }),
       });
       if (!res.ok) throw new Error("Request failed");
