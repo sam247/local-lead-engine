@@ -31,8 +31,8 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between md:h-20">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
+        {/* Logo – size matched to drains: h-5 mobile, h-6 from sm */}
+        <Link href="/" className="flex shrink-0 items-center gap-2">
           <Image
             src="/logo_black.svg"
             alt="Mainline Surveys"
