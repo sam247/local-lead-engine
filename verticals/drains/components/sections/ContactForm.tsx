@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { services } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,14 +10,17 @@ import { useToast } from "@/hooks/use-toast";
 import { trackEvent } from "engine";
 import { z } from "zod";
 
+const SERVICE_OPTIONS = ["Drain survey", "Blocked drain", "Drain repair", "Drain inspection", "Advice"] as const;
+
 const enquirySchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
   email: z.string().trim().email("Valid email required").max(255),
   phone: z.string().trim().min(1, "Phone number is required").max(20),
-  postcode: z.string().trim().min(1, "Postcode is required").max(10),
-  issueType: z.string().min(1, "Please select an issue type"),
-  urgency: z.string().min(1, "Please select urgency level"),
-  message: z.string().trim().max(2000).optional(),
+  postcode: z.string().trim().min(1, "Postcode is required").max(16),
+  town: z.string().trim().min(1, "Town is required").max(100),
+  service: z.enum(SERVICE_OPTIONS, { message: "Please select a service" }),
+  description: z.string().trim().min(1, "Please describe the issue").max(2000),
+  source_site: z.literal("drains"),
 });
 
 type EnquiryData = z.infer<typeof enquirySchema>;
@@ -34,10 +36,10 @@ export default function ContactForm() {
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    const result = enquirySchema.safeParse(formData);
+    const result = enquirySchema.safeParse({ ...formData, source_site: "drains" });
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};
       result.error.issues.forEach((err) => {
@@ -48,13 +50,31 @@ export default function ContactForm() {
       return;
     }
     trackEvent("lead_form_submit");
-    setTimeout(() => {
-      toast({ title: "Enquiry Received", description: "We'll get back to you within 1 hour. For emergencies, call us directly." });
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(result.data),
+      });
+      if (!res.ok) {
+        throw new Error("Request failed");
+      }
       setFormData({});
       setErrors({});
+      toast({
+        title: "Thanks for your enquiry.",
+        description: "A drainage specialist will contact you shortly.",
+      });
+    } catch {
+      toast({
+        title: "Submission failed",
+        description: "Please try again in a moment.",
+        variant: "destructive",
+      });
+    } finally {
       setSubmitting(false);
-    }, 500);
-  }
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -82,40 +102,38 @@ export default function ContactForm() {
           {errors.postcode && <p className="mt-1 text-xs text-destructive">{errors.postcode}</p>}
         </div>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <Label>Type of Issue *</Label>
-          <Select value={formData.issueType || ""} onValueChange={(v) => updateField("issueType", v)}>
-            <SelectTrigger className={errors.issueType ? "border-destructive" : ""}>
-              <SelectValue placeholder="Select issue type" />
-            </SelectTrigger>
-            <SelectContent>
-              {services.map((s) => (
-                <SelectItem key={s.slug} value={s.slug}>{s.title}</SelectItem>
-              ))}
-              <SelectItem value="other">Other / Not Sure</SelectItem>
-            </SelectContent>
-          </Select>
-          {errors.issueType && <p className="mt-1 text-xs text-destructive">{errors.issueType}</p>}
-        </div>
-        <div>
-          <Label>Urgency Level *</Label>
-          <Select value={formData.urgency || ""} onValueChange={(v) => updateField("urgency", v)}>
-            <SelectTrigger className={errors.urgency ? "border-destructive" : ""}>
-              <SelectValue placeholder="Select urgency" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="routine">Routine — within a week</SelectItem>
-              <SelectItem value="urgent">Urgent — within 24 hours</SelectItem>
-              <SelectItem value="emergency">Emergency — need help now</SelectItem>
-            </SelectContent>
-          </Select>
-          {errors.urgency && <p className="mt-1 text-xs text-destructive">{errors.urgency}</p>}
-        </div>
+      <div>
+        <Label htmlFor="town">Town *</Label>
+        <Input id="town" value={formData.town || ""} onChange={(e) => updateField("town", e.target.value)} className={errors.town ? "border-destructive" : ""} />
+        {errors.town && <p className="mt-1 text-xs text-destructive">{errors.town}</p>}
       </div>
       <div>
-        <Label htmlFor="message">Additional Details</Label>
-        <Textarea id="message" rows={4} value={formData.message || ""} onChange={(e) => updateField("message", e.target.value)} placeholder="Describe your drainage issue..." />
+        <Label>What service do you need? *</Label>
+        <Select value={formData.service || ""} onValueChange={(v) => updateField("service", v)}>
+          <SelectTrigger className={errors.service ? "border-destructive" : ""}>
+            <SelectValue placeholder="Select a service" />
+          </SelectTrigger>
+          <SelectContent>
+            {SERVICE_OPTIONS.map((opt) => (
+              <SelectItem key={opt} value={opt}>
+                {opt}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {errors.service && <p className="mt-1 text-xs text-destructive">{errors.service}</p>}
+      </div>
+      <div>
+        <Label htmlFor="description">Description of issue *</Label>
+        <Textarea
+          id="description"
+          rows={4}
+          value={formData.description || ""}
+          onChange={(e) => updateField("description", e.target.value)}
+          placeholder="Describe your drainage issue..."
+          className={errors.description ? "border-destructive" : ""}
+        />
+        {errors.description && <p className="mt-1 text-xs text-destructive">{errors.description}</p>}
       </div>
       <Button type="submit" size="lg" className="w-full" disabled={submitting}>
         {submitting ? "Submitting…" : "Submit Enquiry"}

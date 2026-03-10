@@ -13,6 +13,8 @@ import { useToast } from "@/hooks/use-toast";
 import { trackEvent } from "engine";
 import { cn } from "@/lib/utils";
 
+const SERVICE_OPTIONS = ["Drain survey", "Blocked drain", "Drain repair", "Drain inspection", "Advice"] as const;
+
 const issueOptions = [
   { id: "blocked-drain", label: "Blocked Drain", icon: Ban },
   { id: "bad-smells", label: "Bad Smells", icon: Wind },
@@ -25,31 +27,81 @@ const Hero = () => {
   const { toast } = useToast();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    name: "", phone: "", email: "", postcode: "", issueType: "", urgency: "", details: "",
+    name: "",
+    phone: "",
+    email: "",
+    postcode: "",
+    town: "",
+    service: "",
+    issueType: "",
+    details: "",
   });
   const [submitting, setSubmitting] = useState(false);
 
   const handleContinue = () => {
-    if (!formData.name || !formData.postcode) {
-      toast({ title: "Please fill in your name and postcode", variant: "destructive" });
+    if (!formData.name || !formData.postcode || !formData.town) {
+      toast({ title: "Please fill in your name, postcode and town", variant: "destructive" });
       return;
     }
     setStep(2);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.phone) {
       toast({ title: "Please enter your phone number", variant: "destructive" });
       return;
     }
+    if (!formData.service) {
+      toast({ title: "Please select a service", variant: "destructive" });
+      return;
+    }
+    if (!formData.details.trim()) {
+      toast({ title: "Please describe the issue", variant: "destructive" });
+      return;
+    }
     setSubmitting(true);
-    setTimeout(() => {
-      toast({ title: "Enquiry Received!", description: "We'll call you back within 30 minutes." });
-      setFormData({ name: "", phone: "", email: "", postcode: "", issueType: "", urgency: "", details: "" });
+    try {
+      trackEvent("lead_form_submit");
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          postcode: formData.postcode,
+          town: formData.town,
+          service: formData.service,
+          description: formData.details,
+          source_site: "drains",
+        }),
+      });
+      if (!res.ok) throw new Error("Request failed");
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        postcode: "",
+        town: "",
+        service: "",
+        issueType: "",
+        details: "",
+      });
       setStep(1);
+      toast({
+        title: "Thanks for your enquiry.",
+        description: "A drainage specialist will contact you shortly.",
+      });
+    } catch {
+      toast({
+        title: "Submission failed",
+        description: "Please try again in a moment.",
+        variant: "destructive",
+      });
+    } finally {
       setSubmitting(false);
-    }, 500);
+    }
   };
 
   return (
@@ -107,6 +159,11 @@ const Hero = () => {
                       value={formData.postcode}
                       onChange={(e) => setFormData((p) => ({ ...p, postcode: e.target.value }))}
                     />
+                    <Input
+                      placeholder="Town *"
+                      value={formData.town}
+                      onChange={(e) => setFormData((p) => ({ ...p, town: e.target.value }))}
+                    />
 
                     {/* Symptom Selector Cards */}
                     <div>
@@ -152,19 +209,21 @@ const Hero = () => {
                       onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
                     />
 
-                    <Select value={formData.urgency} onValueChange={(v) => setFormData((p) => ({ ...p, urgency: v }))}>
+                    <Select value={formData.service} onValueChange={(v) => setFormData((p) => ({ ...p, service: v }))}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Urgency Level" />
+                        <SelectValue placeholder="What service do you need? *" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="routine">Routine — within a week</SelectItem>
-                        <SelectItem value="urgent">Urgent — within 24 hours</SelectItem>
-                        <SelectItem value="emergency">Emergency — need help now</SelectItem>
+                        {SERVICE_OPTIONS.map((opt) => (
+                          <SelectItem key={opt} value={opt}>
+                            {opt}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
 
                     <Textarea
-                      placeholder="Additional details (optional)"
+                      placeholder="Describe the issue *"
                       value={formData.details}
                       onChange={(e) => setFormData((p) => ({ ...p, details: e.target.value }))}
                       className="min-h-[60px]"
