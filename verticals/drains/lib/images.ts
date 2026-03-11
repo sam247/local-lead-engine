@@ -16,7 +16,7 @@ export const serviceImages: Record<string, string> = {
   "commercial-drainage": `${base}/services/commercial-drainage.jpg`,
 };
 
-export const projectImages = [
+const projectImagePaths = [
   `${base}/projects/project-1.jpg`,
   `${base}/projects/project-2.jpg`,
   `${base}/projects/project-3.jpg`,
@@ -24,6 +24,10 @@ export const projectImages = [
   `${base}/projects/project-5.jpg`,
   `${base}/projects/project-6.jpg`,
 ];
+
+export function getProjectImage(index: number): string {
+  return projectImagePaths[Math.abs(index) % projectImagePaths.length] ?? projectImagePaths[0];
+}
 
 export const blogImages = [
   `${base}/blog/blog-1.jpg`,

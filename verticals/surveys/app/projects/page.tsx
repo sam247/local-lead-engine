@@ -1,21 +1,11 @@
-import { projectImages } from "@/lib/images";
+import { projects } from "@/data/projects";
+import { getProjectImage } from "@/lib/images";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
 export const revalidate = false;
-
-const projects = [
-  { id: 1, title: "Topographical Site Survey for Planning", location: "Chelsea", category: "Topographical Survey", image: projectImages[0] },
-  { id: 2, title: "Measured Building Survey, Period Property", location: "Richmond", category: "Measured Building Survey", image: projectImages[1] },
-  { id: 3, title: "Drone Survey for Development Site", location: "Surrey", category: "Drone Survey", image: projectImages[2] },
-  { id: 4, title: "Utility Mapping Before Groundworks", location: "Wimbledon", category: "Utility Survey", image: projectImages[3] },
-  { id: 5, title: "Extension Design – Existing Building Survey", location: "Ealing", category: "Measured Building Survey", image: projectImages[4] },
-  { id: 6, title: "Drone Roof Inspection", location: "Kensington", category: "Drone Survey", image: projectImages[5] },
-  { id: 7, title: "Multi-Plot Topographical Survey", location: "Hammersmith", category: "Topographical Survey", image: projectImages[1] },
-  { id: 8, title: "Construction Progress Drone Survey", location: "Fulham", category: "Drone Survey", image: projectImages[0] },
-];
 
 export const metadata: Metadata = {
   title: "Our Projects | Mainline Surveys",
@@ -41,12 +31,13 @@ export default function ProjectsPage() {
             {projects.map((project) => (
               <div key={project.id} className="group overflow-hidden rounded-lg bg-card shadow-sm">
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={project.image} alt={project.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  <img src={getProjectImage(project.imageIndex)} alt={project.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                 </div>
                 <div className="p-4">
-                  <span className="text-xs font-medium text-primary">{project.category}</span>
+                  <span className="text-xs font-medium text-primary">{project.service}</span>
                   <h3 className="mt-1 font-display font-semibold">{project.title}</h3>
                   <p className="text-sm text-muted-foreground">{project.location}</p>
+                  {project.description && <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{project.description}</p>}
                 </div>
               </div>
             ))}

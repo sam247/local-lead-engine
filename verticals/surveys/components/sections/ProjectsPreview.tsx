@@ -2,16 +2,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { projectImages } from "@/lib/images";
-
-const projects = [
-  { id: 1, title: "Topographical Site Survey", location: "Chelsea", image: projectImages[0], serviceType: "Topographical Survey", serviceSlug: "topographical-survey", description: "Full topographical survey for a residential redevelopment site to support planning and design." },
-  { id: 2, title: "Measured Building Survey", location: "Canary Wharf", image: projectImages[1], serviceType: "Measured Building Survey", serviceSlug: "measured-building-survey", description: "As-built floor plans, elevations and sections for a commercial office refurbishment." },
-  { id: 3, title: "Drone Survey for Development Site", location: "Richmond", image: projectImages[2], serviceType: "Drone Survey", serviceSlug: "drone-survey", description: "Drone survey and orthophoto for a multi-plot development site prior to planning submission." },
-  { id: 4, title: "Utility Mapping Survey", location: "Wimbledon", image: projectImages[3], serviceType: "Utility Mapping Survey", serviceSlug: "utility-mapping-survey", description: "Underground utility detection and mapping before excavation and foundation works." },
-  { id: 5, title: "Drone Roof Inspection", location: "Ealing", image: projectImages[4], serviceType: "Drone Roof Inspection", serviceSlug: "drone-roof-inspection", description: "Roof condition survey and imagery for a period property ahead of refurbishment." },
-  { id: 6, title: "Boundary Survey", location: "Kensington", image: projectImages[5], serviceType: "Boundary Survey", serviceSlug: "boundary-survey", description: "Boundary survey to clarify the extent of the title for an extension and party wall matters." },
-];
+import { homepageProjects } from "@/data/projects";
+import { getProjectImage } from "@/lib/images";
 
 const ProjectsPreview = () => {
   return (
@@ -30,7 +22,7 @@ const ProjectsPreview = () => {
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => (
+          {homepageProjects.map((project, index) => (
             <div
               key={project.id}
               className="group overflow-hidden rounded-lg bg-card animate-fade-in opacity-0"
@@ -38,7 +30,7 @@ const ProjectsPreview = () => {
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
-                  src={project.image}
+                  src={getProjectImage(project.imageIndex)}
                   alt={project.title}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
@@ -47,7 +39,7 @@ const ProjectsPreview = () => {
                 <div className="mb-2">
                   <Link href={`/services/${project.serviceSlug}`}>
                     <Badge variant="secondary" className="transition-colors hover:bg-primary hover:text-primary-foreground">
-                      {project.serviceType}
+                      {project.service}
                     </Badge>
                   </Link>
                 </div>
