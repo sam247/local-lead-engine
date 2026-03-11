@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { buildSitemapEntries } from "engine";
 import { services, locations, hubPages, getCategoryPages } from "@/lib/data";
+import { drainProblems } from "@/data/problems";
 import { verticalConfig } from "@/config";
 
 const staticPaths = [
@@ -17,6 +18,7 @@ const staticPaths = [
   "/drain-survey-cost",
   "/drainage-faq",
   "/contractors",
+  ...drainProblems.map((p) => `/drain-problems/${p.slug}`),
 ];
 
 const nearMePaths = [

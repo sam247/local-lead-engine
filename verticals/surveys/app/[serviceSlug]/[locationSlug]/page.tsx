@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { services, locations } from "@/lib/data";
 import { getHeroImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
-import { LocationPage } from "engine";
+import { LocationPage, getNeighbourLocationIds } from "engine";
 import { buildLocationMetadata } from "engine";
 import type { Metadata } from "next";
 
@@ -81,6 +81,12 @@ export default async function LocationRoute({ params }: Props) {
   const otherServices = services.filter((s) => s.id !== service.id);
   const serviceImage = getHeroImage({ serviceSlug: service.slug });
 
+  const neighbourIds = getNeighbourLocationIds(location.id, locations.map((l) => l.id));
+  const neighbourLocationsForContext = neighbourIds
+    .map((id) => locations.find((l) => l.id === id))
+    .filter((l): l is NonNullable<typeof l> => l != null)
+    .slice(0, 5);
+
   const introParagraph = `We provide ${service.title} across ${location.name} and ${location.area}. Our survey partners deliver accurate, planning-ready data for residential and commercial projects, with free no-obligation quotes.`;
 
   return (
@@ -102,6 +108,7 @@ export default async function LocationRoute({ params }: Props) {
       diagnosisGuidePath="/do-i-need-a-drain-survey"
       introParagraph={introParagraph}
       nearbyAreasDescription={`Compare our ${service.title} in nearby areas.`}
+      neighbourLocationsForContext={neighbourLocationsForContext}
     />
   );
 }

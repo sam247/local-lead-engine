@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, ArrowRight } from "lucide-react";
 import { trackEvent } from "engine";
 import { companyInfo } from "@/lib/data";
+import { verticalConfig } from "@/config";
 
 const StickyEmergencyBar = () => {
   return (
@@ -23,7 +24,7 @@ const StickyEmergencyBar = () => {
           </Button>
           <Button size="sm" asChild className="flex-1 md:flex-none">
             <Link href="/contact" className="gap-2">
-              Request Inspection
+              {verticalConfig.heroSecondaryCtaText ?? "Request Inspection"}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>

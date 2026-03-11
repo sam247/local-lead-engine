@@ -1,5 +1,7 @@
 export { BreadcrumbNav, type BreadcrumbNavProps, type BreadcrumbItem } from "./BreadcrumbNav";
+export { LocationContext, type LocationContextProps } from "./LocationContext";
 export { LocationPage, type LocationPageProps } from "./LocationPage";
+export { NearbyAreas, type NearbyAreasProps } from "./NearbyAreas";
 export { HubPage, type HubPageProps, type CrossSection, type PillarGuideLink } from "./HubPage";
 export { InfoPage, type InfoPageProps, type RelatedPageLink } from "./InfoPage";
 export { NearMePage, type NearMePageProps } from "./NearMePage";
@@ -8,6 +10,8 @@ export { MapEmbed, type MapEmbedProps } from "./MapEmbed";
 export { InspectionCTA, type InspectionCTAProps } from "./InspectionCTA";
 export { MidContentCTA, type MidContentCTAProps } from "./MidContentCTA";
 export { CTABanner, type CTABannerProps } from "./CTABanner";
+export { ProblemCTA, type ProblemCTAProps } from "./ProblemCTA";
+export { ProblemPage, type ProblemPageProps } from "./ProblemPage";
 export { RelatedLinks, type RelatedLinksProps } from "./RelatedLinks";
 export { Button, buttonVariants } from "./ui/button";
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "./ui/card";

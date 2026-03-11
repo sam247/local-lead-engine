@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowRight, ArrowLeft, Phone, Ban, Wind, Droplets, TrendingDown, Search } from "lucide-react";
 import { heroBg } from "@/lib/images";
 import { companyInfo } from "@/lib/data";
+import { verticalConfig } from "@/config";
 import { useToast } from "@/hooks/use-toast";
 import { trackEvent } from "engine";
 import { cn } from "@/lib/utils";
@@ -143,7 +144,7 @@ const Hero = () => {
               </Button>
               <Button variant="outline" size="lg" asChild className="border-primary-foreground/30 text-primary hover:bg-primary-foreground/10">
                 <Link href="/contact">
-                  Request Inspection
+                  {verticalConfig.heroSecondaryCtaText ?? "Request Inspection"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>

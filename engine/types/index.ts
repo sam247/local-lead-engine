@@ -65,5 +65,17 @@ export interface VerticalConfig {
   baseUrl: string;
   primaryService?: string;
   industry?: string;
+  /** Optional action-oriented label for hero/secondary CTA (e.g. "Book CCTV Drain Survey"). */
+  heroSecondaryCtaText?: string;
   companyInfo: CompanyInfo;
+}
+
+export interface ProblemData {
+  slug: string;
+  title: string;
+  causes: string;
+  howFixed: string;
+  whenToCall: string;
+  relatedServiceSlugs: string[];
+  ctaMessage: string;
 }

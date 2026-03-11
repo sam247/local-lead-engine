@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { services, locations, relatedGuideLinksByService, serviceFaqsBySlug } from "@/lib/data";
 import { getHeroImage } from "@/lib/images";
-import { verticalConfig } from "@/config";
+import { verticalConfig, partnerBaseUrl, partnerDrainSurveyPath } from "@/config";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight, AlertTriangle } from "lucide-react";
 import { BreadcrumbNav, SchemaMarkup as EngineSchemaMarkup } from "engine";
@@ -62,6 +62,17 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
             <div className="lg:col-span-2">
               <h2 className="mb-4 font-display text-2xl font-bold">Overview</h2>
               <p className="mb-8 text-muted-foreground">{service.description}</p>
+              <p className="mb-8 text-sm text-muted-foreground">
+                Drain surveys are often required before construction or utility mapping work.{" "}
+                <a
+                  href={`${partnerBaseUrl}${partnerDrainSurveyPath}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  Find out more about drain surveys
+                </a>.
+              </p>
               {relatedGuides.length > 0 && (
                 <>
                   <h3 className="mb-4 font-display text-xl font-bold">Related guides</h3>

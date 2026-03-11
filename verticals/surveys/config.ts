@@ -1,6 +1,10 @@
 import { companyInfo } from "@/lib/data";
 import type { VerticalConfig } from "engine";
 
+/** Partner site for cross-vertical linking (drains). */
+export const partnerBaseUrl = "https://mainlinedrains.co.uk";
+export const partnerDrainSurveyPath = "/services/cctv-drain-surveys";
+
 export const verticalConfig: VerticalConfig = {
   siteName: "Mainline Surveys",
   baseUrl: "https://mainlinesurveys.co.uk",

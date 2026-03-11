@@ -6,6 +6,8 @@ import { FAQSchema, type FAQItem } from "../schema/FAQSchema";
 import { InspectionCTA } from "./InspectionCTA";
 import { BreadcrumbNav } from "./BreadcrumbNav";
 import { MapEmbed } from "./MapEmbed";
+import { LocationContext } from "./LocationContext";
+import { NearbyAreas } from "./NearbyAreas";
 import type { Service, Location, CompanyInfo } from "../types";
 
 const locationBreadcrumbs = (
@@ -44,6 +46,8 @@ export interface LocationPageProps {
   introParagraph?: string;
   /** Optional description for the "Nearby Areas We Serve" block (e.g. "Compare our {service} in nearby areas"). */
   nearbyAreasDescription?: string;
+  /** Up to 5 neighbour locations for local context block and "Nearby service areas" links. When provided, LocationContext and NearbyAreas are rendered after the intro paragraph. */
+  neighbourLocationsForContext?: Location[];
 }
 
 export function LocationPage({
@@ -64,6 +68,7 @@ export function LocationPage({
   showMap = true,
   introParagraph,
   nearbyAreasDescription,
+  neighbourLocationsForContext,
 }: LocationPageProps) {
   const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
   const displayTitle = service.titleSingular ?? service.title;
@@ -161,6 +166,20 @@ export function LocationPage({
                 <p className="mb-6 text-muted-foreground">
                   Expert {service.title.toLowerCase()} services to residential and commercial clients in {location.name}, {location.area}. Our experienced engineers deliver fast, reliable solutions tailored to your property&apos;s specific needs.
                 </p>
+              )}
+              {neighbourLocationsForContext && neighbourLocationsForContext.length > 0 && (
+                <>
+                  <LocationContext
+                    serviceTitle={displayTitle}
+                    locationName={location.name}
+                    locationArea={location.area}
+                    neighbourNames={neighbourLocationsForContext.map((l) => l.name)}
+                  />
+                  <NearbyAreas
+                    serviceSlug={serviceSlug}
+                    neighbourLocations={neighbourLocationsForContext.slice(0, 5).map((l) => ({ id: l.id, name: l.name }))}
+                  />
+                </>
               )}
               <p className="mb-8 text-muted-foreground">{service.description}</p>
 
