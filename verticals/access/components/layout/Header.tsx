@@ -7,6 +7,9 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { locations, services } from "@/lib/data";
+
+const NAV_SERVICE_SLUGS = ["access-control-systems", "commercial-cctv-installation", "ip-camera-systems"];
+const navServices = services.filter((s) => NAV_SERVICE_SLUGS.includes(s.slug));
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -45,7 +48,7 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
-          {services.slice(0, 5).map((s) => (
+          {navServices.map((s) => (
             <Link
               key={s.slug}
               href={`/services/${s.slug}`}
@@ -165,7 +168,7 @@ const Header = () => {
         <div className="border-t border-border bg-background lg:hidden">
           <nav className="container py-4">
             
-            {services.map((s) => (
+            {navServices.map((s) => (
               <Link key={s.slug} href={`/services/${s.slug}`} className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>{s.title}</Link>
             ))}
             <Link href="/industries" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Industries</Link>

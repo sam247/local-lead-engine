@@ -9,10 +9,10 @@ const CTABanner = () => {
       <div className="container">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="mb-4 font-display text-3xl font-bold md:text-4xl text-primary">
-            Need a Drainage Expert?
+            Need a Security Expert?
           </h2>
           <p className="mb-8 text-lg text-primary">
-            Get in touch today for a free, no-obligation quote. Our team is ready to help with all your drainage needs — 24/7.
+            Get in touch today for a free, no-obligation quote. Our team is ready to help with access control, CCTV and security systems.
           </p>
 
           <div className="mb-8 flex flex-col items-center justify-center gap-4 sm:flex-row">

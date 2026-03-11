@@ -5,10 +5,10 @@ import { aboutTeam } from "@/lib/images";
 
 const AboutPreview = () => {
   const highlights = [
-    "24/7 emergency response across London",
-    "Free CCTV surveys and no-obligation quotes",
-    "Fully insured with insurance-backed guarantees",
-    "Residential and commercial drainage experts",
+    "24/7 support for contract and critical sites",
+    "Free site surveys and no-obligation quotes",
+    "Fully insured with guarantees on all work",
+    "Commercial and public-sector security specialists",
   ];
 
   return (
@@ -20,13 +20,13 @@ const AboutPreview = () => {
             <div className="aspect-[4/3] overflow-hidden rounded-lg bg-muted">
               <img
                 src={aboutTeam}
-                alt="Mainline Drains team at work"
+                alt="Mainline Access team"
                 className="h-full w-full object-cover"
               />
             </div>
             <div className="absolute -bottom-6 -right-6 hidden rounded-lg bg-primary p-6 text-primary-foreground md:block">
-              <div className="font-display text-3xl font-bold">15K+</div>
-              <div className="text-sm text-primary-foreground/80">Drains Repaired</div>
+              <div className="font-display text-3xl font-bold">500+</div>
+              <div className="text-sm text-primary-foreground/80">Sites Secured</div>
             </div>
           </div>
 
@@ -36,10 +36,10 @@ const AboutPreview = () => {
               About Us
             </span>
             <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
-              London's Trusted Drainage Experts
+              London's Trusted Security Experts
             </h2>
             <p className="mb-6 text-muted-foreground">
-              Mainline Drains provides expert drain collapse repair, relining, CCTV surveys and emergency drainage services across London. Our team of experienced drainage engineers delivers fast, reliable solutions for residential and commercial properties — day or night.
+              Mainline Access designs and installs access control, CCTV and integrated security systems for hospitals, data centres, warehouses and commercial buildings. Our experienced engineers deliver tailored solutions for commercial and public-sector sites across London and the UK.
             </p>
             <ul className="mb-8 space-y-3">
               {highlights.map((item) => (

@@ -19,10 +19,10 @@ const WhyChooseUs = () => {
             Why Choose Us
           </span>
           <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
-            The Mainline Drains Difference
+            The Mainline Access Difference
           </h2>
           <p className="text-muted-foreground">
-            What sets us apart from other drainage contractors in London.
+            What sets us apart from other security and access control providers.
           </p>
         </div>
 

@@ -16,14 +16,14 @@ const Footer = () => {
             <div className="mb-4 flex items-center gap-2">
               <Image
                 src="/logo_white.svg"
-                alt="Mainline Drains"
+                alt="Mainline Access"
                 width={84}
                 height={24}
                 className="h-5 w-auto sm:h-6"
               />
             </div>
             <p className="mb-6 text-sm text-primary-foreground/80">
-              Expert drain repair and drainage solutions across the UK. 24/7 emergency response, CCTV surveys and professional drain relining.
+              Access control, CCTV and integrated security systems for commercial and public-sector sites across the UK.
             </p>
             <div className="flex gap-4">
               <a href={companyInfo.social.linkedin} className="text-primary-foreground/60 transition-colors hover:text-primary-foreground" aria-label="LinkedIn">
@@ -62,33 +62,23 @@ const Footer = () => {
             <h3 className="mb-4 font-display text-lg font-semibold">Guides & Resources</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/drainage-guides" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Drainage Guides
+                <Link href="/industries" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Industries
                 </Link>
               </li>
               <li>
-                <Link href="/drainage-faq" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Drainage FAQ
+                <Link href="/access-problems" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Access & Security Guides
                 </Link>
               </li>
               <li>
-                <Link href="/drain-survey-cost" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Cost Calculator
+                <Link href="/access-problems/access-control-system-cost" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Access Control Cost Guide
                 </Link>
               </li>
               <li>
-                <Link href="/do-i-need-a-drain-survey" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Do I Need a Survey?
-                </Link>
-              </li>
-              <li>
-                <Link href="/collapsed-drains-complete-guide" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Complete Guide
-                </Link>
-              </li>
-              <li>
-                <Link href="/homebuyer-drainage" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Homebuyer Guides
+                <Link href="/contact" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Contact Us
                 </Link>
               </li>
             </ul>
@@ -128,11 +118,11 @@ const Footer = () => {
           <h4 className="mb-3 text-sm font-semibold text-primary-foreground/60">Areas We Cover</h4>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             {topLocations.map((loc) => (
-              <Link key={loc.id} href={`/drain-collapse-repair/${loc.id}`} className="text-sm text-primary-foreground/70 transition-colors hover:text-primary-foreground">
+              <Link key={loc.id} href={`/access-control-systems/${loc.id}`} className="text-sm text-primary-foreground/70 transition-colors hover:text-primary-foreground">
                 {loc.name}
               </Link>
             ))}
-            <Link href="/drain-collapse-near-me" className="text-sm font-medium text-primary-foreground/70 transition-colors hover:text-primary-foreground">
+            <Link href="/service-areas" className="text-sm font-medium text-primary-foreground/70 transition-colors hover:text-primary-foreground">
               All Areas →
             </Link>
           </div>

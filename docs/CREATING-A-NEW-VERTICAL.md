@@ -11,6 +11,19 @@ This guide explains how to add a new vertical (e.g. "surveys", "plumbing") to th
 - Update the new vertical’s `package.json` name (e.g. `verticals-surveys`).
 - **Do not** change route paths or template structure; keep URLs and layout identical so the clone stays maintainable.
 
+### 1.1 Avoiding hardcoded copy and source-vertical data leaks
+
+A common mistake is leaving **hardcoded copy** or **source-vertical config/data** in the clone. That causes the new site to show the wrong brand (e.g. “Mainline Drains” or “Our Core Drainage Services” on an access/surveys site).
+
+**Rules:**
+
+1. **No source-vertical strings in components.** Every user-facing string (headings, CTAs, taglines, image alts) must be replaced with the new vertical’s copy or derived from the new vertical’s data (e.g. `lib/data.ts`, `config.ts`). Do not leave drain/survey/etc. wording “for now”.
+2. **Data-driven sections.** Section headings (e.g. “Our Core X Services”), benefit lists, project titles, and blog categories must come from the new vertical’s `lib/data.ts` (or equivalent) or be explicitly replaced in the component. Avoid in-component arrays (e.g. `prioritySlugs`, `serviceBenefits`, `projects`) that still reference the source vertical’s slugs or copy; either move them to `lib/data.ts` or replace every entry.
+3. **Config and layout.** `app/layout.tsx` metadata, Footer tagline, Header logo alt, and any “Guides & Resources” / location links must use the new vertical’s config and routes (e.g. new `baseUrl`, new service slugs, new hub paths). Replace all links that point at source-vertical routes (e.g. `/drain-collapse-repair/...`, `/drainage-guides`).
+4. **Systematic audit before launch.** After replacing data, grep the new vertical for the **source** vertical’s topic (e.g. “drain”, “drainage”, “blocked drain”, “Mainline Drains”) across `.tsx`, `.ts`, and `.css`. Fix or remove every user-facing match except intentional cross-vertical links. Then do a full-page visual pass: home, services grid, projects, blog, footer, about, and CTA sections.
+
+Adding a vertical from “drains” is the usual case: ensure **no** drain-specific slugs, headings, or copy remain unless they are deliberate cross-links to another site.
+
 ---
 
 ## 2. Replace config and site identity
@@ -130,6 +143,7 @@ To avoid building a vertical when only another vertical (or unrelated files) cha
 ## 8. Checklist before launch
 
 - [ ] All content in `lib/data.ts`, `data/guides.ts`, and `lib/blogArticleContent.ts` is for the new vertical only (no source-vertical copy).
+- [ ] **No hardcoded source-vertical copy:** All section headings, CTAs, taglines, project lists, and nav links use the new vertical’s data or explicitly replaced strings (see §1.1).
 - [ ] Grep for source-vertical keywords (e.g. drain, CCTV, blockage) shows no user-facing leaks except intentional cross-links.
 - [ ] Hero and contact forms send a payload that the leads API accepts (`source_site` and `service` enum).
 - [ ] Leads API writes the correct `vertical` and lead ID prefix to the sheet and sends email to the new vertical’s address.

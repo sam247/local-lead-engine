@@ -8,9 +8,9 @@ export const dynamic = "force-static";
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: "About Us | Mainline Drains",
-  description: "Learn about Mainline Drains - London's trusted drainage experts providing 24/7 drain repair, CCTV surveys and emergency drainage services.",
-  alternates: { canonical: "https://mainlinedrains.co.uk/about" },
+  title: "About Us | Mainline Access",
+  description: "Learn about Mainline Access — commercial access control and security systems for hospitals, data centres, warehouses and commercial buildings.",
+  alternates: { canonical: "https://mainlineaccess.co.uk/about" },
 };
 
 export default function AboutPage() {
@@ -20,8 +20,8 @@ export default function AboutPage() {
       <section className="bg-primary py-16 md:py-24">
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">About Mainline Drains</h1>
-            <p className="text-lg text-primary-foreground/80">London&apos;s trusted drainage experts — fast, reliable, and available 24/7.</p>
+            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">About Mainline Access</h1>
+            <p className="text-lg text-primary-foreground/80">Commercial access control and security systems — trusted by hospitals, data centres and commercial sites.</p>
           </div>
         </div>
       </section>
@@ -31,17 +31,17 @@ export default function AboutPage() {
             <div>
               <h2 className="mb-4 font-display text-3xl font-bold">Our Story</h2>
               <p className="mb-4 text-muted-foreground">
-                Mainline Drains was founded with a simple mission: to provide London homeowners and businesses with honest, expert drainage services they can rely on — especially when they need help most.
+                Mainline Access was founded to provide commercial and public-sector sites with professional access control and security systems they can rely on — from hospitals and data centres to warehouses and offices.
               </p>
               <p className="mb-4 text-muted-foreground">
-                We&apos;ve repaired over 15,000 drains across London, from emergency collapsed drain repairs in Chelsea to commercial drainage surveys in the City. Our reputation is built on fast response times, transparent pricing, and work that lasts.
+                We design, install and maintain access control, CCTV and integrated security solutions across London and the UK. Our reputation is built on transparent pricing, reliable support, and systems that meet your site and compliance requirements.
               </p>
               <p className="text-muted-foreground">
-                Today, our team of 30+ experienced drainage engineers operates 24/7, equipped with the latest CCTV, jetting, and relining technology to handle any drainage challenge.
+                Today, our team of experienced security engineers works with facilities and IT teams to deliver access control, IP cameras, perimeter security and unified platforms that scale with your needs.
               </p>
             </div>
             <div className="aspect-[4/3] overflow-hidden rounded-lg bg-muted">
-              <img src={aboutTeam} alt="Mainline Drains team" className="h-full w-full object-cover" />
+              <img src={aboutTeam} alt="Mainline Access team" className="h-full w-full object-cover" />
             </div>
           </div>
         </div>

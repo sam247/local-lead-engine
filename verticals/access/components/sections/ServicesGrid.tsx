@@ -1,26 +1,18 @@
 import Link from "next/link";
-import { ArrowRight, AlertTriangle, Layers, Camera, Shovel, Siren, Ban } from "lucide-react";
+import { ArrowRight, Lock, Camera, Video, Shield, Network } from "lucide-react";
 import { services } from "@/lib/data";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  AlertTriangle,
-  Layers,
+  Lock,
   Camera,
-  Shovel,
-  Siren,
-  Ban,
+  Video,
+  Shield,
+  Network,
 };
 
-const prioritySlugs = ["drain-collapse-repair", "cctv-drain-surveys", "blocked-drains", "drain-excavation"];
-
-const serviceBenefits: Record<string, string[]> = {
-  "drain-collapse-repair": ["Emergency same-day response", "Full excavation & replacement", "Insurance-backed guarantees"],
-  "cctv-drain-surveys": ["Non-invasive camera inspection", "Detailed video reports", "Essential for homebuyers"],
-  "blocked-drains": ["High-pressure jetting", "Clears roots, fat & debris", "Prevents recurring blockages"],
-  "drain-excavation": ["Complete pipe replacement", "All depths and materials", "Professional surface reinstatement"],
-};
+const prioritySlugs = ["access-control-systems", "commercial-cctv-installation", "ip-camera-systems", "perimeter-security-systems"];
 
 const ServicesGrid = () => {
   const priorityServices = services.filter((s) => prioritySlugs.includes(s.slug));
@@ -33,17 +25,17 @@ const ServicesGrid = () => {
             What We Do
           </span>
           <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
-            Our Core Drainage Services
+            Our Core Security Services
           </h2>
           <p className="text-muted-foreground">
-            Comprehensive drain repair and drainage solutions tailored to your property's needs.
+            Access control, CCTV and integrated security systems for commercial and public-sector sites.
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
           {priorityServices.map((service, index) => {
-            const Icon = iconMap[service.icon] || AlertTriangle;
-            const benefits = serviceBenefits[service.slug] || [];
+            const Icon = iconMap[service.icon] || Lock;
+            const benefits = service.benefits?.slice(0, 3) ?? [];
             return (
               <Card
                 key={service.id}

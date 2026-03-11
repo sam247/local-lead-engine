@@ -10,8 +10,8 @@ interface MidContentCTAProps {
 }
 
 const MidContentCTA = ({
-  message = "Think your drain may be damaged? A CCTV inspection will give you a definitive answer.",
-  buttonText = "Book a CCTV Inspection",
+  message = "Need a quote for access control, CCTV or integrated security? We'll assess your site and provide a clear, no-obligation proposal.",
+  buttonText = "Get Security Quote",
   buttonLink = "/contact",
 }: MidContentCTAProps) => {
   return (

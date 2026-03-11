@@ -1,19 +1,13 @@
 const base = "/images";
 
-const DEFAULT_HERO_SERVICE_SLUG = "drain-collapse-repair";
+const DEFAULT_HERO_SERVICE_SLUG = "access-control-systems";
 
 export const serviceImages: Record<string, string> = {
-  "drain-collapse-repair": `${base}/services/drain-collapse-repair.jpg`,
-  "drain-relining": `${base}/services/drain-relining.jpg`,
-  "cctv-drain-surveys": `${base}/services/cctv-drain-surveys.jpg`,
-  "drain-excavation": `${base}/services/drain-excavation.jpg`,
-  "emergency-drainage": `${base}/services/emergency-drainage.jpg`,
-  "blocked-drains": `${base}/services/blocked-drains.jpg`,
-  "drain-jetting": `${base}/services/drain-jetting.jpg`,
-  "drain-root-removal": `${base}/services/drain-root-removal.jpg`,
-  "drain-unblocking": `${base}/services/drain-unblocking.jpg`,
-  "drain-pipe-replacement": `${base}/services/drain-pipe-replacement.jpg`,
-  "commercial-drainage": `${base}/services/commercial-drainage.jpg`,
+  "access-control-systems": `${base}/services/access-control-systems.jpg`,
+  "commercial-cctv-installation": `${base}/services/commercial-cctv-installation.jpg`,
+  "ip-camera-systems": `${base}/services/ip-camera-systems.jpg`,
+  "perimeter-security-systems": `${base}/services/perimeter-security-systems.jpg`,
+  "security-system-integration": `${base}/services/security-system-integration.jpg`,
 };
 
 export const projectImages = [
