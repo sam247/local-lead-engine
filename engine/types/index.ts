@@ -72,6 +72,14 @@ export interface VerticalConfig {
   /** Optional label for problem/guide hub breadcrumb (e.g. "Drain Problems", "Access Problems"). Falls back to "Problems" in ProblemPage. */
   problemLabel?: string;
   companyInfo: CompanyInfo;
+  /** Per-service list of "types" for Service Detail "Types of {Service Name}" section. Key = service slug. */
+  serviceTypesBySlug?: Record<string, string[]>;
+  /** Override for "Industries We Work With" section. If absent, engine uses a default list. */
+  industries?: string[];
+  /** Optional list for "Trusted Systems and Equipment" section (e.g. manufacturers, product lines). */
+  trustedEquipment?: string[];
+  /** Short label for sidebar "Related X Services" (e.g. "Drain" → "Related Drain Services"). Falls back to siteName. */
+  relatedServicesLabel?: string;
 }
 
 export interface ProblemData {

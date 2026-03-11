@@ -13,5 +13,7 @@ export { CTABanner, type CTABannerProps } from "./CTABanner";
 export { ProblemCTA, type ProblemCTAProps } from "./ProblemCTA";
 export { ProblemPage, type ProblemPageProps } from "./ProblemPage";
 export { RelatedLinks, type RelatedLinksProps } from "./RelatedLinks";
+export { ServiceImageGallery, type ServiceImageGalleryProps } from "./ServiceImageGallery";
+export { ServiceDetailContent, type ServiceDetailContentProps, type SymptomLink } from "./ServiceDetailContent";
 export { Button, buttonVariants } from "./ui/button";
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "./ui/card";

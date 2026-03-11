@@ -11,9 +11,9 @@ export const dynamic = "force-static";
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: "Blog | Mainline Drains",
-  description: "Expert insights and advice on drain repair, drainage maintenance and common drainage problems from Mainline Drains.",
-  alternates: { canonical: "https://mainlinedrains.co.uk/blog" },
+  title: "Blog | Mainline Access",
+  description: "Expert insights on access control, CCTV, and commercial security systems from Mainline Access.",
+  alternates: { canonical: "https://mainlineaccess.co.uk/blog" },
 };
 
 export default function BlogPage() {
@@ -24,7 +24,7 @@ export default function BlogPage() {
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">Our Blog</h1>
-            <p className="text-lg text-primary-foreground/80">Drainage insights and expert advice.</p>
+            <p className="text-lg text-primary-foreground/80">Security and access control insights and expert advice.</p>
           </div>
         </div>
       </section>

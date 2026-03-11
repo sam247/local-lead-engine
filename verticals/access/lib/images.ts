@@ -19,10 +19,11 @@ export const projectImages = [
   `${base}/projects/project-6.jpg`,
 ];
 
+/** Security/access-themed blog images (no drainage). Replace with local assets from data/images.ts prompts when ready. */
 export const blogImages = [
-  `${base}/blog/blog-1.jpg`,
-  `${base}/blog/blog-2.jpg`,
-  `${base}/blog/blog-3.jpg`,
+  "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=800&q=80", // security camera / access control
+  "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80", // CCTV / surveillance
+  "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&q=80", // office security / keycard
 ];
 
 export const heroBg = `${base}/hero-bg.jpg`;

@@ -25,10 +25,11 @@ export const projectImages = [
   `${base}/projects/project-6.jpg`,
 ];
 
+/** Survey/land/drone-themed blog images (no drainage). Replace with local assets when ready. */
 export const blogImages = [
-  `${base}/blog/blog-1.jpg`,
-  `${base}/blog/blog-2.jpg`,
-  `${base}/blog/blog-3.jpg`,
+  "https://images.unsplash.com/photo-1474487548417-809cb4be70cd?w=800&q=80", // drone / aerial
+  "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&q=80", // land survey / planning
+  "https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=800&q=80", // topographic / map
 ];
 
 export const heroBg = `${base}/hero-bg.jpg`;

@@ -1,16 +1,7 @@
-import Link from "next/link";
 import { services, locations } from "@/lib/data";
 import { getHeroImage } from "@/lib/images";
 import { verticalConfig, partnerBaseUrl, partnerTopographicalSurveyPath } from "@/config";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, ArrowRight, AlertTriangle } from "lucide-react";
-import { BreadcrumbNav, SchemaMarkup as EngineSchemaMarkup } from "engine";
-import InspectionCTA from "@/components/sections/InspectionCTA";
-import MidContentCTA from "@/components/sections/MidContentCTA";
-import FAQSchema from "@/components/sections/FAQSchema";
-import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import RelatedLinks from "@/components/sections/RelatedLinks";
-import CTABanner from "@/components/sections/CTABanner";
+import { ServiceDetailContent as EngineServiceDetailContent } from "engine";
 
 const serviceSymptomLinks: Record<string, { slug: string; path: string; title: string }[]> = {
   "drain-collapse-repair": [
@@ -144,133 +135,39 @@ interface ServiceDetailContentProps {
 }
 
 export default function ServiceDetailContent({ service }: ServiceDetailContentProps) {
-  const symptoms = serviceSymptomLinks[service.slug] || [];
-  const faqs = serviceFaqs[service.slug] || [];
-  const imageSrc = getHeroImage({ serviceSlug: service.slug });
+  const symptomLinks = serviceSymptomLinks[service.slug] ?? [];
+  const faqs = serviceFaqs[service.slug] ?? [];
+  const heroImageSrc = getHeroImage({ serviceSlug: service.slug });
 
   return (
-    <>
-      <EngineSchemaMarkup
-        type="Service"
-        companyInfo={verticalConfig.companyInfo}
-        baseUrl={verticalConfig.baseUrl}
-        data={{
-          serviceName: service.title,
-          serviceDescription: service.description,
-          url: `/services/${service.slug}`,
-          areaServed: "London and surrounding areas",
-          serviceType: service.title,
-        }}
-      />
-      <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Services", url: "/services" }, { name: service.title, url: `/services/${service.slug}` }] }} />
-      <section className="relative bg-primary py-16 md:py-24">
-        <div className="absolute inset-0">
-          <img src={imageSrc} alt="" className="h-full w-full object-cover opacity-20" />
-          <div className="absolute inset-0 bg-primary/60" />
-        </div>
-        <div className="container relative">
-          <div className="mx-auto max-w-3xl text-center">
-            <BreadcrumbNav
-              items={[
-                { name: "Home", url: "/" },
-                { name: "Services", url: "/services" },
-                { name: service.title, url: `/services/${service.slug}` },
-              ]}
-              variant="inverse"
-            />
-            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">{service.titleSingular ?? service.title}</h1>
-            <p className="text-lg text-primary-foreground/80">{service.shortDescription}</p>
-          </div>
-        </div>
-      </section>
-      <section className="section-padding">
-        <div className="container">
-          <div className="grid gap-12 lg:grid-cols-3">
-            <div className="lg:col-span-2">
-              <h2 className="mb-4 font-display text-2xl font-bold">Overview</h2>
-              <p className="mb-8 text-muted-foreground">{service.description}</p>
-              <p className="mb-8 text-sm text-muted-foreground">
-                Larger construction projects may require a{" "}
-                <a
-                  href={`${partnerBaseUrl}${partnerTopographicalSurveyPath}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline"
-                >
-                  topographical or utility survey
-                </a>{" "}
-                before drainage work begins.
-              </p>
-              {symptoms.length > 0 && (
-                <>
-                  <h3 className="mb-4 font-display text-xl font-bold">Common Signs You Need {service.title}</h3>
-                  <ul className="mb-8 space-y-2">
-                    {symptoms.map((s) => (
-                      <li key={s.slug} className="flex items-center gap-2">
-                        <AlertTriangle className="h-5 w-5 shrink-0 text-amber-500" />
-                        <Link href={s.path} className="text-primary hover:underline">{s.title}</Link>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
-              <h3 className="mb-4 font-display text-xl font-bold">Our Process</h3>
-              <ol className="mb-8 space-y-3">
-                {service.process.map((step, i) => (
-                  <li key={i} className="flex gap-3">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{i + 1}</span>
-                    <span className="text-muted-foreground">{step}</span>
-                  </li>
-                ))}
-              </ol>
-              <MidContentCTA message="Not sure what's wrong with your drains? Book a professional CCTV drain survey for a clear diagnosis." buttonText="Book a CCTV Survey" />
-              <h3 className="mb-4 font-display text-xl font-bold">Benefits</h3>
-              <ul className="mb-8 space-y-2">
-                {service.benefits.map((b) => (
-                  <li key={b} className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-primary" />
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-              <InspectionCTA />
-            </div>
-            <div className="space-y-6">
-              <div className="rounded-lg bg-secondary p-6">
-                <h3 className="mb-4 font-display text-lg font-bold">Related Drain Services</h3>
-                <ul className="space-y-2">
-                  {services
-                    .filter((s) => s.slug !== service.slug)
-                    .slice(0, 6)
-                    .map((s) => (
-                      <li key={s.id}>
-                        <Link href={`/services/${s.slug}`} className="text-sm text-primary hover:underline">
-                          {s.title}
-                        </Link>
-                      </li>
-                    ))}
-                </ul>
-              </div>
-              <div className="rounded-lg bg-secondary p-6">
-                <h3 className="mb-4 font-display text-lg font-bold">Areas We Cover</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  {locations.map((loc) => (
-                    <Link key={loc.id} href={`/${service.slug}/${loc.id}`} className="text-sm text-primary hover:underline">
-                      {loc.name} <ArrowRight className="inline h-3 w-3" />
-                    </Link>
-                  ))}
-                </div>
-              </div>
-              <RelatedLinks relatedServices={services.filter((s) => s.slug !== service.slug).slice(0, 3).map((s) => s.slug)} />
-              <Button asChild className="w-full" variant="highlight">
-                <Link href="/contact">Get a Free Quote</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-      {faqs.length > 0 && <FAQSchema items={faqs} title={`${service.title} FAQ`} />}
-      <CTABanner />
-    </>
+    <EngineServiceDetailContent
+      service={service}
+      services={services}
+      locations={locations}
+      verticalConfig={verticalConfig}
+      heroImageSrc={heroImageSrc}
+      contactPath="/contact"
+      servicesPath="/services"
+      locationLinkPath={(slug, id) => `/${slug}/${id}`}
+      symptomLinks={symptomLinks}
+      faqs={faqs}
+      firstCtaMessage="Not sure what's wrong with your drains? Book a professional CCTV drain survey for a clear diagnosis."
+      firstCtaButtonText="Book a CCTV Survey"
+      firstCtaButtonLink="/contact"
+      overviewExtra={
+        <p className="mb-8 text-sm text-muted-foreground">
+          Larger construction projects may require a{" "}
+          <a
+            href={`${partnerBaseUrl}${partnerTopographicalSurveyPath}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:underline"
+          >
+            topographical or utility survey
+          </a>{" "}
+          before drainage work begins.
+        </p>
+      }
+    />
   );
 }

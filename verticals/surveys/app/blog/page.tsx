@@ -24,7 +24,7 @@ export default function BlogPage() {
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">Our Blog</h1>
-            <p className="text-lg text-primary-foreground/80">Drainage insights and expert advice.</p>
+            <p className="text-lg text-primary-foreground/80">Survey insights and expert advice for planning and development.</p>
           </div>
         </div>
       </section>
