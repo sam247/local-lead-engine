@@ -12,6 +12,8 @@ export interface ProblemPageProps {
   contactPath?: string;
   basePath?: string;
   problemsBasePath?: string;
+  /** Breadcrumb label for the problems hub (e.g. "Drain Problems", "Access Problems"). Default "Problems". */
+  problemsBreadcrumbLabel?: string;
 }
 
 export function ProblemPage({
@@ -22,6 +24,7 @@ export function ProblemPage({
   contactPath = "/contact",
   basePath = "/services",
   problemsBasePath = "/drain-problems",
+  problemsBreadcrumbLabel,
 }: ProblemPageProps) {
   const relatedServices = problem.relatedServiceSlugs
     .map((slug) => services.find((s) => s.slug === slug))
@@ -32,9 +35,10 @@ export function ProblemPage({
     label: s.title,
   }));
 
+  const breadcrumbLabel = problemsBreadcrumbLabel ?? "Problems";
   const breadcrumbs = [
     { name: "Home", url: "/" },
-    { name: "Drain Problems", url: problemsBasePath },
+    { name: breadcrumbLabel, url: problemsBasePath },
     { name: `${problem.title} – Causes and Repair`, url: `${problemsBasePath}/${problem.slug}` },
   ];
 

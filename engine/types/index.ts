@@ -61,12 +61,16 @@ export interface InfoPageData {
 }
 
 export interface VerticalConfig {
+  /** Identifier for analytics, reporting, and cross-vertical linking (e.g. "drains", "surveys", "access"). */
+  verticalId: string;
   siteName: string;
   baseUrl: string;
   primaryService?: string;
   industry?: string;
   /** Optional action-oriented label for hero/secondary CTA (e.g. "Book CCTV Drain Survey"). */
   heroSecondaryCtaText?: string;
+  /** Optional label for problem/guide hub breadcrumb (e.g. "Drain Problems", "Access Problems"). Falls back to "Problems" in ProblemPage. */
+  problemLabel?: string;
   companyInfo: CompanyInfo;
 }
 

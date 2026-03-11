@@ -6,12 +6,13 @@ export const partnerBaseUrl = "https://mainlinesurveys.co.uk";
 export const partnerTopographicalSurveyPath = "/services/topographical-survey";
 
 export const verticalConfig: VerticalConfig = {
+  verticalId: "drains",
   siteName: "Mainline Drains",
   baseUrl: "https://mainlinedrains.co.uk",
   primaryService: "Drain Collapse Repair",
   industry: "drainage",
-  /** Action-oriented label for hero/secondary CTA (contact link). */
   heroSecondaryCtaText: "Book CCTV Drain Survey",
+  problemLabel: "Drain Problems",
   companyInfo: {
     name: companyInfo.name,
     phone: companyInfo.phone,

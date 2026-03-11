@@ -6,6 +6,7 @@ export const partnerBaseUrl = "https://mainlinedrains.co.uk";
 export const partnerDrainSurveyPath = "/services/cctv-drain-surveys";
 
 export const verticalConfig: VerticalConfig = {
+  verticalId: "surveys",
   siteName: "Mainline Surveys",
   baseUrl: "https://mainlinesurveys.co.uk",
   primaryService: "Land & Drone Surveying",

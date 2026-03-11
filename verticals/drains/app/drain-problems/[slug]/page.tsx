@@ -47,6 +47,7 @@ export default function DrainProblemsSlugPage({ params }: Props) {
         contactPath="/contact"
         basePath="/services"
         problemsBasePath="/drain-problems"
+        problemsBreadcrumbLabel={verticalConfig.problemLabel ?? "Problems"}
       />
     );
   }
