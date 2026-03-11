@@ -28,7 +28,8 @@ const Hero = () => {
   const [utmSource, setUtmSource] = useState<string | undefined>(undefined);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     phone: "",
     email: "",
     postcode: "",
@@ -50,8 +51,8 @@ const Hero = () => {
   }, []);
 
   const handleContinue = () => {
-    if (!formData.name || !formData.postcode || !formData.town) {
-      toast({ title: "Please fill in your name, postcode and town", variant: "destructive" });
+    if (!formData.firstName || !formData.lastName || !formData.postcode || !formData.town) {
+      toast({ title: "Please fill in your first name, last name, postcode and town", variant: "destructive" });
       return;
     }
     setStep(2);
@@ -78,7 +79,8 @@ const Hero = () => {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          name: formData.name,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
           email: formData.email,
           phone: formData.phone,
           postcode: formData.postcode,
@@ -91,7 +93,8 @@ const Hero = () => {
       });
       if (!res.ok) throw new Error("Request failed");
       setFormData({
-        name: "",
+        firstName: "",
+        lastName: "",
         phone: "",
         email: "",
         postcode: "",
@@ -164,21 +167,30 @@ const Hero = () => {
               <form onSubmit={handleSubmit} className="space-y-3">
                 {step === 1 ? (
                   <>
-                    <Input
-                      placeholder="Your Name *"
-                      value={formData.name}
-                      onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
-                    />
-                    <Input
-                      placeholder="Postcode *"
-                      value={formData.postcode}
-                      onChange={(e) => setFormData((p) => ({ ...p, postcode: e.target.value }))}
-                    />
-                    <Input
-                      placeholder="Town *"
-                      value={formData.town}
-                      onChange={(e) => setFormData((p) => ({ ...p, town: e.target.value }))}
-                    />
+                    <div className="grid grid-cols-2 gap-2">
+                      <Input
+                        placeholder="First name *"
+                        value={formData.firstName}
+                        onChange={(e) => setFormData((p) => ({ ...p, firstName: e.target.value }))}
+                      />
+                      <Input
+                        placeholder="Last name *"
+                        value={formData.lastName}
+                        onChange={(e) => setFormData((p) => ({ ...p, lastName: e.target.value }))}
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Input
+                        placeholder="Town *"
+                        value={formData.town}
+                        onChange={(e) => setFormData((p) => ({ ...p, town: e.target.value }))}
+                      />
+                      <Input
+                        placeholder="Postcode *"
+                        value={formData.postcode}
+                        onChange={(e) => setFormData((p) => ({ ...p, postcode: e.target.value }))}
+                      />
+                    </div>
 
                     {/* Symptom Selector Cards */}
                     <div>

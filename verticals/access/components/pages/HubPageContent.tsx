@@ -39,10 +39,10 @@ export default function HubPageContent({ category }: HubPageContentProps) {
   if (!hub || pages.length === 0) return null;
 
   const keyServices = services.filter((s) =>
-    ["drain-collapse-repair", "cctv-drain-surveys", "drain-excavation"].includes(s.slug)
+    ["access-control-systems", "commercial-cctv-installation", "ip-camera-systems"].includes(s.slug)
   );
-  const heroImage = serviceImages[categoryImages[category] || "cctv-drain-surveys"];
-  const heroAlt = categoryAltText[category] || `${hub.title} - drainage services`;
+  const heroImage = serviceImages[categoryImages[category] || "access-control-systems"];
+  const heroAlt = categoryAltText[category] || `${hub.title} - access and security services`;
   const crossSections = categorisePages(category);
 
   return (

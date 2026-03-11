@@ -13,7 +13,8 @@ import { z } from "zod";
 const SERVICE_OPTIONS = ["Topographical survey", "Drone survey", "Measured building survey", "Utility survey", "Advice / not sure"] as const;
 
 const enquirySchema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(100),
+  first_name: z.string().trim().min(1, "First name is required").max(50),
+  last_name: z.string().trim().min(1, "Last name is required").max(50),
   email: z.string().trim().email("Valid email required").max(255),
   phone: z.string().trim().min(1, "Phone number is required").max(20),
   postcode: z.string().trim().min(1, "Postcode is required").max(16),
@@ -91,32 +92,39 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <Label htmlFor="name">Full Name *</Label>
-          <Input id="name" value={formData.name || ""} onChange={(e) => updateField("name", e.target.value)} className={errors.name ? "border-destructive" : ""} />
-          {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
+          <Label htmlFor="first_name">First name *</Label>
+          <Input id="first_name" value={formData.first_name || ""} onChange={(e) => updateField("first_name", e.target.value)} className={errors.first_name ? "border-destructive" : ""} />
+          {errors.first_name && <p className="mt-1 text-xs text-destructive">{errors.first_name}</p>}
         </div>
+        <div>
+          <Label htmlFor="last_name">Last name *</Label>
+          <Input id="last_name" value={formData.last_name || ""} onChange={(e) => updateField("last_name", e.target.value)} className={errors.last_name ? "border-destructive" : ""} />
+          {errors.last_name && <p className="mt-1 text-xs text-destructive">{errors.last_name}</p>}
+        </div>
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <Label htmlFor="email">Email *</Label>
           <Input id="email" type="email" value={formData.email || ""} onChange={(e) => updateField("email", e.target.value)} className={errors.email ? "border-destructive" : ""} />
           {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
         </div>
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <Label htmlFor="phone">Phone Number *</Label>
           <Input id="phone" type="tel" value={formData.phone || ""} onChange={(e) => updateField("phone", e.target.value)} className={errors.phone ? "border-destructive" : ""} />
           {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
+        </div>
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <Label htmlFor="town">Town *</Label>
+          <Input id="town" value={formData.town || ""} onChange={(e) => updateField("town", e.target.value)} className={errors.town ? "border-destructive" : ""} />
+          {errors.town && <p className="mt-1 text-xs text-destructive">{errors.town}</p>}
         </div>
         <div>
           <Label htmlFor="postcode">Postcode *</Label>
           <Input id="postcode" value={formData.postcode || ""} onChange={(e) => updateField("postcode", e.target.value)} placeholder="e.g. SW1A 1AA" className={errors.postcode ? "border-destructive" : ""} />
           {errors.postcode && <p className="mt-1 text-xs text-destructive">{errors.postcode}</p>}
         </div>
-      </div>
-      <div>
-        <Label htmlFor="town">Town *</Label>
-        <Input id="town" value={formData.town || ""} onChange={(e) => updateField("town", e.target.value)} className={errors.town ? "border-destructive" : ""} />
-        {errors.town && <p className="mt-1 text-xs text-destructive">{errors.town}</p>}
       </div>
       <div>
         <Label>What service do you need? *</Label>

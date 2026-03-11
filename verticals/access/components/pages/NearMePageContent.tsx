@@ -21,7 +21,7 @@ export default function NearMePageContent({ serviceSlug }: NearMePageContentProp
       <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: pageTitle, url: `/${serviceSlug}-near-me` }] }} />
       <section className="relative bg-primary py-16 md:py-24">
         <div className="absolute inset-0">
-          <img src={serviceImages[service.slug]} alt={`Professional ${service.title.toLowerCase()} engineer servicing drainage near your location`} className="h-full w-full object-cover opacity-20" />
+          <img src={serviceImages[service.slug]} alt={`Professional ${service.title.toLowerCase()} engineer servicing access control and security near your location`} className="h-full w-full object-cover opacity-20" />
           <div className="absolute inset-0 bg-primary/60" />
         </div>
         <div className="container relative">

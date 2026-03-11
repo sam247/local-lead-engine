@@ -108,7 +108,7 @@ export function getCollapsedDrainsGuideProps() {
   ];
 
   const heroImage =
-    serviceImages["drain-collapse-repair"] ?? "/images/services/drain-collapse-repair.jpg";
+    serviceImages["access-control-systems"] ?? "/images/services/access-control-systems.jpg";
 
   return {
     heroTitle: "Collapsed Drains: The Complete Guide",

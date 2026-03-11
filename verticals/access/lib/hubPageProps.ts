@@ -43,16 +43,14 @@ export function getHubPageProps(category: string) {
   const pages = getCategoryPages(category);
   if (!hub || pages.length === 0) return null;
   const keyServices = services.filter((s) =>
-    ["drain-collapse-repair", "cctv-drain-surveys", "drain-excavation"].includes(
-      s.slug
-    )
+    ["access-control-systems", "commercial-cctv-installation", "ip-camera-systems"].includes(s.slug)
   );
   const heroImage = getHeroImage({
     category,
     categoryImagesMap: categoryImages,
   });
   const heroAlt =
-    categoryAltText[category] || `${hub.title} - drainage services`;
+    categoryAltText[category] || `${hub.title} - security services`;
   const crossSections = categorisePages(category);
   const pillarGuides = [
     { title: "Collapsed Drains Complete Guide", href: "/collapsed-drains-complete-guide" },

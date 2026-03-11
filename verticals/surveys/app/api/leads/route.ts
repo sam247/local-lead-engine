@@ -6,7 +6,8 @@ import { google } from "googleapis";
 const SERVICE_OPTIONS = ["Topographical survey", "Drone survey", "Measured building survey", "Utility survey", "Advice / not sure"] as const;
 
 const LeadInputSchema = z.object({
-  name: z.string().trim().min(1).max(100),
+  first_name: z.string().trim().min(1).max(50),
+  last_name: z.string().trim().min(1).max(50),
   email: z.string().trim().email().max(255),
   phone: z.string().trim().min(1).max(30),
   postcode: z.string().trim().min(1).max(16),
@@ -28,7 +29,8 @@ const SHEET_HEADERS = [
   "service",
   "postcode",
   "town",
-  "name",
+  "first_name",
+  "last_name",
   "email",
   "phone",
   "description",
@@ -70,7 +72,7 @@ async function getSheetsClient() {
 }
 
 async function ensureHeaderRow(sheets: ReturnType<typeof google.sheets>, spreadsheetId: string) {
-  const headerRange = "Sheet1!A1:O1";
+  const headerRange = "Sheet1!A1:P1";
   const existing = await sheets.spreadsheets.values.get({ spreadsheetId, range: headerRange });
   const row = existing.data.values?.[0] ?? [];
   const normalized = row.map((c) => String(c ?? "").trim());
@@ -112,7 +114,8 @@ async function appendLeadRow(
     lead.service,
     lead.postcode,
     lead.town,
-    lead.name,
+    lead.first_name,
+    lead.last_name,
     lead.email,
     lead.phone,
     lead.description,
@@ -123,7 +126,7 @@ async function appendLeadRow(
 
   await sheets.spreadsheets.values.append({
     spreadsheetId,
-    range: "Sheet1!A:O",
+    range: "Sheet1!A:P",
     valueInputOption: "RAW",
     insertDataOption: "INSERT_ROWS",
     requestBody: { values: [row] },
@@ -139,7 +142,7 @@ function buildEmailBody(lead: LeadInput & { lead_id: string; timestamp: string }
     `Lead Reference: ${lead.lead_id}`,
     `Timestamp: ${lead.timestamp}`,
     "",
-    `Name: ${lead.name}`,
+    `Name: ${lead.first_name} ${lead.last_name}`,
     `Email: ${lead.email}`,
     `Phone: ${lead.phone}`,
     `Postcode: ${lead.postcode}`,

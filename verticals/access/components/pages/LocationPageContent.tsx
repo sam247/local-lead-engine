@@ -69,7 +69,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
       <section className="relative bg-primary py-16 md:py-24">
         <div className="absolute inset-0">
           <img
-            src={serviceImages[service.slug] ?? "/images/services/drain-collapse-repair.jpg"}
+            src={serviceImages[service.slug] ?? serviceImages["access-control-systems"]}
             alt={`${service.title} engineer working in ${location.name}, ${location.area}`}
             className="h-full w-full object-cover opacity-20"
           />

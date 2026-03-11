@@ -22,8 +22,8 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
   if (!hub || !page) return null;
 
   const otherPages = pages.filter((p) => p.slug !== page.slug).slice(0, 4);
-  const heroImage = serviceImages[categoryImages[category] || "cctv-drain-surveys"];
-  const heroAlt = categoryAltText[category] || `${page.title} - professional drainage service`;
+  const heroImage = serviceImages[categoryImages[category] || "access-control-systems"];
+  const heroAlt = categoryAltText[category] || `${page.title} - professional security service`;
   const pageFaqs = [
     { question: `What are the signs of ${page.title.toLowerCase()}?`, answer: page.signs.slice(0, 3).join(". ") + "." },
     { question: `How do you diagnose ${page.title.toLowerCase()}?`, answer: page.diagnosis.slice(0, 200) + "..." },
