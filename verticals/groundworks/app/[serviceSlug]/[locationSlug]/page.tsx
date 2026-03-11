@@ -1,0 +1,110 @@
+import { notFound } from "next/navigation";
+import { services, locations } from "@/lib/data";
+import { getHeroImage } from "@/lib/images";
+import { verticalConfig } from "@/config";
+import { LocationPage, getNeighbourLocationIds } from "engine";
+import { buildLocationMetadata } from "engine";
+import type { Metadata } from "next";
+
+export const dynamic = "force-static";
+export const revalidate = false;
+
+export async function generateStaticParams() {
+  return services.flatMap((s) =>
+    locations.map((l) => ({ serviceSlug: s.slug, locationSlug: l.id }))
+  );
+}
+
+type Props = { params: { serviceSlug: string; locationSlug: string } };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { serviceSlug, locationSlug } = params;
+  const service = services.find((s) => s.slug === serviceSlug);
+  const location = locations.find((l) => l.id === locationSlug);
+  if (!service || !location) return { title: "Not Found" };
+  return buildLocationMetadata(service, location, verticalConfig);
+}
+
+export default async function LocationRoute({ params }: Props) {
+  const { serviceSlug, locationSlug } = params;
+  const service = services.find((s) => s.slug === serviceSlug);
+  const location = locations.find((l) => l.id === locationSlug);
+  if (!service || !location) notFound();
+
+  const sameAreaLocations = locations.filter(
+    (l) => l.id !== location.id && l.area === location.area
+  );
+  const nearbyLocations =
+    sameAreaLocations.length >= 4
+      ? sameAreaLocations.slice(0, 8)
+      : [
+          ...sameAreaLocations,
+          ...locations.filter(
+            (l) => l.id !== location.id && l.area !== location.area
+          ),
+        ].slice(0, 8);
+
+  const localFaqs = [
+    {
+      question: `Do you provide ${service.title.toLowerCase()} in ${location.name}?`,
+      answer: `Yes, we provide ${service.title.toLowerCase()} throughout ${location.name} and ${location.area} for commercial and residential projects.`,
+    },
+    {
+      question: `Do you offer quotes for groundworks in ${location.name}?`,
+      answer: `Yes. We provide free, no-obligation quotes for groundworks in ${location.name}. Send us your site details and we will come back with a detailed quote.`,
+    },
+    {
+      question: `What groundworks do you do in ${location.name}?`,
+      answer: `We deliver piling, excavation, site clearance, foundations, concrete foundations and enabling works in ${location.name} and ${location.area}.`,
+    },
+    {
+      question: `How long do groundworks take in ${location.name}?`,
+      answer: `Programme depends on the scope. We work to your schedule and provide clear timelines when we quote. Contact us for a programme for your project in ${location.name}.`,
+    },
+    {
+      question: `Are you insured for groundworks in ${location.name}?`,
+      answer: `Yes. We are fully insured and accredited for groundworks. We can provide documentation when you request a quote in ${location.name}.`,
+    },
+  ].slice(0, 5);
+
+  const trustPoints = [
+    "Years of experience in " + location.area,
+    "Fully insured and accredited",
+    "Programme-led delivery",
+    "Quality assured and certified",
+  ];
+
+  const otherServices = services.filter((s) => s.id !== service.id);
+  const serviceImage = getHeroImage({ serviceSlug: service.slug });
+
+  const neighbourIds = getNeighbourLocationIds(location.id, locations.map((l) => l.id));
+  const neighbourLocationsForContext = neighbourIds
+    .map((id) => locations.find((l) => l.id === id))
+    .filter((l): l is NonNullable<typeof l> => l != null)
+    .slice(0, 5);
+
+  const introParagraph = `We provide ${service.title} across ${location.name} and ${location.area}. Our team delivers piling, excavation, foundations and site preparation for commercial and residential projects, with free no-obligation quotes.`;
+
+  return (
+    <LocationPage
+      service={service}
+      location={location}
+      serviceSlug={serviceSlug}
+      locationSlug={locationSlug}
+      sameAreaLocations={sameAreaLocations}
+      nearbyLocations={nearbyLocations}
+      localFaqs={localFaqs}
+      companyInfo={verticalConfig.companyInfo}
+      otherServices={otherServices}
+      baseUrl={verticalConfig.baseUrl}
+      serviceImage={serviceImage}
+      contactPath="/contact"
+      trustSectionTitle={`Trusted Groundworks Contractors in ${location.name}`}
+      trustPoints={trustPoints}
+      diagnosisGuidePath="/guides/groundworks-process"
+      introParagraph={introParagraph}
+      nearbyAreasDescription={`Compare our ${service.title} in nearby areas.`}
+      neighbourLocationsForContext={neighbourLocationsForContext}
+    />
+  );
+}

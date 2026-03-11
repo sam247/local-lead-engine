@@ -1,0 +1,153 @@
+import Link from "next/link";
+import Image from "next/image";
+import { Phone, Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
+import { companyInfo, services, locations } from "@/lib/data";
+
+const Footer = () => {
+  const currentYear = new Date().getFullYear();
+  const topLocations = locations.slice(0, 8);
+
+  return (
+    <footer className="bg-primary pb-14 text-primary-foreground">
+      <div className="container py-12 md:py-16">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {/* Company Info */}
+          <div>
+            <div className="mb-4 flex items-center gap-2">
+              <Image
+                src="/logo_white.svg"
+                alt="Mainline Groundworks"
+                width={84}
+                height={24}
+                className="h-5 w-auto sm:h-6"
+              />
+            </div>
+            <p className="mb-6 text-sm text-primary-foreground/80">
+              Commercial groundworks contractors providing piling, excavation, site clearance and foundation construction across the UK.
+            </p>
+            <div className="flex gap-4">
+              <a href={companyInfo.social.linkedin} className="text-primary-foreground/60 transition-colors hover:text-primary-foreground" aria-label="LinkedIn">
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a href={companyInfo.social.twitter} className="text-primary-foreground/60 transition-colors hover:text-primary-foreground" aria-label="Twitter">
+                <Twitter className="h-5 w-5" />
+              </a>
+              <a href={companyInfo.social.facebook} className="text-primary-foreground/60 transition-colors hover:text-primary-foreground" aria-label="Facebook">
+                <Facebook className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h3 className="mb-4 font-display text-lg font-semibold">Our Services</h3>
+            <ul className="space-y-2">
+              {services.slice(0, 6).map((service) => (
+                <li key={service.id}>
+                  <Link href={`/services/${service.slug}`} className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                    {service.title}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/services" className="text-sm font-medium text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  View All →
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Guides & Resources */}
+          <div>
+            <h3 className="mb-4 font-display text-lg font-semibold">Guides & Resources</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/guides" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Groundworks Guides
+                </Link>
+              </li>
+              <li>
+                <Link href="/guides/foundation-cost" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Foundation Cost
+                </Link>
+              </li>
+              <li>
+                <Link href="/guides/piling-cost" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Piling Cost
+                </Link>
+              </li>
+              <li>
+                <Link href="/guides/groundworks-process" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Groundworks Process
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="mb-4 font-display text-lg font-semibold">Contact Us</h3>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3">
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
+                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  <Phone className="h-4 w-4 shrink-0" />
+                  Call Now
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
+                <a href={`mailto:${companyInfo.email}`} className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  {companyInfo.email}
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
+                <span className="text-sm text-primary-foreground/80">{companyInfo.address}</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
+                <span className="text-sm text-primary-foreground/80">{companyInfo.hours}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Location Links Row */}
+        <div className="mt-10 border-t border-primary-foreground/10 pt-6">
+          <h4 className="mb-3 text-sm font-semibold text-primary-foreground/60">Areas We Cover</h4>
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            {topLocations.map((loc) => (
+              <Link key={loc.id} href={`/groundworks-contractors/${loc.id}`} className="text-sm text-primary-foreground/70 transition-colors hover:text-primary-foreground">
+                {loc.name}
+              </Link>
+            ))}
+            <Link href="/service-areas" className="text-sm font-medium text-primary-foreground/70 transition-colors hover:text-primary-foreground">
+              All Areas →
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="border-t border-primary-foreground/10">
+        <div className="container flex flex-col items-center justify-between gap-4 py-6 md:flex-row">
+          <p className="text-sm text-primary-foreground/60">
+            © {currentYear} {companyInfo.name}. All rights reserved.
+          </p>
+          <div className="flex gap-6">
+            <Link href="/about" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">About</Link>
+            <Link href="/service-areas" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Service Areas</Link>
+            <Link href="/projects" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Projects</Link>
+            <Link href="/blog" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Blog</Link>
+            <Link href="/privacy" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Privacy</Link>
+            <Link href="/terms" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Terms</Link>
+            <Link href="/contractors" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Contractors</Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

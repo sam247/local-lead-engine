@@ -23,6 +23,19 @@ const PROPERTY_TYPES = [
   "commercial property",
 ] as const;
 
+const PROPERTY_TYPES_BY_VERTICAL: Record<string, readonly string[]> = {
+  groundworks: [
+    "housing development",
+    "commercial office building",
+    "warehouse",
+    "industrial site",
+    "hospital",
+    "school",
+    "retail park",
+    "construction site",
+  ],
+};
+
 function titleCase(str: string): string {
   return str.replace(/\b\w/g, (c) => c.toUpperCase());
 }
@@ -52,6 +65,14 @@ const IMAGE_PROMPTS_BY_VERTICAL: Record<string, string[]> = {
     "utility detection and mapping equipment",
     "drone survey over development site",
   ],
+  groundworks: [
+    "excavator digging foundations on construction site",
+    "mini piling rig installing steel piles",
+    "groundworks contractors installing drainage and foundations",
+    "construction excavation trench for building foundations",
+    "site clearance machinery clearing land",
+    "concrete foundations being poured",
+  ],
 };
 
 const DESCRIPTION_TEMPLATES_BY_VERTICAL: Record<string, string[]> = {
@@ -70,6 +91,15 @@ const DESCRIPTION_TEMPLATES_BY_VERTICAL: Record<string, string[]> = {
     "Site survey and mapping for a {property} in {location}. Delivered to programme with CAD outputs.",
     "Survey and verification for a {property} project in {location}. As-built and topographical data supplied.",
   ],
+  groundworks: [
+    "{service} for a {property} in {location}. Completed to programme with full handover.",
+    "Groundworks and foundations for a {property} in {location}. Delivered on time with certification.",
+    "Site preparation and {service} for a {property} in {location}. Quality assured and documented.",
+  ],
+};
+
+const PROJECT_TITLE_TEMPLATE_BY_VERTICAL: Record<string, string> = {
+  groundworks: "{service} for {property} – {location}",
 };
 
 /**
@@ -95,12 +125,14 @@ export function generateProjects(
   services: Service[]
 ): Project[] {
   const verticalId = verticalConfig.verticalId;
+  const propertyTypes = PROPERTY_TYPES_BY_VERTICAL[verticalId] ?? PROPERTY_TYPES;
   const prompts = IMAGE_PROMPTS_BY_VERTICAL[verticalId] ?? IMAGE_PROMPTS_BY_VERTICAL.access;
   const templates = DESCRIPTION_TEMPLATES_BY_VERTICAL[verticalId] ?? DESCRIPTION_TEMPLATES_BY_VERTICAL.access;
+  const titleTemplate = PROJECT_TITLE_TEMPLATE_BY_VERTICAL[verticalId];
 
   const combinations: { property: string; service: Service; location: Location }[] = [];
   let locIndex = 0;
-  for (const prop of PROPERTY_TYPES) {
+  for (const prop of propertyTypes) {
     for (const service of services) {
       const location = locations[locIndex % locations.length];
       combinations.push({ property: titleCase(prop), service, location });
@@ -112,7 +144,12 @@ export function generateProjects(
 
   return capped.map((combo, index) => {
     const { property, service, location } = combo;
-    const title = `${property} ${service.title} – ${location.name}`;
+    const title = titleTemplate
+      ? titleTemplate
+          .replace("{service}", service.title)
+          .replace("{property}", property)
+          .replace("{location}", location.name)
+      : `${property} ${service.title} – ${location.name}`;
     const template = templates[index % templates.length];
     const description = template
       .replace("{property}", property.toLowerCase())
