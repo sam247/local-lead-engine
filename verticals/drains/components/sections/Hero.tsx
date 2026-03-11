@@ -192,7 +192,7 @@ const Hero = () => {
 
                     {/* Symptom Selector Cards */}
                     <div>
-                      <p className="mb-2 text-xs font-medium text-muted-foreground">What issue are you experiencing?</p>
+                      <p className="mb-2 text-sm font-medium text-muted-foreground">What issue are you experiencing?</p>
                       <div className="grid grid-cols-2 gap-2">
                         {issueOptions.map((option, i) => (
                           <button
@@ -200,7 +200,7 @@ const Hero = () => {
                             type="button"
                             onClick={() => setFormData((p) => ({ ...p, issueType: option.id }))}
                             className={cn(
-                              "flex items-center gap-2 rounded-md border p-2.5 text-left text-xs font-medium transition-colors",
+                              "flex items-center gap-2 rounded-md border p-2.5 text-left text-sm font-medium transition-colors",
                               formData.issueType === option.id
                                 ? "border-primary bg-primary/5 text-primary"
                                 : "border-border text-muted-foreground hover:border-primary/50",

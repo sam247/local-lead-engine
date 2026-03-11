@@ -6,6 +6,8 @@ import StickyEmergencyBar from "@/components/sections/StickyEmergencyBar";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { Providers } from "./providers";
 
+export const viewport = { width: "device-width", initialScale: 1 };
+
 export const metadata: Metadata = {
   title: "Mainline Groundworks | Piling, Excavation & Foundation Contractors UK",
   description: "Commercial groundworks contractors providing piling, excavation, site clearance and foundation construction across the UK.",

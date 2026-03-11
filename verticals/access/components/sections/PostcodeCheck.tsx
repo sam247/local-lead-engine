@@ -32,7 +32,7 @@ const PostcodeCheck = () => {
           onKeyDown={(e) => e.key === "Enter" && handleCheck()}
           className="bg-background"
         />
-        <Button size="sm" onClick={handleCheck}>Check</Button>
+        <Button onClick={handleCheck}>Check</Button>
       </div>
       {result === "covered" && (
         <p className="mt-2 flex items-center gap-2 text-sm font-medium text-primary">

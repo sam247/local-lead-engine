@@ -6,6 +6,8 @@ import StickyEmergencyBar from "@/components/sections/StickyEmergencyBar";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { Providers } from "./providers";
 
+export const viewport = { width: "device-width", initialScale: 1 };
+
 export const metadata: Metadata = {
   title: "Mainline Drains | Expert Drain Repair & Drainage Solutions",
   description: "24/7 emergency drainage, drain collapse repair, CCTV surveys and relining across the UK. Trusted local drainage experts.",

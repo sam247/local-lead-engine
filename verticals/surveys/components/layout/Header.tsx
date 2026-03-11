@@ -195,7 +195,7 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="lg:hidden"
+          className="flex min-h-[44px] min-w-[44px] items-center justify-center lg:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -208,14 +208,14 @@ const Header = () => {
         <div className="border-t border-border bg-background lg:hidden">
           <nav className="container py-4">
             
-            <Link href="/services/topographical-survey" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Topographical Survey</Link>
-            <Link href="/services/drone-survey" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drone Survey</Link>
-            <Link href="/services/measured-building-survey" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Measured Building Survey</Link>
+            <Link href="/services/topographical-survey" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Topographical Survey</Link>
+            <Link href="/services/drone-survey" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drone Survey</Link>
+            <Link href="/services/measured-building-survey" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Measured Building Survey</Link>
 
             {/* Mobile Locations Accordion */}
             <div>
               <button
-                className="flex w-full items-center justify-between py-3 text-sm font-medium text-foreground"
+                className="flex min-h-[44px] w-full items-center justify-between text-sm font-medium text-foreground"
                 onClick={() => setLocationsOpen(!locationsOpen)}
               >
                 Locations
@@ -238,7 +238,7 @@ const Header = () => {
             {/* Mobile Resources Accordion */}
             <div>
               <button
-                className="flex w-full items-center justify-between py-3 text-sm font-medium text-foreground"
+                className="flex min-h-[44px] w-full items-center justify-between text-sm font-medium text-foreground"
                 onClick={() => setResourcesOpen(!resourcesOpen)}
               >
                 Resources

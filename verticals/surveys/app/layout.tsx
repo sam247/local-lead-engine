@@ -6,6 +6,8 @@ import StickyEmergencyBar from "@/components/sections/StickyEmergencyBar";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { Providers } from "./providers";
 
+export const viewport = { width: "device-width", initialScale: 1 };
+
 export const metadata: Metadata = {
   title: "Mainline Surveys | Land & Drone Surveying Across the UK",
   description: "Professional topographical, measured building, utility and drone surveys for architects, developers and property owners. Request a survey quote.",

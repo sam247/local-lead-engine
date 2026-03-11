@@ -145,14 +145,14 @@ const Footer = () => {
           <p className="text-sm text-primary-foreground/60">
             © {currentYear} {companyInfo.name}. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <Link href="/about" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">About</Link>
-            <Link href="/service-areas" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Service Areas</Link>
-            <Link href="/projects" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Projects</Link>
-            <Link href="/blog" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Blog</Link>
-            <Link href="/privacy" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Privacy</Link>
-            <Link href="/terms" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Terms</Link>
-            <Link href="/contractors" className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Contractors</Link>
+          <div className="flex flex-wrap items-center gap-2 gap-y-2">
+            <Link href="/about" className="inline-flex min-h-[44px] items-center text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">About</Link>
+            <Link href="/service-areas" className="inline-flex min-h-[44px] items-center text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Service Areas</Link>
+            <Link href="/projects" className="inline-flex min-h-[44px] items-center text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Projects</Link>
+            <Link href="/blog" className="inline-flex min-h-[44px] items-center text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Blog</Link>
+            <Link href="/privacy" className="inline-flex min-h-[44px] items-center text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Privacy</Link>
+            <Link href="/terms" className="inline-flex min-h-[44px] items-center text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Terms</Link>
+            <Link href="/contractors" className="inline-flex min-h-[44px] items-center text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Contractors</Link>
           </div>
         </div>
       </div>

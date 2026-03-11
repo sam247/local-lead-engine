@@ -15,6 +15,7 @@ export interface BlogPost {
   excerpt: string;
   date: string;
   image: string;
+  imagePrompt?: string;
   category: string;
 }
 

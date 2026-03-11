@@ -6,6 +6,8 @@ import StickyEmergencyBar from "@/components/sections/StickyEmergencyBar";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { Providers } from "./providers";
 
+export const viewport = { width: "device-width", initialScale: 1 };
+
 export const metadata: Metadata = {
   title: "Mainline Access | Commercial Access Control and Security Systems",
   description: "Access control, CCTV and integrated security systems for hospitals, data centres, warehouses and commercial buildings. Request a security consultation.",

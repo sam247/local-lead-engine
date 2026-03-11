@@ -155,7 +155,7 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="lg:hidden"
+          className="flex min-h-[44px] min-w-[44px] items-center justify-center lg:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -169,14 +169,14 @@ const Header = () => {
           <nav className="container py-4">
             
             {navServices.map((s) => (
-              <Link key={s.slug} href={`/services/${s.slug}`} className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>{s.title}</Link>
+              <Link key={s.slug} href={`/services/${s.slug}`} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>{s.title}</Link>
             ))}
-            <Link href="/industries" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Industries</Link>
+            <Link href="/industries" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Industries</Link>
 
             {/* Mobile Locations Accordion */}
             <div>
               <button
-                className="flex w-full items-center justify-between py-3 text-sm font-medium text-foreground"
+                className="flex min-h-[44px] w-full items-center justify-between text-sm font-medium text-foreground"
                 onClick={() => setLocationsOpen(!locationsOpen)}
               >
                 Locations
@@ -199,7 +199,7 @@ const Header = () => {
             {/* Mobile Industries Accordion */}
             <div>
               <button
-                className="flex w-full items-center justify-between py-3 text-sm font-medium text-foreground"
+                className="flex min-h-[44px] w-full items-center justify-between text-sm font-medium text-foreground"
                 onClick={() => setResourcesOpen(!resourcesOpen)}
               >
                 Industries

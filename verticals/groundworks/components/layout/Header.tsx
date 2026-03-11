@@ -160,7 +160,7 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="lg:hidden"
+          className="flex min-h-[44px] min-w-[44px] items-center justify-center lg:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -173,14 +173,14 @@ const Header = () => {
         <div className="border-t border-border bg-background lg:hidden">
           <nav className="container py-4">
             
-            <Link href="/services/groundworks-contractors" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Groundworks</Link>
-            <Link href="/services/piling-contractors" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Piling</Link>
-            <Link href="/services/foundation-contractors" className="block py-3 text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Foundations</Link>
+            <Link href="/services/groundworks-contractors" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Groundworks</Link>
+            <Link href="/services/piling-contractors" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Piling</Link>
+            <Link href="/services/foundation-contractors" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Foundations</Link>
 
             {/* Mobile Locations Accordion */}
             <div>
               <button
-                className="flex w-full items-center justify-between py-3 text-sm font-medium text-foreground"
+                className="flex min-h-[44px] w-full items-center justify-between text-sm font-medium text-foreground"
                 onClick={() => setLocationsOpen(!locationsOpen)}
               >
                 Locations
@@ -203,7 +203,7 @@ const Header = () => {
             {/* Mobile Resources Accordion */}
             <div>
               <button
-                className="flex w-full items-center justify-between py-3 text-sm font-medium text-foreground"
+                className="flex min-h-[44px] w-full items-center justify-between text-sm font-medium text-foreground"
                 onClick={() => setResourcesOpen(!resourcesOpen)}
               >
                 Resources

@@ -14,14 +14,14 @@ const StickyEmergencyBar = () => {
           Survey Quote & Specialist Support
         </span>
         <div className="flex w-full items-center gap-2 md:w-auto">
-          <Button variant="highlight" size="sm" asChild className="flex-1 md:flex-none">
+          <Button variant="highlight" asChild className="flex-1 md:flex-none">
             <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="gap-2" onClick={() => trackEvent("call_button_click")}>
               <Phone className="h-4 w-4" />
               <span className="md:hidden">Call Now</span>
               <span className="hidden md:inline">Call Now</span>
             </a>
           </Button>
-          <Button size="sm" asChild className="flex-1 md:flex-none">
+          <Button asChild className="flex-1 md:flex-none">
             <Link href="/contact" className="gap-2">
               Request a Survey Quote
               <ArrowRight className="h-4 w-4" />

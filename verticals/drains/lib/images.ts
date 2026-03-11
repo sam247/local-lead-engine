@@ -35,6 +35,15 @@ export const blogImages = [
   `${base}/blog/blog-3.jpg`,
 ];
 
+/** Use post's dedicated image if set (and not placeholder), else fallback to index in blogImages. */
+export function getBlogImage(
+  post: { image?: string },
+  index: number
+): string {
+  if (post.image && post.image !== "/placeholder.svg") return post.image;
+  return blogImages[Math.abs(index) % blogImages.length] ?? blogImages[0];
+}
+
 export const heroBg = `${base}/hero-bg.jpg`;
 export const aboutTeam = `${base}/about-team.jpg`;
 

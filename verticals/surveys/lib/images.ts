@@ -37,6 +37,15 @@ export const blogImages = [
   "https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=800&q=80", // topographic / map
 ];
 
+/** Use post's dedicated image if set (and not placeholder), else fallback to index in blogImages. */
+export function getBlogImage(
+  post: { image?: string },
+  index: number
+): string {
+  if (post.image && post.image !== "/placeholder.svg") return post.image;
+  return blogImages[Math.abs(index) % blogImages.length] ?? blogImages[0];
+}
+
 export const heroBg = `${base}/hero-bg.jpg`;
 export const aboutTeam = `${base}/about-team.jpg`;
 

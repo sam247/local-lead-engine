@@ -18,10 +18,10 @@ const buttonVariants = cva(
         highlight: "bg-highlight text-white font-bold hover:bg-highlight/90 shadow-lg",
       },
       size: {
-        default: "h-10 px-4 py-2",
+        default: "min-h-[44px] px-4 py-2",
         sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
+        lg: "min-h-[44px] rounded-md px-8",
+        icon: "min-h-[44px] min-w-[44px]",
       },
     },
     defaultVariants: {

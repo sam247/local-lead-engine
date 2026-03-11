@@ -209,7 +209,7 @@ export const faqs: { question: string; answer: string }[] = [
   { question: "Do you need a survey before groundworks?", answer: "Many projects benefit from a topographical or utility survey before groundworks to map the site and avoid clashes. We can work with your surveyor or recommend one." },
 ];
 
-export const blogPosts: Array<{ id: string; title: string; excerpt: string; date: string; image: string; category: string }> = [];
+export const blogPosts: Array<{ id: string; title: string; excerpt: string; date: string; image: string; imagePrompt?: string; category: string }> = [];
 
 export const whyChooseUs: { title: string; description: string; icon: string }[] = [
   { title: "Experienced Teams", description: "Qualified operatives and modern plant for piling, excavation and foundations across the UK.", icon: "Users" },

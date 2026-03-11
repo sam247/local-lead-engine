@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
 import { blogPosts } from "@/lib/data";
-import { blogImages } from "@/lib/images";
+import { getBlogImage } from "@/lib/images";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -43,7 +43,7 @@ const BlogPreview = () => {
               >
                 <div className="aspect-video overflow-hidden">
                   <img
-                    src={blogImages[index % blogImages.length]}
+                    src={getBlogImage(post, index)}
                     alt={post.title}
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { blogPosts } from "@/lib/data";
-import { blogImages } from "@/lib/images";
+import { getBlogImage } from "@/lib/images";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "lucide-react";
@@ -35,7 +35,7 @@ export default function BlogPage() {
               <Link key={post.id} href={`/blog/${post.id}`}>
                 <Card className="group overflow-hidden transition-all hover:shadow-lg">
                   <div className="aspect-video overflow-hidden">
-                    <img src={blogImages[index % blogImages.length]} alt={post.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                    <img src={getBlogImage(post, index)} alt={post.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                   </div>
                   <CardHeader>
                     <div className="flex items-center gap-2">

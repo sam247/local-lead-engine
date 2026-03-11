@@ -436,14 +436,15 @@ export const faqs = [
   }
 ];
 
-// Blog posts
+// Blog posts — imagePrompt must exactly match the blog topic for image regeneration
 export const blogPosts = [
   {
     id: "signs-of-drain-collapse",
     title: "7 Warning Signs Your Drain Has Collapsed",
     excerpt: "Learn to spot the early warning signs of a collapsed drain before it causes serious damage to your property.",
     date: "2024-01-15",
-    image: "/placeholder.svg",
+    image: "/images/blog/signs-of-drain-collapse.jpg",
+    imagePrompt: "Sinkhole or depression in a UK garden above a collapsed drain, cracked driveway, warning signs of drain collapse, residential property drainage problem, realistic photo",
     category: "Advice"
   },
   {
@@ -451,7 +452,8 @@ export const blogPosts = [
     title: "Drain Relining vs Excavation: Which Repair Is Better?",
     excerpt: "A detailed comparison of no-dig relining and traditional excavation to help you choose the best repair method.",
     date: "2024-01-08",
-    image: "/placeholder.svg",
+    image: "/images/blog/drain-relining-vs-excavation.jpg",
+    imagePrompt: "Drain repair comparison: no-dig drain relining liner being inserted into pipe versus excavation trench with exposed damaged drain pipe, UK drainage contractor, realistic photo",
     category: "Technical"
   },
   {
@@ -459,7 +461,8 @@ export const blogPosts = [
     title: "What Happens During a CCTV Drain Survey",
     excerpt: "Everything you need to know about CCTV drain surveys — what they reveal and why they're essential before buying a property.",
     date: "2023-12-20",
-    image: "/placeholder.svg",
+    image: "/images/blog/cctv-drain-survey-guide.jpg",
+    imagePrompt: "CCTV drain survey in progress: engineer with drain camera monitor and cable fed into manhole, inspecting underground pipe, UK drainage survey, realistic photo",
     category: "Guides"
   },
   {
@@ -467,7 +470,8 @@ export const blogPosts = [
     title: "How To Prevent Blocked Drains At Home",
     excerpt: "Simple steps you can take to keep your drains flowing freely and avoid costly emergency callouts.",
     date: "2023-12-12",
-    image: "/placeholder.svg",
+    image: "/images/blog/preventing-blocked-drains.jpg",
+    imagePrompt: "Kitchen sink with strainer and fat in bin, bathroom drain guard, household preventing blocked drains, UK home drainage care, realistic photo",
     category: "Advice"
   },
   {
@@ -475,7 +479,8 @@ export const blogPosts = [
     title: "Tree Roots In Drains: Causes And Solutions",
     excerpt: "Why tree roots are one of the biggest threats to underground drainage and how to protect your pipes.",
     date: "2023-12-01",
-    image: "/placeholder.svg",
+    image: "/images/blog/tree-root-drain-damage.jpg",
+    imagePrompt: "Tree roots growing into cracked clay drain pipe, root intrusion in underground drainage, drain damage from roots, UK property, realistic photo",
     category: "Technical"
   },
   {
@@ -483,7 +488,8 @@ export const blogPosts = [
     title: "What To Do In A Drainage Emergency",
     excerpt: "A step-by-step guide on what to do when you have a drainage emergency to minimise damage and costs.",
     date: "2023-11-25",
-    image: "/placeholder.svg",
+    image: "/images/blog/emergency-drainage-what-to-do.jpg",
+    imagePrompt: "Emergency drainage callout: drainage engineer at manhole with van, sewage backup or blocked drain emergency, UK 24/7 drainage service, realistic photo",
     category: "Guides"
   }
 ];

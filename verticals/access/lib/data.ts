@@ -285,14 +285,15 @@ export const faqs = [
   }
 ];
 
-// Blog posts
+// Blog posts — imagePrompt must exactly match the blog topic for image regeneration
 export const blogPosts = [
   {
     id: "access-control-buying-guide",
     title: "Access Control Buying Guide for Commercial Buildings",
     excerpt: "What to consider when specifying access control for offices, warehouses and multi-site premises.",
     date: "2024-01-15",
-    image: "/placeholder.svg",
+    image: "/images/blog/access-control-buying-guide.jpg",
+    imagePrompt: "Commercial building entrance with access control keypad and door reader, office or warehouse security, UK, realistic photo",
     category: "Advice"
   },
   {
@@ -300,7 +301,8 @@ export const blogPosts = [
     title: "CCTV vs IP Cameras: Which Is Right for Your Site?",
     excerpt: "A comparison of analogue HD and IP camera systems to help you choose the right solution.",
     date: "2024-01-08",
-    image: "/placeholder.svg",
+    image: "/images/blog/cctv-vs-ip-cameras.jpg",
+    imagePrompt: "CCTV and IP cameras mounted on building exterior, security camera comparison, commercial site surveillance, UK, realistic photo",
     category: "Technical"
   },
   {
@@ -308,7 +310,8 @@ export const blogPosts = [
     title: "Hospital Security Systems: Requirements and Best Practice",
     excerpt: "Key considerations for access control and CCTV in healthcare environments.",
     date: "2023-12-20",
-    image: "/placeholder.svg",
+    image: "/images/blog/hospital-security-requirements.jpg",
+    imagePrompt: "Hospital or healthcare building entrance with access control and CCTV, secure reception, UK healthcare security, realistic photo",
     category: "Guides"
   },
   {
@@ -316,7 +319,8 @@ export const blogPosts = [
     title: "Perimeter Security for Data Centres and Warehouses",
     excerpt: "How to protect boundaries with detection and CCTV integration.",
     date: "2023-12-12",
-    image: "/placeholder.svg",
+    image: "/images/blog/perimeter-security-guide.jpg",
+    imagePrompt: "Perimeter security: fence line with detection and CCTV cameras, data centre or warehouse boundary, UK, realistic photo",
     category: "Advice"
   },
   {
@@ -324,7 +328,8 @@ export const blogPosts = [
     title: "Integrating Access Control, CCTV and Alarms",
     excerpt: "Benefits of a unified security platform and what to plan for.",
     date: "2023-12-01",
-    image: "/placeholder.svg",
+    image: "/images/blog/security-system-integration.jpg",
+    imagePrompt: "Unified security control room or panel showing access control, CCTV and alarms integrated, commercial building, UK, realistic photo",
     category: "Technical"
   },
   {
@@ -332,7 +337,8 @@ export const blogPosts = [
     title: "CCTV Compliance and Data Protection",
     excerpt: "What you need to know about signage, retention and data protection for business CCTV.",
     date: "2023-11-25",
-    image: "/placeholder.svg",
+    image: "/images/blog/commercial-cctv-compliance.jpg",
+    imagePrompt: "CCTV in use sign and security camera at business entrance, data protection compliant signage, UK commercial CCTV, realistic photo",
     category: "Guides"
   }
 ];

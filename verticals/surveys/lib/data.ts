@@ -447,14 +447,15 @@ export const faqs = [
   }
 ];
 
-// Blog posts
+// Blog posts — imagePrompt must exactly match the blog topic for image regeneration
 export const blogPosts = [
   {
     id: "when-do-you-need-a-topographical-survey",
     title: "When Do You Need a Topographical Survey?",
     excerpt: "From planning applications to extension design — when to commission a topographical survey and what you get.",
     date: "2024-01-15",
-    image: "/placeholder.svg",
+    image: "/images/blog/when-do-you-need-a-topographical-survey.jpg",
+    imagePrompt: "Land surveyor with total station or GNSS receiver on UK site, topographical survey for planning application, contours and levels, realistic photo",
     category: "Topographical"
   },
   {
@@ -462,7 +463,8 @@ export const blogPosts = [
     title: "Drone Surveys vs Traditional Surveys",
     excerpt: "How drone surveys compare to total station and GNSS surveys — speed, cost and when to use each.",
     date: "2024-01-08",
-    image: "/placeholder.svg",
+    image: "/images/blog/drone-surveys-vs-traditional-surveys.jpg",
+    imagePrompt: "Drone survey UAV in flight over construction site alongside surveyor with total station on ground, comparison of drone vs traditional land survey, UK, realistic photo",
     category: "Drone"
   },
   {
@@ -470,7 +472,8 @@ export const blogPosts = [
     title: "Survey Requirements for Planning Permission",
     excerpt: "What land and building surveys planners expect to see and how to avoid delays on your application.",
     date: "2023-12-20",
-    image: "/placeholder.svg",
+    image: "/images/blog/survey-requirements-for-planning-permission.jpg",
+    imagePrompt: "Site plan and topographical survey drawings for planning application, architect reviewing survey data, UK planning, realistic photo",
     category: "Planning"
   },
   {
@@ -478,7 +481,8 @@ export const blogPosts = [
     title: "How Much Does a Land Survey Cost?",
     excerpt: "Typical UK pricing for topographical, measured building, utility and drone surveys — and what affects the quote.",
     date: "2023-12-12",
-    image: "/placeholder.svg",
+    image: "/images/blog/how-much-does-a-land-survey-cost.jpg",
+    imagePrompt: "Land surveyor quoting on site visit, topographical and measured building survey equipment, UK land survey cost, realistic photo",
     category: "Costs"
   },
   {
@@ -486,7 +490,8 @@ export const blogPosts = [
     title: "When to Use a Drone Survey",
     excerpt: "Drone surveys for construction, roof inspections and large sites — benefits and limitations.",
     date: "2023-12-01",
-    image: "/placeholder.svg",
+    image: "/images/blog/when-to-use-a-drone-survey.jpg",
+    imagePrompt: "Drone survey over large construction or quarry site, aerial mapping and progress monitoring, UK drone survey, realistic photo",
     category: "Drone"
   },
   {
@@ -494,7 +499,8 @@ export const blogPosts = [
     title: "Why You Need a Utility Survey Before Excavation",
     excerpt: "Locating underground services before you dig — safety, cost and programme benefits.",
     date: "2023-11-25",
-    image: "/placeholder.svg",
+    image: "/images/blog/utility-survey-before-excavation.jpg",
+    imagePrompt: "Utility survey in progress: GPR and EM equipment locating underground pipes and cables, marked-out services on site before excavation, UK, realistic photo",
     category: "Utility"
   }
 ];
