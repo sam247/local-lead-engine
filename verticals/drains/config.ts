@@ -52,6 +52,9 @@ export const verticalConfig: VerticalConfig = {
     "Drainage projects often require different approaches depending on the issue—from surveys and diagnosis to excavation, relining and emergency response. In addition to the service above, we offer the following so you can find the right solution for your property.",
   relatedLocationsIntro:
     "We provide drainage services across the UK. Select an area below for local information, coverage and contact options.",
+  crossVerticalLinks: [
+    { label: "Topographical and land surveys", url: `${partnerBaseUrl}${partnerTopographicalSurveyPath}` },
+  ],
   locationContextTemplate:
     "We provide {serviceTitle} across {locationName} and the wider {area} region. Our engineers attend residential and commercial properties throughout the area, including in {nearbyTowns}, for CCTV surveys, drain repairs, relining and emergency call-outs. Contact us for a free no-obligation quote or to discuss your project in {locationName}.",
 };

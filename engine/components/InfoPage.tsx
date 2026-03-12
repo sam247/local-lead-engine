@@ -153,6 +153,22 @@ export function InfoPage({
                   </ol>
                 </div>
               )}
+              {locations.length > 0 && (page.relatedServices?.[0] || services[0]?.slug) && (
+                <div className="mb-8">
+                  <h3 className="mb-3 font-display text-lg font-bold">We provide these services across the UK, including</h3>
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                    {locations.slice(0, 8).map((loc) => (
+                      <Link
+                        key={loc.id}
+                        href={`/${page.relatedServices?.[0] || services[0]?.slug}/${loc.id}`}
+                        className="text-sm text-primary hover:underline"
+                      >
+                        {loc.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div className="mb-8">
                 <InspectionCTA companyInfo={companyInfo} contactPath={contactPath} />
               </div>

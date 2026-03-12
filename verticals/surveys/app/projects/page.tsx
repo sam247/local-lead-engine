@@ -1,5 +1,8 @@
+import Link from "next/link";
 import { projects } from "@/data/projects";
+import { services } from "@/lib/data";
 import { getProjectImage } from "@/lib/images";
+import { ProjectCardWithLinks } from "engine";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import type { Metadata } from "next";
@@ -14,6 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsPage() {
+  const featuredServices = services.slice(0, 6);
   return (
     <>
       <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Projects", url: "/projects" }] }} />
@@ -21,25 +25,47 @@ export default function ProjectsPage() {
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">Our Projects</h1>
-            <p className="text-lg text-primary-foreground/80">A showcase of land and drone surveying projects across London and the South East.</p>
+            <p className="text-lg text-primary-foreground/80">A showcase of land and drone surveying projects across the South East.</p>
           </div>
         </div>
       </section>
       <section className="section-padding">
         <div className="container">
+          {featuredServices.length > 0 && (
+            <div className="mb-8 rounded-lg border border-border bg-secondary/30 p-6">
+              <h2 className="mb-4 font-display text-xl font-bold">Related services</h2>
+              <div className="flex flex-wrap gap-3">
+                {featuredServices.map((s) => (
+                  <Link
+                    key={s.id}
+                    href={`/services/${s.slug}`}
+                    className="text-sm font-medium text-primary hover:underline"
+                  >
+                    {s.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (
-              <div key={project.id} className="group overflow-hidden rounded-lg bg-card shadow-sm">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img src={getProjectImage(project)} alt={project.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                </div>
-                <div className="p-4">
-                  <span className="text-xs font-medium text-primary">{project.service}</span>
-                  <h3 className="mt-1 font-display font-semibold">{project.title}</h3>
-                  <p className="text-sm text-muted-foreground">{project.location}</p>
-                  {project.description && <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{project.description}</p>}
-                </div>
-              </div>
+              <ProjectCardWithLinks
+                key={project.id}
+                project={{
+                  id: project.id,
+                  title: project.title,
+                  description: project.description,
+                  location: project.location,
+                  locationId: project.locationId,
+                  service: project.service,
+                  serviceSlug: project.serviceSlug,
+                }}
+                imageSrc={getProjectImage(project)}
+                imageAlt={project.title}
+                services={services}
+                locationLinkPath={(slug, locId) => `/${slug}/${locId}`}
+                servicesPath="/services"
+              />
             ))}
           </div>
         </div>

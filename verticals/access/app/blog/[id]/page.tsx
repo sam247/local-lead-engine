@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { blogPosts } from "@/lib/data";
+import { blogPosts, services, locations } from "@/lib/data";
 import { getBlogArticleContent } from "@/lib/blogArticleContent";
 import { verticalConfig } from "@/config";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
@@ -37,6 +37,12 @@ export default async function BlogArticlePage({ params }: Props) {
   const content = post ? getBlogArticleContent(id) : null;
   if (!post || !content) notFound();
 
+  const postWithSlugs = post as typeof post & { relatedServiceSlugs?: string[] };
+  const relatedServiceSlugs =
+    (postWithSlugs.relatedServiceSlugs?.length ?? 0) > 0
+      ? (postWithSlugs.relatedServiceSlugs ?? []).slice(0, 4)
+      : services.slice(0, 4).map((s) => s.slug);
+
   return (
     <>
       <SchemaMarkup
@@ -49,7 +55,17 @@ export default async function BlogArticlePage({ params }: Props) {
           ],
         }}
       />
-      <BlogArticleContent post={post} content={content} />
+      <BlogArticleContent
+        post={post}
+        content={content}
+        relatedServiceSlugs={relatedServiceSlugs}
+        services={services}
+        locations={locations}
+        relatedGuideLinks={[]}
+        crossVerticalLinks={verticalConfig.crossVerticalLinks}
+        servicesPath="/services"
+        locationLinkPath={(slug, locId) => `/${slug}/${locId}`}
+      />
     </>
   );
 }

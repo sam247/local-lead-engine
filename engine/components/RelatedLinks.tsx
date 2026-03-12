@@ -32,7 +32,7 @@ export function RelatedLinks({
 }: RelatedLinksProps) {
   const matchedServices = services.filter((s) => relatedServices.includes(s.slug));
   const firstServiceSlug = relatedServices[0] || services[0]?.slug;
-  const featuredLocations = locations.slice(0, 6);
+  const featuredLocations = locations.slice(0, 8);
 
   const relatedHubs = hubPages
     .filter((h) => h.category !== category && getCategoryPages(h.category).length > 0)

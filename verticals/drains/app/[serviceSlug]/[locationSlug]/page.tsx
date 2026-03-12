@@ -86,7 +86,7 @@ export default async function LocationRoute({ params }: Props) {
   const neighbourLocationsForContext = neighbourIds
     .map((id) => locations.find((l) => l.id === id))
     .filter((l): l is NonNullable<typeof l> => l != null)
-    .slice(0, 5);
+    .slice(0, 8);
 
   const displayTitle = service.titleSingular ?? service.title;
   const nearbyTowns =

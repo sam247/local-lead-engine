@@ -185,7 +185,7 @@ export function LocationPage({
                   <NearbyAreas
                     serviceSlug={serviceSlug}
                     serviceTitle={displayTitle}
-                    neighbourLocations={neighbourLocationsForContext.slice(0, 5).map((l) => ({ id: l.id, name: l.name }))}
+                    neighbourLocations={neighbourLocationsForContext.slice(0, 8).map((l) => ({ id: l.id, name: l.name }))}
                   />
                 </>
               )}

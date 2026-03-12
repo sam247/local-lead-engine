@@ -93,6 +93,8 @@ export interface VerticalConfig {
   relatedLocationsIntro?: string;
   /** Template for location page context paragraph (60–100 words). Placeholders: {serviceTitle}, {locationName}, {area}, {nearbyTowns}. */
   locationContextTemplate?: string;
+  /** Optional 1–2 cross-vertical links for blog/content related blocks (e.g. partner site). */
+  crossVerticalLinks?: { label: string; url: string }[];
 }
 
 export interface ProblemData {

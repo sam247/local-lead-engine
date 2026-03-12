@@ -239,7 +239,7 @@ export function ServiceDetailContent({
 
               {(() => {
                 const otherServices = services.filter((s) => s.slug !== service.slug);
-                const featuredLocations = locations.slice(0, 6);
+                const featuredLocations = locations.slice(0, 12);
                 const showRelatedServices =
                   otherServices.length > 0 && verticalConfig.relatedServicesIntro;
                 const showRelatedLocations = featuredLocations.length > 0;

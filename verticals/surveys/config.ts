@@ -50,6 +50,9 @@ export const verticalConfig: VerticalConfig = {
     "Survey requirements vary by project—from land and utility mapping to measured building and drone-based capture. In addition to the service above, we offer the following so you can find the right survey type and deliverables for planning, design or construction.",
   relatedLocationsIntro:
     "We deliver surveys across the UK. Select an area below for local information and contact options.",
+  crossVerticalLinks: [
+    { label: "CCTV drain surveys", url: `${partnerBaseUrl}${partnerDrainSurveyPath}` },
+  ],
   locationContextTemplate:
     "{locationName} and the wider {area} region see residential, commercial and infrastructure projects that often need topographical, measured building or drone surveys. Our survey partners deliver planning-ready data across the area, including in {nearbyTowns}. Contact us for a free no-obligation quote for your project in or around {locationName}.",
 };

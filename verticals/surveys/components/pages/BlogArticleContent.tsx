@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BreadcrumbNav } from "engine";
+import { BreadcrumbNav, ContentRelatedLinks } from "engine";
 import { Calendar } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import FAQSchema from "@/components/sections/FAQSchema";
@@ -8,6 +8,7 @@ import {
   parseBodyWithLinks,
   type BlogArticleContent as BlogArticleContentType,
 } from "@/lib/blogArticleContent";
+import type { Service, Location } from "engine";
 
 export interface BlogPost {
   id: string;
@@ -21,9 +22,26 @@ export interface BlogPost {
 interface BlogArticleContentProps {
   post: BlogPost;
   content: BlogArticleContentType;
+  relatedServiceSlugs?: string[];
+  services?: Service[];
+  locations?: Location[];
+  relatedGuideLinks?: { title: string; href: string }[];
+  crossVerticalLinks?: { label: string; url: string }[];
+  servicesPath?: string;
+  locationLinkPath?: (serviceSlug: string, locationId: string) => string;
 }
 
-export default function BlogArticleContent({ post, content }: BlogArticleContentProps) {
+export default function BlogArticleContent({
+  post,
+  content,
+  relatedServiceSlugs = [],
+  services = [],
+  locations = [],
+  relatedGuideLinks = [],
+  crossVerticalLinks = [],
+  servicesPath = "/services",
+  locationLinkPath = (slug, locId) => `/${slug}/${locId}`,
+}: BlogArticleContentProps) {
   const breadcrumbs = [
     { name: "Home", url: "/" },
     { name: "Blog", url: "/blog" },
@@ -83,6 +101,20 @@ export default function BlogArticleContent({ post, content }: BlogArticleContent
             {content.faqs && content.faqs.length > 0 && (
               <div className="mt-12">
                 <FAQSchema items={content.faqs} title={`${post.title} – FAQ`} />
+              </div>
+            )}
+
+            {services.length > 0 && locations.length > 0 && (
+              <div className="mt-10">
+                <ContentRelatedLinks
+                  relatedServiceSlugs={relatedServiceSlugs}
+                  services={services}
+                  locations={locations}
+                  relatedGuideLinks={relatedGuideLinks}
+                  crossVerticalLinks={crossVerticalLinks}
+                  servicesPath={servicesPath}
+                  locationLinkPath={locationLinkPath}
+                />
               </div>
             )}
           </div>

@@ -9,9 +9,11 @@ export { PillarGuide, type PillarGuideProps, type PillarGuideSection } from "./P
 export { MapEmbed, type MapEmbedProps } from "./MapEmbed";
 export { InspectionCTA, type InspectionCTAProps } from "./InspectionCTA";
 export { MidContentCTA, type MidContentCTAProps } from "./MidContentCTA";
+export { ContentRelatedLinks, type ContentRelatedLinksProps } from "./ContentRelatedLinks";
 export { CTABanner, type CTABannerProps } from "./CTABanner";
 export { ProblemCTA, type ProblemCTAProps } from "./ProblemCTA";
 export { ProblemPage, type ProblemPageProps } from "./ProblemPage";
+export { ProjectCardWithLinks, type ProjectCardWithLinksProps, type ProjectForCard } from "./ProjectCardWithLinks";
 export { RelatedLinks, type RelatedLinksProps } from "./RelatedLinks";
 export { ServiceImageGallery, type ServiceImageGalleryProps } from "./ServiceImageGallery";
 export { ServiceDetailContent, type ServiceDetailContentProps, type SymptomLink } from "./ServiceDetailContent";

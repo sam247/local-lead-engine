@@ -38,6 +38,9 @@ export const verticalConfig: VerticalConfig = {
     "Security and access solutions can include access control, CCTV, perimeter detection and integration with existing systems. In addition to the service above, we offer the following so you can find the right combination for your site.",
   relatedLocationsIntro:
     "We install and maintain security systems across the UK. Select an area below for local information and contact options.",
+  crossVerticalLinks: [
+    { label: "Topographical surveys", url: `${partnerBaseUrl}${partnerTopographicalSurveyPath}` },
+  ],
   locationContextTemplate:
     "We provide {serviceTitle} across {locationName} and the {area} region for commercial and public-sector sites. Our engineers install and maintain access control, CCTV and integrated security systems throughout the area, including in {nearbyTowns}. Contact us for a free site survey and quote for your project in or around {locationName}.",
   companyInfo: {

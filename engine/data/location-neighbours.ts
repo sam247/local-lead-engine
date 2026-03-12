@@ -8,9 +8,11 @@ export const locationNeighbours: Record<string, string[]> = {
   manchester: ["salford", "trafford", "stockport", "oldham", "rochdale"],
 };
 
+const NEIGHBOUR_LOCATIONS_MAX = 8;
+
 /**
- * Returns up to 5 neighbour location ids for the current location.
- * Uses locationNeighbours when available; otherwise returns the first 5 from allLocationIds excluding current.
+ * Returns up to 8 neighbour location ids for the current location.
+ * Uses locationNeighbours when available; otherwise returns the first 8 from allLocationIds excluding current.
  */
 export function getNeighbourLocationIds(
   currentLocationId: string,
@@ -19,10 +21,10 @@ export function getNeighbourLocationIds(
   const neighbours = locationNeighbours[currentLocationId];
   const others = allLocationIds.filter((id) => id !== currentLocationId);
   if (neighbours && neighbours.length > 0) {
-    const fromMap = neighbours.filter((id) => allLocationIds.includes(id)).slice(0, 5);
-    if (fromMap.length >= 5) return fromMap;
-    const remaining = others.filter((id) => !fromMap.includes(id)).slice(0, 5 - fromMap.length);
+    const fromMap = neighbours.filter((id) => allLocationIds.includes(id)).slice(0, NEIGHBOUR_LOCATIONS_MAX);
+    if (fromMap.length >= NEIGHBOUR_LOCATIONS_MAX) return fromMap;
+    const remaining = others.filter((id) => !fromMap.includes(id)).slice(0, NEIGHBOUR_LOCATIONS_MAX - fromMap.length);
     return [...fromMap, ...remaining];
   }
-  return others.slice(0, 5);
+  return others.slice(0, NEIGHBOUR_LOCATIONS_MAX);
 }

@@ -39,6 +39,10 @@ export const verticalConfig: VerticalConfig = {
     "Groundworks projects often involve several specialist disciplines depending on the size and complexity of the development. In addition to general groundworks contracting, clients frequently require services such as piling, excavation or foundation installation.",
   relatedLocationsIntro:
     "We deliver groundworks and related services across the UK. Select an area below for local information and contact options.",
+  crossVerticalLinks: [
+    { label: "Topographical surveys", url: `${partnerBaseUrl}${partnerTopographicalSurveyPath}` },
+    { label: "Drainage installation", url: `${partnerDrainsBaseUrl}/services/drain-installation` },
+  ],
   locationContextTemplate:
     "{locationName} and the wider {area} region see a mix of housing, commercial and infrastructure projects. Our {serviceTitle} teams work with developers and main contractors across the area, including in {nearbyTowns}. We deliver piling, excavation, foundations and site preparation to programme, with free no-obligation quotes for projects in and around {locationName}.",
   companyInfo: {
