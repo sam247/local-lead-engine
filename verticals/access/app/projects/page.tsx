@@ -31,7 +31,7 @@ export default function ProjectsPage() {
             {projects.map((project) => (
               <div key={project.id} className="group overflow-hidden rounded-lg bg-card shadow-sm">
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={getProjectImage(project.imageIndex)} alt={project.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  <img src={getProjectImage(project)} alt={project.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                 </div>
                 <div className="p-4">
                   <span className="text-xs font-medium text-primary">{project.service}</span>

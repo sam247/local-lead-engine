@@ -40,4 +40,10 @@ export const verticalConfig: VerticalConfig = {
       bestRating: 5,
     },
   },
+  sectionIntros: {
+    types: "Survey services cover a wide range of deliverables, from land and utility mapping to measured building and drone-based capture. Depending on your project, we provide the right method and output format for planning, design or construction.",
+    process: "We take a project-led approach: from your brief and site visit through to data capture, processing and delivery. You receive clear deliverables—CAD, point clouds, reports—on an agreed programme with no surprises.",
+    industries: "We work with developers, architects, contractors and public-sector clients. Our surveys support residential and commercial development, infrastructure, heritage projects and land management across the UK.",
+    benefits: "Working with an experienced survey provider means accurate, planning-ready data and consistent quality. We deliver on programme, use calibrated equipment and provide documentation suitable for design and approval.",
+  },
 };

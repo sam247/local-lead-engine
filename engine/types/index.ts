@@ -80,6 +80,13 @@ export interface VerticalConfig {
   trustedEquipment?: string[];
   /** Short label for sidebar "Related X Services" (e.g. "Drain" → "Related Drain Services"). Falls back to siteName. */
   relatedServicesLabel?: string;
+  /** Optional intro paragraphs for service detail sections (before each list). ~40–80 words each. */
+  sectionIntros?: {
+    types?: string;
+    process?: string;
+    industries?: string;
+    benefits?: string;
+  };
 }
 
 export interface ProblemData {

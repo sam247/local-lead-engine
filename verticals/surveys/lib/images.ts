@@ -26,8 +26,11 @@ const PROJECT_IMAGE_URLS = [
   "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80", // site survey
 ];
 
-export function getProjectImage(index: number): string {
-  return PROJECT_IMAGE_URLS[Math.abs(index) % PROJECT_IMAGE_URLS.length] ?? PROJECT_IMAGE_URLS[0];
+/** Use project's dedicated image when available, else fallback to index in pool. */
+export function getProjectImage(project: { image?: string; imageIndex?: number } | number, index?: number): string {
+  const idx = typeof project === "number" ? project : (index ?? project.imageIndex ?? 0);
+  if (typeof project === "object" && project.image) return project.image;
+  return PROJECT_IMAGE_URLS[Math.abs(idx) % PROJECT_IMAGE_URLS.length] ?? PROJECT_IMAGE_URLS[0];
 }
 
 /** Survey/land/drone-themed blog images (no drainage). Replace with local assets when ready. */

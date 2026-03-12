@@ -29,6 +29,12 @@ export const verticalConfig: VerticalConfig = {
   problemLabel: "Groundworks",
   relatedServicesLabel: "Groundworks",
   serviceTypesBySlug,
+  sectionIntros: {
+    types: "Groundworks projects often involve several specialist disciplines depending on the requirements of the development. Contractors may focus on excavation, piling, drainage installation or foundation construction, often working together to prepare a site for structural works.",
+    process: "We follow a structured approach from site assessment and design coordination through to setting out, excavation, piling and foundations, drainage and services, and reinstatement and handover. Each phase is planned and delivered to programme.",
+    industries: "We work with developers, main contractors and clients across commercial and residential construction. Our groundworks teams have experience on housing, offices, warehouses, schools, healthcare and industrial sites throughout the UK.",
+    benefits: "A single point of contact for groundworks simplifies coordination and accountability. We deliver to programme, are fully insured and accredited, and provide experienced teams and plant with quality-assured work and handover documentation.",
+  },
   companyInfo: {
     name: companyInfo.name,
     phone: companyInfo.phone,

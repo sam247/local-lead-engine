@@ -14,9 +14,9 @@ export interface InspectionCTAProps {
 export function InspectionCTA({
   companyInfo,
   contactPath = "/contact",
-  heading = "Need a Professional Inspection?",
-  body = "If you're experiencing persistent issues, don't wait for the problem to worsen. Our engineers use proven methods to diagnose accurately. Call for emergency response or book a scheduled inspection.",
-  ctaText = "Book an Inspection",
+  heading = "Get a Free Quote",
+  body = "Contact us for a no-obligation quote or to discuss your project. We'll advise on the best approach and provide clear pricing.",
+  ctaText = "Get a Quote",
 }: InspectionCTAProps) {
   return (
     <div className="rounded-lg border border-primary/20 bg-primary/5 p-6 md:p-8">

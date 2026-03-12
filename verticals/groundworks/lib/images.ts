@@ -22,8 +22,11 @@ const projectImagePaths = [
   `${base}/projects/project-6.jpg`,
 ];
 
-export function getProjectImage(index: number): string {
-  return projectImagePaths[Math.abs(index) % projectImagePaths.length] ?? projectImagePaths[0];
+/** Use project's dedicated image when available, else fallback to index in pool. */
+export function getProjectImage(project: { image?: string; imageIndex?: number } | number, index?: number): string {
+  const idx = typeof project === "number" ? project : (index ?? project.imageIndex ?? 0);
+  if (typeof project === "object" && project.image) return project.image;
+  return projectImagePaths[Math.abs(idx) % projectImagePaths.length] ?? projectImagePaths[0];
 }
 
 export const blogImages = [

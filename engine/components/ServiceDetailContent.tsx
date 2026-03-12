@@ -44,6 +44,8 @@ export interface ServiceDetailContentProps {
   secondCtaButtonText?: string;
   galleryImages?: { src: string; alt?: string }[];
   overviewExtra?: React.ReactNode;
+  /** Optional image block shown after Overview (before Types section). */
+  overviewImage?: { src: string; alt: string };
   /** Optional override for the symptom/related-links section heading (e.g. "Related guides" for surveys). */
   symptomLinksSectionTitle?: string;
 }
@@ -67,12 +69,14 @@ export function ServiceDetailContent({
   secondCtaButtonText,
   galleryImages = [],
   overviewExtra,
+  overviewImage,
   symptomLinksSectionTitle,
 }: ServiceDetailContentProps) {
   const displayTitle = service.titleSingular ?? service.title;
   const serviceTypes = verticalConfig.serviceTypesBySlug?.[service.slug] ?? [];
   const industries = verticalConfig.industries ?? DEFAULT_INDUSTRIES;
   const trustedEquipment = verticalConfig.trustedEquipment ?? [];
+  const sectionIntros = verticalConfig.sectionIntros ?? {};
   const relatedSidebarLabel = verticalConfig.relatedServicesLabel
     ? `Related ${verticalConfig.relatedServicesLabel} Services`
     : `Related ${verticalConfig.siteName} Services`;
@@ -127,12 +131,24 @@ export function ServiceDetailContent({
               <h2 className="mb-4 font-display text-2xl font-bold">Overview</h2>
               <p className="mb-8 text-muted-foreground">{service.description}</p>
               {overviewExtra && <div className="mb-8">{overviewExtra}</div>}
+              {overviewImage && (
+                <figure className="mb-8 overflow-hidden rounded-lg border border-border shadow-sm">
+                  <img
+                    src={overviewImage.src}
+                    alt={overviewImage.alt}
+                    className="h-auto w-full object-cover"
+                  />
+                </figure>
+              )}
 
               {serviceTypes.length > 0 && (
                 <>
                   <h2 className="mb-4 font-display text-2xl font-bold">
                     Types of {displayTitle}
                   </h2>
+                  {sectionIntros.types && (
+                    <p className="mb-4 text-muted-foreground">{sectionIntros.types}</p>
+                  )}
                   <ul className="mb-8 list-disc space-y-2 pl-6 text-muted-foreground">
                     {serviceTypes.map((type, i) => (
                       <li key={i}>{type}</li>
@@ -167,6 +183,9 @@ export function ServiceDetailContent({
               )}
 
               <h3 className="mb-4 font-display text-xl font-bold">Our Process</h3>
+              {sectionIntros.process && (
+                <p className="mb-4 text-muted-foreground">{sectionIntros.process}</p>
+              )}
               <ol className="mb-8 space-y-3">
                 {service.process.map((step, i) => (
                   <li key={i} className="flex gap-3">
@@ -179,6 +198,9 @@ export function ServiceDetailContent({
               </ol>
 
               <h3 className="mb-4 font-display text-xl font-bold">Industries We Work With</h3>
+              {sectionIntros.industries && (
+                <p className="mb-4 text-muted-foreground">{sectionIntros.industries}</p>
+              )}
               <ul className="mb-8 list-disc space-y-2 pl-6 text-muted-foreground">
                 {industries.map((ind, i) => (
                   <li key={i}>{ind}</li>
@@ -203,6 +225,9 @@ export function ServiceDetailContent({
               )}
 
               <h3 className="mb-4 font-display text-xl font-bold">Benefits</h3>
+              {sectionIntros.benefits && (
+                <p className="mb-4 text-muted-foreground">{sectionIntros.benefits}</p>
+              )}
               <ul className="mb-8 space-y-2">
                 {service.benefits.map((b) => (
                   <li key={b} className="flex items-center gap-2">

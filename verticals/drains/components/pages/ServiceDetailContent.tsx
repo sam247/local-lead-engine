@@ -151,6 +151,7 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
       locationLinkPath={(slug, id) => `/${slug}/${id}`}
       symptomLinks={symptomLinks}
       faqs={faqs}
+      overviewImage={{ src: heroImageSrc, alt: `${service.title} – ${verticalConfig.siteName}` }}
       firstCtaMessage="Not sure what's wrong with your drains? Book a professional CCTV drain survey for a clear diagnosis."
       firstCtaButtonText="Book a CCTV Survey"
       firstCtaButtonLink="/contact"

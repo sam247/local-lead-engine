@@ -151,9 +151,13 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
       locationLinkPath={(slug, id) => `/${slug}/${id}`}
       symptomLinks={symptomLinks}
       faqs={faqs}
-      firstCtaMessage="Not sure what's wrong with your drains? Book a professional CCTV drain survey for a clear diagnosis."
-      firstCtaButtonText="Book a CCTV Survey"
+      overviewImage={{ src: heroImageSrc, alt: `${service.title} – ${verticalConfig.siteName}` }}
+      firstCtaMessage="Not sure what you need? Request a site assessment or quote and we'll advise on the best approach for your project."
+      firstCtaButtonText="Request a Site Assessment"
       firstCtaButtonLink="/contact"
+      secondCtaHeading="Need a Groundworks Quote?"
+      secondCtaBody="Contact us for a no-obligation quote for piling, excavation, foundations or full groundworks. We'll outline the scope and programme for your site."
+      secondCtaButtonText="Get a Quote"
       overviewExtra={
         <p className="mb-8 text-sm text-muted-foreground">
           Larger construction projects may require a{" "}
@@ -165,7 +169,7 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
           >
             topographical or utility survey
           </a>{" "}
-          before drainage work begins.
+          before groundworks begin.
         </p>
       }
     />

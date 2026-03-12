@@ -71,6 +71,7 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
       locationLinkPath={(slug, id) => `/${slug}/${id}`}
       symptomLinks={symptomLinks}
       faqs={faqs}
+      overviewImage={{ src: heroImageSrc, alt: `${service.title} – ${verticalConfig.siteName}` }}
       firstCtaMessage="Need a security system quote or site survey? We provide free, no-obligation consultations."
       firstCtaButtonText="Request Security Consultation"
       firstCtaButtonLink="/contact"

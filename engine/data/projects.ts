@@ -9,6 +9,7 @@ export interface Project {
   serviceSlug: string;
   description: string;
   imagePrompt: string;
+  image: string;
   imageIndex: number;
 }
 
@@ -156,6 +157,7 @@ export function generateProjects(
       .replace("{location}", location.name)
       .replace("{service}", service.title);
 
+    const imagePrompt = prompts[index % prompts.length];
     return {
       id: `project-${verticalId}-${index + 1}`,
       title,
@@ -164,7 +166,8 @@ export function generateProjects(
       service: service.title,
       serviceSlug: service.slug,
       description,
-      imagePrompt: prompts[index % prompts.length],
+      imagePrompt,
+      image: `/images/projects/project-${verticalId}-${index + 1}.jpg`,
       imageIndex: index % 6,
     };
   });

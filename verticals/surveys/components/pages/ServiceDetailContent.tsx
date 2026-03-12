@@ -25,6 +25,7 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
       symptomLinks={symptomLinks}
       symptomLinksSectionTitle="Related guides"
       faqs={faqs}
+      overviewImage={{ src: heroImageSrc, alt: `${service.title} – ${verticalConfig.siteName}` }}
       firstCtaMessage="Need a survey for your project? Request a quote and we'll match you with a survey specialist."
       firstCtaButtonText="Request a Survey Quote"
       firstCtaButtonLink="/contact"

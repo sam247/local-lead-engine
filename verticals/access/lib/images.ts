@@ -20,8 +20,11 @@ const PROJECT_IMAGE_URLS = [
   "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=800&q=80", // access / keycard
 ];
 
-export function getProjectImage(index: number): string {
-  return PROJECT_IMAGE_URLS[Math.abs(index) % PROJECT_IMAGE_URLS.length] ?? PROJECT_IMAGE_URLS[0];
+/** Use project's dedicated image when available, else fallback to index in pool. */
+export function getProjectImage(project: { image?: string; imageIndex?: number } | number, index?: number): string {
+  const idx = typeof project === "number" ? project : (index ?? project.imageIndex ?? 0);
+  if (typeof project === "object" && project.image) return project.image;
+  return PROJECT_IMAGE_URLS[Math.abs(idx) % PROJECT_IMAGE_URLS.length] ?? PROJECT_IMAGE_URLS[0];
 }
 
 /** Security/access-themed blog images (no drainage). Replace with local assets from data/images.ts prompts when ready. */

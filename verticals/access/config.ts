@@ -28,6 +28,12 @@ export const verticalConfig: VerticalConfig = {
   serviceTypesBySlug,
   industries: ["Hospitals", "Data centres", "Warehouses", "Office buildings", "Manufacturing sites", "Commercial property"],
   trustedEquipment: ["Major access control brands", "CCTV and VMS platforms", "Intruder and fire systems", "Building management integration"],
+  sectionIntros: {
+    types: "Security and access solutions can include access control, CCTV, perimeter detection and integration with existing systems. We specify and install the right combination for your site, from single-door systems to multi-site platforms.",
+    process: "We work from initial site survey and design through to installation, commissioning and handover. You get a single point of contact, clear documentation and support so your systems perform as specified.",
+    industries: "We install and maintain security systems for a wide range of sectors. From offices and retail to healthcare, data centres and industrial sites, we tailor solutions to each environment and compliance need.",
+    benefits: "A single supplier for access and security simplifies procurement and support. We deliver on programme, integrate with major brands and building systems, and provide ongoing maintenance and documentation.",
+  },
   companyInfo: {
     name: companyInfo.name,
     phone: companyInfo.phone,

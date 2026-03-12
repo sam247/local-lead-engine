@@ -42,4 +42,10 @@ export const verticalConfig: VerticalConfig = {
       bestRating: 5,
     },
   },
+  sectionIntros: {
+    types: "Drainage work can involve several approaches depending on the issue and site. We offer everything from surveys and diagnosis to excavation, relining and emergency response, so you get the right solution for your property.",
+    process: "We follow a clear, structured approach from first contact to completion. Every job starts with understanding the problem, then we recommend the most appropriate method and deliver with full documentation and reinstatement where needed.",
+    industries: "We work with domestic and commercial clients across the UK. Our teams are experienced in residential properties, offices, retail, healthcare, education and industrial sites, with the right equipment and insurance for each sector.",
+    benefits: "Working with a single drainage specialist simplifies scheduling and accountability. We deliver to programme, provide written reports and certification where required, and our engineers are fully insured and trained.",
+  },
 };
