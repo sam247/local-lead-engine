@@ -35,6 +35,12 @@ export const verticalConfig: VerticalConfig = {
     industries: "We work with developers, main contractors and clients across commercial and residential construction. Our groundworks teams have experience on housing, offices, warehouses, schools, healthcare and industrial sites throughout the UK.",
     benefits: "A single point of contact for groundworks simplifies coordination and accountability. We deliver to programme, are fully insured and accredited, and provide experienced teams and plant with quality-assured work and handover documentation.",
   },
+  relatedServicesIntro:
+    "Groundworks projects often involve several specialist disciplines depending on the size and complexity of the development. In addition to general groundworks contracting, clients frequently require services such as piling, excavation or foundation installation.",
+  relatedLocationsIntro:
+    "We deliver groundworks and related services across the UK. Select an area below for local information and contact options.",
+  locationContextTemplate:
+    "{locationName} and the wider {area} region see a mix of housing, commercial and infrastructure projects. Our {serviceTitle} teams work with developers and main contractors across the area, including in {nearbyTowns}. We deliver piling, excavation, foundations and site preparation to programme, with free no-obligation quotes for projects in and around {locationName}.",
   companyInfo: {
     name: companyInfo.name,
     phone: companyInfo.phone,

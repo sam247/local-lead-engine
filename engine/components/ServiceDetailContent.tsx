@@ -237,6 +237,70 @@ export function ServiceDetailContent({
                 ))}
               </ul>
 
+              {(() => {
+                const otherServices = services.filter((s) => s.slug !== service.slug);
+                const featuredLocations = locations.slice(0, 6);
+                const showRelatedServices =
+                  otherServices.length > 0 && verticalConfig.relatedServicesIntro;
+                const showRelatedLocations = featuredLocations.length > 0;
+                if (!showRelatedServices && !showRelatedLocations) return null;
+                return (
+                  <div className="mb-8 space-y-8">
+                    {showRelatedServices && (
+                      <>
+                        <h2 className="mb-4 font-display text-2xl font-bold">
+                          {relatedSidebarLabel}
+                        </h2>
+                        <p className="mb-4 text-muted-foreground">
+                          {verticalConfig.relatedServicesIntro}
+                        </p>
+                        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                          {otherServices.slice(0, 8).map((s) => (
+                            <Link
+                              key={s.id}
+                              href={`${servicesPath}/${s.slug}`}
+                              className="group rounded-lg border border-border bg-background p-4 transition-all hover:border-primary hover:shadow-md"
+                            >
+                              <h3 className="mb-1 font-display text-lg font-semibold group-hover:text-primary">
+                                {s.title}
+                              </h3>
+                              {s.shortDescription && (
+                                <p className="text-sm text-muted-foreground line-clamp-2">
+                                  {s.shortDescription}
+                                </p>
+                              )}
+                            </Link>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                    {showRelatedLocations && (
+                      <>
+                        <h3 className="mb-4 font-display text-xl font-bold">
+                          {service.title} by Location
+                        </h3>
+                        <p className="mb-4 text-muted-foreground">
+                          {verticalConfig.relatedLocationsIntro ??
+                            "We serve the following areas."}
+                        </p>
+                        <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                          {featuredLocations.map((loc) => (
+                            <Link
+                              key={loc.id}
+                              href={locationLinkPath(service.slug, loc.id)}
+                              className="flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm text-primary transition-all hover:border-primary hover:shadow-md hover:underline"
+                            >
+                              {service.title} {loc.name}
+                              <ArrowRight className="h-4 w-4 shrink-0" />
+                            </Link>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                );
+              })()}
+
               <InspectionCTA
                 companyInfo={verticalConfig.companyInfo}
                 contactPath={contactPath}

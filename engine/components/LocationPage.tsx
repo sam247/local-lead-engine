@@ -48,6 +48,10 @@ export interface LocationPageProps {
   nearbyAreasDescription?: string;
   /** Up to 5 neighbour locations for local context block and "Nearby service areas" links. When provided, LocationContext and NearbyAreas are rendered after the intro paragraph. */
   neighbourLocationsForContext?: Location[];
+  /** Optional 60–100 word paragraph for the Location Context section (H2 + paragraph). When provided, LocationContext uses it instead of the default short text. */
+  locationContextParagraph?: string;
+  /** Optional 2–3 projects near this location for "Recent Projects Near {Location}" block. Each url typically points to /projects or /projects#id. */
+  nearbyProjects?: Array<{ id: string; title: string; description: string; image: string; url: string }>;
 }
 
 export function LocationPage({
@@ -69,6 +73,8 @@ export function LocationPage({
   introParagraph,
   nearbyAreasDescription,
   neighbourLocationsForContext,
+  locationContextParagraph,
+  nearbyProjects,
 }: LocationPageProps) {
   const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
   const displayTitle = service.titleSingular ?? service.title;
@@ -174,9 +180,11 @@ export function LocationPage({
                     locationName={location.name}
                     locationArea={location.area}
                     neighbourNames={neighbourLocationsForContext.map((l) => l.name)}
+                    contextParagraph={locationContextParagraph}
                   />
                   <NearbyAreas
                     serviceSlug={serviceSlug}
+                    serviceTitle={displayTitle}
                     neighbourLocations={neighbourLocationsForContext.slice(0, 5).map((l) => ({ id: l.id, name: l.name }))}
                   />
                 </>
@@ -247,6 +255,39 @@ export function LocationPage({
                   </li>
                 ))}
               </ol>
+
+              {nearbyProjects && nearbyProjects.length > 0 && (
+                <>
+                  <h3 className="mb-4 font-display text-xl font-bold">
+                    Recent Projects Near {location.name}
+                  </h3>
+                  <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {nearbyProjects.slice(0, 3).map((project) => (
+                      <Link
+                        key={project.id}
+                        href={project.url}
+                        className="group rounded-lg border border-border bg-background overflow-hidden transition-all hover:border-primary hover:shadow-md"
+                      >
+                        <div className="aspect-video w-full overflow-hidden bg-muted">
+                          <img
+                            src={project.image}
+                            alt=""
+                            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                          />
+                        </div>
+                        <div className="p-4">
+                          <h4 className="mb-1 font-display font-semibold group-hover:text-primary">
+                            {project.title}
+                          </h4>
+                          <p className="line-clamp-2 text-sm text-muted-foreground">
+                            {project.description}
+                          </p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              )}
 
               <InspectionCTA companyInfo={companyInfo} contactPath={contactPath} />
             </div>

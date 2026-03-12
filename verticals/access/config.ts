@@ -34,6 +34,12 @@ export const verticalConfig: VerticalConfig = {
     industries: "We install and maintain security systems for a wide range of sectors. From offices and retail to healthcare, data centres and industrial sites, we tailor solutions to each environment and compliance need.",
     benefits: "A single supplier for access and security simplifies procurement and support. We deliver on programme, integrate with major brands and building systems, and provide ongoing maintenance and documentation.",
   },
+  relatedServicesIntro:
+    "Security and access solutions can include access control, CCTV, perimeter detection and integration with existing systems. In addition to the service above, we offer the following so you can find the right combination for your site.",
+  relatedLocationsIntro:
+    "We install and maintain security systems across the UK. Select an area below for local information and contact options.",
+  locationContextTemplate:
+    "We provide {serviceTitle} across {locationName} and the {area} region for commercial and public-sector sites. Our engineers install and maintain access control, CCTV and integrated security systems throughout the area, including in {nearbyTowns}. Contact us for a free site survey and quote for your project in or around {locationName}.",
   companyInfo: {
     name: companyInfo.name,
     phone: companyInfo.phone,

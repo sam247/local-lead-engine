@@ -48,4 +48,10 @@ export const verticalConfig: VerticalConfig = {
     industries: "We work with domestic and commercial clients across the UK. Our teams are experienced in residential properties, offices, retail, healthcare, education and industrial sites, with the right equipment and insurance for each sector.",
     benefits: "Working with a single drainage specialist simplifies scheduling and accountability. We deliver to programme, provide written reports and certification where required, and our engineers are fully insured and trained.",
   },
+  relatedServicesIntro:
+    "Drainage projects often require different approaches depending on the issue—from surveys and diagnosis to excavation, relining and emergency response. In addition to the service above, we offer the following so you can find the right solution for your property.",
+  relatedLocationsIntro:
+    "We provide drainage services across the UK. Select an area below for local information, coverage and contact options.",
+  locationContextTemplate:
+    "We provide {serviceTitle} across {locationName} and the wider {area} region. Our engineers attend residential and commercial properties throughout the area, including in {nearbyTowns}, for CCTV surveys, drain repairs, relining and emergency call-outs. Contact us for a free no-obligation quote or to discuss your project in {locationName}.",
 };

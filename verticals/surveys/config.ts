@@ -46,4 +46,10 @@ export const verticalConfig: VerticalConfig = {
     industries: "We work with developers, architects, contractors and public-sector clients. Our surveys support residential and commercial development, infrastructure, heritage projects and land management across the UK.",
     benefits: "Working with an experienced survey provider means accurate, planning-ready data and consistent quality. We deliver on programme, use calibrated equipment and provide documentation suitable for design and approval.",
   },
+  relatedServicesIntro:
+    "Survey requirements vary by project—from land and utility mapping to measured building and drone-based capture. In addition to the service above, we offer the following so you can find the right survey type and deliverables for planning, design or construction.",
+  relatedLocationsIntro:
+    "We deliver surveys across the UK. Select an area below for local information and contact options.",
+  locationContextTemplate:
+    "{locationName} and the wider {area} region see residential, commercial and infrastructure projects that often need topographical, measured building or drone surveys. Our survey partners deliver planning-ready data across the area, including in {nearbyTowns}. Contact us for a free no-obligation quote for your project in or around {locationName}.",
 };

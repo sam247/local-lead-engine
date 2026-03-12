@@ -87,6 +87,12 @@ export interface VerticalConfig {
     industries?: string;
     benefits?: string;
   };
+  /** Intro paragraph for in-content "Related X Services" section (after Benefits). */
+  relatedServicesIntro?: string;
+  /** Intro paragraph for in-content "X by Location" subsection. If absent, a generic fallback can be used. */
+  relatedLocationsIntro?: string;
+  /** Template for location page context paragraph (60–100 words). Placeholders: {serviceTitle}, {locationName}, {area}, {nearbyTowns}. */
+  locationContextTemplate?: string;
 }
 
 export interface ProblemData {

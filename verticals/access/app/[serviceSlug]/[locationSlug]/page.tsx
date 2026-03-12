@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import { services, locations } from "@/lib/data";
-import { getHeroImage } from "@/lib/images";
+import { projects } from "@/data/projects";
+import { getHeroImage, getProjectImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
-import { LocationPage, getNeighbourLocationIds } from "engine";
+import { LocationPage, getNeighbourLocationIds, buildLocationContextParagraph } from "engine";
 import { buildLocationMetadata } from "engine";
 import type { Metadata } from "next";
 
@@ -83,6 +84,33 @@ export default async function LocationRoute({ params }: Props) {
     .filter((l): l is NonNullable<typeof l> => l != null)
     .slice(0, 5);
 
+  const displayTitle = service.titleSingular ?? service.title;
+  const nearbyTowns =
+    location.nearbyTowns && location.nearbyTowns.length > 0
+      ? location.nearbyTowns
+      : neighbourLocationsForContext.map((l) => l.name).slice(0, 5);
+  const locationContextParagraph =
+    verticalConfig.locationContextTemplate
+      ? buildLocationContextParagraph(verticalConfig.locationContextTemplate, {
+          serviceTitle: displayTitle,
+          locationName: location.name,
+          area: location.area,
+          nearbyTowns,
+        })
+      : undefined;
+
+  const eligibleProjectIds = new Set([location.id, ...neighbourIds]);
+  const nearbyProjectsList = projects
+    .filter((p) => p.locationId && eligibleProjectIds.has(p.locationId))
+    .slice(0, 3)
+    .map((p) => ({
+      id: p.id,
+      title: p.title,
+      description: p.description,
+      image: getProjectImage(p),
+      url: `/projects#${p.id}`,
+    }));
+
   const introParagraph = `We provide ${service.title} across ${location.name} and ${location.area}. Our team offers design, installation and maintenance for commercial and public-sector sites, with free no-obligation site surveys and quotes.`;
 
   return (
@@ -104,6 +132,8 @@ export default async function LocationRoute({ params }: Props) {
       introParagraph={introParagraph}
       nearbyAreasDescription={`Compare our ${service.title} in nearby areas.`}
       neighbourLocationsForContext={neighbourLocationsForContext}
+      locationContextParagraph={locationContextParagraph}
+      nearbyProjects={nearbyProjectsList.length > 0 ? nearbyProjectsList : undefined}
     />
   );
 }
