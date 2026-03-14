@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { trackEvent } from "engine";
+import { trackEvent, leadEmailField, leadPhoneField, leadPostcodeField } from "engine";
 import { z } from "zod";
 
 const SERVICE_OPTIONS = [
@@ -25,9 +25,9 @@ const SERVICE_OPTIONS = [
 const enquirySchema = z.object({
   first_name: z.string().trim().min(1, "First name is required").max(50),
   last_name: z.string().trim().min(1, "Last name is required").max(50),
-  email: z.string().trim().email("Valid email required").max(255),
-  phone: z.string().trim().min(1, "Phone number is required").max(20),
-  postcode: z.string().trim().min(1, "Postcode is required").max(16),
+  email: leadEmailField,
+  phone: leadPhoneField,
+  postcode: leadPostcodeField,
   town: z.string().trim().min(1, "Town is required").max(100),
   service: z.enum(SERVICE_OPTIONS, { message: "Please select a service" }),
   description: z.string().trim().min(1, "Please describe the issue").max(2000),

@@ -10,15 +10,20 @@
     "./schema": "./schema/index.ts",
     "./tools": "./tools/index.ts",
     "./utils": "./utils/index.ts",
-    "./types": "./types/index.ts"
+    "./types": "./types/index.ts",
+    "./validation": "./validation/index.ts"
   },
   "peerDependencies": {
     "next": ">=14",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zod": ">=4"
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "libphonenumber-js": "^1.11.15",
+    "validator": "^13.12.0",
+    "zod": "^4.3.6",
     "lucide-react": "^0.577.0",
     "tailwind-merge": "^3.5.0",
     "@radix-ui/react-slot": "^1.2.4",

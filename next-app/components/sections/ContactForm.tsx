@@ -8,13 +8,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { leadEmailField, leadPhoneField, leadPostcodeField } from "engine";
 import { z } from "zod";
 
 const enquirySchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
-  email: z.string().trim().email("Valid email required").max(255),
-  phone: z.string().trim().min(1, "Phone number is required").max(20),
-  postcode: z.string().trim().min(1, "Postcode is required").max(10),
+  email: leadEmailField,
+  phone: leadPhoneField,
+  postcode: leadPostcodeField,
   issueType: z.string().min(1, "Please select an issue type"),
   urgency: z.string().min(1, "Please select urgency level"),
   message: z.string().trim().max(2000).optional(),

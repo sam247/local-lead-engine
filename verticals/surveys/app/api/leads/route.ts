@@ -2,15 +2,16 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { Resend } from "resend";
 import { google } from "googleapis";
+import { leadEmailField, leadPhoneField, leadPostcodeField } from "engine";
 
 const SERVICE_OPTIONS = ["Topographical survey", "Drone survey", "Measured building survey", "Utility survey", "Advice / not sure"] as const;
 
 const LeadInputSchema = z.object({
   first_name: z.string().trim().min(1).max(50),
   last_name: z.string().trim().min(1).max(50),
-  email: z.string().trim().email().max(255),
-  phone: z.string().trim().min(1).max(30),
-  postcode: z.string().trim().min(1).max(16),
+  email: leadEmailField,
+  phone: leadPhoneField,
+  postcode: leadPostcodeField,
   town: z.string().trim().min(1).max(100),
   service: z.enum(SERVICE_OPTIONS),
   description: z.string().trim().min(1).max(2000),
@@ -178,7 +179,7 @@ export async function POST(req: Request) {
     const lead: LeadInput & { lead_id: string; timestamp: string } = { ...parsed.data, lead_id, timestamp };
 
     const resend = new Resend(requireEnv("RESEND_API_KEY"));
-    const emailTo = "leads@mainlinesurveys.co.uk";
+    const emailTo = process.env.LEAD_EMAIL_OVERRIDE?.trim() || "leads@mainlinesurveys.co.uk";
     const emailFrom = "Mainline Surveys <leads@mainlinesurveys.co.uk>";
 
     await resend.emails.send({
