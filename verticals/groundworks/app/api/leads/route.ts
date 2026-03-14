@@ -186,19 +186,34 @@ export async function POST(req: Request) {
 
     const lead: LeadInput & { lead_id: string; timestamp: string } = { ...parsed.data, lead_id, timestamp };
 
+    // Persist first so we never lose a lead if email fails
+    await appendLeadRow(sheets, spreadsheetId, lead);
+
     const resend = new Resend(requireEnv("RESEND_API_KEY"));
     const emailTo = process.env.LEAD_EMAIL_OVERRIDE?.trim() || "leads@mainlinegroundworks.co.uk";
     const emailFrom = "Mainline Groundworks <leads@mainlinegroundworks.co.uk>";
 
-    await resend.emails.send({
-      to: emailTo,
-      from: emailFrom,
-      subject: buildEmailSubject(lead),
-      text: buildEmailBody(lead),
-    });
+    const maxRetries = 3;
+    let lastError: unknown = null;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      const { error } = await resend.emails.send({
+        to: emailTo,
+        from: emailFrom,
+        subject: buildEmailSubject(lead),
+        text: buildEmailBody(lead),
+      });
+      if (!error) {
+        return NextResponse.json({ ok: true, lead_id, timestamp });
+      }
+      lastError = error;
+      const statusCode = (error as { statusCode?: number })?.statusCode;
+      const isRetryable = statusCode === 429 || (statusCode != null && statusCode >= 500);
+      if (!isRetryable || attempt === maxRetries) break;
+      await new Promise((r) => setTimeout(r, Math.pow(2, attempt) * 1000));
+    }
 
-    await appendLeadRow(sheets, spreadsheetId, lead);
-
+    // Lead is saved; log email failure but still return success
+    console.error("[leads] Resend failed after retries:", lastError);
     return NextResponse.json({ ok: true, lead_id, timestamp });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
