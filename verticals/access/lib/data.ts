@@ -374,6 +374,34 @@ export const getCategoryPages = (category: string): InfoPageData[] => {
 export const getHubData = (category: string): HubData | undefined =>
   hubPages.find((h) => h.category === category);
 
+const ACCESS_SERVICE_TO_TOPIC_CATEGORIES: Record<string, string[]> = {
+  "commercial-cctv-installation": ["cctv-problems", "cctv-guides", "data-cabling-guides"],
+  "ip-camera-systems": ["cctv-guides", "data-cabling-guides", "security-upgrades"],
+  "access-control-systems": ["access-control-guides", "data-cabling-guides"],
+  "perimeter-security-systems": ["perimeter-security-guides", "cctv-guides"],
+  "security-system-integration": ["access-control-guides", "cctv-guides", "security-upgrades"],
+};
+
+const MAX_TOPIC_LINKS = 6;
+const MAX_PER_CATEGORY = 2;
+
+export function getRelevantTopicsForService(serviceSlug: string): { title: string; href: string }[] {
+  const categories = ACCESS_SERVICE_TO_TOPIC_CATEGORIES[serviceSlug];
+  if (!categories?.length) return [];
+  const out: { title: string; href: string }[] = [];
+  for (const category of categories) {
+    const hub = getHubData(category);
+    const pages = getCategoryPages(category);
+    if (!hub || !pages.length) continue;
+    const taken = pages.slice(0, MAX_PER_CATEGORY);
+    for (const page of taken) {
+      out.push({ title: page.title, href: `${hub.basePath}/${page.slug}` });
+      if (out.length >= MAX_TOPIC_LINKS) return out;
+    }
+  }
+  return out;
+}
+
 export const categoryImages: Record<string, string> = {
   "access-control-systems": "access-control-systems",
   "commercial-cctv-installation": "commercial-cctv-installation",

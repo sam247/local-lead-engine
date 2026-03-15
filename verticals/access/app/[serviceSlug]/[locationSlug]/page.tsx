@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { services, locations } from "@/lib/data";
+import { services, locations, getRelevantTopicsForService } from "@/lib/data";
 import { projects } from "@/data/projects";
 import { getHeroImage, getProjectImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
@@ -7,31 +7,67 @@ import { LocationPage, getNeighbourLocationIds, buildLocationContextParagraph } 
 import { buildLocationMetadata } from "engine";
 import type { Location } from "engine";
 import type { Metadata } from "next";
+import { isTopicLocationSlug, getTopicForRouteSlug, getTopicLocationStaticParams, TOPIC_HUB_PATH } from "@/lib/topicLocationConfig";
+import { TopicLocationPage } from "@/app/components/TopicLocationPage";
 
 export const dynamic = "force-static";
 export const revalidate = false;
 
 export async function generateStaticParams() {
-  return services.flatMap((s) =>
+  const serviceLocationParams = services.flatMap((s) =>
     locations.map((l: Location) => ({ serviceSlug: s.slug, locationSlug: l.id }))
   );
+  const topicLocationParams = getTopicLocationStaticParams(locations);
+  return [...serviceLocationParams, ...topicLocationParams];
 }
 
 type Props = { params: { serviceSlug: string; locationSlug: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { serviceSlug, locationSlug } = params;
-  const service = services.find((s) => s.slug === serviceSlug);
   const location = locations.find((l) => l.id === locationSlug);
-  if (!service || !location) return { title: "Not Found" };
+  if (!location) return { title: "Not Found" };
+
+  if (isTopicLocationSlug(serviceSlug)) {
+    const topic = getTopicForRouteSlug(serviceSlug);
+    if (!topic) return { title: "Not Found" };
+    const title = `${topic.title} in ${location.name} | Business Security Systems`;
+    const metaDescription =
+      topic.metaDescription.slice(0, 140) +
+      ` We provide ${topic.title.toLowerCase()} across ${location.name} and ${location.area}.`;
+    return {
+      title,
+      description: metaDescription,
+    };
+  }
+
+  const service = services.find((s) => s.slug === serviceSlug);
+  if (!service) return { title: "Not Found" };
   return buildLocationMetadata(service, location, verticalConfig);
 }
 
 export default async function LocationRoute({ params }: Props) {
   const { serviceSlug, locationSlug } = params;
-  const service = services.find((s) => s.slug === serviceSlug);
   const location = locations.find((l) => l.id === locationSlug);
-  if (!service || !location) notFound();
+  if (!location) notFound();
+
+  if (isTopicLocationSlug(serviceSlug)) {
+    const topic = getTopicForRouteSlug(serviceSlug);
+    if (!topic) notFound();
+    const topicHubPath = TOPIC_HUB_PATH[topic.slug] ?? "/cctv-guides";
+    return (
+      <TopicLocationPage
+        topic={topic}
+        location={location}
+        topicSlug={serviceSlug}
+        locationSlug={locationSlug}
+        topicHubPath={topicHubPath}
+      />
+    );
+  }
+
+  const service = services.find((s) => s.slug === serviceSlug);
+  if (!service) notFound();
 
   const sameAreaLocations = locations.filter(
     (l) => l.id !== location.id && l.area === location.area
@@ -114,6 +150,8 @@ export default async function LocationRoute({ params }: Props) {
 
   const introParagraph = `We provide ${service.title} across ${location.name} and ${location.area}. Our team offers design, installation and maintenance for commercial and public-sector sites, with free no-obligation site surveys and quotes.`;
 
+  const relatedTopicLinks = getRelevantTopicsForService(service.slug);
+
   return (
     <LocationPage
       service={service}
@@ -135,6 +173,8 @@ export default async function LocationRoute({ params }: Props) {
       neighbourLocationsForContext={neighbourLocationsForContext}
       locationContextParagraph={locationContextParagraph}
       nearbyProjects={nearbyProjectsList.length > 0 ? nearbyProjectsList : undefined}
+      relatedTopicLinks={relatedTopicLinks.length > 0 ? relatedTopicLinks : undefined}
+      relatedTopicsSectionTitle={relatedTopicLinks.length > 0 ? `Security advice for businesses in ${location.name}` : undefined}
     />
   );
 }
