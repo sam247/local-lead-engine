@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { services, locations } from "@/lib/data";
+import { services, locations, getRelevantTopicsForService } from "@/lib/data";
 import { projects } from "@/data/projects";
 import { getHeroImage, getProjectImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
@@ -117,6 +117,8 @@ export default async function LocationRoute({ params }: Props) {
 
   const introParagraph = `We provide ${service.title} across ${location.name} and ${location.area}. Our team offers expert diagnosis, repair, and maintenance for residential and commercial properties, with 24/7 emergency cover and free no-obligation quotes.`;
 
+  const relatedTopicLinks = getRelevantTopicsForService(service.slug);
+
   return (
     <LocationPage
       service={service}
@@ -139,6 +141,7 @@ export default async function LocationRoute({ params }: Props) {
       neighbourLocationsForContext={neighbourLocationsForContext}
       locationContextParagraph={locationContextParagraph}
       nearbyProjects={nearbyProjectsList.length > 0 ? nearbyProjectsList : undefined}
+      relatedTopicLinks={relatedTopicLinks.length > 0 ? relatedTopicLinks : undefined}
     />
   );
 }

@@ -2087,3 +2087,37 @@ export const getCategoryPages = (category: string): InfoPageData[] => {
 export const getHubData = (category: string): HubData | undefined => {
   return hubPages.find((h) => h.category === category);
 };
+
+const DRAINS_SERVICE_TO_TOPIC_CATEGORIES: Record<string, string[]> = {
+  "drain-collapse-repair": ["problems", "collapse", "repair-methods", "costs"],
+  "drain-relining": ["repair-methods", "problems", "costs"],
+  "cctv-drain-surveys": ["inspection", "costs", "survey", "guides"],
+  "drain-excavation": ["repair-methods", "collapse", "costs"],
+  "emergency-drainage": ["emergency", "problems", "repair-methods"],
+  "blocked-drains": ["problems", "repair-methods", "emergency"],
+  "drain-jetting": ["repair-methods", "problems"],
+  "drain-root-removal": ["causes", "repair-methods", "problems"],
+  "drain-unblocking": ["problems", "emergency", "repair-methods"],
+  "drain-pipe-replacement": ["repair-methods", "collapse", "costs"],
+  "commercial-drainage": ["commercial", "problems", "repair-methods"],
+};
+
+const MAX_TOPIC_LINKS = 6;
+const MAX_PER_CATEGORY = 2;
+
+export function getRelevantTopicsForService(serviceSlug: string): { title: string; href: string }[] {
+  const categories = DRAINS_SERVICE_TO_TOPIC_CATEGORIES[serviceSlug];
+  if (!categories?.length) return [];
+  const out: { title: string; href: string }[] = [];
+  for (const category of categories) {
+    const hub = getHubData(category);
+    const pages = getCategoryPages(category);
+    if (!hub || !pages.length) continue;
+    const taken = pages.slice(0, MAX_PER_CATEGORY);
+    for (const page of taken) {
+      out.push({ title: page.title, href: `${hub.basePath}/${page.slug}` });
+      if (out.length >= MAX_TOPIC_LINKS) return out;
+    }
+  }
+  return out;
+}

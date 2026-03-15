@@ -52,6 +52,12 @@ export interface LocationPageProps {
   locationContextParagraph?: string;
   /** Optional 2–3 projects near this location for "Recent Projects Near {Location}" block. Each url typically points to /projects or /projects#id. */
   nearbyProjects?: Array<{ id: string; title: string; description: string; image: string; url: string }>;
+  /** Optional topic links for "Helpful guidance" block (4–6 links to topic pages). When provided, section is rendered above FAQ. */
+  relatedTopicLinks?: { title: string; href: string }[];
+  /** Optional heading for the related topics block. Default: "Helpful guidance related to this service". */
+  relatedTopicsSectionTitle?: string;
+  /** Optional intro paragraph for the related topics block. */
+  relatedTopicsSectionIntro?: string;
 }
 
 export function LocationPage({
@@ -75,6 +81,9 @@ export function LocationPage({
   neighbourLocationsForContext,
   locationContextParagraph,
   nearbyProjects,
+  relatedTopicLinks,
+  relatedTopicsSectionTitle,
+  relatedTopicsSectionIntro,
 }: LocationPageProps) {
   const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
   const displayTitle = service.titleSingular ?? service.title;
@@ -373,6 +382,32 @@ export function LocationPage({
           </div>
         </div>
       </section>
+
+      {relatedTopicLinks && relatedTopicLinks.length > 0 && (
+        <section className="bg-secondary/50 py-12">
+          <div className="container">
+            <h2 className="mb-4 font-display text-2xl font-bold text-center">
+              {relatedTopicsSectionTitle ?? "Helpful guidance related to this service"}
+            </h2>
+            {relatedTopicsSectionIntro && (
+              <p className="mb-6 text-center text-sm text-muted-foreground max-w-2xl mx-auto">
+                {relatedTopicsSectionIntro}
+              </p>
+            )}
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+              {relatedTopicLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-primary hover:underline"
+                >
+                  {link.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <FAQSchema items={localFaqs} title={`${displayTitle} FAQs for ${location.name}`} />
 

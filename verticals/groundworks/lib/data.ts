@@ -218,6 +218,37 @@ export const getHubData = (category: string): HubData | undefined => {
   return hubPages.find((h) => h.category === category);
 };
 
+const GROUNDWORKS_SERVICE_TO_TOPIC_CATEGORIES: Record<string, string[]> = {
+  "foundation-contractors": ["foundation-problems", "ground-conditions", "groundworks-costs"],
+  "groundworks-contractors": ["groundworks-costs", "site-preparation", "guides"],
+  "piling-contractors": ["ground-conditions", "groundworks-costs", "guides"],
+  "mini-piling-contractors": ["ground-conditions", "groundworks-costs", "guides"],
+  "excavation-contractors": ["site-preparation", "groundworks-costs", "guides"],
+  "site-clearance-contractors": ["site-preparation", "groundworks-costs"],
+  "concrete-foundations": ["foundation-problems", "ground-conditions", "groundworks-costs"],
+  "enabling-works-contractors": ["site-preparation", "construction-drainage", "guides"],
+};
+
+const MAX_TOPIC_LINKS = 6;
+const MAX_PER_CATEGORY = 2;
+
+export function getRelevantTopicsForService(serviceSlug: string): { title: string; href: string }[] {
+  const categories = GROUNDWORKS_SERVICE_TO_TOPIC_CATEGORIES[serviceSlug];
+  if (!categories?.length) return [];
+  const out: { title: string; href: string }[] = [];
+  for (const category of categories) {
+    const hub = getHubData(category);
+    const pages = getCategoryPages(category);
+    if (!hub || !pages.length) continue;
+    const taken = pages.slice(0, MAX_PER_CATEGORY);
+    for (const page of taken) {
+      out.push({ title: page.title, href: `${hub.basePath}/${page.slug}` });
+      if (out.length >= MAX_TOPIC_LINKS) return out;
+    }
+  }
+  return out;
+}
+
 export const stats: { value: string; label: string }[] = [
   { value: "500+", label: "Projects Completed" },
   { value: "25+", label: "Years Experience" },

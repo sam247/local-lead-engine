@@ -2074,6 +2074,40 @@ export const getHubData = (category: string): HubData | undefined => {
   return hubPages.find((h) => h.category === category);
 };
 
+const SURVEYS_SERVICE_TO_TOPIC_CATEGORIES: Record<string, string[]> = {
+  "topographical-survey": ["survey", "inspection", "costs", "guides"],
+  "measured-building-survey": ["survey", "inspection", "costs", "property-types"],
+  "utility-survey": ["inspection", "survey", "costs"],
+  "utility-mapping-survey": ["inspection", "survey", "costs"],
+  "boundary-survey": ["legal", "survey", "guides"],
+  "laser-scanning-survey": ["inspection", "survey", "guides"],
+  "drone-survey": ["survey", "inspection", "guides", "costs"],
+  "drone-roof-inspection": ["inspection", "survey", "guides"],
+  "drone-building-inspection": ["inspection", "survey", "guides"],
+  "drone-topographical-survey": ["survey", "inspection", "costs"],
+  "drone-construction-survey": ["survey", "inspection", "guides"],
+};
+
+const MAX_TOPIC_LINKS = 6;
+const MAX_PER_CATEGORY = 2;
+
+export function getRelevantTopicsForService(serviceSlug: string): { title: string; href: string }[] {
+  const categories = SURVEYS_SERVICE_TO_TOPIC_CATEGORIES[serviceSlug];
+  if (!categories?.length) return [];
+  const out: { title: string; href: string }[] = [];
+  for (const category of categories) {
+    const hub = getHubData(category);
+    const pages = getCategoryPages(category);
+    if (!hub || !pages.length) continue;
+    const taken = pages.slice(0, MAX_PER_CATEGORY);
+    for (const page of taken) {
+      out.push({ title: page.title, href: `${hub.basePath}/${page.slug}` });
+      if (out.length >= MAX_TOPIC_LINKS) return out;
+    }
+  }
+  return out;
+}
+
 // Service detail page: related guide links per survey service (from guides data)
 export const relatedGuideLinksByService: Record<string, { slug: string; path: string; title: string }[]> = (() => {
   const map: Record<string, { slug: string; path: string; title: string }[]> = {};
