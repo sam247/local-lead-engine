@@ -475,5 +475,395 @@ export const guidesPages: InfoPageData[] = [
       { slug: "who-carries-out-drain-surveys", category: "guides", title: "Who Carries Out Drain Surveys?" },
       { slug: "what-is-gpr-utility-mapping", category: "guides", title: "What Is GPR Utility Mapping?" }
     ]
+  },
+
+  // BUILDING SURVEY & INSPECTION CLUSTER
+  {
+    slug: "building-survey-vs-homebuyer-survey",
+    title: "Building Survey vs Homebuyer Survey",
+    metaDescription:
+      "Building survey vs homebuyer survey in the UK. When to choose a full building survey or a homebuyer report before buying a property.",
+    intro:
+      "When buying a property, the right survey helps you understand condition and risk. A homebuyer report is a mid-level option; a full building survey goes deeper and is often recommended for older or non-standard properties. This guide explains the difference and when each is appropriate.",
+    signs: [
+      "You are buying a property and unsure which survey level to commission",
+      "The property is over 50 years old or has visible signs of age",
+      "You want to understand structural condition before exchange",
+      "Your lender has requested a valuation but you want more detail",
+      "The property has been extended, converted or is listed",
+      "You are considering a homebuyer report vs a full building survey"
+    ],
+    diagnosis:
+      "Surveyors assess the property type, age and your risk tolerance. A homebuyer report uses a standard format and traffic-light ratings; a building survey is more detailed and tailored, with a full description of construction and defects. We can advise which level fits your situation.",
+    resolution:
+      "Our survey partners deliver homebuyer reports and full building surveys to RICS standards. You receive a clear written report with condition ratings and recommendations. For complex or older buildings, a building survey typically provides the best value by identifying issues early.",
+    ctaText: "Not sure which survey you need? Request a quote and we’ll recommend the right level for your purchase.",
+    relatedServices: ["measured-building-survey", "topographical-survey"],
+    relatedPages: [
+      { slug: "when-you-need-structural-survey", category: "guides", title: "When You Need a Structural Survey" },
+      { slug: "survey-inspections-buying-commercial-property", category: "guides", title: "Survey Inspections Before Buying Commercial Property" }
+    ]
+  },
+  {
+    slug: "when-you-need-structural-survey",
+    title: "When You Need a Structural Survey",
+    metaDescription:
+      "When you need a structural survey in the UK. Signs that a structural or building survey is necessary before buying or renovating.",
+    intro:
+      "Structural concerns—subsidence, cracking, roof structure, damp—can be costly to put right. A structural or building survey identifies defects and helps you decide whether to proceed, renegotiate or walk away. This guide explains when a structural survey is recommended.",
+    signs: [
+      "Visible cracking, uneven floors or sticking doors",
+      "The property is pre-1920, timber-framed or has had significant alterations",
+      "You are buying at auction or without a full marketing history",
+      "Neighbours or searches mention mining, clay or flood risk",
+      "You plan major renovation and need to understand the structure",
+      "Your solicitor or lender has flagged condition concerns"
+    ],
+    diagnosis:
+      "A qualified surveyor inspects the structure, foundations, roof and drainage. They report on condition, identify causes of defects where possible and recommend further investigations (e.g. structural engineer) if needed. The report forms part of your due diligence.",
+    resolution:
+      "We work with RICS-registered surveyors who deliver building surveys and, where appropriate, coordinate with structural engineers. You get a clear report with condition ratings and advice on next steps before you commit to the purchase or works.",
+    ctaText: "Worried about structural condition? Request a building or structural survey quote.",
+    relatedServices: ["measured-building-survey", "drone-roof-inspection"],
+    relatedPages: [
+      { slug: "building-survey-vs-homebuyer-survey", category: "guides", title: "Building Survey vs Homebuyer Survey" },
+      { slug: "what-structural-survey-includes", category: "guides", title: "What a Structural Survey Includes" }
+    ]
+  },
+  {
+    slug: "cost-building-survey-uk",
+    title: "Cost of a Building Survey in the UK",
+    metaDescription:
+      "Cost of a building survey in the UK. What affects the price of a full building survey and what you can expect to pay.",
+    intro:
+      "Building survey costs depend on property size, type and location. A full building survey is typically more expensive than a homebuyer report but provides greater detail and is often worthwhile for older or complex properties. This guide outlines typical cost ranges and what influences the quote.",
+    signs: [
+      "You are budgeting for a purchase and want to allow for survey costs",
+      "Comparing quotes from different surveyors",
+      "The property is large, listed or has multiple buildings",
+      "You need a survey quickly and want to understand premium options",
+      "Your mortgage valuation is not enough and you want a full survey"
+    ],
+    diagnosis:
+      "Surveyors quote based on property value band, size, complexity and location. Additional services (drainage, damp, timber) may be included or quoted separately. We can provide fixed-price quotes once property details are known.",
+    resolution:
+      "Our partners provide transparent quotes for building surveys and homebuyer reports. You receive a clear scope and price before instruction. Costs are typically in the hundreds to low thousands depending on the property; we’ll advise what to expect for your situation.",
+    ctaText: "Need a building survey quote? Request a quote and we’ll provide a fixed price for your property.",
+    relatedServices: ["measured-building-survey", "topographical-survey"],
+    relatedPages: [
+      { slug: "measured-building-survey-cost", category: "costs", title: "Measured Building Survey Cost" },
+      { slug: "building-survey-vs-homebuyer-survey", category: "guides", title: "Building Survey vs Homebuyer Survey" }
+    ]
+  },
+  {
+    slug: "what-structural-survey-includes",
+    title: "What a Structural Survey Includes",
+    metaDescription:
+      "What a structural survey includes in the UK. Scope of a full building survey and what the report covers.",
+    intro:
+      "A full building (structural) survey examines the condition of the property inside and out. It covers structure, damp, timber, drainage and services so you know what you are buying. This guide explains what is included in the survey and report.",
+    signs: [
+      "You have commissioned or are considering a full building survey",
+      "You want to understand what the surveyor will inspect",
+      "The report has arrived and you need to interpret sections",
+      "You are comparing survey types and want to know the scope",
+      "Your conveyancer has recommended a building survey"
+    ],
+    diagnosis:
+      "The surveyor inspects accessible parts of the structure, roof, walls, floors, drainage and visible services. They note defects, causes where evident and recommend further investigations or repairs. The report is written in plain English with condition ratings.",
+    resolution:
+      "You receive a detailed report with sections on each element, condition ratings and a summary of urgent and non-urgent issues. Our partners follow RICS standards so the scope and format are consistent and recognised by lenders and solicitors.",
+    ctaText: "Want to know what a building survey will cover? We can explain the scope and provide a quote.",
+    relatedServices: ["measured-building-survey", "drone-roof-inspection"],
+    relatedPages: [
+      { slug: "when-you-need-structural-survey", category: "guides", title: "When You Need a Structural Survey" },
+      { slug: "surveying-older-buildings-renovation", category: "guides", title: "Surveying Older Buildings Before Renovation" }
+    ]
+  },
+  {
+    slug: "when-get-measured-building-survey",
+    title: "When to Get a Measured Building Survey",
+    metaDescription:
+      "When to get a measured building survey. Before extensions, refurbishment and change of use—why accurate as-built drawings matter.",
+    intro:
+      "A measured building survey produces accurate floor plans, elevations and sections of an existing building. Architects and designers use them for extensions, refurbishments and planning applications. This guide explains when a measured building survey is needed and what it delivers.",
+    signs: [
+      "You are planning an extension, refurbishment or change of use",
+      "Your architect has requested accurate existing drawings",
+      "Existing plans are outdated, incomplete or not to scale",
+      "You need to coordinate structure, M&E and space planning",
+      "Planning or building control requires as-existing drawings",
+      "You are working in BIM and need a reliable base model"
+    ],
+    diagnosis:
+      "Surveyors assess the building size, complexity and required deliverables (plans only, or plans plus elevations and sections). They recommend survey method—total station, laser scanning or both—and quote on that basis.",
+    resolution:
+      "We deliver measured building surveys as 2D CAD or 3D/BIM-ready data. Drawings are layered and annotated to your or industry standards. You get a single source of truth for the existing building so design and construction can proceed with confidence.",
+    ctaText: "Planning a refurbishment or extension? Request a measured building survey quote.",
+    relatedServices: ["measured-building-survey", "laser-scanning-survey", "topographical-survey"],
+    relatedPages: [
+      { slug: "measured-building-survey-renovations", category: "guides", title: "Measured Building Survey for Renovations" },
+      { slug: "survey-for-planning-permission", category: "guides", title: "What Survey Do I Need for Planning Permission?" }
+    ]
+  },
+  {
+    slug: "measured-building-survey-renovations",
+    title: "Measured Building Survey for Renovations",
+    metaDescription:
+      "Measured building survey for renovations. Accurate as-built drawings before refurbishment, conversion and extension projects.",
+    intro:
+      "Renovations and conversions depend on knowing what is already there. Guessing dimensions from old plans or site visits leads to costly changes on site. A measured building survey gives you accurate floor plans, elevations and sections so your design fits the building.",
+    signs: [
+      "You are refurbishing or converting an existing building",
+      "Room dimensions, ceiling heights and openings need to be accurate",
+      "You are designing kitchens, bathrooms or fitted furniture",
+      "Party walls, staircases or irregular layouts complicate design",
+      "You need to coordinate with structural or M&E designs",
+      "Previous projects have suffered from poor existing information"
+    ],
+    diagnosis:
+      "Surveyors capture internal and external dimensions using laser scanning and/or total stations. They produce plans, elevations and sections to the level of detail your project needs. For complex or heritage buildings, laser scanning is often the most efficient approach.",
+    resolution:
+      "Our partners deliver measured building surveys tailored to renovation projects. Outputs include CAD and, where required, point clouds or simple 3D models. You get a reliable base for design and a clear record of what was there before works started.",
+    ctaText: "Starting a renovation? Get accurate existing drawings with a measured building survey.",
+    relatedServices: ["measured-building-survey", "laser-scanning-survey"],
+    relatedPages: [
+      { slug: "when-get-measured-building-survey", category: "guides", title: "When to Get a Measured Building Survey" },
+      { slug: "surveying-older-buildings-renovation", category: "guides", title: "Surveying Older Buildings Before Renovation" }
+    ]
+  },
+  {
+    slug: "topographical-survey-construction-projects",
+    title: "Topographical Survey for Construction Projects",
+    metaDescription:
+      "Topographical survey for construction projects. Site levels, boundaries and features for design and setting out in the UK.",
+    intro:
+      "Construction projects need an accurate picture of the site—levels, boundaries, buildings, drainage and access. A topographical survey provides that base so architects, engineers and contractors can design and build with confidence. This guide explains how topographical surveys support construction.",
+    signs: [
+      "You are starting a new-build, extension or civil project",
+      "Architects or engineers have requested a topographical survey",
+      "Site levels, drainage or boundaries are unclear",
+      "You need to set out foundations, roads or services",
+      "Planning or design requires accurate existing drawings",
+      "Multiple consultants need a shared site reference"
+    ],
+    diagnosis:
+      "Surveyors capture ground levels, features and services to the accuracy your project requires. They use total stations, GNSS and sometimes laser scanning depending on site size and complexity. Deliverables are typically 2D or 3D CAD in your chosen coordinate system.",
+    resolution:
+      "We deliver topographical surveys for construction projects with clear CAD outputs and a survey report. Data can be tied to OS grid or local control. You get a single source of truth for the site so design, planning and construction stay aligned.",
+    ctaText: "Need a topographical survey for your construction project? Request a quote.",
+    relatedServices: ["topographical-survey", "utility-mapping-survey", "measured-building-survey"],
+    relatedPages: [
+      { slug: "survey-for-planning-permission", category: "guides", title: "What Survey Do I Need for Planning Permission?" },
+      { slug: "survey-before-building-extension", category: "guides", title: "Do I Need a Survey Before Building an Extension?" }
+    ]
+  },
+  {
+    slug: "utility-mapping-survey-building-works",
+    title: "Utility Mapping Survey for Building Works",
+    metaDescription:
+      "Utility mapping survey for building works. Locating buried services before excavation and construction in the UK.",
+    intro:
+      "Before digging or building, you need to know where underground services run. A utility mapping survey locates and maps pipes, cables and ducts so you can design foundations, drainage and access without striking services. This guide explains when and how utility mapping supports building works.",
+    signs: [
+      "You are excavating for foundations, drainage or landscaping",
+      "Existing utility records are incomplete or conflicting",
+      "You need to route new services and avoid existing ones",
+      "CDM or safe system of work requires service location",
+      "The site has multiple utility owners or unknown assets",
+      "You want to reduce the risk of service strikes and delays"
+    ],
+    diagnosis:
+      "Surveyors use electromagnetic location (EML), GPR and record research to map buried services. They classify findings by confidence level and produce drawings that designers and contractors can use for planning and excavation.",
+    resolution:
+      "Our partners deliver utility mapping surveys with CAD drawings and a report explaining methodology and limitations. You get a clear picture of subsurface constraints and can plan excavation and design accordingly.",
+    ctaText: "Planning building works? Get a utility mapping survey to de-risk excavation.",
+    relatedServices: ["utility-mapping-survey", "topographical-survey"],
+    relatedPages: [
+      { slug: "survey-before-property-development", category: "guides", title: "Surveys Required Before Property Development" },
+      { slug: "survey-reports-planning-permission", category: "guides", title: "Survey Reports Required for Planning Permission" }
+    ]
+  },
+  {
+    slug: "drone-roof-inspection-commercial-buildings",
+    title: "Drone Roof Inspections for Commercial Buildings",
+    metaDescription:
+      "Drone roof inspections for commercial buildings. Safe, detailed roof surveys without scaffolding for UK businesses.",
+    intro:
+      "Commercial roof inspections often require access at height. Drones can capture high-resolution imagery and video of roof surfaces, gutters and flashings without scaffolding or cherry pickers, reducing cost and disruption. This guide explains when drone roof inspections are appropriate for commercial premises.",
+    signs: [
+      "You need to inspect roof condition without full scaffolding",
+      "Leaks, storm damage or ageing roofing need assessment",
+      "You are buying or maintaining a commercial property",
+      "Access is difficult or dangerous for traditional inspection",
+      "You want a visual record for insurance or maintenance planning",
+      "Flat roofs, gutters or high-level details need checking"
+    ],
+    diagnosis:
+      "Operators fly drones over the roof to capture stills and video. Imagery is reviewed for defects, ponding, vegetation and damage. For some buildings, thermal or multispectral sensors can help identify moisture or insulation issues. We advise on the right level of inspection for your situation.",
+    resolution:
+      "You receive a report with annotated imagery and recommendations. Where needed, we can coordinate with roofing contractors or structural surveyors. Drone inspections are carried out by CAA-approved operators with appropriate insurance.",
+    ctaText: "Need a roof inspection without scaffolding? Request a drone roof inspection quote.",
+    relatedServices: ["drone-roof-inspection", "measured-building-survey"],
+    relatedPages: [
+      { slug: "drone-roof-inspection-vs-traditional", category: "guides", title: "Drone Roof Inspection vs Traditional Inspection" },
+      { slug: "when-you-need-structural-survey", category: "guides", title: "When You Need a Structural Survey" }
+    ]
+  },
+  {
+    slug: "drone-roof-inspection-vs-traditional",
+    title: "Drone Roof Inspection vs Traditional Inspection",
+    metaDescription:
+      "Drone roof inspection vs traditional inspection. When to use drones and when scaffolding or rope access is better for UK properties.",
+    intro:
+      "Roof inspections can be done by drone, scaffolding, cherry picker or rope access. Each has pros and cons in terms of cost, detail and access. This guide compares drone and traditional roof inspections so you can choose the right approach for your property.",
+    signs: [
+      "You need a roof survey and are comparing methods",
+      "Scaffolding is expensive or impractical",
+      "You need a quick visual assessment for insurance or sale",
+      "Detailed close-up inspection of specific defects is required",
+      "The building is high or access is restricted",
+      "You want to minimise disruption to occupants or operations"
+    ],
+    diagnosis:
+      "Drones suit large areas, first-pass assessments and hard-to-reach roofs. Traditional access may be better where close-up tactile inspection, sampling or repair work is needed. We can advise which method fits your building and objectives.",
+    resolution:
+      "Our partners offer both drone and traditional roof surveys. We recommend the most appropriate method and provide a clear scope and quote. For many commercial buildings, a drone survey is a cost-effective first step; we can arrange follow-up access if needed.",
+    ctaText: "Not sure whether to use a drone or traditional roof inspection? We can advise and quote.",
+    relatedServices: ["drone-roof-inspection", "measured-building-survey"],
+    relatedPages: [
+      { slug: "drone-roof-inspection-commercial-buildings", category: "guides", title: "Drone Roof Inspections for Commercial Buildings" },
+      { slug: "what-structural-survey-includes", category: "guides", title: "What a Structural Survey Includes" }
+    ]
+  },
+  {
+    slug: "laser-scanning-surveys-large-buildings",
+    title: "Laser Scanning Surveys for Large Buildings",
+    metaDescription:
+      "Laser scanning surveys for large buildings. 3D point clouds and as-built data for commercial and industrial premises in the UK.",
+    intro:
+      "Large or complex buildings are difficult to survey with traditional methods. Laser scanning captures millions of points to create a 3D point cloud, giving designers and operators an accurate as-built model. This guide explains when laser scanning is the right choice for large buildings.",
+    signs: [
+      "The building is large, complex or has irregular geometry",
+      "You need as-built data for refurbishment, M&E or BIM",
+      "Traditional measured survey would be slow or incomplete",
+      "Multiple floors, atria or plant rooms need to be captured",
+      "You want to avoid multiple site visits",
+      "Clash detection or coordination with new design is critical"
+    ],
+    diagnosis:
+      "Surveyors deploy static or mobile laser scanners to capture the building interior and exterior. Point clouds are registered, cleaned and can be modelled to the level of detail you need. We advise on scan density, control and deliverables for your project.",
+    resolution:
+      "You receive point clouds in standard formats (e.g. E57, LAS) and, where required, 2D/3D CAD or BIM elements. Our partners work to agreed accuracy and coverage so your design team has a reliable base for coordination and construction.",
+    ctaText: "Need a laser scanning survey for a large building? Request a quote.",
+    relatedServices: ["laser-scanning-survey", "measured-building-survey", "topographical-survey"],
+    relatedPages: [
+      { slug: "survey-for-architectural-design", category: "guides", title: "Surveys for Architectural Design and BIM" },
+      { slug: "when-get-measured-building-survey", category: "guides", title: "When to Get a Measured Building Survey" }
+    ]
+  },
+  {
+    slug: "boundary-surveys-property-disputes",
+    title: "Boundary Surveys for Property Disputes",
+    metaDescription:
+      "Boundary surveys for property disputes in the UK. When you need a boundary survey for disputes, conveyancing and Land Registry.",
+    intro:
+      "Boundary disputes often turn on where the legal boundary lies and where physical features sit relative to it. A boundary survey measures the position of fences, walls and other features and can be tied to title plans and the national grid. This guide explains when a boundary survey is needed for disputes.",
+    signs: [
+      "A neighbour or legal dispute involves boundary position",
+      "You are buying or selling and the boundary is unclear",
+      "You plan to build close to the boundary and need certainty",
+      "Title plans are ambiguous or inconsistent with physical features",
+      "Your solicitor has recommended a boundary survey",
+      "You need evidence for court, mediation or Land Registry"
+    ],
+    diagnosis:
+      "Surveyors measure the position of boundary features and compare them to title documents and, where available, historical evidence. They produce a plan and report that can be used by solicitors and the courts. Surveys are carried out to a standard that meets legal and professional expectations.",
+    resolution:
+      "You receive a plan showing measured positions and a report explaining how the survey was done and how it relates to the title. Our partners work with solicitors and can provide expert input where required. The survey gives you a clear factual base for resolving the dispute.",
+    ctaText: "In a boundary dispute? Request a boundary survey quote and we’ll advise on scope.",
+    relatedServices: ["boundary-survey", "topographical-survey"],
+    relatedPages: [
+      { slug: "survey-reports-planning-permission", category: "guides", title: "Survey Reports Required for Planning Permission" },
+      { slug: "survey-before-building-extension", category: "guides", title: "Do I Need a Survey Before Building an Extension?" }
+    ]
+  },
+  {
+    slug: "survey-reports-planning-permission",
+    title: "Survey Reports Required for Planning Permission",
+    metaDescription:
+      "Survey reports required for planning permission in the UK. Topographical, measured building and other surveys for planning applications.",
+    intro:
+      "Planning applications often need to be supported by accurate survey information. Councils expect to see existing site and building data that is up to date and properly prepared. This guide outlines which survey reports are commonly required for planning permission and when to commission them.",
+    signs: [
+      "You are preparing a planning application for new build, extension or change of use",
+      "The local authority has requested existing drawings or levels",
+      "Your architect has asked for a topographical or measured building survey",
+      "Drainage, visibility or design constraints need to be shown accurately",
+      "The site has level changes, trees or neighbouring buildings that affect the design",
+      "You want to avoid delays or refusals due to inadequate survey information"
+    ],
+    diagnosis:
+      "Requirements vary by authority and project type. Typically a topographical survey of the site and, where existing buildings are affected, a measured building survey are needed. Boundary and utility surveys may also be required. We can advise on the right package for your application.",
+    resolution:
+      "Our partners deliver planning-ready survey packs with CAD drawings and reports. We coordinate with your architect so the survey captures what planners need in one visit. You get a solid evidence base for your application and reduce the risk of requests for further information.",
+    ctaText: "Applying for planning permission? Request a survey quote tailored to your application.",
+    relatedServices: ["topographical-survey", "measured-building-survey", "utility-mapping-survey"],
+    relatedPages: [
+      { slug: "survey-for-planning-permission", category: "guides", title: "What Survey Do I Need for Planning Permission?" },
+      { slug: "topographical-survey-construction-projects", category: "guides", title: "Topographical Survey for Construction Projects" }
+    ]
+  },
+  {
+    slug: "surveying-older-buildings-renovation",
+    title: "Surveying Older Buildings Before Renovation",
+    metaDescription:
+      "Surveying older buildings before renovation in the UK. Measured surveys and condition assessments for period and listed properties.",
+    intro:
+      "Older and listed buildings need careful assessment before renovation. Inaccurate or incomplete information leads to surprises during strip-out and construction. A measured building survey and, where relevant, a condition or structural assessment give you a clear picture before you commit to design and cost.",
+    signs: [
+      "You are renovating a period, listed or pre-1900 building",
+      "Existing drawings are missing or unreliable",
+      "You need to understand construction, materials and condition",
+      "Structural or conservation concerns have been raised",
+      "You are designing services, insulation or damp proofing",
+      "Funders or insurers require a survey or condition report"
+    ],
+    diagnosis:
+      "Surveyors combine measured building survey with observation of construction type, defects and materials. For listed buildings, the level of detail and any intrusive investigation must be agreed with the conservation officer. We can scope a survey that balances information need with sensitivity.",
+    resolution:
+      "You receive accurate as-built drawings and a report on condition and construction. Where appropriate we coordinate with structural engineers or conservation specialists. The survey forms a baseline for design and helps avoid costly changes once work has started.",
+    ctaText: "Renovating an older building? Get a measured building survey and condition assessment.",
+    relatedServices: ["measured-building-survey", "laser-scanning-survey", "drone-roof-inspection"],
+    relatedPages: [
+      { slug: "measured-building-survey-renovations", category: "guides", title: "Measured Building Survey for Renovations" },
+      { slug: "what-structural-survey-includes", category: "guides", title: "What a Structural Survey Includes" }
+    ]
+  },
+  {
+    slug: "survey-inspections-buying-commercial-property",
+    title: "Survey Inspections Before Buying Commercial Property",
+    metaDescription:
+      "Survey inspections before buying commercial property in the UK. Building surveys, measured surveys and due diligence for investors.",
+    intro:
+      "Buying commercial property involves significant capital and risk. Survey inspections—building surveys, measured surveys, drainage and structural assessments—help you understand condition and liability before exchange. This guide outlines which surveys to consider when buying commercial premises.",
+    signs: [
+      "You are purchasing commercial property or a portfolio",
+      "You need to understand building condition and repair liability",
+      "The property is multi-let, mixed-use or has complex services",
+      "You want to budget for immediate and future works",
+      "Lenders or partners require independent survey advice",
+      "You are comparing several properties and need consistent information"
+    ],
+    diagnosis:
+      "Surveyors assess the building fabric, services, compliance and any specialist areas (e.g. drainage, asbestos). Measured building surveys support refurbishment or redevelopment plans. We can put together a survey package that matches your due diligence needs and timescale.",
+    resolution:
+      "You receive clear reports on condition, defects and recommendations. Where relevant we deliver measured surveys and utility information so you have a full picture for design and cost planning. Our partners work to RICS and industry standards so your advisers and lenders can rely on the output.",
+    ctaText: "Buying commercial property? Request a survey package for your due diligence.",
+    relatedServices: ["measured-building-survey", "topographical-survey", "utility-mapping-survey", "drone-roof-inspection"],
+    relatedPages: [
+      { slug: "building-survey-vs-homebuyer-survey", category: "guides", title: "Building Survey vs Homebuyer Survey" },
+      { slug: "when-you-need-structural-survey", category: "guides", title: "When You Need a Structural Survey" }
+    ]
   }
 ];

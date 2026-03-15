@@ -8,6 +8,7 @@ export const revalidate = false;
 const SEGMENTS = [
   "sitemap-services.xml",
   "sitemap-service-locations.xml",
+  "sitemap-topic-locations.xml",
   "sitemap-topics.xml",
   "sitemap-static.xml",
 ] as const;

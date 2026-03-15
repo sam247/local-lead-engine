@@ -57,6 +57,24 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <p className="mb-8 text-lg text-muted-foreground">{page.intro}</p>
+              {page.topicLocationLink && (
+                <p className="mb-8 text-muted-foreground">
+                  Businesses installing structured cabling often combine it with{" "}
+                  <Link href={page.topicLocationLink.href} className="text-primary hover:underline">
+                    {page.topicLocationLink.linkText}
+                  </Link>{" "}
+                  or nearby commercial areas.
+                </p>
+              )}
+              {page.serviceLocationLink && (
+                <p className="mb-8 text-muted-foreground">
+                  Businesses planning CCTV coverage often start with{" "}
+                  <Link href={page.serviceLocationLink.href} className="text-primary hover:underline">
+                    {page.serviceLocationLink.linkText}
+                  </Link>{" "}
+                  or surrounding areas.
+                </p>
+              )}
               <h2 className="mb-4 font-display text-2xl font-bold">What to Look For</h2>
               <ul className="mb-8 space-y-2">
                 {page.signs.map((sign) => (

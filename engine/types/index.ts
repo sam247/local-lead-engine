@@ -58,6 +58,10 @@ export interface InfoPageData {
   ctaText: string;
   relatedServices: string[];
   relatedPages?: { slug: string; category: string; title: string }[];
+  /** Optional in-content link to a topic×location page for crawl flow (e.g. guide → topic-location). */
+  topicLocationLink?: { href: string; linkText: string };
+  /** Optional in-content link to a service×location page for crawl flow (e.g. guide → service-location). */
+  serviceLocationLink?: { href: string; linkText: string };
 }
 
 export interface VerticalConfig {

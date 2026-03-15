@@ -6,31 +6,66 @@ import { verticalConfig } from "@/config";
 import { LocationPage, getNeighbourLocationIds, buildLocationContextParagraph } from "engine";
 import { buildLocationMetadata } from "engine";
 import type { Metadata } from "next";
+import {
+  isTopicLocationSlug,
+  getTopicForRouteSlug,
+  getTopicLocationStaticParams,
+} from "@/lib/topicLocationConfig";
+import { TopicLocationPage } from "@/app/components/TopicLocationPage";
 
 export const dynamic = "force-static";
 export const revalidate = false;
 
 export async function generateStaticParams() {
-  return services.flatMap((s) =>
+  const serviceLocationParams = services.flatMap((s) =>
     locations.map((l) => ({ serviceSlug: s.slug, locationSlug: l.id }))
   );
+  const topicLocationParams = getTopicLocationStaticParams(locations);
+  return [...serviceLocationParams, ...topicLocationParams];
 }
 
 type Props = { params: { serviceSlug: string; locationSlug: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { serviceSlug, locationSlug } = params;
-  const service = services.find((s) => s.slug === serviceSlug);
   const location = locations.find((l) => l.id === locationSlug);
-  if (!service || !location) return { title: "Not Found" };
+  if (!location) return { title: "Not Found" };
+
+  if (isTopicLocationSlug(serviceSlug)) {
+    const topic = getTopicForRouteSlug(serviceSlug);
+    if (!topic) return { title: "Not Found" };
+    const title = `${topic.title} in ${location.name} | ${verticalConfig.siteName}`;
+    const description =
+      topic.intro.slice(0, 120) +
+      ` We provide ${topic.title.toLowerCase()} across ${location.name} and ${location.area}.`;
+    return { title, description };
+  }
+
+  const service = services.find((s) => s.slug === serviceSlug);
+  if (!service) return { title: "Not Found" };
   return buildLocationMetadata(service, location, verticalConfig);
 }
 
 export default async function LocationRoute({ params }: Props) {
   const { serviceSlug, locationSlug } = params;
-  const service = services.find((s) => s.slug === serviceSlug);
   const location = locations.find((l) => l.id === locationSlug);
-  if (!service || !location) notFound();
+  if (!location) notFound();
+
+  if (isTopicLocationSlug(serviceSlug)) {
+    const topic = getTopicForRouteSlug(serviceSlug);
+    if (!topic) notFound();
+    return (
+      <TopicLocationPage
+        topic={topic}
+        location={location}
+        topicSlug={serviceSlug}
+        locationSlug={locationSlug}
+      />
+    );
+  }
+
+  const service = services.find((s) => s.slug === serviceSlug);
+  if (!service) notFound();
 
   const sameAreaLocations = locations.filter(
     (l) => l.id !== location.id && l.area === location.area
