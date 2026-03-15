@@ -35,6 +35,17 @@ export default function NearMeRoute() {
       otherServices={otherServices}
       baseUrl={verticalConfig.baseUrl}
       pagePath={pagePath}
+      introParagraph={verticalConfig.relatedLocationsIntro}
+      sectionTitle={`${service.title} by Location`}
+      trustBlockTitle="Why choose MainLine Drains"
+      trustBlockPoints={[
+        "Emergency response available",
+        "Local engineers across the UK",
+        "CCTV diagnostics and drain repair specialists",
+      ]}
+      conversionHeading="Need urgent drain repair?"
+      secondaryCtaLabel={verticalConfig.heroSecondaryCtaText}
+      secondaryCtaPath="/contact"
     />
   );
 }

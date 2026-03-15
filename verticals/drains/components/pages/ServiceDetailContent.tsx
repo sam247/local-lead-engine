@@ -1,7 +1,11 @@
 import { services, locations } from "@/lib/data";
 import { getHeroImage } from "@/lib/images";
 import { verticalConfig, partnerBaseUrl, partnerTopographicalSurveyPath } from "@/config";
+import { drainProblems } from "@/data/problems";
 import { ServiceDetailContent as EngineServiceDetailContent } from "engine";
+
+const SERVICES_WITH_PROBLEM_LINKS = ["drain-collapse-repair", "drain-unblocking", "cctv-drain-surveys"];
+const problemLinksList = drainProblems.map((p) => ({ path: `/drain-problems/${p.slug}`, label: p.title }));
 
 const serviceSymptomLinks: Record<string, { slug: string; path: string; title: string }[]> = {
   "drain-collapse-repair": [
@@ -138,6 +142,7 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
   const symptomLinks = serviceSymptomLinks[service.slug] ?? [];
   const faqs = serviceFaqs[service.slug] ?? [];
   const heroImageSrc = getHeroImage({ serviceSlug: service.slug });
+  const showProblemLinks = SERVICES_WITH_PROBLEM_LINKS.includes(service.slug);
 
   return (
     <EngineServiceDetailContent
@@ -151,6 +156,8 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
       locationLinkPath={(slug, id) => `/${slug}/${id}`}
       symptomLinks={symptomLinks}
       faqs={faqs}
+      problemLinks={showProblemLinks ? problemLinksList : undefined}
+      problemLinksSectionTitle={showProblemLinks ? "Drain problems we solve" : undefined}
       overviewImage={{ src: heroImageSrc, alt: `${service.title} – ${verticalConfig.siteName}` }}
       firstCtaMessage="Not sure what's wrong with your drains? Book a professional CCTV drain survey for a clear diagnosis."
       firstCtaButtonText="Book a CCTV Survey"

@@ -20,6 +20,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/drain-survey-cost",
     "/drainage-faq",
     "/contractors",
+    "/privacy",
+    "/terms",
   ];
   for (const path of staticPaths) {
     entries.push({ url: `${baseUrl}${path}`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: path === "" ? 1 : 0.8 });

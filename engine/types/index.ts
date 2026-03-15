@@ -95,6 +95,8 @@ export interface VerticalConfig {
   locationContextTemplate?: string;
   /** Optional 1–2 cross-vertical links for blog/content related blocks (e.g. partner site). */
   crossVerticalLinks?: { label: string; url: string }[];
+  /** Optional suffix for generated image alt when no location (e.g. "drainage service", "drainage inspection"). */
+  imageAltNoLocationSuffix?: string;
 }
 
 export interface ProblemData {
@@ -105,4 +107,8 @@ export interface ProblemData {
   whenToCall: string;
   relatedServiceSlugs: string[];
   ctaMessage: string;
+  /** Optional: plain-language troubleshooting steps (paragraph or short list). */
+  quickChecks?: string;
+  /** Optional: when the issue may indicate collapse or severe blockage. */
+  seriousSigns?: string;
 }

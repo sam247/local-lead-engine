@@ -8,6 +8,7 @@ import { InspectionCTA } from "./InspectionCTA";
 import { CTABanner } from "./CTABanner";
 import { ServiceImageGallery } from "./ServiceImageGallery";
 import { Button } from "./ui/button";
+import { getImageAlt } from "../utils/imageAlt";
 import type { Service, Location, VerticalConfig } from "../types";
 
 const DEFAULT_INDUSTRIES = [
@@ -48,6 +49,10 @@ export interface ServiceDetailContentProps {
   overviewImage?: { src: string; alt: string };
   /** Optional override for the symptom/related-links section heading (e.g. "Related guides" for surveys). */
   symptomLinksSectionTitle?: string;
+  /** Optional list of problem/issue pages to link to (e.g. "Drain problems we solve"). Rendered as crawlable links. */
+  problemLinks?: { path: string; label: string }[];
+  /** Optional heading for the problem links section (e.g. "Drain problems we solve"). */
+  problemLinksSectionTitle?: string;
 }
 
 export function ServiceDetailContent({
@@ -71,12 +76,19 @@ export function ServiceDetailContent({
   overviewExtra,
   overviewImage,
   symptomLinksSectionTitle,
+  problemLinks = [],
+  problemLinksSectionTitle,
 }: ServiceDetailContentProps) {
   const displayTitle = service.titleSingular ?? service.title;
   const serviceTypes = verticalConfig.serviceTypesBySlug?.[service.slug] ?? [];
   const industries = verticalConfig.industries ?? DEFAULT_INDUSTRIES;
   const trustedEquipment = verticalConfig.trustedEquipment ?? [];
   const sectionIntros = verticalConfig.sectionIntros ?? {};
+  const heroImageAlt =
+    getImageAlt({
+      service: displayTitle,
+      noLocationSuffix: verticalConfig.imageAltNoLocationSuffix,
+    });
   const relatedSidebarLabel = verticalConfig.relatedServicesLabel
     ? `Related ${verticalConfig.relatedServicesLabel} Services`
     : `Related ${verticalConfig.siteName} Services`;
@@ -110,7 +122,7 @@ export function ServiceDetailContent({
 
       <section className="relative bg-primary py-16 md:py-24">
         <div className="absolute inset-0">
-          <img src={heroImageSrc} alt="" className="h-full w-full object-cover opacity-20" />
+          <img src={heroImageSrc} alt={heroImageAlt} className="h-full w-full object-cover opacity-20" />
           <div className="absolute inset-0 bg-primary/60" />
         </div>
         <div className="container relative">
@@ -182,6 +194,21 @@ export function ServiceDetailContent({
                 </>
               )}
 
+              {problemLinks.length > 0 && problemLinksSectionTitle && (
+                <>
+                  <h3 className="mb-4 font-display text-xl font-bold">{problemLinksSectionTitle}</h3>
+                  <ul className="mb-8 space-y-2">
+                    {problemLinks.map((link) => (
+                      <li key={link.path}>
+                        <Link href={link.path} className="text-primary hover:underline">
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+
               <h3 className="mb-4 font-display text-xl font-bold">Our Process</h3>
               {sectionIntros.process && (
                 <p className="mb-4 text-muted-foreground">{sectionIntros.process}</p>
@@ -221,7 +248,15 @@ export function ServiceDetailContent({
               )}
 
               {galleryImages.length > 0 && (
-                <ServiceImageGallery images={galleryImages} />
+                <ServiceImageGallery
+                  images={galleryImages}
+                  imageAltFallback={() =>
+                    getImageAlt({
+                      service: displayTitle,
+                      noLocationSuffix: verticalConfig.imageAltNoLocationSuffix,
+                    })
+                  }
+                />
               )}
 
               <h3 className="mb-4 font-display text-xl font-bold">Benefits</h3>

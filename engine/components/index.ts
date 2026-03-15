@@ -5,6 +5,7 @@ export { NearbyAreas, type NearbyAreasProps } from "./NearbyAreas";
 export { HubPage, type HubPageProps, type CrossSection, type PillarGuideLink } from "./HubPage";
 export { InfoPage, type InfoPageProps, type RelatedPageLink } from "./InfoPage";
 export { NearMePage, type NearMePageProps } from "./NearMePage";
+export { NearMeLocationList, type NearMeLocationListProps } from "./NearMeLocationList";
 export { PillarGuide, type PillarGuideProps, type PillarGuideSection } from "./PillarGuide";
 export { MapEmbed, type MapEmbedProps } from "./MapEmbed";
 export { InspectionCTA, type InspectionCTAProps } from "./InspectionCTA";

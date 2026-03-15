@@ -18,6 +18,8 @@ const staticPaths = [
   "/drain-survey-cost",
   "/drainage-faq",
   "/contractors",
+  "/privacy",
+  "/terms",
   ...drainProblems.map((p) => `/drain-problems/${p.slug}`),
 ];
 

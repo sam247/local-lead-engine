@@ -13,6 +13,10 @@ export const drainProblems: ProblemData[] = [
     relatedServiceSlugs: ["cctv-drain-surveys", "drain-unblocking", "drain-jetting", "drain-relining"],
     ctaMessage:
       "If you have a blocked outside drain or recurring drainage issues, our engineers can carry out a CCTV drain survey and clear or repair the problem.",
+    quickChecks:
+      "Check that gullies and grates are clear of leaves and debris. Run taps and flush toilets to see if the blockage affects one outlet or several. If only one drain is slow, the issue may be local; if multiple fixtures are affected, the blockage is likely in a shared run.",
+    seriousSigns:
+      "Recurring blockages after clearing, foul smells that persist, or water backing up from manholes or gullies can indicate a partial collapse, root ingress, or broken pipe. These need a CCTV survey and proper repair, not just another clear-out.",
   },
   {
     slug: "drain-smell-in-garden",
@@ -26,6 +30,10 @@ export const drainProblems: ProblemData[] = [
     relatedServiceSlugs: ["cctv-drain-surveys", "drain-collapse-repair", "drain-relining", "drain-excavation"],
     ctaMessage:
       "If you are experiencing a drain smell in your garden, our engineers can carry out a CCTV drain survey and recommend the right repair.",
+    quickChecks:
+      "Note whether the smell is in one spot or across the garden, and if it gets worse after rain or when you run water. Check that inspection chamber covers and gullies are sealed and that no traps have run dry. Avoid pouring chemicals down the drain; they rarely fix a physical leak.",
+    seriousSigns:
+      "A strong, persistent smell in one area often points to a crack or collapse letting sewage into the soil. Sinkholes, unusually green or soggy patches, or smell that worsens after rain suggest a broken pipe that needs locating and repairing.",
   },
   {
     slug: "collapsed-drain-repair",
@@ -39,6 +47,10 @@ export const drainProblems: ProblemData[] = [
     relatedServiceSlugs: ["cctv-drain-surveys", "drain-collapse-repair", "drain-excavation", "drain-relining"],
     ctaMessage:
       "If you are experiencing a collapsed drain or drainage issue, our engineers can carry out a CCTV drain survey and repair.",
+    quickChecks:
+      "Look for sinkholes, dips or cracks in paving, or patches of grass that stay unusually green. Check if multiple sinks, toilets or gullies are slow or backing up. If only one fixture is affected, the issue may be local; multiple outlets suggest a shared run problem.",
+    seriousSigns:
+      "Sinkholes, sewage on the ground, or a sudden drop in drainage across several fixtures are strong signs of a collapse. Recurring blockages and foul smells that persist after clearing also suggest structural failure. These need a CCTV survey and repair, not just unblocking.",
   },
   {
     slug: "slow-draining-outside-pipe",
@@ -52,6 +64,10 @@ export const drainProblems: ProblemData[] = [
     relatedServiceSlugs: ["cctv-drain-surveys", "drain-jetting", "drain-unblocking", "drain-relining"],
     ctaMessage:
       "If you have a slow-draining outside pipe, our engineers can survey the drain and clear or repair it.",
+    quickChecks:
+      "Run water in the affected gully or outlet and time how long it takes to clear. Check if other outside drains are also slow. Remove any visible leaves or debris from grates. If the problem has appeared gradually and is getting worse, build-up or partial collapse is likely.",
+    seriousSigns:
+      "Slow drainage that is worsening, affecting more than one gully, or accompanied by foul smells or gurgling suggests a partial collapse, root blockage, or damaged pipe. Recurring slowness after a quick clear-out also points to a structural or gradient issue that needs surveying.",
   },
   {
     slug: "drain-overflow-in-garden",
@@ -65,6 +81,10 @@ export const drainProblems: ProblemData[] = [
     relatedServiceSlugs: ["cctv-drain-surveys", "emergency-drainage", "drain-unblocking", "drain-excavation"],
     ctaMessage:
       "If you have drain overflow in your garden, our engineers can carry out a CCTV drain survey and repair.",
+    quickChecks:
+      "Avoid using sinks, toilets and washing machines until the overflow is investigated. Note where the water is appearing—gully, manhole or chamber—and whether it happens when you run water. Do not try to clear pooled wastewater yourself; it is a health risk.",
+    seriousSigns:
+      "Any overflow of wastewater into the garden is serious. It can indicate a blockage, a collapsed pipe, or a surcharged system. The sooner it is surveyed and repaired, the less risk to health, landscaping and foundations. Treat it as urgent and get a professional assessment.",
   },
 ];
 

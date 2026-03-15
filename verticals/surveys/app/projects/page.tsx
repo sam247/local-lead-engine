@@ -48,7 +48,7 @@ export default function ProjectsPage() {
             </div>
           )}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => (
+            {projects.map((project, index) => (
               <ProjectCardWithLinks
                 key={project.id}
                 project={{
@@ -60,7 +60,7 @@ export default function ProjectsPage() {
                   service: project.service,
                   serviceSlug: project.serviceSlug,
                 }}
-                imageSrc={getProjectImage(project)}
+                imageSrc={getProjectImage(project, index)}
                 imageAlt={project.title}
                 services={services}
                 locationLinkPath={(slug, locId) => `/${slug}/${locId}`}

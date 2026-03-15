@@ -43,7 +43,7 @@ export default function PillarGuideContent() {
       <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Collapsed Drains Guide", url: "/collapsed-drains-complete-guide" }] }} />
       <section className="relative bg-primary py-16 md:py-24">
         <div className="absolute inset-0">
-          <img src={imageSrc} alt="" className="h-full w-full object-cover opacity-20" />
+          <img src={imageSrc} alt="Collapsed drains complete guide – drainage repair and survey" className="h-full w-full object-cover opacity-20" />
           <div className="absolute inset-0 bg-primary/60" />
         </div>
         <div className="container relative">

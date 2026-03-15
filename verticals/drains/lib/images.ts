@@ -25,7 +25,11 @@ const projectImagePaths = [
   `${base}/projects/project-6.jpg`,
 ];
 
-/** Use project's dedicated image when available, else fallback to index in pool. */
+/**
+ * Resolve project image: dedicated project.image when set, else pool by index.
+ * When rendering a list (e.g. homepage Recent Projects), pass the display index so
+ * the first N items get N distinct pool images and avoid repeated imagery.
+ */
 export function getProjectImage(project: { image?: string; imageIndex?: number } | number, index?: number): string {
   const idx = typeof project === "number" ? project : (index ?? project.imageIndex ?? 0);
   if (typeof project === "object" && project.image) return project.image;

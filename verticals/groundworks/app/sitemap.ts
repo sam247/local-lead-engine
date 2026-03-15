@@ -13,6 +13,8 @@ const staticPaths = [
   "/blog",
   "/guides",
   "/contractors",
+  "/privacy",
+  "/terms",
 ];
 
 const nearMePaths: string[] = [];

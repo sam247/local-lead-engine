@@ -17,6 +17,8 @@ const staticPaths = [
   "/drain-survey-cost",
   "/drainage-faq",
   "/contractors",
+  "/privacy",
+  "/terms",
 ];
 
 const nearMePaths = [

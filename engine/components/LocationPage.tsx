@@ -271,7 +271,7 @@ export function LocationPage({
                         <div className="aspect-video w-full overflow-hidden bg-muted">
                           <img
                             src={project.image}
-                            alt=""
+                            alt={project.title}
                             className="h-full w-full object-cover transition-transform group-hover:scale-105"
                           />
                         </div>

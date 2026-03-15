@@ -14,6 +14,8 @@ const staticPaths = [
   "/projects",
   "/blog",
   "/industries",
+  "/privacy",
+  "/terms",
   ...industries.map((i) => `/industries/${i.slug}`),
   ...accessProblems.map((p) => `/access-problems/${p.slug}`),
 ];

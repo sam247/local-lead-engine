@@ -107,11 +107,11 @@ export default async function LocationRoute({ params }: Props) {
   const nearbyProjectsList = projects
     .filter((p) => p.locationId && eligibleProjectIds.has(p.locationId))
     .slice(0, 3)
-    .map((p) => ({
+    .map((p, i) => ({
       id: p.id,
       title: p.title,
       description: p.description,
-      image: getProjectImage(p),
+      image: getProjectImage(p, i),
       url: `/projects#${p.id}`,
     }));
 

@@ -1,11 +1,14 @@
 import { notFound } from "next/navigation";
-import { getHubData, getCategoryPages, services } from "@/lib/data";
+import { getHubData, getCategoryPages, services, locations } from "@/lib/data";
 import { drainProblems, getDrainProblemBySlug } from "@/data/problems";
 import { InfoPage, ProblemPage } from "engine";
 import { buildInfoMetadata } from "engine";
 import { verticalConfig } from "@/config";
 import { getInfoPageProps } from "@/lib/infoPageProps";
 import type { Metadata } from "next";
+
+const SERVICES_NEAR_YOU_INTRO =
+  "Our engineers provide CCTV drain surveys, drain repairs and drain unblocking across the area. Find a local service below.";
 
 export const dynamic = "force-static";
 export const revalidate = false;
@@ -48,6 +51,17 @@ export default function DrainProblemsSlugPage({ params }: Props) {
         basePath="/services"
         problemsBasePath="/drain-problems"
         problemsBreadcrumbLabel={verticalConfig.problemLabel ?? "Problems"}
+        allProblems={drainProblems}
+        relatedProblemsTitle="Related drain issues"
+        diagnosisSectionTitle="Drain problem diagnosis"
+        causesSectionTitle="What causes this drain problem"
+        whenToCallSectionTitle="When to call a drainage engineer"
+        featuredLocations={locations.slice(0, 8).map((loc) => ({ id: loc.id, name: loc.name }))}
+        primaryServiceSlug="drain-collapse-repair"
+        primaryServiceLabel="Drain collapse repair"
+        locationLinkPath={(slug, id) => `/${slug}/${id}`}
+        servicesNearYouTitle="Drain repair services near you"
+        servicesNearYouIntro={SERVICES_NEAR_YOU_INTRO}
       />
     );
   }

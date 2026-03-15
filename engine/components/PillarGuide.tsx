@@ -4,6 +4,7 @@ import { Phone, ArrowRight } from "lucide-react";
 import { SchemaMarkup } from "../schema/SchemaMarkup";
 import { FAQSchema, type FAQItem } from "../schema/FAQSchema";
 import { InspectionCTA } from "./InspectionCTA";
+import { getImageAlt } from "../utils/imageAlt";
 import type { CompanyInfo } from "../types";
 
 export interface PillarGuideSection {
@@ -73,7 +74,11 @@ export function PillarGuide({
       />
       <section className="relative bg-primary py-16 md:py-24">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="" className="h-full w-full object-cover opacity-20" />
+          <img
+          src={heroImage}
+          alt={getImageAlt({ service: heroTitle, noLocationSuffix: "guide" })}
+          className="h-full w-full object-cover opacity-20"
+        />
           <div className="absolute inset-0 bg-primary/60" />
         </div>
         <div className="container relative">
