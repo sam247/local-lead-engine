@@ -23,11 +23,11 @@ export function getInfoPageProps(category: string, slug: string) {
     categoryImagesMap: categoryImages,
   });
   const heroAlt =
-    categoryAltText[category] || `${page.title} - professional drainage service`;
+    categoryAltText[category] || `${page.title} - ${verticalConfig.siteName}`;
   const pageFaqs = [
     {
       question: `What are the signs of ${page.title.toLowerCase()}?`,
-      answer: page.signs.slice(0, 3).join(". ") + ".",
+      answer: page.signs.length > 0 ? page.signs.slice(0, 3).join(". ") + "." : page.intro.slice(0, 150) + "...",
     },
     {
       question: `How do you diagnose ${page.title.toLowerCase()}?`,
@@ -66,6 +66,6 @@ export function getInfoPageProps(category: string, slug: string) {
     locations,
     hubPages,
     getCategoryPages,
-    relatedGuidesTitle: "Related Drain Guides",
+    relatedGuidesTitle: "Related guides",
   };
 }

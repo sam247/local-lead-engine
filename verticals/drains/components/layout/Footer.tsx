@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
+import { Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
 import { companyInfo, services, locations } from "@/lib/data";
 
 const Footer = () => {
@@ -99,25 +99,18 @@ const Footer = () => {
             <h3 className="mb-4 font-display text-lg font-semibold">Contact Us</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
-                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  <Phone className="h-4 w-4 shrink-0" />
-                  Call Now
-                </a>
-              </li>
-              <li className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
-                <a href={`mailto:${companyInfo.email}`} className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  {companyInfo.email}
+                <a href="mailto:info@mainlinedrains.co.uk" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  info@mainlinedrains.co.uk
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
-                <span className="text-sm text-primary-foreground/80">{companyInfo.address}</span>
+                <span className="text-sm text-primary-foreground/80">128 City Road, London, EC1V 2NX</span>
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
-                <span className="text-sm text-primary-foreground/80">{companyInfo.hours}</span>
+                <span className="text-sm text-primary-foreground/80">24/7 Emergency Service Available</span>
               </li>
             </ul>
           </div>

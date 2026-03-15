@@ -25,15 +25,26 @@ const projectImagePaths = [
   `${base}/projects/project-6.jpg`,
 ];
 
+/** Stable index from project id so the same project always gets the same image and duplicates are minimised. */
+function projectIdToPoolIndex(id: string, poolLength: number): number {
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+  return h % poolLength;
+}
+
 /**
- * Resolve project image: dedicated project.image when set, else pool by index.
- * When rendering a list (e.g. homepage Recent Projects), pass the display index so
- * the first N items get N distinct pool images and avoid repeated imagery.
+ * Resolve project image: dedicated project.image when set, else pool by stable id-based index.
+ * Uses project id to pick a pool image so the same project always shows the same image and
+ * different projects get different images where possible (no duplicate images per project).
  */
-export function getProjectImage(project: { image?: string; imageIndex?: number } | number, index?: number): string {
-  const idx = typeof project === "number" ? project : (index ?? project.imageIndex ?? 0);
-  if (typeof project === "object" && project.image) return project.image;
-  return projectImagePaths[Math.abs(idx) % projectImagePaths.length] ?? projectImagePaths[0];
+export function getProjectImage(project: { id?: string; image?: string; imageIndex?: number } | number, index?: number): string {
+  if (typeof project === "number") {
+    return projectImagePaths[Math.abs(project) % projectImagePaths.length] ?? projectImagePaths[0];
+  }
+  if (project.image) return project.image;
+  const poolLen = projectImagePaths.length;
+  const idx = project.id != null ? projectIdToPoolIndex(project.id, poolLen) : (index ?? project.imageIndex ?? 0);
+  return projectImagePaths[Math.abs(idx) % poolLen] ?? projectImagePaths[0];
 }
 
 export const blogImages = [

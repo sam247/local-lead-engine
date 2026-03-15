@@ -1,5 +1,11 @@
 import type { HubData, InfoPageData } from "engine";
 import { guidesPages } from "@/data/guides";
+import { foundationProblems } from "@/data/foundationProblems";
+import { groundConditionsPages } from "@/data/groundConditionsPages";
+import { groundworksCostsPages } from "@/data/groundworksCostsPages";
+import { sitePreparationPages } from "@/data/sitePreparationPages";
+import { drivewayGroundworksPages } from "@/data/drivewayGroundworksPages";
+import { constructionDrainagePages } from "@/data/constructionDrainagePages";
 
 // Company info – used by config and layout
 export const companyInfo = {
@@ -107,67 +113,11 @@ export const services = [
   },
 ];
 
-// Locations (shared UK list – same as other verticals)
-export const locations = [
-  { id: "london", name: "London", area: "Central London", lat: 51.5074, lng: -0.1278, nearbyTowns: ["Westminster", "Southwark", "Camden", "Islington"], propertyTypes: "Georgian terraces, Victorian conversions, modern apartments and commercial premises" },
-  { id: "richmond", name: "Richmond", area: "South West London", lat: 51.4613, lng: -0.3037, nearbyTowns: ["Twickenham", "Kew", "Mortlake", "Petersham"], propertyTypes: "Georgian and Victorian houses, riverside properties, 1930s semis and modern developments" },
-  { id: "birmingham", name: "Birmingham", area: "West Midlands", lat: 52.4862, lng: -1.8904, nearbyTowns: ["Solihull", "Sutton Coldfield", "Edgbaston", "Moseley"], propertyTypes: "Victorian terraces, 1930s semis, post-war estates and modern city apartments" },
-  { id: "manchester", name: "Manchester", area: "Greater Manchester", lat: 53.4808, lng: -2.2426, nearbyTowns: ["Salford", "Stockport", "Trafford", "Didsbury"], propertyTypes: "Victorian terraces, converted warehouses, modern apartments and suburban semis" },
-  { id: "leeds", name: "Leeds", area: "West Yorkshire", lat: 53.8008, lng: -1.5491, nearbyTowns: ["Headingley", "Roundhay", "Horsforth", "Pudsey"], propertyTypes: "Victorian back-to-backs, Edwardian semis, stone-built terraces and modern developments" },
-  { id: "bristol", name: "Bristol", area: "Bristol", lat: 51.4545, lng: -2.5879, nearbyTowns: ["Clifton", "Redland", "Bedminster", "Fishponds"], propertyTypes: "Georgian terraces, Victorian houses, Edwardian villas and modern waterfront apartments" },
-  { id: "reading", name: "Reading", area: "Berkshire", lat: 51.4543, lng: -0.9781, nearbyTowns: ["Caversham", "Woodley", "Tilehurst", "Earley"], propertyTypes: "Victorian terraces, Edwardian semis, modern apartments and commercial premises" },
-  { id: "watford", name: "Watford", area: "Hertfordshire", lat: 51.6565, lng: -0.3903, nearbyTowns: ["Bushey", "Rickmansworth", "Abbots Langley", "Garston"], propertyTypes: "Victorian terraces, 1930s semis, modern town centre flats and detached houses" },
-  { id: "st-albans", name: "St Albans", area: "Hertfordshire", lat: 51.7520, lng: -0.3366, nearbyTowns: ["Harpenden", "Hatfield", "London Colney", "Redbourn"], propertyTypes: "Georgian townhouses, Victorian villas, Edwardian semis and modern estates" },
-  { id: "brighton", name: "Brighton", area: "East Sussex", lat: 50.8225, lng: -0.1372, nearbyTowns: ["Hove", "Portslade", "Rottingdean", "Shoreham"], propertyTypes: "Regency terraces, Victorian houses, Edwardian villas and modern flats" },
-  { id: "sheffield", name: "Sheffield", area: "South Yorkshire", lat: 53.3811, lng: -1.4701, nearbyTowns: ["Rotherham", "Dronfield", "Chapeltown", "Hillsborough"], propertyTypes: "Victorian terraces, stone-built semis, post-war estates and modern apartments" },
-  { id: "liverpool", name: "Liverpool", area: "Merseyside", lat: 53.4084, lng: -2.9916, nearbyTowns: ["Birkenhead", "Bootle", "Crosby", "Woolton"], propertyTypes: "Georgian terraces, Victorian houses, post-war estates and waterfront apartments" },
-  { id: "newcastle", name: "Newcastle", area: "Tyne and Wear", lat: 54.9783, lng: -1.6178, nearbyTowns: ["Gateshead", "Jesmond", "Gosforth", "Whitley Bay"], propertyTypes: "Georgian terraces, Victorian flats, Edwardian houses and modern developments" },
-  { id: "nottingham", name: "Nottingham", area: "Nottinghamshire", lat: 52.9548, lng: -1.1581, nearbyTowns: ["West Bridgford", "Beeston", "Arnold", "Hucknall"], propertyTypes: "Victorian terraces, 1930s semis, post-war estates and modern city apartments" },
-  { id: "cambridge", name: "Cambridge", area: "Cambridgeshire", lat: 52.2053, lng: 0.1218, nearbyTowns: ["Trumpington", "Cherry Hinton", "Girton", "Histon"], propertyTypes: "Georgian townhouses, Victorian terraces, college properties and modern developments" },
-  { id: "southampton", name: "Southampton", area: "Hampshire", lat: 50.9097, lng: -1.4044, nearbyTowns: ["Eastleigh", "Totton", "Romsey", "Hedge End"], propertyTypes: "Victorian terraces, 1930s semis, post-war estates and modern waterfront apartments" },
-  { id: "croydon", name: "Croydon", area: "South London", lat: 51.3762, lng: -0.0982, nearbyTowns: ["Purley", "Thornton Heath", "South Norwood", "Addiscombe"], propertyTypes: "Victorian terraces, 1930s semis, post-war estates and modern apartments" },
-  { id: "greenwich", name: "Greenwich", area: "South East London", lat: 51.4769, lng: -0.0005, nearbyTowns: ["Blackheath", "Woolwich", "Charlton", "Deptford"], propertyTypes: "Georgian terraces, Victorian conversions, riverside apartments and modern builds" },
-  { id: "woking", name: "Woking", area: "Surrey", lat: 51.3162, lng: -0.5570, nearbyTowns: ["Byfleet", "Horsell", "Knaphill", "Pyrford"], propertyTypes: "Victorian terraces, 1930s semis, modern town centre apartments and detached houses" },
-  { id: "guildford", name: "Guildford", area: "Surrey", lat: 51.2362, lng: -0.5704, nearbyTowns: ["Godalming", "Cranleigh", "Shalford", "Merrow"], propertyTypes: "Georgian townhouses, Victorian villas, period cottages and modern family homes" },
-  { id: "oxford", name: "Oxford", area: "Oxfordshire", lat: 51.7520, lng: -1.2577, nearbyTowns: ["Headington", "Cowley", "Abingdon", "Kidlington"], propertyTypes: "Georgian townhouses, Victorian terraces, period colleges and modern developments" },
-  { id: "milton-keynes", name: "Milton Keynes", area: "Buckinghamshire", lat: 52.0406, lng: -0.7594, nearbyTowns: ["Bletchley", "Wolverton", "Newport Pagnell", "Stony Stratford"], propertyTypes: "Modern grid-plan housing, new-build estates, converted farmhouses and apartments" },
-  { id: "northampton", name: "Northampton", area: "Northamptonshire", lat: 52.2405, lng: -0.9027, nearbyTowns: ["Weston Favell", "Duston", "Kingsthorpe", "Moulton"], propertyTypes: "Victorian terraces, 1930s semis, shoe industry conversions and modern estates" },
-  { id: "luton", name: "Luton", area: "Bedfordshire", lat: 51.8787, lng: -0.4200, nearbyTowns: ["Dunstable", "Harpenden", "Hitchin", "Leagrave"], propertyTypes: "Victorian terraces, 1930s semis, post-war estates and modern apartments" },
-  { id: "chelmsford", name: "Chelmsford", area: "Essex", lat: 51.7356, lng: 0.4685, nearbyTowns: ["Writtle", "Broomfield", "Great Baddow", "Springfield"], propertyTypes: "Victorian terraces, 1930s semis, Edwardian houses and modern estates" },
-  { id: "norwich", name: "Norwich", area: "Norfolk", lat: 52.6309, lng: 1.2974, nearbyTowns: ["Thorpe St Andrew", "Costessey", "Sprowston", "Eaton"], propertyTypes: "Medieval buildings, Georgian townhouses, Victorian terraces and modern developments" },
-  { id: "exeter", name: "Exeter", area: "Devon", lat: 50.7184, lng: -3.5339, nearbyTowns: ["Topsham", "Heavitree", "Alphington", "Pinhoe"], propertyTypes: "Georgian terraces, Victorian villas, period cottages and modern developments" },
-  { id: "plymouth", name: "Plymouth", area: "Devon", lat: 50.3755, lng: -4.1427, nearbyTowns: ["Plymstock", "Plympton", "Saltash", "Ivybridge"], propertyTypes: "Post-war rebuilds, Victorian terraces, naval housing and modern estates" },
-  { id: "portsmouth", name: "Portsmouth", area: "Hampshire", lat: 50.8198, lng: -1.0880, nearbyTowns: ["Gosport", "Fareham", "Havant", "Southsea"], propertyTypes: "Victorian terraces, Edwardian houses, naval housing and modern apartments" },
-  { id: "bournemouth", name: "Bournemouth", area: "Dorset", lat: 50.7192, lng: -1.8808, nearbyTowns: ["Poole", "Christchurch", "Ferndown", "Westbourne"], propertyTypes: "Victorian villas, Edwardian houses, 1930s bungalows and modern apartments" },
-  { id: "swindon", name: "Swindon", area: "Wiltshire", lat: 51.5558, lng: -1.7797, nearbyTowns: ["Wroughton", "Highworth", "Stratton", "Old Town"], propertyTypes: "Victorian railway terraces, 1930s semis, modern estates and new-build developments" },
-  { id: "bath", name: "Bath", area: "Somerset", lat: 51.3811, lng: -2.3590, nearbyTowns: ["Batheaston", "Combe Down", "Weston", "Larkhall"], propertyTypes: "Georgian townhouses, Victorian villas, period cottages and modern developments" },
-  { id: "chiswick", name: "Chiswick", area: "West London", lat: 51.4927, lng: -0.2687, nearbyTowns: ["Acton", "Brentford", "Hammersmith", "Gunnersbury"], propertyTypes: "Edwardian terraces, 1930s semis, Victorian villas and modern flats" },
-  { id: "wandsworth", name: "Wandsworth", area: "South London", lat: 51.4571, lng: -0.1818, nearbyTowns: ["Battersea", "Tooting", "Balham", "Clapham"], propertyTypes: "Victorian terraces, Edwardian semis, post-war estates and new-build apartments" },
-  { id: "ealing", name: "Ealing", area: "West London", lat: 51.5130, lng: -0.3089, nearbyTowns: ["Acton", "Hanwell", "Northolt", "Greenford"], propertyTypes: "Edwardian houses, 1930s semis, Victorian villas and modern apartments" },
-  { id: "harrow", name: "Harrow", area: "North West London", lat: 51.5898, lng: -0.3346, nearbyTowns: ["Pinner", "Stanmore", "Wealdstone", "Kenton"], propertyTypes: "1930s semis, Victorian terraces, Edwardian houses and modern flats" },
-  { id: "bromley", name: "Bromley", area: "South East London", lat: 51.4039, lng: 0.0198, nearbyTowns: ["Beckenham", "Orpington", "Chislehurst", "Petts Wood"], propertyTypes: "Edwardian semis, 1930s detached, Victorian terraces and modern estates" },
-  { id: "enfield", name: "Enfield", area: "North London", lat: 51.6538, lng: -0.0799, nearbyTowns: ["Southgate", "Winchmore Hill", "Palmers Green", "Edmonton"], propertyTypes: "1930s semis, Edwardian terraces, post-war estates and modern apartments" },
-  { id: "barnet", name: "Barnet", area: "North London", lat: 51.6444, lng: -0.1997, nearbyTowns: ["Finchley", "Edgware", "Mill Hill", "Whetstone"], propertyTypes: "1930s semis, Victorian villas, Edwardian houses and modern developments" },
-  { id: "slough", name: "Slough", area: "Berkshire", lat: 51.5105, lng: -0.5950, nearbyTowns: ["Langley", "Colnbrook", "Farnham Royal", "Iver"], propertyTypes: "1930s semis, post-war estates, modern apartments and commercial properties" },
-  { id: "colchester", name: "Colchester", area: "Essex", lat: 51.8860, lng: 0.8920, nearbyTowns: ["Wivenhoe", "West Mersea", "Marks Tey", "Stanway"], propertyTypes: "Georgian townhouses, Victorian terraces, period cottages and modern estates" },
-  { id: "southend", name: "Southend-on-Sea", area: "Essex", lat: 51.5459, lng: 0.7077, nearbyTowns: ["Westcliff", "Leigh-on-Sea", "Shoeburyness", "Prittlewell"], propertyTypes: "Victorian terraces, Edwardian houses, 1930s semis and seafront apartments" },
-  { id: "canterbury", name: "Canterbury", area: "Kent", lat: 51.2802, lng: 1.0789, nearbyTowns: ["Whitstable", "Herne Bay", "Sturry", "Bridge"], propertyTypes: "Medieval and Georgian townhouses, Victorian terraces, period cottages and modern developments" },
-  { id: "leicester", name: "Leicester", area: "Leicestershire", lat: 52.6369, lng: -1.1398, nearbyTowns: ["Oadby", "Wigston", "Birstall", "Glenfield"], propertyTypes: "Victorian terraces, Edwardian houses, 1930s semis and modern estates" },
-  { id: "coventry", name: "Coventry", area: "West Midlands", lat: 52.4068, lng: -1.5197, nearbyTowns: ["Kenilworth", "Bedworth", "Tile Hill", "Earlsdon"], propertyTypes: "Post-war rebuilds, Victorian suburbs, modern estates and converted buildings" },
-  { id: "derby", name: "Derby", area: "Derbyshire", lat: 52.9225, lng: -1.4746, nearbyTowns: ["Allestree", "Mickleover", "Spondon", "Littleover"], propertyTypes: "Victorian terraces, 1930s semis, Georgian townhouses and modern estates" },
-  { id: "ipswich", name: "Ipswich", area: "Suffolk", lat: 52.0567, lng: 1.1482, nearbyTowns: ["Felixstowe", "Woodbridge", "Stowmarket", "Kesgrave"], propertyTypes: "Victorian terraces, Edwardian houses, 1930s semis and modern estates" },
-  { id: "peterborough", name: "Peterborough", area: "Cambridgeshire", lat: 52.5695, lng: -0.2405, nearbyTowns: ["Yaxley", "Eye", "Whittlesey", "Stanground"], propertyTypes: "Victorian terraces, post-war estates, modern new-builds and converted properties" },
-  { id: "worcester", name: "Worcester", area: "Worcestershire", lat: 52.1936, lng: -2.2216, nearbyTowns: ["Malvern", "Droitwich", "Pershore", "Upton"], propertyTypes: "Georgian townhouses, Victorian terraces, period cottages and modern estates" },
-  { id: "gloucester", name: "Gloucester", area: "Gloucestershire", lat: 51.8642, lng: -2.2382, nearbyTowns: ["Cheltenham", "Tewkesbury", "Stroud", "Quedgeley"], propertyTypes: "Medieval buildings, Georgian terraces, Victorian houses and modern estates" },
-  { id: "winchester", name: "Winchester", area: "Hampshire", lat: 51.0632, lng: -1.3080, nearbyTowns: ["Kings Worthy", "Littleton", "Twyford", "Chandlers Ford"], propertyTypes: "Medieval buildings, Georgian townhouses, Victorian villas and modern family homes" },
-  { id: "basingstoke", name: "Basingstoke", area: "Hampshire", lat: 51.2667, lng: -1.0876, nearbyTowns: ["Tadley", "Overton", "Hook", "Old Basing"], propertyTypes: "1960s new town housing, Victorian cottages, modern estates and business parks" },
-  { id: "maidenhead", name: "Maidenhead", area: "Berkshire", lat: 51.5218, lng: -0.7176, nearbyTowns: ["Cookham", "Marlow", "Taplow", "Bray"], propertyTypes: "Victorian villas, Edwardian houses, 1930s semis and modern riverside apartments" },
-  { id: "high-wycombe", name: "High Wycombe", area: "Buckinghamshire", lat: 51.6292, lng: -0.7482, nearbyTowns: ["Beaconsfield", "Marlow", "Hazlemere", "Hughenden Valley"], propertyTypes: "Victorian terraces, 1930s semis, period cottages and modern estates" },
-  { id: "hemel-hempstead", name: "Hemel Hempstead", area: "Hertfordshire", lat: 51.7526, lng: -0.4692, nearbyTowns: ["Berkhamsted", "Kings Langley", "Bovingdon", "Leverstock Green"], propertyTypes: "1950s new town housing, Victorian cottages, modern estates and converted properties" },
-  { id: "bishops-stortford", name: "Bishops Stortford", area: "Hertfordshire", lat: 51.8720, lng: 0.1607, nearbyTowns: ["Sawbridgeworth", "Much Hadham", "Stansted Mountfitchet", "Thorley"], propertyTypes: "Georgian market town houses, Victorian terraces, modern estates and converted properties" },
-];
+// Locations: single source of truth in engine; do not redefine in verticals.
+import { locations } from "../../../engine/data/locations";
+export { locations };
 
-// Hub: guides only
+// Level 2 = service hubs (/services, /services/[slug]). Level 3 = topic hubs (e.g. /foundation-problems, /ground-conditions). Level 4 = service×location (/[serviceSlug]/[locationId]).
 export const hubPages: HubData[] = [
   {
     category: "guides",
@@ -177,11 +127,91 @@ export const hubPages: HubData[] = [
     metaDescription:
       "Expert guides on piling costs, foundation types, excavation, site clearance and enabling works. UK groundworks advice from Mainline Groundworks.",
   },
+  {
+    category: "foundation-problems",
+    basePath: "/foundation-problems",
+    title: "Foundation Problems",
+    subtitle: "Subsidence, cracking and inadequate design — causes and how we fix them.",
+    metaDescription: "Foundation problems: subsidence, cracking, inadequate design. Expert diagnosis and repair from Mainline Groundworks.",
+  },
+  {
+    category: "ground-conditions",
+    basePath: "/ground-conditions",
+    title: "Ground Conditions",
+    subtitle: "Made ground, soft soils and when piling is needed.",
+    metaDescription: "Ground conditions for construction: made ground, soft soils, when piling is needed. UK groundworks advice from Mainline Groundworks.",
+  },
+  {
+    category: "groundworks-costs",
+    basePath: "/groundworks-costs",
+    title: "Groundworks Costs",
+    subtitle: "Cost overview and budgeting for piling, foundations and site preparation.",
+    metaDescription: "Groundworks costs: piling, foundations, excavation and site clearance. Cost overview from Mainline Groundworks.",
+  },
+  {
+    category: "site-preparation",
+    basePath: "/site-preparation",
+    title: "Site Preparation",
+    subtitle: "Surveys, clearance and enabling works before main construction.",
+    metaDescription: "Site preparation for construction: surveys, clearance, enabling works. UK guide from Mainline Groundworks.",
+  },
+  {
+    category: "driveway-groundworks",
+    basePath: "/driveway-groundworks",
+    title: "Driveway Groundworks",
+    subtitle: "Sub-base, drainage and construction for domestic driveways.",
+    metaDescription: "Driveway groundworks: sub-base, drainage and construction. Domestic driveway advice from Mainline Groundworks.",
+  },
+  {
+    category: "construction-drainage",
+    basePath: "/construction-drainage",
+    title: "Construction Drainage",
+    subtitle: "Build-over, connections and drainage surveys for construction.",
+    metaDescription: "Construction drainage: build-over agreements, connections and surveys. UK guide from Mainline Groundworks.",
+  },
 ];
 
+function problemDataToInfoPageData(p: {
+  slug: string;
+  title: string;
+  causes: string;
+  howFixed: string;
+  whenToCall: string;
+  ctaMessage: string;
+  relatedServiceSlugs: string[];
+}): InfoPageData {
+  return {
+    slug: p.slug,
+    title: p.title,
+    metaDescription: p.causes.slice(0, 155) + (p.causes.length > 155 ? "..." : ""),
+    intro: p.causes,
+    signs: [],
+    diagnosis: p.howFixed,
+    resolution: p.whenToCall,
+    ctaText: p.ctaMessage,
+    relatedServices: p.relatedServiceSlugs,
+  };
+}
+
 export const getCategoryPages = (category: string): InfoPageData[] => {
-  if (category === "guides") return guidesPages;
-  return [];
+  switch (category) {
+    case "guides":
+      return guidesPages;
+    case "foundation-problems":
+      return foundationProblems.map(problemDataToInfoPageData);
+    case "ground-conditions":
+      return groundConditionsPages;
+    case "groundworks-costs":
+      return groundworksCostsPages;
+    case "site-preparation":
+      return sitePreparationPages;
+    case "driveway-groundworks":
+      return drivewayGroundworksPages;
+    case "construction-drainage":
+      return constructionDrainagePages;
+    default:
+      return [];
+  }
 };
 
 export const getHubData = (category: string): HubData | undefined => {
@@ -284,6 +314,20 @@ export const guidesIndexNearMe: { title: string; href: string }[] = locations.sl
 
 export const categoryAltText: Record<string, string> = {
   guides: "Groundworks guides and cost advice",
+  "foundation-problems": "Foundation problems and repair",
+  "ground-conditions": "Ground conditions for construction",
+  "groundworks-costs": "Groundworks cost guides",
+  "site-preparation": "Site preparation and enabling works",
+  "driveway-groundworks": "Driveway groundworks",
+  "construction-drainage": "Construction drainage",
 };
 
-export const categoryImages: Record<string, string> = { guides: "groundworks-contractors" };
+export const categoryImages: Record<string, string> = {
+  guides: "groundworks-contractors",
+  "foundation-problems": "foundation-contractors",
+  "ground-conditions": "piling-contractors",
+  "groundworks-costs": "groundworks-contractors",
+  "site-preparation": "site-clearance-contractors",
+  "driveway-groundworks": "groundworks-contractors",
+  "construction-drainage": "excavation-contractors",
+};

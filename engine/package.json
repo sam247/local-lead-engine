@@ -7,6 +7,7 @@
   "exports": {
     ".": "./index.ts",
     "./components": "./components/index.ts",
+    "./data/locations": "./data/locations.ts",
     "./schema": "./schema/index.ts",
     "./tools": "./tools/index.ts",
     "./utils": "./utils/index.ts",

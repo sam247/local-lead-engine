@@ -27,7 +27,7 @@ export function getInfoPageProps(category: string, slug: string) {
   const pageFaqs = [
     {
       question: `What are the signs of ${page.title.toLowerCase()}?`,
-      answer: page.signs.slice(0, 3).join(". ") + ".",
+      answer: page.signs.length > 0 ? page.signs.slice(0, 3).join(". ") + "." : page.intro.slice(0, 150) + "...",
     },
     {
       question: `How do you diagnose ${page.title.toLowerCase()}?`,

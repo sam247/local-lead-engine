@@ -5,6 +5,7 @@ import { getHeroImage, getProjectImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
 import { LocationPage, getNeighbourLocationIds, buildLocationContextParagraph } from "engine";
 import { buildLocationMetadata } from "engine";
+import type { Location } from "engine";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -12,7 +13,7 @@ export const revalidate = false;
 
 export async function generateStaticParams() {
   return services.flatMap((s) =>
-    locations.map((l) => ({ serviceSlug: s.slug, locationSlug: l.id }))
+    locations.map((l: Location) => ({ serviceSlug: s.slug, locationSlug: l.id }))
   );
 }
 

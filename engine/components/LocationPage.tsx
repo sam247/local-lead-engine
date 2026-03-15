@@ -343,6 +343,19 @@ export function LocationPage({
               </div>
 
               <div className="rounded-lg bg-secondary p-6">
+                <p className="mb-2 text-sm text-muted-foreground">
+                  <Link href={`/services/${service.slug}`} className="text-primary hover:underline">
+                    View {displayTitle} overview
+                  </Link>
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  <Link href="/services" className="text-primary hover:underline">
+                    All services
+                  </Link>
+                </p>
+              </div>
+
+              <div className="rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">Other Services</h3>
                 <div className="space-y-2">
                   {otherServices.map((s) => (
