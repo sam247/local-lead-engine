@@ -348,6 +348,8 @@ Agents **must** follow these rules to avoid architecture drift:
 9. **Engine is vertical-agnostic.** Do not put vertical-specific URLs, topic lists, or content in the engine. Vertical-specific logic belongs in the vertical’s `lib/` or `data/`.
 10. **Config and company info:** Use `verticalConfig` and vertical `companyInfo` for site name, base URL, and contact; do not hardcode these in the engine.
 
+All verticals must use the segmented sitemap architecture consisting of sitemap.xml (index) plus sitemap-services.xml, sitemap-service-locations.xml, sitemap-topics.xml and sitemap-static.xml. Additional sitemaps such as sitemap-topic-locations.xml may only be added when a vertical introduces topic × location pages.
+
 ---
 
 ## 10. Expansion strategy
