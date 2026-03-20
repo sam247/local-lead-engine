@@ -31,9 +31,9 @@ const MAJOR_CITY_IDS = [
 ];
 
 export const metadata: Metadata = {
-  title: "Service Areas | Mainline Drains",
-  description: "Drainage services across the UK. Find drain repair, CCTV surveys and emergency drainage in your area.",
-  alternates: { canonical: "https://mainlinedrains.co.uk/service-areas" },
+  title: "Service Areas | Mainline Groundworks",
+  description: "Groundworks services across the UK. Find piling, excavation, foundations and site preparation in your area.",
+  alternates: { canonical: "https://mainlinegroundworks.co.uk/service-areas" },
 };
 
 export default function ServiceAreasPage() {
@@ -79,13 +79,13 @@ export default function ServiceAreasPage() {
         <div className="container">
           <h2 className="mb-4 font-display text-2xl font-bold">Browse by Location</h2>
           <p className="mb-4 text-muted-foreground">
-            View all areas we cover and find drainage services near you.
+            View all areas we cover and find groundworks services near you.
           </p>
           <Link
-            href="/drain-collapse-near-me"
+            href="/services"
             className="inline-flex font-medium text-primary hover:underline"
           >
-            View all areas →
+            Browse all services →
           </Link>
         </div>
       </section>

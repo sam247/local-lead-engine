@@ -67,7 +67,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/access-problems" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                <Link href="/cctv-problems" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
                   Access & Security Guides
                 </Link>
               </li>
@@ -142,7 +142,7 @@ const Footer = () => {
             <Link href="/blog" className="inline-flex min-h-[44px] items-center text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Blog</Link>
             <Link href="/privacy" className="inline-flex min-h-[44px] items-center text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Privacy</Link>
             <Link href="/terms" className="inline-flex min-h-[44px] items-center text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Terms</Link>
-            <Link href="/contractors" className="inline-flex min-h-[44px] items-center text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Contractors</Link>
+            <Link href="/contact" className="inline-flex min-h-[44px] items-center text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground">Contact</Link>
           </div>
         </div>
       </div>

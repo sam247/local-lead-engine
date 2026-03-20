@@ -103,7 +103,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
                 {service.title} Services in {location.name}
               </h2>
               <p className="mb-6 text-muted-foreground">
-                Mainline Drains provides expert {service.title.toLowerCase()} services to residential and commercial clients in {location.name}, {location.area}. Our experienced drainage engineers deliver fast, reliable solutions tailored to your property&apos;s specific needs.
+                {companyInfo.name} provides expert {service.title.toLowerCase()} services in {location.name}, {location.area}. Our experienced engineers deliver reliable solutions tailored to commercial and public-sector site requirements.
               </p>
               <p className="mb-8 text-muted-foreground">{service.description}</p>
 

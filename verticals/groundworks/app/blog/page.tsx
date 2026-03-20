@@ -11,9 +11,9 @@ export const dynamic = "force-static";
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: "Blog | Mainline Drains",
-  description: "Expert insights and advice on drain repair, drainage maintenance and common drainage problems from Mainline Drains.",
-  alternates: { canonical: "https://mainlinedrains.co.uk/blog" },
+  title: "Blog | Mainline Groundworks",
+  description: "Groundworks insights and practical guidance on piling, excavation, foundations and site preparation.",
+  alternates: { canonical: "https://mainlinegroundworks.co.uk/blog" },
 };
 
 export default function BlogPage() {

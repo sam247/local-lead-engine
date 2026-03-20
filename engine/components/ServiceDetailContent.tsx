@@ -8,6 +8,10 @@ import { InspectionCTA } from "./InspectionCTA";
 import { CTABanner } from "./CTABanner";
 import { ServiceImageGallery } from "./ServiceImageGallery";
 import { Button } from "./ui/button";
+import { SectionIntro } from "./SectionIntro";
+import { ProcessTimeline } from "./ProcessTimeline";
+import { TrustReassuranceStrip } from "./TrustReassuranceStrip";
+import { ActionPanel } from "./ActionPanel";
 import { getImageAlt } from "../utils/imageAlt";
 import type { Service, Location, VerticalConfig } from "../types";
 
@@ -92,6 +96,12 @@ export function ServiceDetailContent({
   const relatedSidebarLabel = verticalConfig.relatedServicesLabel
     ? `Related ${verticalConfig.relatedServicesLabel} Services`
     : `Related ${verticalConfig.siteName} Services`;
+  const trustPoints = [
+    "Clear scope and practical recommendations",
+    "Transparent pricing and documented next steps",
+    "Reliable scheduling with minimal disruption",
+    "Experienced teams aligned to site requirements",
+  ];
 
   const breadcrumbs = [
     { name: "Home", url: "/" },
@@ -140,7 +150,10 @@ export function ServiceDetailContent({
         <div className="container">
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <h2 className="mb-4 font-display text-2xl font-bold">Overview</h2>
+              <SectionIntro
+                title="Overview"
+                description={`This service is designed to solve the underlying issue quickly and safely, while keeping disruption, uncertainty, and repeat costs to a minimum.`}
+              />
               <p className="mb-8 text-muted-foreground">{service.description}</p>
               {overviewExtra && <div className="mb-8">{overviewExtra}</div>}
               {overviewImage && (
@@ -152,15 +165,17 @@ export function ServiceDetailContent({
                   />
                 </figure>
               )}
+              <TrustReassuranceStrip points={trustPoints} />
 
               {serviceTypes.length > 0 && (
                 <>
-                  <h2 className="mb-4 font-display text-2xl font-bold">
-                    Types of {displayTitle}
-                  </h2>
-                  {sectionIntros.types && (
-                    <p className="mb-4 text-muted-foreground">{sectionIntros.types}</p>
-                  )}
+                  <SectionIntro
+                    title={`Types of ${displayTitle}`}
+                    description={
+                      sectionIntros.types ??
+                      "Choose the right scope based on site conditions, urgency, and long-term performance requirements."
+                    }
+                  />
                   <ul className="mb-8 list-disc space-y-2 pl-6 text-muted-foreground">
                     {serviceTypes.map((type, i) => (
                       <li key={i}>{type}</li>
@@ -178,9 +193,10 @@ export function ServiceDetailContent({
 
               {symptomLinks.length > 0 && (
                 <>
-                  <h3 className="mb-4 font-display text-xl font-bold">
-                    {symptomLinksSectionTitle ?? `Common Signs You Need ${service.title}`}
-                  </h3>
+                  <SectionIntro
+                    title={symptomLinksSectionTitle ?? `Common Signs You Need ${service.title}`}
+                    description="If you notice these signs, acting early usually keeps costs down and reduces operational disruption."
+                  />
                   <ul className="mb-8 space-y-2">
                     {symptomLinks.map((s) => (
                       <li key={s.slug} className="flex items-center gap-2">
@@ -196,7 +212,10 @@ export function ServiceDetailContent({
 
               {problemLinks.length > 0 && problemLinksSectionTitle && (
                 <>
-                  <h3 className="mb-4 font-display text-xl font-bold">{problemLinksSectionTitle}</h3>
+                  <SectionIntro
+                    title={problemLinksSectionTitle}
+                    description="These related issues often lead to this service being commissioned as part of a complete fix."
+                  />
                   <ul className="mb-8 space-y-2">
                     {problemLinks.map((link) => (
                       <li key={link.path}>
@@ -209,25 +228,22 @@ export function ServiceDetailContent({
                 </>
               )}
 
-              <h3 className="mb-4 font-display text-xl font-bold">Our Process</h3>
-              {sectionIntros.process && (
-                <p className="mb-4 text-muted-foreground">{sectionIntros.process}</p>
-              )}
-              <ol className="mb-8 space-y-3">
-                {service.process.map((step, i) => (
-                  <li key={i} className="flex gap-3">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                      {i + 1}
-                    </span>
-                    <span className="text-muted-foreground">{step}</span>
-                  </li>
-                ))}
-              </ol>
+              <SectionIntro
+                title="Our Process"
+                description={
+                  sectionIntros.process ??
+                  "Each stage is structured to keep decisions clear and delivery predictable from first assessment to sign-off."
+                }
+              />
+              <ProcessTimeline steps={service.process} />
 
-              <h3 className="mb-4 font-display text-xl font-bold">Industries We Work With</h3>
-              {sectionIntros.industries && (
-                <p className="mb-4 text-muted-foreground">{sectionIntros.industries}</p>
-              )}
+              <SectionIntro
+                title="Industries We Work With"
+                description={
+                  sectionIntros.industries ??
+                  "Our teams adapt this service to the compliance, access, and operational constraints of each environment."
+                }
+              />
               <ul className="mb-8 list-disc space-y-2 pl-6 text-muted-foreground">
                 {industries.map((ind, i) => (
                   <li key={i}>{ind}</li>
@@ -236,9 +252,10 @@ export function ServiceDetailContent({
 
               {trustedEquipment.length > 0 && (
                 <>
-                  <h3 className="mb-4 font-display text-xl font-bold">
-                    Trusted Systems and Equipment
-                  </h3>
+                  <SectionIntro
+                    title="Trusted Systems and Equipment"
+                    description="We use proven systems and tools selected for reliability, maintainability, and suitability to each job."
+                  />
                   <ul className="mb-8 list-disc space-y-2 pl-6 text-muted-foreground">
                     {trustedEquipment.map((item, i) => (
                       <li key={i}>{item}</li>
@@ -259,10 +276,13 @@ export function ServiceDetailContent({
                 />
               )}
 
-              <h3 className="mb-4 font-display text-xl font-bold">Benefits</h3>
-              {sectionIntros.benefits && (
-                <p className="mb-4 text-muted-foreground">{sectionIntros.benefits}</p>
-              )}
+              <SectionIntro
+                title="Benefits"
+                description={
+                  sectionIntros.benefits ??
+                  "The outcomes below reflect what clients typically gain when this service is scoped and delivered correctly."
+                }
+              />
               <ul className="mb-8 space-y-2">
                 {service.benefits.map((b) => (
                   <li key={b} className="flex items-center gap-2">
@@ -283,12 +303,13 @@ export function ServiceDetailContent({
                   <div className="mb-8 space-y-8">
                     {showRelatedServices && (
                       <>
-                        <h2 className="mb-4 font-display text-2xl font-bold">
-                          {relatedSidebarLabel}
-                        </h2>
-                        <p className="mb-4 text-muted-foreground">
-                          {verticalConfig.relatedServicesIntro}
-                        </p>
+                        <SectionIntro
+                          title={relatedSidebarLabel}
+                          description={
+                            verticalConfig.relatedServicesIntro ??
+                            "Explore related services that are commonly scoped together for better overall outcomes."
+                          }
+                        />
                         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                           {otherServices.slice(0, 8).map((s) => (
                             <Link
@@ -311,13 +332,13 @@ export function ServiceDetailContent({
                     )}
                     {showRelatedLocations && (
                       <>
-                        <h3 className="mb-4 font-display text-xl font-bold">
-                          {service.title} by Location
-                        </h3>
-                        <p className="mb-4 text-muted-foreground">
-                          {verticalConfig.relatedLocationsIntro ??
-                            "We serve the following areas."}
-                        </p>
+                        <SectionIntro
+                          title={`${service.title} by Location`}
+                          description={
+                            verticalConfig.relatedLocationsIntro ??
+                            "Browse local coverage to find the nearest team for this service."
+                          }
+                        />
                         <div className="grid grid-cols-2 gap-2 sm:gap-3">
                           {featuredLocations.map((loc) => (
                             <Link
@@ -342,6 +363,13 @@ export function ServiceDetailContent({
                 heading={secondCtaHeading}
                 body={secondCtaBody}
                 ctaText={secondCtaButtonText}
+              />
+              <ActionPanel
+                companyInfo={verticalConfig.companyInfo}
+                contactPath={contactPath}
+                heading={`Discuss your ${displayTitle.toLowerCase()} requirements`}
+                body="Share your site details and goals. We will recommend the right scope and provide a clear quote."
+                ctaText="Book a Site Survey"
               />
             </div>
 

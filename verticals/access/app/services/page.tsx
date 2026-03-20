@@ -14,9 +14,9 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 export const metadata: Metadata = {
-  title: "Our Services | Mainline Drains",
-  description: "Comprehensive drainage services including drain collapse repair, relining, CCTV surveys, excavation, jetting, root removal and emergency drainage across the UK.",
-  alternates: { canonical: "https://mainlinedrains.co.uk/services" },
+  title: "Our Services | Mainline Access",
+  description: "Commercial security services including access control, CCTV, IP camera systems, perimeter security and system integration across the UK.",
+  alternates: { canonical: "https://mainlineaccess.co.uk/services" },
 };
 
 export default function ServicesPage() {

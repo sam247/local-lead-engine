@@ -10,6 +10,7 @@ const SEGMENTS = [
   "sitemap-service-locations.xml",
   "sitemap-topics.xml",
   "sitemap-topic-locations.xml",
+  "sitemap-static.xml",
 ] as const;
 
 export async function GET() {

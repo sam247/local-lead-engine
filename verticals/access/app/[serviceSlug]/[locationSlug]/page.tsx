@@ -35,9 +35,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const metaDescription =
       topic.metaDescription.slice(0, 140) +
       ` We provide ${topic.title.toLowerCase()} across ${location.name} and ${location.area}.`;
+    const canonical = `${verticalConfig.baseUrl}/${serviceSlug}/${locationSlug}`;
     return {
       title,
       description: metaDescription,
+      alternates: { canonical },
     };
   }
 

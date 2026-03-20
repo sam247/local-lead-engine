@@ -4,6 +4,8 @@ import { ArrowRight } from "lucide-react";
 import { SchemaMarkup } from "../schema/SchemaMarkup";
 import { BreadcrumbNav } from "./BreadcrumbNav";
 import { CTABanner } from "./CTABanner";
+import { SectionIntro } from "./SectionIntro";
+import { ActionPanel } from "./ActionPanel";
 import type { HubData, InfoPageData, Service, CompanyInfo } from "../types";
 
 export interface CrossSection {
@@ -28,6 +30,10 @@ export interface HubPageProps {
   contactPath?: string;
   /** Optional links to major pillar guides (e.g. Collapsed Drains Complete Guide). */
   pillarGuides?: PillarGuideLink[];
+  /** Optional heading/body override for service CTA block above topic cards. */
+  serviceCtaHeading?: string;
+  serviceCtaBody?: string;
+  serviceCtaText?: string;
 }
 
 export function HubPage({
@@ -41,7 +47,13 @@ export function HubPage({
   baseUrl,
   contactPath = "/contact",
   pillarGuides,
+  serviceCtaHeading,
+  serviceCtaBody,
+  serviceCtaText,
 }: HubPageProps) {
+  const featuredPages = pages.slice(0, 3);
+  const remainingPages = pages.slice(3);
+
   return (
     <>
       <SchemaMarkup
@@ -78,11 +90,27 @@ export function HubPage({
       </section>
       <section className="section-padding">
         <div className="container">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {pages.map((page) => (
+          <SectionIntro
+            title="Guides in this hub"
+            description="Start with a featured guide below, then explore the full collection to compare options and next steps."
+          />
+          {keyServices.length > 0 && (
+            <ActionPanel
+              companyInfo={companyInfo}
+              contactPath={contactPath}
+              heading={serviceCtaHeading ?? `Need help with ${hub.title.toLowerCase()}?`}
+              body={
+                serviceCtaBody ??
+                "If you need direct advice on your situation, speak to our team and we will help you choose the right service."
+              }
+              ctaText={serviceCtaText ?? "Speak to an Expert"}
+            />
+          )}
+          <div className="mb-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {featuredPages.map((page) => (
               <Card
                 key={page.slug}
-                className="group border-border transition-all hover:shadow-lg"
+                className="group border-border transition-all hover:border-primary hover:shadow-lg"
               >
                 <CardHeader>
                   <CardTitle className="font-display text-lg">{page.title}</CardTitle>
@@ -101,12 +129,46 @@ export function HubPage({
               </Card>
             ))}
           </div>
+          {remainingPages.length > 0 && (
+            <>
+              <SectionIntro
+                title="More related topics"
+                description="Use these supporting guides to deepen your understanding or compare approaches before booking work."
+              />
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {remainingPages.map((page) => (
+                  <Card
+                    key={page.slug}
+                    className="group border-border transition-all hover:border-primary hover:shadow-lg"
+                  >
+                    <CardHeader>
+                      <CardTitle className="font-display text-lg">{page.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="mb-4 line-clamp-3 text-sm text-muted-foreground">
+                        {page.intro}
+                      </p>
+                      <Link
+                        href={`${hub.basePath}/${page.slug}`}
+                        className="inline-flex items-center text-sm font-medium text-primary hover:underline"
+                      >
+                        Read More <ArrowRight className="ml-1 h-4 w-4" />
+                      </Link>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </section>
       {crossSections.map((section) => (
         <section key={section.label} className="bg-secondary/50 py-12">
           <div className="container">
             <h2 className="mb-6 font-display text-2xl font-bold">{section.label}</h2>
+            <p className="mb-4 text-muted-foreground">
+              Explore these related guides to compare scenarios and pick the most relevant path.
+            </p>
             <div className="grid gap-4 md:grid-cols-3">
               {section.pages.map((page) => (
                 <Link
@@ -128,6 +190,9 @@ export function HubPage({
         <section className="bg-secondary/50 py-12">
           <div className="container">
             <h2 className="mb-6 text-center font-display text-2xl font-bold">Featured guides</h2>
+            <p className="mx-auto mb-6 max-w-2xl text-center text-muted-foreground">
+              These pillar guides give broader context and are useful if you are still deciding the right route.
+            </p>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {pillarGuides.map((guide) => (
                 <Link
@@ -150,6 +215,9 @@ export function HubPage({
       <section className="bg-secondary py-12">
         <div className="container">
           <h2 className="mb-8 text-center font-display text-2xl font-bold">Related Services</h2>
+          <p className="mx-auto mb-6 max-w-2xl text-center text-muted-foreground">
+            If you need practical help rather than guidance alone, these services are the most relevant next step.
+          </p>
           <div className="grid gap-6 md:grid-cols-3">
             {keyServices.map((service) => (
               <Link

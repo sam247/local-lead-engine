@@ -60,7 +60,7 @@ export default function NearMePageContent({ serviceSlug }: NearMePageContentProp
           <div className="mx-auto max-w-3xl">
             <h2 className="mb-4 font-display text-2xl font-bold">About Our {service.title} Service</h2>
             <p className="mb-6 text-muted-foreground">{service.description}</p>
-            <h3 className="mb-3 font-display text-lg font-bold">Why Choose Mainline Drains?</h3>
+            <h3 className="mb-3 font-display text-lg font-bold">Why Choose {companyInfo.name}?</h3>
             <ul className="mb-6 space-y-2">
               {service.benefits.map((b) => (
                 <li key={b} className="flex items-start gap-2 text-sm">

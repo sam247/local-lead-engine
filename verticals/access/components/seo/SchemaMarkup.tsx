@@ -1,4 +1,5 @@
 import { companyInfo } from "@/lib/data";
+import { verticalConfig } from "@/config";
 
 interface BreadcrumbItem {
   name: string;
@@ -20,7 +21,7 @@ interface SchemaMarkupProps {
   };
 }
 
-const baseUrl = "https://mainlinedrains.co.uk";
+const baseUrl = verticalConfig.baseUrl;
 
 const localBusinessBase = {
   "@type": "LocalBusiness",

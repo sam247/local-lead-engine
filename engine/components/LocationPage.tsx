@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { CheckCircle, Phone, Mail, ArrowRight } from "lucide-react";
+import { Phone, Mail, ArrowRight } from "lucide-react";
 import { SchemaMarkup } from "../schema/SchemaMarkup";
 import { FAQSchema, type FAQItem } from "../schema/FAQSchema";
 import { InspectionCTA } from "./InspectionCTA";
@@ -8,6 +8,10 @@ import { BreadcrumbNav } from "./BreadcrumbNav";
 import { MapEmbed } from "./MapEmbed";
 import { LocationContext } from "./LocationContext";
 import { NearbyAreas } from "./NearbyAreas";
+import { SectionIntro } from "./SectionIntro";
+import { ProcessTimeline } from "./ProcessTimeline";
+import { TrustReassuranceStrip } from "./TrustReassuranceStrip";
+import { ActionPanel } from "./ActionPanel";
 import type { Service, Location, CompanyInfo } from "../types";
 
 const locationBreadcrumbs = (
@@ -87,6 +91,15 @@ export function LocationPage({
 }: LocationPageProps) {
   const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
   const displayTitle = service.titleSingular ?? service.title;
+  const defaultTrustPoints = [
+    `Local expertise in ${location.area}`,
+    "Clear communication from quote to completion",
+    "Fully insured teams with professional standards",
+    "Practical solutions tailored to your property",
+  ];
+  const activeTrustPoints =
+    trustPoints && trustPoints.length > 0 ? trustPoints : defaultTrustPoints;
+
   return (
     <>
       <SchemaMarkup
@@ -155,6 +168,16 @@ export function LocationPage({
         </div>
       </section>
 
+      <section className="border-b border-border bg-secondary/30 py-6">
+        <div className="container">
+          <TrustReassuranceStrip
+            title={`Trusted support for ${displayTitle.toLowerCase()} in ${location.name}`}
+            points={activeTrustPoints.slice(0, 4)}
+            className="mx-auto mb-0 max-w-4xl rounded-lg border border-border bg-background p-5"
+          />
+        </div>
+      </section>
+
       {diagnosisGuidePath && (
         <section className="border-b border-border bg-secondary/30 py-6">
           <div className="container">
@@ -218,52 +241,20 @@ export function LocationPage({
                 </div>
               )}
 
-              <h3 className="mb-4 font-display text-xl font-bold">
-                Why Choose Us for {displayTitle} in {location.name}?
-              </h3>
-              <ul className="mb-8 space-y-2">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Local expertise in {location.area}
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> 24/7 emergency response
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Fully insured with guarantees
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Free surveys and no-obligation quotes
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Transparent, competitive pricing
-                </li>
-              </ul>
+              <SectionIntro
+                title={`Why choose us for ${displayTitle.toLowerCase()} in ${location.name}?`}
+                description={`When you need ${displayTitle.toLowerCase()} locally, you need clear advice, dependable delivery, and a team that understands the practical constraints in ${location.name} and ${location.area}.`}
+              />
+              <TrustReassuranceStrip
+                points={activeTrustPoints}
+                title={trustSectionTitle ?? "What you can expect"}
+              />
 
-              {trustSectionTitle && trustPoints && trustPoints.length > 0 && (
-                <div className="mb-8 rounded-lg border border-border bg-secondary/50 p-6">
-                  <h3 className="mb-4 font-display text-xl font-bold">{trustSectionTitle}</h3>
-                  <ul className="space-y-2">
-                    {trustPoints.map((point, i) => (
-                      <li key={i} className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 shrink-0 text-primary" />
-                        <span className="text-muted-foreground">{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <h3 className="mb-4 font-display text-xl font-bold">Our {displayTitle} Process</h3>
-              <ol className="mb-8 space-y-3">
-                {service.process.map((step, i) => (
-                  <li key={i} className="flex gap-3">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                      {i + 1}
-                    </span>
-                    <span className="text-muted-foreground">{step}</span>
-                  </li>
-                ))}
-              </ol>
+              <SectionIntro
+                title={`How our ${displayTitle.toLowerCase()} service works`}
+                description="Our process is designed to keep things straightforward: define the issue, explain your options clearly, carry out the right work, and confirm everything before handover."
+              />
+              <ProcessTimeline steps={service.process} />
 
               {nearbyProjects && nearbyProjects.length > 0 && (
                 <>
@@ -298,6 +289,13 @@ export function LocationPage({
                 </>
               )}
 
+              <ActionPanel
+                companyInfo={companyInfo}
+                contactPath={contactPath}
+                heading={`Need ${displayTitle.toLowerCase()} in ${location.name}?`}
+                body="Tell us what you need and we will advise on the right approach, timeline, and next step for your property."
+                ctaText="Request a Free Quote"
+              />
               <InspectionCTA companyInfo={companyInfo} contactPath={contactPath} />
             </div>
 
@@ -366,6 +364,9 @@ export function LocationPage({
 
               <div className="rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">Other Services</h3>
+                <p className="mb-3 text-xs text-muted-foreground">
+                  If your project needs more than one service, compare relevant options available in {location.name}.
+                </p>
                 <div className="space-y-2">
                   {otherServices.map((s) => (
                     <Link
@@ -389,11 +390,10 @@ export function LocationPage({
             <h2 className="mb-4 font-display text-2xl font-bold text-center">
               {relatedTopicsSectionTitle ?? "Helpful guidance related to this service"}
             </h2>
-            {relatedTopicsSectionIntro && (
-              <p className="mb-6 text-center text-sm text-muted-foreground max-w-2xl mx-auto">
-                {relatedTopicsSectionIntro}
-              </p>
-            )}
+            <p className="mb-6 text-center text-sm text-muted-foreground max-w-2xl mx-auto">
+              {relatedTopicsSectionIntro ??
+                "These guides explain common issues, planning considerations, and practical decisions related to this service."}
+            </p>
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
               {relatedTopicLinks.map((link) => (
                 <Link
@@ -416,11 +416,10 @@ export function LocationPage({
           <h2 className="mb-6 font-display text-2xl font-bold text-center">
             Nearby Areas We Serve
           </h2>
-          {nearbyAreasDescription && (
-            <p className="mb-4 text-center text-sm text-muted-foreground">
-              {nearbyAreasDescription}
-            </p>
-          )}
+          <p className="mb-4 text-center text-sm text-muted-foreground">
+            {nearbyAreasDescription ??
+              `Compare ${displayTitle.toLowerCase()} options in nearby towns and cities around ${location.name}.`}
+          </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
             {nearbyLocations.slice(0, 8).map((loc) => (
               <Link
@@ -440,6 +439,9 @@ export function LocationPage({
           <h2 className="mb-6 font-display text-2xl font-bold text-center">
             Other Services in {location.name}
           </h2>
+          <p className="mb-4 text-center text-sm text-muted-foreground">
+            Explore related services that are often commissioned alongside this work in {location.name}.
+          </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
             {otherServices.map((s) => (
               <Link

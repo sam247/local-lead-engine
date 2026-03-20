@@ -8,9 +8,9 @@ export const dynamic = "force-static";
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: "Contact Us | Mainline Drains",
-  description: "Get in touch with Mainline Drains for a free quote on drain repair, CCTV surveys and emergency drainage services across London.",
-  alternates: { canonical: "https://mainlinedrains.co.uk/contact" },
+  title: "Contact Us | Mainline Access",
+  description: "Get in touch with Mainline Access for a free quote on access control, CCTV and integrated security systems.",
+  alternates: { canonical: "https://mainlineaccess.co.uk/contact" },
 };
 
 export default function ContactPage() {
