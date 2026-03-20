@@ -159,17 +159,17 @@ const Header = () => {
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link href="/drain-insurance" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Insurance</Link>
+                            <Link href="/drainage-guides" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Insurance</Link>
                           </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link href="/drain-responsibility" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Legal</Link>
+                            <Link href="/drainage-guides" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Legal</Link>
                           </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link href="/homebuyer-drainage" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Homebuyers</Link>
+                            <Link href="/drainage-guides" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Homebuyers</Link>
                           </NavigationMenuLink>
                         </li>
                       </ul>

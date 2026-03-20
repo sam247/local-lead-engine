@@ -40,8 +40,8 @@ const getDiagnosis = (selected: string[]): Diagnosis => {
       description: "Your symptoms suggest a collapsed or severely damaged drain. This requires urgent professional inspection to prevent further property damage.",
       severity: "high",
       links: [
-        { label: "Signs of Collapsed Drain", url: "/drain-problems/signs-of-collapsed-drain" },
-        { label: "Collapsed Drain Under Garden", url: "/drain-collapse/under-garden" },
+        { label: "Signs of Collapsed Drain", url: "/drainage-guides" },
+        { label: "Collapsed Drain Under Garden", url: "/drainage-guides" },
         { label: "Book CCTV Survey", url: "/contact" },
       ],
     };
@@ -53,8 +53,8 @@ const getDiagnosis = (selected: string[]): Diagnosis => {
       description: "Water backing up or pest activity indicates a serious blockage or structural issue. A CCTV survey is recommended to diagnose the exact cause.",
       severity: "high",
       links: [
-        { label: "Why Water Backs Up", url: "/drain-problems/why-is-water-backing-up-in-drains" },
-        { label: "Drain Backing Up Into Garden", url: "/drain-problems/drain-backing-up-garden" },
+        { label: "Why Water Backs Up", url: "/drainage-guides" },
+        { label: "Drain Backing Up Into Garden", url: "/drainage-guides" },
         { label: "Book CCTV Survey", url: "/contact" },
       ],
     };
@@ -66,8 +66,8 @@ const getDiagnosis = (selected: string[]): Diagnosis => {
       description: "Foul smells without other symptoms may indicate a broken seal, dry trap, or cracked pipe allowing sewer gas to escape. A professional inspection will identify the source.",
       severity: "medium",
       links: [
-        { label: "Bad Smells From Drains", url: "/drain-problems/bad-smells-from-drains" },
-        { label: "Why Do My Drains Smell?", url: "/drain-problems/why-do-my-drains-smell" },
+        { label: "Bad Smells From Drains", url: "/drainage-guides" },
+        { label: "Why Do My Drains Smell?", url: "/drainage-guides" },
         { label: "Book CCTV Survey", url: "/contact" },
       ],
     };
@@ -79,8 +79,8 @@ const getDiagnosis = (selected: string[]): Diagnosis => {
       description: "Gurgling indicates air pressure imbalances in your drainage. This is often caused by a partial blockage, poor venting, or a developing structural problem.",
       severity: "medium",
       links: [
-        { label: "Why Do Drains Gurgle?", url: "/drain-problems/why-do-drains-gurgle" },
-        { label: "Gurgling Drains and Pipes", url: "/drain-problems/gurgling-drains-pipes" },
+        { label: "Why Do Drains Gurgle?", url: "/drainage-guides" },
+        { label: "Gurgling Drains and Pipes", url: "/drainage-guides" },
         { label: "Book CCTV Survey", url: "/contact" },
       ],
     };
@@ -92,8 +92,8 @@ const getDiagnosis = (selected: string[]): Diagnosis => {
       description: "Slow drainage may indicate a partial blockage, tree root ingress, or pipe damage restricting flow. Early investigation prevents escalation.",
       severity: "medium",
       links: [
-        { label: "Slow Draining Sinks & Toilets", url: "/drain-problems/slow-draining-sinks-toilets" },
-        { label: "Tree Roots in Drains", url: "/drain-causes/tree-roots-in-drains" },
+        { label: "Slow Draining Sinks & Toilets", url: "/drainage-guides" },
+        { label: "Tree Roots in Drains", url: "/drainage-guides" },
         { label: "Book CCTV Survey", url: "/contact" },
       ],
     };
@@ -105,8 +105,8 @@ const getDiagnosis = (selected: string[]): Diagnosis => {
       description: "Multiple symptoms suggest an underlying problem in your drainage system. A professional CCTV survey will identify the cause before it worsens.",
       severity: "medium",
       links: [
-        { label: "Recurring Blockages", url: "/drain-problems/recurring-drain-blockages" },
-        { label: "Why Is My Drain Blocking?", url: "/drain-problems/why-is-my-drain-blocking" },
+        { label: "Recurring Blockages", url: "/drainage-guides" },
+        { label: "Why Is My Drain Blocking?", url: "/drainage-guides" },
         { label: "Book CCTV Survey", url: "/contact" },
       ],
     };

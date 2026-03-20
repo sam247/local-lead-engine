@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { blogPosts, services, locations, hubPages, getCategoryPages } from "@/lib/data";
+import { blogPosts, services, locations, getCategoryPages, getHubData } from "@/lib/data";
 import { getBlogArticleContent } from "@/lib/blogArticleContent";
 import { verticalConfig } from "@/config";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
@@ -43,9 +43,9 @@ export default async function BlogArticlePage({ params }: Props) {
       ? (postWithSlugs.relatedServiceSlugs ?? []).slice(0, 4)
       : services.slice(0, 4).map((s) => s.slug);
 
-  const guidesHub = hubPages.find((h) => getCategoryPages(h.category).length > 0);
+  const guidesHub = getHubData("guides");
   const relatedGuideLinks = guidesHub
-    ? getCategoryPages(guidesHub.category)
+    ? getCategoryPages("guides")
         .slice(0, 4)
         .map((p) => ({ title: p.title, href: `${guidesHub.basePath}/${p.slug}` }))
     : [];

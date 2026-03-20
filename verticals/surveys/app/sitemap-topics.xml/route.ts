@@ -12,13 +12,16 @@ export async function GET() {
   const entries: { url: string; lastmod: Date; changefreq: "weekly" | "monthly"; priority: number }[] = [];
 
   for (const hub of hubPages) {
+    const pages = getCategoryPages(hub.category);
+    if (!pages.length) continue;
+
     entries.push({
       url: `${baseUrl}${hub.basePath}`,
       lastmod,
       changefreq: "weekly",
       priority: 0.8,
     });
-    const pages = getCategoryPages(hub.category);
+
     for (const page of pages) {
       entries.push({
         url: `${baseUrl}${hub.basePath}/${page.slug}`,

@@ -2048,23 +2048,23 @@ export const categoryImages: Record<string, string> = {
   "property-types": "measured-building-survey",
 };
 
-// Helper to get all pages for a category (survey vertical: all non-cost hubs surface survey guides)
+// Helper to get all pages for a category (canonical topic families only)
 export const getCategoryPages = (category: string): InfoPageData[] => {
   const map: Record<string, InfoPageData[]> = {
-    problems: guidesPages,
-    collapse: guidesPages,
-    insurance: guidesPages,
+    problems: [],
+    collapse: [],
+    insurance: [],
     costs: costPages,
-    inspection: guidesPages,
-    causes: guidesPages,
-    commercial: guidesPages,
-    emergency: guidesPages,
-    "repair-methods": guidesPages,
-    property: guidesPages,
-    survey: guidesPages,
-    "property-types": guidesPages,
-    legal: guidesPages,
-    buyer: guidesPages,
+    inspection: [],
+    causes: [],
+    commercial: [],
+    emergency: [],
+    "repair-methods": [],
+    property: [],
+    survey: [],
+    "property-types": [],
+    legal: [],
+    buyer: [],
     guides: guidesPages
   };
   return map[category] || [];
@@ -2095,13 +2095,18 @@ export function getRelevantTopicsForService(serviceSlug: string): { title: strin
   const categories = SURVEYS_SERVICE_TO_TOPIC_CATEGORIES[serviceSlug];
   if (!categories?.length) return [];
   const out: { title: string; href: string }[] = [];
+  const seenHrefs = new Set<string>();
   for (const category of categories) {
-    const hub = getHubData(category);
-    const pages = getCategoryPages(category);
+    const canonicalCategory = category === "costs" ? "costs" : "guides";
+    const hub = getHubData(canonicalCategory);
+    const pages = getCategoryPages(canonicalCategory);
     if (!hub || !pages.length) continue;
     const taken = pages.slice(0, MAX_PER_CATEGORY);
     for (const page of taken) {
-      out.push({ title: page.title, href: `${hub.basePath}/${page.slug}` });
+      const href = `${hub.basePath}/${page.slug}`;
+      if (seenHrefs.has(href)) continue;
+      seenHrefs.add(href);
+      out.push({ title: page.title, href });
       if (out.length >= MAX_TOPIC_LINKS) return out;
     }
   }

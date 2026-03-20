@@ -56,7 +56,7 @@ export function getHubPageProps(category: string) {
   const crossSections = categorisePages(category);
   const pillarGuides = [
     { title: "Collapsed Drains Complete Guide", href: "/collapsed-drains-complete-guide" },
-    { title: "CCTV Drain Survey Guide", href: "/drain-survey" },
+    { title: "CCTV Drain Survey Guide", href: "/drainage-guides" },
   ];
   return {
     hub,
