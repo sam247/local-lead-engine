@@ -75,6 +75,9 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
       firstCtaMessage="Need a security system quote or site survey? We provide free, no-obligation consultations."
       firstCtaButtonText="Request Security Consultation"
       firstCtaButtonLink="/contact"
+      secondCtaHeading="Get a Security Quote"
+      secondCtaBody="Contact us for a no-obligation quote or site survey. We'll assess your requirements and recommend access control, CCTV or integrated security options."
+      secondCtaButtonText="Request a Quote"
       overviewExtra={
         <>
           <p className="mb-4 text-sm text-muted-foreground">

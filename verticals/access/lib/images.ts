@@ -10,28 +10,26 @@ export const serviceImages: Record<string, string> = {
   "security-system-integration": `${base}/services/security-system-integration.jpg`,
 };
 
-/** Security/access-themed project images (no drainage). Index 0–5 for project cards. */
-const PROJECT_IMAGE_URLS = [
-  "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=800&q=80", // security / access control
-  "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80", // CCTV
-  "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&q=80", // office security
-  "https://images.unsplash.com/photo-1558002038-10559092df31?w=800&q=80", // security camera install
-  "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", // control room
-  "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=800&q=80", // access / keycard
+const projectImagePaths = [
+  `${base}/projects/project-access-1.jpg`,
+  `${base}/projects/project-access-2.jpg`,
+  `${base}/projects/project-access-3.jpg`,
+  `${base}/projects/project-access-4.jpg`,
+  `${base}/projects/project-access-5.jpg`,
+  `${base}/projects/project-access-6.jpg`,
 ];
 
 /** Use project's dedicated image when available, else fallback to index in pool. */
 export function getProjectImage(project: { image?: string; imageIndex?: number } | number, index?: number): string {
   const idx = typeof project === "number" ? project : (index ?? project.imageIndex ?? 0);
   if (typeof project === "object" && project.image) return project.image;
-  return PROJECT_IMAGE_URLS[Math.abs(idx) % PROJECT_IMAGE_URLS.length] ?? PROJECT_IMAGE_URLS[0];
+  return projectImagePaths[Math.abs(idx) % projectImagePaths.length] ?? projectImagePaths[0];
 }
 
-/** Security/access-themed blog images (no drainage). Replace with local assets from data/images.ts prompts when ready. */
 export const blogImages = [
-  "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=800&q=80", // security camera / access control
-  "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80", // CCTV / surveillance
-  "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&q=80", // office security / keycard
+  `${base}/blog/blog-1.jpg`,
+  `${base}/blog/blog-2.jpg`,
+  `${base}/blog/blog-3.jpg`,
 ];
 
 /** Use post's dedicated image if set (and not placeholder), else fallback to index in blogImages. */

@@ -182,7 +182,8 @@ export async function POST(req: Request) {
     await appendLeadRow(sheets, spreadsheetId, lead);
 
     const resend = new Resend(requireEnv("RESEND_API_KEY"));
-    const emailTo = process.env.LEAD_EMAIL_OVERRIDE?.trim() || "leads@mainlinesurveys.co.uk";
+    // Hardcoded test inbox until leads@* MX records receive mail.
+    const emailTo = "sampettiford@googlemail.com";
     const emailFrom = "Mainline Surveys <leads@mainlinesurveys.co.uk>";
 
     const maxRetries = 3;

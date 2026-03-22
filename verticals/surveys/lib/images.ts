@@ -16,28 +16,26 @@ export const serviceImages: Record<string, string> = {
   "drone-construction-survey": `${base}/services/drone-survey.jpg`,
 };
 
-/** Survey/drone/land-themed project images (no drainage). Index 0–5 for project cards. */
-const PROJECT_IMAGE_URLS = [
-  "https://images.unsplash.com/photo-1474487548417-809cb4be70cd?w=800&q=80", // drone / aerial
-  "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&q=80", // land survey
-  "https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=800&q=80", // topographic / map
-  "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80", // construction survey
-  "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=800&q=80", // drone
-  "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80", // site survey
+const projectImagePaths = [
+  `${base}/projects/project-surveys-1.jpg`,
+  `${base}/projects/project-surveys-2.jpg`,
+  `${base}/projects/project-surveys-3.jpg`,
+  `${base}/projects/project-surveys-4.jpg`,
+  `${base}/projects/project-surveys-5.jpg`,
+  `${base}/projects/project-surveys-6.jpg`,
 ];
 
 /** Use project's dedicated image when available, else fallback to index in pool. */
 export function getProjectImage(project: { image?: string; imageIndex?: number } | number, index?: number): string {
   const idx = typeof project === "number" ? project : (index ?? project.imageIndex ?? 0);
   if (typeof project === "object" && project.image) return project.image;
-  return PROJECT_IMAGE_URLS[Math.abs(idx) % PROJECT_IMAGE_URLS.length] ?? PROJECT_IMAGE_URLS[0];
+  return projectImagePaths[Math.abs(idx) % projectImagePaths.length] ?? projectImagePaths[0];
 }
 
-/** Survey/land/drone-themed blog images (no drainage). Replace with local assets when ready. */
 export const blogImages = [
-  "https://images.unsplash.com/photo-1474487548417-809cb4be70cd?w=800&q=80", // drone / aerial
-  "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&q=80", // land survey / planning
-  "https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=800&q=80", // topographic / map
+  `${base}/blog/blog-1.jpg`,
+  `${base}/blog/blog-2.jpg`,
+  `${base}/blog/blog-3.jpg`,
 ];
 
 /** Use post's dedicated image if set (and not placeholder), else fallback to index in blogImages. */

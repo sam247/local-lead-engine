@@ -182,7 +182,8 @@ export async function POST(req: Request) {
     await appendLeadRow(sheets, spreadsheetId, lead);
 
     const resend = new Resend(requireEnv("RESEND_API_KEY"));
-    const emailTo = process.env.LEAD_EMAIL_OVERRIDE?.trim() || "leads@mainlinedrains.co.uk";
+    // Hardcoded test inbox: leads@* bounces without MX; revert to env or per-vertical inbox after DNS is fixed.
+    const emailTo = "sampettiford@googlemail.com";
     const emailFrom = "Mainline Drains <leads@mainlinedrains.co.uk>";
 
     const maxRetries = 3;
