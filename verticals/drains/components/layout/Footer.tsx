@@ -2,10 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
 import { companyInfo, services, locations } from "@/lib/data";
+import { verticalConfig } from "@/config";
+import { MainlineGroupLinks } from "engine";
+import { mainlineGroupLinksForSite } from "engine/data/mainline-group";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const topLocations = locations.slice(0, 8);
+  const groupLinks = mainlineGroupLinksForSite(verticalConfig.baseUrl);
 
   return (
     <footer className="bg-primary pb-14 text-primary-foreground">
@@ -100,13 +104,13 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
-                <a href="mailto:info@mainlinedrains.co.uk" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  info@mainlinedrains.co.uk
+                <a href={`mailto:${companyInfo.email}`} className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  {companyInfo.email}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
-                <span className="text-sm text-primary-foreground/80">128 City Road, London, EC1V 2NX</span>
+                <span className="text-sm text-primary-foreground/80">{companyInfo.address}</span>
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
@@ -134,6 +138,9 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-primary-foreground/10">
+        <div className="container border-b border-primary-foreground/10 py-5">
+          <MainlineGroupLinks items={groupLinks} variant="footerOnPrimary" />
+        </div>
         <div className="container flex flex-col items-center justify-between gap-4 py-6 md:flex-row">
           <p className="text-sm text-primary-foreground/60">
             © {currentYear} {companyInfo.name}. All rights reserved.

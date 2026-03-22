@@ -136,8 +136,13 @@ const Hero = () => {
             <p className="mb-3 text-xl font-medium text-primary-foreground md:text-2xl">
               Across London &amp; the South East
             </p>
-            <p className="mb-8 text-base text-primary-foreground/80 md:text-lg">
+            <p className="mb-4 text-base text-primary-foreground/80 md:text-lg">
               Topographical, measured building, utility and drone surveys for planning, development and construction. Request a survey quote or speak with a survey specialist.
+            </p>
+            <p className="mb-8 text-xs text-primary-foreground/60">
+              <Link href="/about" className="underline-offset-2 hover:underline">
+                Part of Mainline Group
+              </Link>
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

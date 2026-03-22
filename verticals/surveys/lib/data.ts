@@ -404,8 +404,8 @@ export const blogPosts = [
 export const companyInfo = {
   name: "Mainline Surveys",
   phone: "020 1234 5678",
-  email: "surveys@mainlinesurveys.co.uk",
-  address: "123 Survey House, London, SW1A 1AA",
+  email: "info@mainlinesurveys.co.uk",
+  address: "128 City Road, London, EC1V 2NX",
   hours: "Office hours and planned survey appointments",
   social: {
     linkedin: "#",

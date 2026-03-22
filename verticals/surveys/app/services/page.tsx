@@ -27,7 +27,9 @@ export default function ServicesPage() {
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">Our Services</h1>
-            <p className="text-lg text-primary-foreground/80">Expert drainage solutions for every situation.</p>
+            <p className="text-lg text-primary-foreground/80">
+              Land, drone and measured surveys for planning, design and construction across the UK.
+            </p>
           </div>
         </div>
       </section>

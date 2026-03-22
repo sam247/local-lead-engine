@@ -12,7 +12,7 @@ export const companyInfo = {
   name: "Mainline Groundworks",
   phone: "020 1234 5678",
   email: "info@mainlinegroundworks.co.uk",
-  address: "123 Construction Way, London, SW1A 1AA",
+  address: "128 City Road, London, EC1V 2NX",
   hours: "Mon–Fri 8am–6pm, Sat 9am–1pm",
   social: {
     linkedin: "#",

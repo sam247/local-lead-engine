@@ -60,6 +60,15 @@ const Header = () => {
               {s.title}
             </Link>
           ))}
+          <Link
+            href="/about"
+            className={cn(
+              "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
+              isActive("/about") ? "text-primary" : "text-muted-foreground"
+            )}
+          >
+            About
+          </Link>
 
           {/* Locations Dropdown */}
           <NavigationMenu>
@@ -171,6 +180,7 @@ const Header = () => {
             {navServices.map((s) => (
               <Link key={s.slug} href={`/services/${s.slug}`} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>{s.title}</Link>
             ))}
+            <Link href="/about" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>About</Link>
             <Link href="/industries" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Industries</Link>
 
             {/* Mobile Locations Accordion */}

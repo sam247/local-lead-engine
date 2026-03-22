@@ -72,6 +72,15 @@ const Header = () => {
           >
             Foundations
           </Link>
+          <Link
+            href="/about"
+            className={cn(
+              "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
+              isActive("/about") ? "text-primary" : "text-muted-foreground"
+            )}
+          >
+            About
+          </Link>
 
           {/* Locations Dropdown */}
           <NavigationMenu>
@@ -176,6 +185,7 @@ const Header = () => {
             <Link href="/services/groundworks-contractors" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Groundworks</Link>
             <Link href="/services/piling-contractors" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Piling</Link>
             <Link href="/services/foundation-contractors" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Foundations</Link>
+            <Link href="/about" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>About</Link>
 
             {/* Mobile Locations Accordion */}
             <div>

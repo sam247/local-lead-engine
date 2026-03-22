@@ -1,13 +1,20 @@
 #!/usr/bin/env node
 /**
  * Copies generated project images from a source dir into each vertical's public/images/projects.
- * Projects use 6 images per vertical (by imageIndex). Source files must be named:
- *   {vertical}-1.jpg through {vertical}-6.jpg  (e.g. drains-1.jpg, surveys-3.jpg)
+ * One source file per project row: {vertical}-N.jpg where N matches project-{vertical}-N.jpg in imagePath
+ * (N = 1..30 from engine generateProjects).
  *
  * Usage:
  *   node scripts/project-image-manifest.mjs > manifest.json
  *   node scripts/project-place-images.mjs --source=./assets --manifest=manifest.json
  */
+
+function slotFromImagePath(imagePath) {
+  const m = String(imagePath).match(/project-[a-z]+-(\d+)\.jpg$/i);
+  if (!m) return null;
+  const n = Number(m[1], 10);
+  return Number.isFinite(n) && n >= 1 ? n : null;
+}
 
 import fs from "fs";
 import path from "path";
@@ -37,8 +44,10 @@ async function main() {
   let copied = 0;
   let missing = 0;
   for (const entry of manifest) {
-    const { vertical, id, imagePath, imageIndex } = entry;
-    const slot = (Number(imageIndex) % 6) + 1;
+    const { vertical, imagePath, imageIndex } = entry;
+    const fromPath = slotFromImagePath(imagePath);
+    const slot =
+      fromPath ?? (Number.isFinite(Number(imageIndex)) ? (Number(imageIndex) % 30) + 1 : 1);
     const src = path.join(sourceDir, `${vertical}-${slot}.jpg`);
     const dest = path.join(root, "verticals", vertical, "public", imagePath.replace(/^\//, ""));
     if (!fs.existsSync(src)) {

@@ -16,6 +16,7 @@ export { InspectionCTA, type InspectionCTAProps } from "./InspectionCTA";
 export { MidContentCTA, type MidContentCTAProps } from "./MidContentCTA";
 export { ContentRelatedLinks, type ContentRelatedLinksProps } from "./ContentRelatedLinks";
 export { CTABanner, type CTABannerProps } from "./CTABanner";
+export { MainlineGroupLinks, type MainlineGroupLinksProps } from "./MainlineGroupLinks";
 export { ProblemCTA, type ProblemCTAProps } from "./ProblemCTA";
 export { ProblemPage, type ProblemPageProps } from "./ProblemPage";
 export { ProjectCardWithLinks, type ProjectCardWithLinksProps, type ProjectForCard } from "./ProjectCardWithLinks";

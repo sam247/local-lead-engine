@@ -72,6 +72,15 @@ const Header = () => {
           >
             Blocked Drains
           </Link>
+          <Link
+            href="/about"
+            className={cn(
+              "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
+              isActive("/about") ? "text-primary" : "text-muted-foreground"
+            )}
+          >
+            About
+          </Link>
 
           {/* Locations Dropdown */}
           <NavigationMenu>
@@ -211,6 +220,7 @@ const Header = () => {
             <Link href="/services/drain-collapse-repair" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drain Collapse</Link>
             <Link href="/services/cctv-drain-surveys" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drain Surveys</Link>
             <Link href="/services/blocked-drains" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Blocked Drains</Link>
+            <Link href="/about" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>About</Link>
 
             {/* Mobile Locations Accordion */}
             <div>

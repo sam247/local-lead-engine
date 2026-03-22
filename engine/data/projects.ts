@@ -168,7 +168,8 @@ export function generateProjects(
       description,
       imagePrompt,
       image: `/images/projects/project-${verticalId}-${index + 1}.jpg`,
-      imageIndex: index % 6,
+      /** 0-based slot matching asset `{verticalId}-{index+1}.jpg` in project-place-images (30 distinct images per vertical). */
+      imageIndex: index,
     };
   });
 }

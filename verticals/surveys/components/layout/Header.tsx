@@ -72,6 +72,15 @@ const Header = () => {
           >
             Measured Building
           </Link>
+          <Link
+            href="/about"
+            className={cn(
+              "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
+              isActive("/about") ? "text-primary" : "text-muted-foreground"
+            )}
+          >
+            About
+          </Link>
 
           {/* Locations Dropdown */}
           <NavigationMenu>
@@ -211,6 +220,7 @@ const Header = () => {
             <Link href="/services/topographical-survey" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Topographical Survey</Link>
             <Link href="/services/drone-survey" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drone Survey</Link>
             <Link href="/services/measured-building-survey" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Measured Building Survey</Link>
+            <Link href="/about" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>About</Link>
 
             {/* Mobile Locations Accordion */}
             <div>

@@ -35,21 +35,22 @@ for (const e of readBlogManifest()) {
   blog++;
 }
 
-const projectSlots = {
-  drains: (n) => path.join(root, "verticals", "drains", "public", "images", "projects", `project-${n}.jpg`),
-  access: (n) => path.join(root, "verticals", "access", "public", "images", "projects", `project-access-${n}.jpg`),
-  surveys: (n) => path.join(root, "verticals", "surveys", "public", "images", "projects", `project-surveys-${n}.jpg`),
-  groundworks: (n) =>
-    path.join(root, "verticals", "groundworks", "public", "images", "projects", `project-groundworks-${n}.jpg`),
-};
+const projectVerticals = ["drains", "access", "surveys", "groundworks"];
 
 let proj = 0;
-for (const vertical of Object.keys(projectSlots)) {
-  for (let n = 1; n <= 6; n++) {
-    const src = projectSlots[vertical](n);
+for (const vertical of projectVerticals) {
+  for (let n = 1; n <= 30; n++) {
+    const src = path.join(
+      root,
+      "verticals",
+      vertical,
+      "public",
+      "images",
+      "projects",
+      `project-${vertical}-${n}.jpg`
+    );
     const dest = path.join(assets, `${vertical}-${n}.jpg`);
     if (!fs.existsSync(src)) {
-      console.warn("Project missing source:", src);
       continue;
     }
     fs.copyFileSync(src, dest);

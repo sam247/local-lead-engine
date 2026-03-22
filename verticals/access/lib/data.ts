@@ -248,8 +248,8 @@ export const blogPosts = [
 export const companyInfo = {
   name: "Mainline Access",
   phone: "020 1234 5678",
-  email: "leads@mainlineaccess.co.uk",
-  address: "123 Security Way, London, SW1A 1AA",
+  email: "info@mainlineaccess.co.uk",
+  address: "128 City Road, London, EC1V 2NX",
   hours: "Mon–Fri 8am–6pm, 24/7 support for contract clients",
   social: {
     linkedin: "#",

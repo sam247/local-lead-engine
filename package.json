@@ -19,7 +19,12 @@
     "images:sync-assets": "node scripts/sync-assets-from-public.mjs",
     "images:place-all": "npm run blog:place-images && node scripts/project-image-manifest.mjs > project-manifest.json && npm run project:place-images",
     "images:roundtrip-from-public": "npm run images:sync-assets && npm run images:place-all",
-    "verify:public-images": "node scripts/verify-public-images.mjs"
+    "verify:public-images": "node scripts/verify-public-images.mjs",
+    "verify:unique-project-images": "node scripts/verify-unique-project-images.mjs",
+    "images:compress": "node scripts/compress-public-images.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

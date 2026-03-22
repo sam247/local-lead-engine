@@ -2,10 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
 import { companyInfo, services, locations } from "@/lib/data";
+import { verticalConfig } from "@/config";
+import { MainlineGroupLinks } from "engine";
+import { mainlineGroupLinksForSite } from "engine/data/mainline-group";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const topLocations = locations.slice(0, 8);
+  const groupLinks = mainlineGroupLinksForSite(verticalConfig.baseUrl);
 
   return (
     <footer className="bg-primary pb-14 text-primary-foreground">
@@ -141,6 +145,9 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-primary-foreground/10">
+        <div className="container border-b border-primary-foreground/10 py-5">
+          <MainlineGroupLinks items={groupLinks} variant="footerOnPrimary" />
+        </div>
         <div className="container flex flex-col items-center justify-between gap-4 py-6 md:flex-row">
           <p className="text-sm text-primary-foreground/60">
             © {currentYear} {companyInfo.name}. All rights reserved.

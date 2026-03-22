@@ -22,22 +22,35 @@ interface SchemaMarkupProps {
 
 const baseUrl = "https://mainlinedrains.co.uk";
 
+const parentOrganization = {
+  "@type": "Organization",
+  name: "Mainline Group",
+};
+
+const postalAddress = {
+  "@type": "PostalAddress",
+  streetAddress: companyInfo.address,
+  addressCountry: "GB",
+};
+
+const organizationPublisher = {
+  "@type": "Organization",
+  name: companyInfo.name,
+  url: baseUrl,
+  parentOrganization,
+};
+
 const localBusinessBase = {
   "@type": "LocalBusiness",
   "@id": `${baseUrl}/#business`,
   name: companyInfo.name,
   telephone: companyInfo.phone,
   email: companyInfo.email,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "123 Drainage Way",
-    addressLocality: "London",
-    postalCode: "SW1A 1AA",
-    addressCountry: "GB",
-  },
+  address: postalAddress,
   url: baseUrl,
   openingHours: "Mo-Su 00:00-23:59",
   priceRange: "££",
+  parentOrganization,
 };
 
 const SchemaMarkup = ({ type, data = {} }: SchemaMarkupProps) => {
@@ -51,11 +64,7 @@ const SchemaMarkup = ({ type, data = {} }: SchemaMarkupProps) => {
         headline: data.title,
         description: data.description,
         url: data.url ? `${baseUrl}${data.url}` : undefined,
-        publisher: {
-          "@type": "Organization",
-          name: companyInfo.name,
-          url: baseUrl,
-        },
+        publisher: organizationPublisher,
         datePublished: data.datePublished || new Date().toISOString().split("T")[0],
       };
       break;

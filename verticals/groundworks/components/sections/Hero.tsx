@@ -144,8 +144,13 @@ const Hero = () => {
             <h1 className="mb-5 font-display text-3xl font-bold tracking-tight text-primary-foreground md:text-4xl lg:text-5xl">
               Piling, Excavation &amp; Foundation Contractors Across the UK
             </h1>
-            <p className="mb-8 text-base text-primary-foreground/80 md:text-lg">
+            <p className="mb-4 text-base text-primary-foreground/80 md:text-lg">
               Commercial groundworks contractors providing piling, excavation, site clearance and foundation construction for housing, commercial and industrial projects.
+            </p>
+            <p className="mb-8 text-xs text-primary-foreground/60">
+              <Link href="/about" className="underline-offset-2 hover:underline">
+                Part of Mainline Group
+              </Link>
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
