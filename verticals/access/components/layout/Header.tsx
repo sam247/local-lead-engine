@@ -7,9 +7,6 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { locations, services } from "@/lib/data";
-
-const NAV_SERVICE_SLUGS = ["access-control-systems", "commercial-cctv-installation", "ip-camera-systems"];
-const navServices = services.filter((s) => NAV_SERVICE_SLUGS.includes(s.slug));
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -18,18 +15,38 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { ResourcesMenu, getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "engine/components/navigation/ResourcesMenu";
+import {
+  ResourcesMenu,
+  getDefaultResourcesMenuLabels,
+  getResourcesMenuFlatLinks,
+  insertResourcesLinksAfterHref,
+} from "engine/components/navigation/ResourcesMenu";
 import { trackEvent } from "engine/utils";
 import { verticalConfig } from "@/config";
 import { cn } from "@/lib/utils";
 
+const NAV_SERVICE_SLUGS = ["access-control-systems", "commercial-cctv-installation", "ip-camera-systems"];
+const navServices = services.filter((s) => NAV_SERVICE_SLUGS.includes(s.slug));
+
 const resourceLabels = getDefaultResourcesMenuLabels(verticalConfig.siteName);
-const mobileResourceLinks = getResourcesMenuFlatLinks(verticalConfig.siteName);
+
+const ACCESS_INDUSTRIES_RESOURCE_LINKS = [
+  { href: "/industries", label: "All Industries" },
+  { href: "/industries/hospital-security-systems", label: "Hospital Security" },
+  { href: "/industries/data-centre-security", label: "Data Centre Security" },
+  { href: "/industries/warehouse-security", label: "Warehouse Security" },
+  { href: "/industries/commercial-building-security", label: "Commercial Buildings" },
+] as const;
+
+const mobileResourceLinks = insertResourcesLinksAfterHref(
+  getResourcesMenuFlatLinks(verticalConfig.siteName),
+  "/services",
+  [...ACCESS_INDUSTRIES_RESOURCE_LINKS]
+);
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [locationsOpen, setLocationsOpen] = useState(false);
-  const [industriesOpen, setIndustriesOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const pathname = usePathname();
 
@@ -40,7 +57,6 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between md:h-20">
-        {/* Logo – mobile ~20% larger (h-6) than before (h-5), same across verticals */}
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <Image
             src="/logo_black.svg"
@@ -52,7 +68,6 @@ const Header = () => {
           />
         </Link>
 
-        {/* Desktop Navigation */}
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
           {navServices.map((s) => (
             <Link
@@ -76,7 +91,6 @@ const Header = () => {
             About
           </Link>
 
-          {/* Locations Dropdown */}
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -113,48 +127,6 @@ const Header = () => {
             </NavigationMenuList>
           </NavigationMenu>
 
-          {/* Industries & Resources */}
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-muted-foreground hover:text-primary">
-                  Industries
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="w-[320px] p-4">
-                    <ul className="space-y-1">
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <Link href="/industries" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">All Industries</Link>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <Link href="/industries/hospital-security-systems" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Hospital Security</Link>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <Link href="/industries/data-centre-security" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Data Centre Security</Link>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <Link href="/industries/warehouse-security" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Warehouse Security</Link>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <Link href="/industries/commercial-building-security" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Commercial Buildings</Link>
-                        </NavigationMenuLink>
-                      </li>
-                    </ul>
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -162,17 +134,19 @@ const Header = () => {
                   Resources
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ResourcesMenu labels={resourceLabels} />
+                  <ResourcesMenu labels={resourceLabels} industriesLinks={[...ACCESS_INDUSTRIES_RESOURCE_LINKS]} />
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-
         </nav>
 
-        {/* CTA Button */}
         <div className="hidden items-center gap-4 lg:flex">
-          <a href="tel:02012345678" className="flex items-center gap-2 text-sm font-medium text-primary" onClick={() => trackEvent("call_button_click")}>
+          <a
+            href="tel:02012345678"
+            className="flex items-center gap-2 text-sm font-medium text-primary"
+            onClick={() => trackEvent("call_button_click")}
+          >
             <Phone className="h-4 w-4" />
             Call Now
           </a>
@@ -181,7 +155,6 @@ const Header = () => {
           </Button>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           className="flex min-h-[44px] min-w-[44px] items-center justify-center lg:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -191,18 +164,27 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="border-t border-border bg-background lg:hidden">
           <nav className="container py-4">
-            
             {navServices.map((s) => (
-              <Link key={s.slug} href={`/services/${s.slug}`} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>{s.title}</Link>
+              <Link
+                key={s.slug}
+                href={`/services/${s.slug}`}
+                className="flex min-h-[44px] items-center text-sm font-medium text-foreground"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {s.title}
+              </Link>
             ))}
-            <Link href="/about" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>About</Link>
-            <Link href="/industries" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Industries</Link>
+            <Link
+              href="/about"
+              className="flex min-h-[44px] items-center text-sm font-medium text-foreground"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              About
+            </Link>
 
-            {/* Mobile Locations Accordion */}
             <div>
               <button
                 className="flex min-h-[44px] w-full items-center justify-between text-sm font-medium text-foreground"
@@ -214,38 +196,26 @@ const Header = () => {
               {locationsOpen && (
                 <div className="ml-4 border-l border-border pl-4">
                   {topLocations.map((loc) => (
-                    <Link key={loc.id} href={`/access-control-systems/${loc.id}`} className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>
+                    <Link
+                      key={loc.id}
+                      href={`/access-control-systems/${loc.id}`}
+                      className="block py-2 text-sm text-muted-foreground"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
                       {loc.name}
                     </Link>
                   ))}
-                  <Link href="/access-control-systems-near-me" className="block py-2 text-sm font-medium text-primary" onClick={() => setMobileMenuOpen(false)}>
+                  <Link
+                    href="/access-control-systems-near-me"
+                    className="block py-2 text-sm font-medium text-primary"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
                     View All Areas →
                   </Link>
                 </div>
               )}
             </div>
 
-            {/* Mobile Industries Accordion */}
-            <div>
-              <button
-                className="flex min-h-[44px] w-full items-center justify-between text-sm font-medium text-foreground"
-                onClick={() => setIndustriesOpen(!industriesOpen)}
-              >
-                Industries
-                <ChevronDown className={cn("h-4 w-4 transition-transform", industriesOpen && "rotate-180")} />
-              </button>
-              {industriesOpen && (
-                <div className="ml-4 border-l border-border pl-4">
-                  <Link href="/industries" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>All Industries</Link>
-                  <Link href="/industries/hospital-security-systems" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Hospital Security</Link>
-                  <Link href="/industries/data-centre-security" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Data Centre Security</Link>
-                  <Link href="/industries/warehouse-security" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Warehouse Security</Link>
-                  <Link href="/industries/commercial-building-security" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Commercial Buildings</Link>
-                </div>
-              )}
-            </div>
-
-            {/* Mobile Resources Accordion */}
             <div>
               <button
                 className="flex min-h-[44px] w-full items-center justify-between text-sm font-medium text-foreground"
@@ -258,7 +228,7 @@ const Header = () => {
                 <div className="ml-4 border-l border-border pl-4">
                   {mobileResourceLinks.map((item) => (
                     <Link
-                      key={item.href}
+                      key={`${item.href}-${item.label}`}
                       href={item.href}
                       className="block py-2 text-sm text-muted-foreground"
                       onClick={() => setMobileMenuOpen(false)}
@@ -271,12 +241,18 @@ const Header = () => {
             </div>
 
             <div className="mt-4 flex flex-col gap-3 border-t border-border pt-4">
-              <a href="tel:02012345678" className="flex items-center gap-2 text-sm font-medium text-primary" onClick={() => trackEvent("call_button_click")}>
+              <a
+                href="tel:02012345678"
+                className="flex items-center gap-2 text-sm font-medium text-primary"
+                onClick={() => trackEvent("call_button_click")}
+              >
                 <Phone className="h-4 w-4" />
                 Call Now
               </a>
               <Button asChild className="w-full">
-                <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>Get a Quote</Link>
+                <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
+                  Get a Quote
+                </Link>
               </Button>
             </div>
           </nav>

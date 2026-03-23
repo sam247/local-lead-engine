@@ -4,8 +4,12 @@ import Link from "next/link";
 import { cn } from "../../utils/cn";
 import type { ResourcesMenuLabels } from "./resources-menu-utils";
 
-export { getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "./resources-menu-utils";
-export type { ResourcesMenuLabels } from "./resources-menu-utils";
+export {
+  getDefaultResourcesMenuLabels,
+  getResourcesMenuFlatLinks,
+  insertResourcesLinksAfterHref,
+} from "./resources-menu-utils";
+export type { ResourcesMenuLabels, ResourcesMenuFlatLink } from "./resources-menu-utils";
 
 
 const DEFAULT_LABELS: ResourcesMenuLabels = {
@@ -23,6 +27,8 @@ export interface ResourcesMenuProps {
   className?: string;
   /** Use with vertical NavigationMenuLink asChild */
   linkClassName?: string;
+  /** Optional section (e.g. Access industries) inserted between Services and Information */
+  industriesLinks?: { href: string; label: string }[];
 }
 
 const LINK_HREFS = {
@@ -36,10 +42,15 @@ const LINK_HREFS = {
 } as const;
 
 /**
- * Fixed Resources dropdown body: GUIDES (3) + SERVICES (1) + INFORMATION (3).
+ * Fixed Resources dropdown body: GUIDES (3) + SERVICES (1) + optional INDUSTRIES + INFORMATION (3).
  * Same structure for every vertical; only labels vary.
  */
-export function ResourcesMenu({ labels: labelsPartial, className, linkClassName }: ResourcesMenuProps) {
+export function ResourcesMenu({
+  labels: labelsPartial,
+  className,
+  linkClassName,
+  industriesLinks,
+}: ResourcesMenuProps) {
   const labels = { ...DEFAULT_LABELS, ...labelsPartial };
   const linkCn = cn(
     "block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent focus:bg-accent",
@@ -79,6 +90,20 @@ export function ResourcesMenu({ labels: labelsPartial, className, linkClassName 
           </li>
         </ul>
       </div>
+      {industriesLinks && industriesLinks.length > 0 && (
+        <div className="mb-3 border-t border-border pt-3">
+          <p className={sectionTitleCn}>Industries</p>
+          <ul className="space-y-1">
+            {industriesLinks.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className={linkCn}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className="border-t border-border pt-3">
         <p className={sectionTitleCn}>Information</p>
         <ul className="grid grid-cols-2 gap-1">
