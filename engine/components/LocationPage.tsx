@@ -111,7 +111,9 @@ function getServiceFamily(service: Service): "drains" | "surveys" | "access" | "
     slug.includes("piling") ||
     slug.includes("excavation") ||
     slug.includes("foundation") ||
-    slug.includes("enabling")
+    slug.includes("enabling") ||
+    slug.includes("underpinning") ||
+    slug.includes("concrete-repair")
   ) {
     return "groundworks";
   }
@@ -219,7 +221,9 @@ function inferProjectTypes(service: Service): { intro: string; items: string[] }
     slug.includes("piling") ||
     slug.includes("excavation") ||
     slug.includes("foundation") ||
-    slug.includes("enabling");
+    slug.includes("enabling") ||
+    slug.includes("underpinning") ||
+    slug.includes("concrete-repair");
 
   if (isSurvey) {
     return {
@@ -319,6 +323,8 @@ export interface LocationPageProps {
   showMap?: boolean;
   /** Optional intro paragraph describing the service in this location (above main content). */
   introParagraph?: string;
+  /** Optional extra links to other services in this location (e.g. high-intent cross-sell). */
+  extraServiceLocationLinks?: { href: string; children: string }[];
   /** Optional description for the "Nearby Areas We Serve" block (e.g. "Compare our {service} in nearby areas"). */
   nearbyAreasDescription?: string;
   /** Up to 5 neighbour locations for local context block and "Nearby service areas" links. When provided, LocationContext and NearbyAreas are rendered after the intro paragraph. */
@@ -352,6 +358,7 @@ export function LocationPage({
   diagnosisGuidePath,
   showMap = true,
   introParagraph,
+  extraServiceLocationLinks,
   nearbyAreasDescription,
   neighbourLocationsForContext,
   locationContextParagraph,
@@ -544,6 +551,19 @@ export function LocationPage({
               </h2>
               <div className="mb-6 space-y-4 text-muted-foreground">
                 {introParagraph && <p>{introParagraph}</p>}
+                {extraServiceLocationLinks && extraServiceLocationLinks.length > 0 && (
+                  <p className="text-muted-foreground">
+                    {extraServiceLocationLinks.map((link, i) => (
+                      <span key={link.href}>
+                        {i > 0 && (i === extraServiceLocationLinks.length - 1 ? " and " : ", ")}
+                        <Link href={link.href} className="text-primary hover:underline">
+                          {link.children}
+                        </Link>
+                      </span>
+                    ))}
+                    .
+                  </p>
+                )}
                 {introLines.map((line) => (
                   <p key={line}>{line}</p>
                 ))}

@@ -1,5 +1,20 @@
 import Link from "next/link";
-import { ArrowRight, Shovel, Layers, CircleDot, Mountain, TreePine, Building2, Box, HardHat, Construction } from "lucide-react";
+import {
+  ArrowRight,
+  Shovel,
+  Layers,
+  CircleDot,
+  Mountain,
+  TreePine,
+  Building2,
+  Box,
+  HardHat,
+  Construction,
+  Anchor,
+  Drill,
+  Warehouse,
+  BrickWall,
+} from "lucide-react";
 import { services } from "@/lib/data";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
@@ -14,9 +29,20 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Box,
   HardHat,
   Construction,
+  Anchor,
+  Drill,
+  Warehouse,
+  BrickWall,
 };
 
-const prioritySlugs = ["groundworks-contractors", "piling-contractors", "foundation-contractors", "excavation-contractors"];
+const prioritySlugs = [
+  "groundworks-contractors",
+  "underpinning",
+  "piling-contractors",
+  "cfa-piling",
+  "foundation-repair",
+  "foundation-contractors",
+];
 const homepageFeaturedSlugs = ["site-clearance-contractors", "enabling-works-contractors"] as const;
 
 const homepageServiceImages: Record<(typeof homepageFeaturedSlugs)[number], string> = {
@@ -26,9 +52,11 @@ const homepageServiceImages: Record<(typeof homepageFeaturedSlugs)[number], stri
 
 const serviceBenefits: Record<string, string[]> = {
   "groundworks-contractors": ["Full substructure package delivery", "Programme-driven site mobilisation", "Single point of accountability"],
-  "piling-contractors": ["CFA, driven and mini piling methods", "Structural engineer coordination", "Load-tested to specification"],
+  underpinning: ["Stabilises existing structures", "Extensions and structural changes", "Movement and subsidence addressed"],
+  "piling-contractors": ["Complex ground and access assessed", "Method chosen for the job", "Installation tied into structure"],
+  "cfa-piling": ["Low noise and low vibration", "Suited to urban sites", "Efficient continuous auger installation"],
+  "foundation-repair": ["Scoped to the defect", "Engineer-led repair detail", "Stabilisation and reinstatement"],
   "foundation-contractors": ["Strip, raft and pad foundations", "Reinforcement to structural drawings", "Ground-bearing and piled solutions"],
-  "excavation-contractors": ["Bulk dig and reduced level excavation", "Muck-away and disposal included", "Temporary works and shoring"],
 };
 
 const ServicesGrid = () => {

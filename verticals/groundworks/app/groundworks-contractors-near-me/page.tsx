@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   if (!service) return { title: "Not Found" };
   return {
     title: `${service.title} Near Me | ${verticalConfig.siteName}`,
-    description: `Find ${service.title.toLowerCase()} near you. ${verticalConfig.siteName} delivers piling, excavation, foundations and site preparation across the UK. Free quotes.`,
+    description: `Find ${service.title.toLowerCase()} near you. ${verticalConfig.siteName} delivers piling, underpinning, foundation repair, concrete works and site preparation across the UK. Free quotes.`,
     alternates: { canonical: `${verticalConfig.baseUrl}${pagePath}` },
   };
 }
@@ -26,6 +26,8 @@ export default function NearMeRoute() {
   if (!service) notFound();
   const otherServices = services.filter((s) => s.slug !== service.slug);
   const serviceImage = getHeroImage({ serviceSlug: service.slug });
+  const nearMeIntro =
+    "We cover piling (including CFA), underpinning, foundation repair and concrete works nationwide — pick your area below for local coverage and contact options.";
   return (
     <NearMePage
       service={service}
@@ -35,13 +37,13 @@ export default function NearMeRoute() {
       otherServices={otherServices}
       baseUrl={verticalConfig.baseUrl}
       pagePath={pagePath}
-      introParagraph={verticalConfig.relatedLocationsIntro}
+      introParagraph={nearMeIntro}
       sectionTitle={`${service.title} by Location`}
       trustBlockTitle={`Why choose ${verticalConfig.siteName}`}
       trustBlockPoints={[
-        "Fully insured groundworks teams with documented health and safety",
+        "Fully insured teams for structural groundworks, piling and repairs",
         "Single accountability from enabling works through to handover",
-        "Piling, excavation and foundations delivered to specification",
+        "Underpinning, foundation repair and concrete work delivered to specification",
       ]}
       conversionHeading="Planning a groundworks package?"
       secondaryCtaLabel={verticalConfig.heroSecondaryCtaText}

@@ -92,7 +92,7 @@ export default async function LocationRoute({ params }: Props) {
     },
     {
       question: `What groundworks do you do in ${location.name}?`,
-      answer: `We deliver piling, excavation, site clearance, foundations, concrete foundations and enabling works in ${location.name} and ${location.area}.`,
+      answer: `We deliver piling (including CFA), underpinning, foundation repair, concrete repair, excavation, site clearance, foundations, concrete foundations and enabling works in ${location.name} and ${location.area}.`,
     },
     {
       question: `How long do groundworks take in ${location.name}?`,
@@ -147,9 +147,19 @@ export default async function LocationRoute({ params }: Props) {
       url: `/projects#${p.id}`,
     }));
 
-  const introParagraph = `We provide ${service.title} across ${location.name} and ${location.area}. Our team delivers piling, excavation, foundations and site preparation for commercial and residential projects, with free no-obligation quotes.`;
+  const introParagraph = `We provide ${service.title} across ${location.name} and ${location.area}. Our team delivers piling, underpinning, foundation repair, concrete works and wider site preparation for commercial and residential projects, with free no-obligation quotes.`;
 
   const relatedTopicLinks = getRelevantTopicsForService(service.slug);
+
+  const extraServiceLocationLinks =
+    service.slug === "piling-contractors" || service.slug === "foundation-contractors"
+      ? [
+          { href: `/underpinning/${location.id}`, children: `Underpinning in ${location.name}` },
+          { href: `/foundation-repair/${location.id}`, children: `Foundation repair in ${location.name}` },
+        ]
+      : service.slug === "foundation-repair"
+        ? [{ href: `/underpinning/${location.id}`, children: `Underpinning in ${location.name}` }]
+        : undefined;
 
   return (
     <LocationPage
@@ -169,6 +179,7 @@ export default async function LocationRoute({ params }: Props) {
       trustPoints={trustPoints}
       diagnosisGuidePath="/guides/groundworks-process"
       introParagraph={introParagraph}
+      extraServiceLocationLinks={extraServiceLocationLinks}
       nearbyAreasDescription={`Compare our ${service.title} in nearby areas.`}
       neighbourLocationsForContext={neighbourLocationsForContext}
       locationContextParagraph={locationContextParagraph}

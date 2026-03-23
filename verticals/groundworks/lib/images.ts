@@ -5,10 +5,14 @@ const DEFAULT_HERO_SERVICE_SLUG = "groundworks-contractors";
 export const serviceImages: Record<string, string> = {
   "groundworks-contractors": `${base}/services/groundworks-contractors.jpg`,
   "piling-contractors": `${base}/services/piling-contractors.jpg`,
+  "cfa-piling": `${base}/services/piling-contractors.jpg`,
   "mini-piling-contractors": `${base}/services/mini-piling-contractors.jpg`,
+  underpinning: `${base}/services/foundation-contractors.jpg`,
+  "foundation-contractors": `${base}/services/foundation-contractors.jpg`,
+  "foundation-repair": `${base}/services/foundation-contractors.jpg`,
+  "concrete-repair": `${base}/services/concrete-foundations.jpg`,
   "excavation-contractors": `${base}/services/excavation-contractors.jpg`,
   "site-clearance-contractors": `${base}/services/site-clearance-contractors.jpg`,
-  "foundation-contractors": `${base}/services/foundation-contractors.jpg`,
   "concrete-foundations": `${base}/services/concrete-foundations.jpg`,
   "enabling-works-contractors": `${base}/services/enabling-works-contractors.jpg`,
 };

@@ -47,7 +47,7 @@ export default function HubPageContent({ category }: HubPageContentProps) {
   if (!hub || pages.length === 0) return null;
 
   const keyServices = services.filter((s) =>
-    ["groundworks-contractors", "foundation-contractors", "piling-contractors"].includes(s.slug)
+    ["groundworks-contractors", "underpinning", "foundation-contractors", "piling-contractors"].includes(s.slug)
   ).slice(0, 3);
   const heroImage = getHeroImage({ category, categoryImagesMap: categoryImages });
   const heroAlt = categoryAltText[category] || `${hub.title} - groundworks services`;

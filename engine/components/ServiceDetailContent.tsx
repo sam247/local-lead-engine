@@ -105,7 +105,9 @@ function getServiceFamily(service: Service): "drains" | "surveys" | "access" | "
     slug.includes("piling") ||
     slug.includes("excavation") ||
     slug.includes("foundation") ||
-    slug.includes("enabling")
+    slug.includes("enabling") ||
+    slug.includes("underpinning") ||
+    slug.includes("concrete-repair")
   ) {
     return "groundworks";
   }

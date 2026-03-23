@@ -19,11 +19,15 @@ export const partnerDrainsBaseUrl = "https://mainlinedrains.co.uk";
 
 const serviceTypesBySlug: Record<string, string[]> = {
   "groundworks-contractors": ["Piling", "Excavation", "Site clearance", "Foundations", "Enabling works"],
-  "piling-contractors": ["Driven piles", "Bored piles", "Sheet piles", "Pile testing"],
+  underpinning: ["Mass concrete underpinning", "Piled underpinning (where specified)", "Bay sequencing", "Structural stabilisation"],
+  "piling-contractors": ["Driven piles", "Bored piles", "Sheet piles", "Design coordination"],
+  "cfa-piling": ["CFA continuous auger piling", "Low-vibration installation", "Urban and restricted sites", "Reinforcement to design"],
   "mini-piling-contractors": ["Section piles", "CFA mini piling", "Driven mini piles", "Pile caps"],
+  "foundation-contractors": ["Strip foundations", "Pad foundations", "Raft foundations", "Piled foundations"],
+  "foundation-repair": ["Crack and movement investigation", "Localised rebuilds", "Stabilisation details", "Engineer-specified repairs"],
+  "concrete-repair": ["Spall and delamination repairs", "Reinforcement exposure treatment", "Structural patch repairs", "Finishing to specification"],
   "excavation-contractors": ["Bulk excavation", "Strip excavation", "Trenching", "Earthworks"],
   "site-clearance-contractors": ["Demolition", "Vegetation clearance", "Waste removal", "Site levelling"],
-  "foundation-contractors": ["Strip foundations", "Pad foundations", "Raft foundations", "Piled foundations"],
   "concrete-foundations": ["Reinforced concrete", "Mass concrete", "Ground beams", "Blinding"],
   "enabling-works-contractors": ["Access roads", "Temporary drainage", "Site fencing", "Temporary services"],
 };

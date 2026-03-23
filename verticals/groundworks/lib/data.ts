@@ -21,7 +21,7 @@ export const companyInfo = {
   },
 };
 
-// Services
+// Services (order: high-intent / core first for footer and list slices)
 export const services = [
   {
     id: "groundworks-contractors",
@@ -31,19 +31,54 @@ export const services = [
     shortDescription: "Full-service groundworks for commercial and residential construction.",
     description: "We deliver complete groundworks packages including piling, excavation, site clearance, foundations and enabling works. From housing developments to commercial and industrial projects across the UK.",
     benefits: ["Single point of contact for all groundworks", "Programme-driven delivery", "Fully insured and accredited", "Experienced teams and plant", "Quality assured work"],
-    process: ["Site assessment and design coordination", "Setting out and excavation", "Piling and foundations as required", "Drainage and services", "Reinstatement and handover"],
+    process: ["Site assessment and design coordination", "Setting out and excavation", "Piling and foundations as required", "Utilities and services", "Reinstatement and handover"],
     icon: "Shovel",
+  },
+  {
+    id: "underpinning",
+    slug: "underpinning",
+    title: "Underpinning Contractors",
+    titleSingular: "Underpinning Contractor",
+    shortDescription: "Stabilise and strengthen existing foundations for movement, subsidence or structural upgrades.",
+    description:
+      "Underpinning deepens or widens existing foundations so the structure is supported where the ground or loading has changed. We work where there is structural movement, subsidence, or when you need to strengthen or extend foundations for alterations. Everything follows structural design with controlled sequencing and handover records.",
+    benefits: [
+      "Stabilises existing structures",
+      "Suitable for extensions and structural changes",
+      "Addresses foundation movement issues",
+    ],
+    process: [
+      "Site assessment",
+      "Structural evaluation",
+      "Excavation and preparation",
+      "Underpinning installation",
+      "Structural stabilisation",
+    ],
+    icon: "Anchor",
   },
   {
     id: "piling-contractors",
     slug: "piling-contractors",
     title: "Piling Contractors",
     titleSingular: "Piling Contractor",
-    shortDescription: "Driven, bored and sheet piling for buildings and structures.",
-    description: "Professional piling services for new-build and refurbishment projects. We install driven piles, bored piles and sheet piles to support buildings, retaining walls and infrastructure.",
-    benefits: ["Suitable for restricted access", "Minimal vibration options", "Load-tested and certified", "Fast installation", "UK-wide coverage"],
-    process: ["Ground investigation review", "Piling design or design-and-build", "Setting out and installation", "Testing and certification", "Handover documentation"],
+    shortDescription: "Piling for new builds, extensions and structural works on difficult or tight sites.",
+    description:
+      "Piling solutions for residential and commercial projects, including new builds, extensions and structural works. We choose approaches around ground conditions, access constraints and what the structure needs — not a one-size-fits-all rig on every job.",
+    benefits: ["Handles complex soil conditions", "Suitable for restricted access", "Tailored foundation solutions"],
+    process: ["Site assessment", "Method selection", "Installation", "Structural integration"],
     icon: "Layers",
+  },
+  {
+    id: "cfa-piling",
+    slug: "cfa-piling",
+    title: "CFA Piling Contractors",
+    titleSingular: "CFA Piling Contractor",
+    shortDescription: "CFA piling for restricted sites and low-vibration urban work.",
+    description:
+      "Continuous Flight Auger (CFA) piling drills a bore and pumps concrete as the auger is withdrawn, forming a cast-in-place pile with low spoil and controlled vibration. It suits restricted sites, low-vibration environments and typical urban builds where neighbours and access matter.",
+    benefits: ["Low noise and low vibration", "Ideal for urban environments", "Efficient installation"],
+    process: ["Site assessment", "Auger drilling", "Concrete injection", "Reinforcement placement"],
+    icon: "Drill",
   },
   {
     id: "mini-piling-contractors",
@@ -57,12 +92,47 @@ export const services = [
     icon: "CircleDot",
   },
   {
+    id: "foundation-contractors",
+    slug: "foundation-contractors",
+    title: "Foundation Contractors",
+    titleSingular: "Foundation Contractor",
+    shortDescription: "Strip, pad, raft and piled foundations for all building types.",
+    description: "We design and build strip foundations, pad foundations, raft foundations and piled foundations for housing, commercial and industrial projects.",
+    benefits: ["Design or design-and-build", "All foundation types", "Engineered solutions", "Programme certainty", "Quality and compliance"],
+    process: ["Ground review and design", "Setting out and excavation", "Reinforcement and concrete", "Curing and protection", "Handover and as-built"],
+    icon: "Building2",
+  },
+  {
+    id: "foundation-repair",
+    slug: "foundation-repair",
+    title: "Foundation Repair",
+    titleSingular: "Foundation Repair",
+    shortDescription: "Repair and stabilisation where foundations have failed, cracked or moved.",
+    description:
+      "Foundation issues show up as movement, cracking or loss of support. We work from investigation and structural input to repair, rebuild or stabilise foundation elements so loads are carried correctly again. Scopes are defined around the defect, not generic make-good.",
+    benefits: ["Targets the real defect", "Aligned with structural design", "Clear reinstatement and records"],
+    process: ["Assessment of movement and damage", "Engineer-led repair specification", "Break out and preparation", "Repair and stabilisation works", "Protection and handover"],
+    icon: "Warehouse",
+  },
+  {
+    id: "concrete-repair",
+    slug: "concrete-repair",
+    title: "Concrete Repair",
+    titleSingular: "Concrete Repair",
+    shortDescription: "Structural and non-structural concrete repairs for slabs, beams and elements.",
+    description:
+      "Spalled, cracked or carbonated concrete needs proper prep and compatible materials. We remove unsound concrete, treat reinforcement where specified and reinstate to a defined repair detail so performance and fire cover are maintained.",
+    benefits: ["Repairs to specification", "Suitable for structural and facing concrete", "Documented quality"],
+    process: ["Assessment and marking up", "Break out and substrate preparation", "Reinstatement and finishing", "Curing and records"],
+    icon: "BrickWall",
+  },
+  {
     id: "excavation-contractors",
     slug: "excavation-contractors",
     title: "Excavation Contractors",
     titleSingular: "Excavation Contractor",
     shortDescription: "Bulk excavation, strip excavation and trenching for construction.",
-    description: "We carry out bulk excavation, strip excavation and trenching for foundations, drainage and services. Machine and hand dig to programme with proper support and reinstatement.",
+    description: "We carry out bulk excavation, strip excavation and trenching for foundations, utility runs and structural formations. Machine and hand dig to programme with proper support and reinstatement.",
     benefits: ["Programme-led excavation", "Support and temporary works", "Spoil management", "Quality formation levels", "Safe working practices"],
     process: ["Setting out and levels", "Excavation to design", "Support and edge protection", "Formation preparation", "Backfill and compaction"],
     icon: "Mountain",
@@ -77,17 +147,6 @@ export const services = [
     benefits: ["Full site strip capability", "Waste removed and recycled where possible", "Safe demolition and clearance", "Site ready for groundworks", "Documented disposal"],
     process: ["Site survey and scope", "Clearance and demolition", "Vegetation and topsoil strip", "Waste removal and tickets", "Handover of clear site"],
     icon: "TreePine",
-  },
-  {
-    id: "foundation-contractors",
-    slug: "foundation-contractors",
-    title: "Foundation Contractors",
-    titleSingular: "Foundation Contractor",
-    shortDescription: "Strip, pad, raft and piled foundations for all building types.",
-    description: "We design and build strip foundations, pad foundations, raft foundations and piled foundations for housing, commercial and industrial projects.",
-    benefits: ["Design or design-and-build", "All foundation types", "Engineered solutions", "Programme certainty", "Quality and compliance"],
-    process: ["Ground review and design", "Setting out and excavation", "Reinforcement and concrete", "Curing and protection", "Handover and as-built"],
-    icon: "Building2",
   },
   {
     id: "concrete-foundations",
@@ -222,7 +281,11 @@ const GROUNDWORKS_SERVICE_TO_TOPIC_CATEGORIES: Record<string, string[]> = {
   "foundation-contractors": ["foundation-problems", "ground-conditions", "groundworks-costs"],
   "groundworks-contractors": ["groundworks-costs", "site-preparation", "guides"],
   "piling-contractors": ["ground-conditions", "groundworks-costs", "guides"],
+  "cfa-piling": ["ground-conditions", "groundworks-costs", "guides"],
   "mini-piling-contractors": ["ground-conditions", "groundworks-costs", "guides"],
+  "underpinning": ["foundation-problems", "groundworks-costs", "guides"],
+  "foundation-repair": ["foundation-problems", "groundworks-costs", "guides"],
+  "concrete-repair": ["foundation-problems", "groundworks-costs", "guides"],
   "excavation-contractors": ["site-preparation", "groundworks-costs", "guides"],
   "site-clearance-contractors": ["site-preparation", "groundworks-costs"],
   "concrete-foundations": ["foundation-problems", "ground-conditions", "groundworks-costs"],
@@ -263,8 +326,16 @@ export const testimonials: { quote: string; author: string; role: string; compan
 ];
 
 export const faqs: { question: string; answer: string }[] = [
-  { question: "What groundworks services do you offer?", answer: "We offer piling (including mini piling), excavation, site clearance, foundations, concrete foundations and enabling works for commercial and residential projects across the UK." },
-  { question: "Do you work on housing developments?", answer: "Yes. We deliver groundworks packages for housing developments including site clearance, excavation, piling, strip and raft foundations, and drainage." },
+  {
+    question: "What groundworks services do you offer?",
+    answer:
+      "We offer piling (including CFA and mini piling), underpinning, foundation repair, concrete repair, excavation, site clearance, new foundations, concrete foundations and enabling works for commercial and residential projects across the UK.",
+  },
+  {
+    question: "Do you work on housing developments?",
+    answer:
+      "Yes. We deliver groundworks packages for housing developments including site clearance, excavation, piling, underpinning, strip and raft foundations, and utility and service connections where required.",
+  },
   { question: "How do I get a quote?", answer: "Contact us with your site address, project type and any drawings or specifications. We will arrange a site visit and provide a detailed quote." },
   { question: "What areas do you cover?", answer: "We operate across the UK including London, Birmingham, Manchester, Leeds, Bristol and many other towns and cities. Contact us to confirm coverage for your area." },
   { question: "Do you need a survey before groundworks?", answer: "Many projects benefit from a topographical or utility survey before groundworks to map the site and avoid clashes. We can work with your surveyor or recommend one." },
@@ -284,7 +355,11 @@ function buildRelatedGuideLinksByService(): Record<string, { slug: string; path:
   const serviceToGuides: Record<string, string[]> = {
     "groundworks-contractors": ["groundworks-process", "construction-site-preparation", "what-are-enabling-works"],
     "piling-contractors": ["piling-cost", "types-of-piling", "when-is-piling-required"],
+    "cfa-piling": ["types-of-piling", "piling-cost", "when-is-piling-required"],
     "mini-piling-contractors": ["mini-piling-cost", "types-of-piling", "when-is-piling-required"],
+    "underpinning": ["foundation-cost", "groundworks-process", "types-of-piling"],
+    "foundation-repair": ["foundation-cost", "groundworks-process", "concrete-foundations-cost"],
+    "concrete-repair": ["concrete-foundations-cost", "foundation-cost", "groundworks-process"],
     "excavation-contractors": ["excavation-cost", "groundworks-process"],
     "site-clearance-contractors": ["site-clearance-cost", "construction-site-preparation"],
     "foundation-contractors": ["foundation-cost", "groundworks-process", "concrete-foundations-cost"],
@@ -307,7 +382,11 @@ export const relatedGuideLinksByService = buildRelatedGuideLinksByService();
 
 export const serviceFaqsBySlug: Record<string, { question: string; answer: string }[]> = {
   "groundworks-contractors": [
-    { question: "What is included in a groundworks package?", answer: "A full groundworks package typically includes site clearance, excavation, piling or foundations, drainage and enabling works such as access and temporary services. We tailor the scope to your project." },
+    {
+      question: "What is included in a groundworks package?",
+      answer:
+        "A full groundworks package typically includes site clearance, excavation, piling or foundations, utility and service runs, and enabling works such as access and temporary site services. We tailor the scope to your project.",
+    },
   ],
   "piling-contractors": [
     { question: "When is piling required?", answer: "Piling is required when the ground cannot support conventional strip or pad foundations — for example on made ground, soft soils or where loads are high. A structural engineer will specify piling from the ground investigation." },
@@ -329,6 +408,32 @@ export const serviceFaqsBySlug: Record<string, { question: string; answer: strin
   ],
   "enabling-works-contractors": [
     { question: "What are enabling works?", answer: "Enabling works prepare the site for main construction: access roads, temporary drainage, fencing, hoardings and temporary services so that the main contractor can start on programme." },
+  ],
+  "cfa-piling": [
+    {
+      question: "When is CFA piling used?",
+      answer:
+        "CFA piling is often chosen on urban or noise-sensitive sites and where vibration must be kept down. Your structural engineer will confirm it suits the loads and ground model for your project.",
+    },
+  ],
+  underpinning: [
+    {
+      question: "Do I need underpinning or foundation repair?",
+      answer:
+        "Underpinning usually means extending or deepening foundations to stabilise the building. Foundation repair can cover localised fixes. A structural engineer defines the right method after assessment.",
+    },
+  ],
+  "foundation-repair": [
+    {
+      question: "Can you work from a structural engineer's report?",
+      answer: "Yes. We scope and price from engineer drawings and specifications, and agree sequencing and protection before work starts.",
+    },
+  ],
+  "concrete-repair": [
+    {
+      question: "What concrete repairs do you take on?",
+      answer: "We repair spalled, cracked and specified structural concrete elements, including prep, reinforcement treatment where required, and reinstatement to the agreed detail.",
+    },
   ],
 };
 
