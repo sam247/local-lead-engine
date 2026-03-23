@@ -4,6 +4,9 @@ import Link from "next/link";
 import { cn } from "../../utils/cn";
 import type { ResourcesMenuLabels } from "./resources-menu-utils";
 
+export { getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "./resources-menu-utils";
+export type { ResourcesMenuLabels } from "./resources-menu-utils";
+
 
 const DEFAULT_LABELS: ResourcesMenuLabels = {
   guides: "Guides",
