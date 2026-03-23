@@ -7,6 +7,7 @@
   "exports": {
     ".": "./index.ts",
     "./components": "./components/index.ts",
+    "./components/navigation/resources-menu-utils": "./components/navigation/resources-menu-utils.ts",
     "./data/locations": "./data/locations.ts",
     "./data/uk-location-hierarchy": "./data/uk-location-hierarchy.ts",
     "./data/key-location-ids": "./data/key-location-ids.ts",

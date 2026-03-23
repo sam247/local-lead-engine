@@ -15,7 +15,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { ResourcesMenu, getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "engine/components";
+import { ResourcesMenu } from "engine/components";
+import { getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "engine/components/navigation/resources-menu-utils";
 import { trackEvent } from "engine/utils";
 import { verticalConfig } from "@/config";
 import { cn } from "@/lib/utils";
