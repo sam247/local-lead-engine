@@ -1,5 +1,14 @@
 import { companyInfo } from "@/lib/data";
-import type { VerticalConfig } from "engine";
+import type { VerticalConfig, HomepageTrustPointsSix } from "engine";
+
+const homepageTrustPoints: HomepageTrustPointsSix = [
+  { icon: "Shield", title: "Planning-ready data", description: "Accurate surveys and deliverables suitable for design and approval." },
+  { icon: "Users", title: "Experienced survey partners", description: "Land, utility, measured building and drone capture under one roof." },
+  { icon: "BadgeCheck", title: "Calibrated methods", description: "The right technique for your site, brief and output format." },
+  { icon: "Clock", title: "Agreed programmes", description: "Clear milestones from brief through capture to delivery." },
+  { icon: "Wrench", title: "Flexible outputs", description: "CAD, point clouds, BIM-ready data and reports as required." },
+  { icon: "Headphones", title: "UK coverage", description: "Support for developments and infrastructure projects nationwide." },
+];
 
 /** Partner site for cross-vertical linking (drains). */
 export const partnerBaseUrl = "https://mainlinedrains.co.uk";
@@ -57,4 +66,5 @@ export const verticalConfig: VerticalConfig = {
   ],
   locationContextTemplate:
     "{locationName} and the wider {area} region see residential, commercial and infrastructure projects that often need topographical, measured building or drone surveys. Our survey partners deliver planning-ready data across the area, including in {nearbyTowns}. Contact us for a free no-obligation quote for your project in or around {locationName}.",
+  homepageTrustPoints,
 };

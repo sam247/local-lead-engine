@@ -1,4 +1,5 @@
 export * from "./types";
+export { getVariantIndex } from "./lib/contentVariants";
 export * from "./utils";
 export * from "./schema";
 export * from "./validation";

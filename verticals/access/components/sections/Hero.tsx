@@ -11,8 +11,10 @@ import { heroBg } from "@/lib/images";
 import { companyInfo } from "@/lib/data";
 import { verticalConfig } from "@/config";
 import { useToast } from "@/hooks/use-toast";
-import { trackEvent } from "engine";
+import { trackEvent, getVariantIndex } from "engine";
 import { cn } from "@/lib/utils";
+
+const HERO_ABOUT_LABELS = ["Learn more about our team", "About our approach"] as const;
 
 const SERVICE_OPTIONS = ["Access control systems", "Commercial CCTV", "IP cameras", "Perimeter security", "Security integration", "Advice"] as const;
 
@@ -25,6 +27,7 @@ const issueOptions = [
 ];
 
 const Hero = () => {
+  const aboutLabelIndex = getVariantIndex(`about:home:${verticalConfig.verticalId}`, HERO_ABOUT_LABELS.length);
   const { toast } = useToast();
   const [utmSource, setUtmSource] = useState<string | undefined>(undefined);
   const [step, setStep] = useState(1);
@@ -142,7 +145,7 @@ const Hero = () => {
             </p>
             <p className="mb-8 text-xs text-primary-foreground/60">
               <Link href="/about" className="underline-offset-2 hover:underline">
-                Part of Mainline Group
+                {HERO_ABOUT_LABELS[aboutLabelIndex]}
               </Link>
             </p>
 

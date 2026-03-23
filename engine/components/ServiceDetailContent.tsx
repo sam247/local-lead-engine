@@ -112,6 +112,8 @@ function getServiceFamily(service: Service): "drains" | "surveys" | "access" | "
   return "generic";
 }
 
+const SERVICE_DETAIL_ABOUT_LABELS = ["Learn more about our team", "About our approach"] as const;
+
 function buildFaqItems(service: Service, verticalId: string, variantIndex: number): FAQItem[] {
   const title = service.titleSingular ?? service.title;
   const processHint = service.process[0]?.toLowerCase() ?? "an initial assessment";
@@ -303,6 +305,7 @@ export function ServiceDetailContent({
   const ctaVariant = getVariantIndex(`cta:${verticalConfig.verticalId}:${service.slug}`, 2);
   const faqVariant = getVariantIndex(`${service.slug}:${verticalConfig.verticalId}-faq`, 3);
   const extraVariant = getVariantIndex(`${service.slug}:${verticalConfig.verticalId}-extra`, 3);
+  const aboutLinkVariant = getVariantIndex(`about:svc:${service.slug}`, SERVICE_DETAIL_ABOUT_LABELS.length);
   const processSteps = service.process.slice(0, 5);
   const generatedFaqs = buildFaqItems(service, verticalConfig.verticalId, faqVariant);
   const shouldAppendOneFaq = faqs.length >= 3;
@@ -390,6 +393,11 @@ export function ServiceDetailContent({
                 description={overviewDescriptions[overviewVariant]}
               />
               <p className="mb-8 text-muted-foreground">{service.description}</p>
+              <p className="mb-8 text-sm text-muted-foreground">
+                <Link href="/about" className="text-primary hover:underline">
+                  {SERVICE_DETAIL_ABOUT_LABELS[aboutLinkVariant]}
+                </Link>
+              </p>
               {overviewExtra && <div className="mb-8">{overviewExtra}</div>}
               {overviewImage && (
                 <figure className="mb-8 overflow-hidden rounded-lg border border-border shadow-sm">

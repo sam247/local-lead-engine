@@ -17,6 +17,8 @@ import { locations as allLocationsDataset } from "../data/locations";
 import { getCountyPeerLocationIds, getUkGroupingForLocationId } from "../data/uk-location-hierarchy";
 import type { Service, Location, CompanyInfo } from "../types";
 
+const LOCATION_ABOUT_LABELS = ["Learn more about our team", "About our approach"] as const;
+
 const INTRO_VARIANTS = [
   (serviceTitle: string, locationName: string) => [
     `${serviceTitle} focuses on assessing requirements and delivering the right scope for each property or site in ${locationName}.`,
@@ -407,6 +409,7 @@ export function LocationPage({
   const linksVariantIndex = getVariantIndex(`inline-links:${service.slug}:${location.id}`, 3);
   const faqVariantIndex = getVariantIndex(`${service.slug}:${location.id}-faq`, 3);
   const extraVariantIndex = getVariantIndex(`${service.slug}:${location.id}-extra`, 3);
+  const aboutLinkVariantIndex = getVariantIndex(`about:loc:${serviceSlug}:${locationSlug}`, LOCATION_ABOUT_LABELS.length);
 
   const introLines = INTRO_VARIANTS[introVariantIndex](displayTitle, location.name);
   const whenNeeded = WHEN_NEEDED_VARIANTS[whenNeededVariantIndex];
@@ -638,6 +641,11 @@ export function LocationPage({
                 </p>
               )}
               <p className="mb-8 text-muted-foreground">{service.description}</p>
+              <p className="mb-8 text-sm text-muted-foreground">
+                <Link href="/about" className="text-primary hover:underline">
+                  {LOCATION_ABOUT_LABELS[aboutLinkVariantIndex]}
+                </Link>
+              </p>
 
               {location.nearbyTowns && location.nearbyTowns.length > 0 && (
                 <div className="mb-8 rounded-lg bg-secondary p-4">

@@ -6,6 +6,18 @@ import { drainProblems } from "@/data/problems";
 export const dynamic = "force-static";
 export const revalidate = false;
 
+const standardGuidePaths = [
+  "/guides",
+  "/how-it-works",
+  "/process",
+  "/common-problems",
+  "/cost",
+  "/faq",
+  "/insurance",
+  "/legal",
+  "/homeowners",
+];
+
 const staticPaths = [
   "",
   "/about",
@@ -22,6 +34,7 @@ const staticPaths = [
   "/contractors",
   "/privacy",
   "/terms",
+  ...standardGuidePaths,
   ...drainProblems.map((p) => `/drain-problems/${p.slug}`),
 ];
 

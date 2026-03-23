@@ -1,5 +1,14 @@
 import { companyInfo } from "@/lib/data";
-import type { VerticalConfig } from "engine";
+import type { VerticalConfig, HomepageTrustPointsSix } from "engine";
+
+const homepageTrustPoints: HomepageTrustPointsSix = [
+  { icon: "Shield", title: "Fully insured engineers", description: "Qualified drainage teams with professional indemnity and public liability cover." },
+  { icon: "Clock", title: "24/7 emergency response", description: "Rapid call-out for urgent blockages, floods and collapse situations." },
+  { icon: "Users", title: "Clear communication", description: "Plain-English reporting from survey through to repair and reinstatement." },
+  { icon: "Wrench", title: "Full-service capability", description: "CCTV surveys, jetting, relining, excavation and commercial drainage." },
+  { icon: "BadgeCheck", title: "Quality-assured work", description: "Structured processes, documentation and sign-off on every job." },
+  { icon: "Headphones", title: "UK-wide coverage", description: "Local expertise across towns and cities with consistent standards." },
+];
 
 /** Partner site for cross-vertical linking (surveys). */
 export const partnerBaseUrl = "https://mainlinesurveys.co.uk";
@@ -57,4 +66,5 @@ export const verticalConfig: VerticalConfig = {
   ],
   locationContextTemplate:
     "We provide {serviceTitle} across {locationName} and the wider {area} region. Our engineers attend residential and commercial properties throughout the area, including in {nearbyTowns}, for CCTV surveys, drain repairs, relining and emergency call-outs. Contact us for a free no-obligation quote or to discuss your project in {locationName}.",
+  homepageTrustPoints,
 };

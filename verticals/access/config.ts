@@ -1,5 +1,14 @@
 import { companyInfo } from "@/lib/data";
-import type { VerticalConfig } from "engine";
+import type { VerticalConfig, HomepageTrustPointsSix } from "engine";
+
+const homepageTrustPoints: HomepageTrustPointsSix = [
+  { icon: "Shield", title: "Commercial-grade security", description: "Access, CCTV and perimeter systems designed for real-world sites." },
+  { icon: "Users", title: "Single point of contact", description: "Survey, design, install and handover managed by one accountable team." },
+  { icon: "BadgeCheck", title: "Proven integration", description: "Works with major brands, BMS and legacy building systems." },
+  { icon: "Clock", title: "Programme-led delivery", description: "Installations planned around access, compliance and your milestones." },
+  { icon: "Wrench", title: "Ongoing support", description: "Maintenance, documentation and updates when your needs change." },
+  { icon: "Headphones", title: "Sector experience", description: "Hospitals, data centres, warehouses and offices across the UK." },
+];
 
 /** Partner site for cross-vertical linking (surveys). */
 export const partnerBaseUrl = "https://mainlinesurveys.co.uk";
@@ -56,4 +65,5 @@ export const verticalConfig: VerticalConfig = {
       bestRating: 5,
     },
   },
+  homepageTrustPoints,
 };

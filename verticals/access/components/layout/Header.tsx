@@ -18,12 +18,17 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { trackEvent } from "engine";
+import { trackEvent, ResourcesMenu, getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "engine";
+import { verticalConfig } from "@/config";
 import { cn } from "@/lib/utils";
+
+const resourceLabels = getDefaultResourcesMenuLabels(verticalConfig.siteName);
+const mobileResourceLinks = getResourcesMenuFlatLinks(verticalConfig.siteName);
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [locationsOpen, setLocationsOpen] = useState(false);
+  const [industriesOpen, setIndustriesOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const pathname = usePathname();
 
@@ -149,6 +154,19 @@ const Header = () => {
             </NavigationMenuList>
           </NavigationMenu>
 
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="bg-transparent text-muted-foreground hover:text-primary">
+                  Resources
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ResourcesMenu labels={resourceLabels} />
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+
         </nav>
 
         {/* CTA Button */}
@@ -210,23 +228,46 @@ const Header = () => {
             <div>
               <button
                 className="flex min-h-[44px] w-full items-center justify-between text-sm font-medium text-foreground"
-                onClick={() => setResourcesOpen(!resourcesOpen)}
+                onClick={() => setIndustriesOpen(!industriesOpen)}
               >
                 Industries
-                <ChevronDown className={cn("h-4 w-4 transition-transform", resourcesOpen && "rotate-180")} />
+                <ChevronDown className={cn("h-4 w-4 transition-transform", industriesOpen && "rotate-180")} />
               </button>
-              {resourcesOpen && (
+              {industriesOpen && (
                 <div className="ml-4 border-l border-border pl-4">
                   <Link href="/industries" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>All Industries</Link>
                   <Link href="/industries/hospital-security-systems" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Hospital Security</Link>
                   <Link href="/industries/data-centre-security" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Data Centre Security</Link>
-                  <Link href="/access-problems/access-control-system-cost" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Guides &amp; Costs</Link>
-                  <Link href="/services" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>All Services</Link>
+                  <Link href="/industries/warehouse-security" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Warehouse Security</Link>
+                  <Link href="/industries/commercial-building-security" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Commercial Buildings</Link>
                 </div>
               )}
             </div>
 
-            
+            {/* Mobile Resources Accordion */}
+            <div>
+              <button
+                className="flex min-h-[44px] w-full items-center justify-between text-sm font-medium text-foreground"
+                onClick={() => setResourcesOpen(!resourcesOpen)}
+              >
+                Resources
+                <ChevronDown className={cn("h-4 w-4 transition-transform", resourcesOpen && "rotate-180")} />
+              </button>
+              {resourcesOpen && (
+                <div className="ml-4 border-l border-border pl-4">
+                  {mobileResourceLinks.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block py-2 text-sm text-muted-foreground"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <div className="mt-4 flex flex-col gap-3 border-t border-border pt-4">
               <a href="tel:02012345678" className="flex items-center gap-2 text-sm font-medium text-primary" onClick={() => trackEvent("call_button_click")}>

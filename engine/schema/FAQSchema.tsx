@@ -11,8 +11,8 @@ export interface FAQSchemaProps {
   children?: React.ReactNode;
 }
 
-export function FAQSchema({ items, title, subtitle, children }: FAQSchemaProps) {
-  const schema = {
+function buildFaqPageSchema(items: FAQItem[]) {
+  return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: items.map((item) => ({
@@ -24,6 +24,18 @@ export function FAQSchema({ items, title, subtitle, children }: FAQSchemaProps) 
       },
     })),
   };
+}
+
+/** JSON-LD only — pair with GuidePage or custom layout. */
+export function FAQSchemaJsonLd({ items }: { items: FAQItem[] }) {
+  const schema = buildFaqPageSchema(items);
+  return (
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+  );
+}
+
+export function FAQSchema({ items, title, subtitle, children }: FAQSchemaProps) {
+  const schema = buildFaqPageSchema(items);
 
   return (
     <>

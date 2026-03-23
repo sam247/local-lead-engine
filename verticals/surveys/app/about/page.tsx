@@ -5,7 +5,7 @@ import { services } from "@/lib/data";
 import { verticalConfig } from "@/config";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import { MainlineGroupLinks } from "engine";
+import { GroupFooter } from "engine";
 import { mainlineGroupLinksForSite } from "engine/data/mainline-group";
 import type { Metadata } from "next";
 
@@ -114,7 +114,7 @@ export default function AboutPage() {
             Mainline Surveys is one of four specialist divisions under Mainline Group. Other divisions cover drainage, commercial security and access control, and groundworks. You are on the{" "}
             <strong className="text-foreground">Mainline Surveys</strong> site; other divisions are linked below if your project needs combined expertise.
           </p>
-          <MainlineGroupLinks items={groupLinks} variant="inline" />
+          <GroupFooter items={groupLinks} variant="default" />
         </div>
       </section>
 

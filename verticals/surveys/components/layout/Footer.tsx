@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
 import { companyInfo, services, locations } from "@/lib/data";
 import { verticalConfig } from "@/config";
-import { FooterServiceAreaGroups, MainlineGroupLinks } from "engine";
+import { FooterServiceAreaGroups, GroupFooter } from "engine";
 import { mainlineGroupLinksForSite } from "engine/data/mainline-group";
 
 const Footer = () => {
@@ -128,7 +128,7 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="border-t border-primary-foreground/10">
         <div className="container border-b border-primary-foreground/10 py-6">
-          <MainlineGroupLinks items={groupLinks} variant="footerOnPrimary" />
+          <GroupFooter items={groupLinks} variant="onPrimary" />
         </div>
         <div className="container flex flex-col items-center justify-between gap-4 py-6 md:flex-row">
           <p className="text-sm text-primary-foreground/60">

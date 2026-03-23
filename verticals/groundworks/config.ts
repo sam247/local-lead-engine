@@ -1,5 +1,14 @@
 import { companyInfo } from "@/lib/data";
-import type { VerticalConfig } from "engine";
+import type { VerticalConfig, HomepageTrustPointsSix } from "engine";
+
+const homepageTrustPoints: HomepageTrustPointsSix = [
+  { icon: "Shield", title: "Accredited contractors", description: "Fully insured groundworks teams with documented health and safety." },
+  { icon: "Users", title: "Programme coordination", description: "Single accountability from enabling works through to handover." },
+  { icon: "BadgeCheck", title: "Quality formation", description: "Piling, excavation and foundations delivered to specification." },
+  { icon: "Clock", title: "Site-led sequencing", description: "Works planned around access, weather and main contractor milestones." },
+  { icon: "Wrench", title: "Full groundworks scope", description: "Clearance, excavation, piling, drainage tie-ins and reinstatement." },
+  { icon: "Headphones", title: "Commercial focus", description: "Housing, industrial, education and infrastructure projects UK-wide." },
+];
 
 /** Partner site for cross-vertical linking (surveys – topographical/measured before construction). */
 export const partnerBaseUrl = "https://mainlinesurveys.co.uk";
@@ -58,4 +67,5 @@ export const verticalConfig: VerticalConfig = {
       bestRating: 5,
     },
   },
+  homepageTrustPoints,
 };

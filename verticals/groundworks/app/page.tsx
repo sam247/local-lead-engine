@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
-import TrustBadgeStrip from "@/components/sections/TrustBadgeStrip";
-import Stats from "@/components/sections/Stats";
 import ServicesGrid from "@/components/sections/ServicesGrid";
-import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import ProjectsPreview from "@/components/sections/ProjectsPreview";
 import Testimonials from "@/components/sections/Testimonials";
-import FAQ from "@/components/sections/FAQ";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { TrustPoints, HomepageArticles, pickHomepageArticleCards } from "engine";
 import { verticalConfig } from "@/config";
+import { blogPosts, getCategoryPages, getHubData } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Mainline Groundworks | Piling, Excavation & Foundation Contractors UK",
@@ -20,32 +16,29 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+  const hub = getHubData("guides");
+  const guidePages = getCategoryPages("guides");
+  const fallbacks = hub
+    ? guidePages.slice(0, 8).map((p) => ({
+        title: p.title,
+        intro: p.intro,
+        href: `${hub.basePath}/${p.slug}`,
+      }))
+    : [];
+  const articleCards = pickHomepageArticleCards(
+    blogPosts.map((p) => ({ id: p.id, title: p.title, excerpt: p.excerpt })),
+    fallbacks
+  );
+
   return (
     <>
       <SchemaMarkup type="LocalBusiness" data={{ areaServed: "UK" }} />
       <Hero />
-      <TrustBadgeStrip />
-      <Stats />
       <ServicesGrid />
-
-      <section className="section-padding bg-background">
-        <div className="container max-w-3xl text-center">
-          <h2 className="mb-3 font-display text-3xl font-bold text-foreground md:text-4xl">
-            Need Early Groundworks Advice?
-          </h2>
-          <p className="mb-6 text-muted-foreground">
-            Share your scope and site constraints for practical advice on sequencing, enabling works and programme risks before full pricing.
-          </p>
-          <Button size="lg" asChild>
-            <Link href="/contact">Get a Quote</Link>
-          </Button>
-        </div>
-      </section>
-
-      <WhyChooseUs />
+      <TrustPoints items={verticalConfig.homepageTrustPoints} />
       <ProjectsPreview />
+      <HomepageArticles cards={articleCards} />
       <Testimonials />
-      <FAQ />
       <CTABanner />
     </>
   );

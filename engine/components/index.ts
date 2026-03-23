@@ -17,6 +17,18 @@ export { MidContentCTA, type MidContentCTAProps } from "./MidContentCTA";
 export { ContentRelatedLinks, type ContentRelatedLinksProps } from "./ContentRelatedLinks";
 export { CTABanner, type CTABannerProps } from "./CTABanner";
 export { MainlineGroupLinks, type MainlineGroupLinksProps } from "./MainlineGroupLinks";
+export { GroupFooter, type GroupFooterProps } from "./footer/GroupFooter";
+export {
+  ResourcesMenu,
+  getDefaultResourcesMenuLabels,
+  getResourcesMenuFlatLinks,
+  type ResourcesMenuProps,
+  type ResourcesMenuLabels,
+} from "./navigation/ResourcesMenu";
+export { TrustPoints, type TrustPointsProps } from "./home/TrustPoints";
+export { HomepageArticles, type HomepageArticlesProps, type HomepageArticleCard } from "./home/HomepageArticles";
+export { GuidePage, type GuidePageProps, type GuidePageSection } from "./content/GuidePage";
+export { GuidesHubPage, type GuidesHubPageProps, type GuidesHubCard } from "./content/GuidesHubPage";
 export { FooterServiceAreaGroups, type FooterServiceAreaGroupsProps } from "./FooterServiceAreaGroups";
 export { ServiceAreasHub, type ServiceAreasHubProps } from "./ServiceAreasHub";
 export { ProblemCTA, type ProblemCTAProps } from "./ProblemCTA";

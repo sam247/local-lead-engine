@@ -64,6 +64,23 @@ export interface InfoPageData {
   serviceLocationLink?: { href: string; linkText: string };
 }
 
+/** Single homepage trust row; icon is a Lucide icon name supported by TrustPoints (e.g. Shield, Users). */
+export interface HomepageTrustPoint {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+/** Exactly six trust points for the homepage TrustPoints block. */
+export type HomepageTrustPointsSix = readonly [
+  HomepageTrustPoint,
+  HomepageTrustPoint,
+  HomepageTrustPoint,
+  HomepageTrustPoint,
+  HomepageTrustPoint,
+  HomepageTrustPoint,
+];
+
 export interface VerticalConfig {
   /** Identifier for analytics, reporting, and cross-vertical linking (e.g. "drains", "surveys", "access"). */
   verticalId: string;
@@ -101,6 +118,8 @@ export interface VerticalConfig {
   crossVerticalLinks?: { label: string; url: string }[];
   /** Optional suffix for generated image alt when no location (e.g. "drainage service", "drainage inspection"). */
   imageAltNoLocationSuffix?: string;
+  /** Exactly six items for the shared homepage TrustPoints section. */
+  homepageTrustPoints: HomepageTrustPointsSix;
 }
 
 export interface ProblemData {

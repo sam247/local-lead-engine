@@ -15,8 +15,12 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { trackEvent } from "engine";
+import { trackEvent, ResourcesMenu, getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "engine";
+import { verticalConfig } from "@/config";
 import { cn } from "@/lib/utils";
+
+const resourceLabels = getDefaultResourcesMenuLabels(verticalConfig.siteName);
+const mobileResourceLinks = getResourcesMenuFlatLinks(verticalConfig.siteName);
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -127,63 +131,7 @@ const Header = () => {
                   Resources
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="w-[400px] p-4">
-                    <div className="mb-3">
-                      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Guides</p>
-                      <ul className="space-y-1">
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/drainage-guides" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Drainage Guides</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/drainage-faq" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Drainage FAQ</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/drain-survey-cost" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Cost Calculator</Link>
-                          </NavigationMenuLink>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="mb-3 border-t border-border pt-3">
-                      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Services</p>
-                      <ul className="space-y-1">
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/services" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">All Services</Link>
-                          </NavigationMenuLink>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="border-t border-border pt-3">
-                      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Information</p>
-                      <ul className="grid grid-cols-2 gap-1">
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/drain-costs" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Costs</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/drain-insurance" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Insurance</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/drain-responsibility" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Legal</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/homebuyer-drainage" className="block rounded-md p-2 text-sm font-medium transition-colors hover:bg-accent">Homebuyers</Link>
-                          </NavigationMenuLink>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                  <ResourcesMenu labels={resourceLabels} />
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -256,10 +204,16 @@ const Header = () => {
               </button>
               {resourcesOpen && (
                 <div className="ml-4 border-l border-border pl-4">
-                  <Link href="/drainage-guides" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Drainage Guides</Link>
-                  <Link href="/drainage-faq" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Drainage FAQ</Link>
-                  <Link href="/drain-survey-cost" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>Cost Calculator</Link>
-                  <Link href="/services" className="block py-2 text-sm text-muted-foreground" onClick={() => setMobileMenuOpen(false)}>All Services</Link>
+                  {mobileResourceLinks.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block py-2 text-sm text-muted-foreground"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
