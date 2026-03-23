@@ -10,3 +10,4 @@ export {
   GuideInternalLinksBlock,
   type GuideInternalLinksModel,
 } from "./guideInternalLinks";
+export { pickServiceDetailFeaturedLocations } from "./pickFeaturedLocations";

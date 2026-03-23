@@ -6,7 +6,6 @@ import { ServiceDetailContent as EngineServiceDetailContent } from "engine";
 const serviceSymptomLinks: Record<string, { slug: string; path: string; title: string }[]> = {
   "access-control-systems": [
     { slug: "access-control-system-cost", path: "/access-problems/access-control-system-cost", title: "Access control system cost" },
-    { slug: "hospital-security-system-requirements", path: "/access-problems/hospital-security-system-requirements", title: "Hospital security requirements" },
   ],
   "commercial-cctv-installation": [
     { slug: "commercial-cctv-installation-cost", path: "/access-problems/commercial-cctv-installation-cost", title: "Commercial CCTV installation cost" },
@@ -15,13 +14,6 @@ const serviceSymptomLinks: Record<string, { slug: string; path: string; title: s
   "ip-camera-systems": [
     { slug: "commercial-cctv-installation-cost", path: "/access-problems/commercial-cctv-installation-cost", title: "CCTV and IP camera costs" },
     { slug: "how-many-cameras-for-commercial-building", path: "/access-problems/how-many-cameras-for-commercial-building", title: "How many cameras do I need?" },
-  ],
-  "perimeter-security-systems": [
-    { slug: "data-centre-perimeter-security", path: "/access-problems/data-centre-perimeter-security", title: "Data centre perimeter security" },
-  ],
-  "security-system-integration": [
-    { slug: "hospital-security-system-requirements", path: "/access-problems/hospital-security-system-requirements", title: "Integrated security for healthcare" },
-    { slug: "data-centre-perimeter-security", path: "/access-problems/data-centre-perimeter-security", title: "Integrated security for data centres" },
   ],
 };
 

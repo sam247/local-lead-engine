@@ -28,7 +28,13 @@ export { MainlineGroupLinks, type MainlineGroupLinksProps } from "./components/M
 export { GroupFooter, type GroupFooterProps } from "./components/footer/GroupFooter";
 export { TrustPoints, type TrustPointsProps } from "./components/home/TrustPoints";
 export { HomepageArticles, type HomepageArticlesProps, type HomepageArticleCard } from "./components/home/HomepageArticles";
-export { GuidePage, type GuidePageProps, type GuidePageSection } from "./components/content/GuidePage";
+export {
+  GuidePage,
+  type GuidePageProps,
+  type GuidePageParagraph,
+  type GuidePagePrimaryCta,
+  type GuidePageSection,
+} from "./components/content/GuidePage";
 export { GuidesHubPage, type GuidesHubPageProps, type GuidesHubCard } from "./components/content/GuidesHubPage";
 export { FooterServiceAreaGroups, type FooterServiceAreaGroupsProps } from "./components/FooterServiceAreaGroups";
 export { ServiceAreasHub, type ServiceAreasHubProps } from "./components/ServiceAreasHub";

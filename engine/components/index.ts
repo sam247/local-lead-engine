@@ -19,7 +19,13 @@ export { MainlineGroupLinks, type MainlineGroupLinksProps } from "./MainlineGrou
 export { GroupFooter, type GroupFooterProps } from "./footer/GroupFooter";
 export { TrustPoints, type TrustPointsProps } from "./home/TrustPoints";
 export { HomepageArticles, type HomepageArticlesProps, type HomepageArticleCard } from "./home/HomepageArticles";
-export { GuidePage, type GuidePageProps, type GuidePageSection } from "./content/GuidePage";
+export {
+  GuidePage,
+  type GuidePageProps,
+  type GuidePageParagraph,
+  type GuidePagePrimaryCta,
+  type GuidePageSection,
+} from "./content/GuidePage";
 export { GuidesHubPage, type GuidesHubPageProps, type GuidesHubCard } from "./content/GuidesHubPage";
 export { FooterServiceAreaGroups, type FooterServiceAreaGroupsProps } from "./FooterServiceAreaGroups";
 export { ServiceAreasHub, type ServiceAreasHubProps } from "./ServiceAreasHub";

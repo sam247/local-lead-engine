@@ -28,32 +28,6 @@ export const accessProblems: ProblemData[] = [
       "For a commercial CCTV quote, request a security consultation. We survey your site and recommend camera positions and equipment.",
   },
   {
-    slug: "hospital-security-system-requirements",
-    title: "Hospital security system requirements",
-    causes:
-      "Hospitals need access control and CCTV that support NHS and healthcare compliance, audit trails, restricted zones (e.g. pharmacy, IT), and integration with alarm and building systems. Staff and visitor flow must be managed without hindering clinical operations.",
-    howFixed:
-      "We design and install access control and CCTV for healthcare environments, with attention to compliance, zoning and audit requirements. Systems can integrate with existing security and BMS. We work with facilities and security teams to align with policy.",
-    whenToCall:
-      "Call a professional when planning a new build, refurbishment or security upgrade. Early involvement helps ensure the system meets operational and compliance requirements.",
-    relatedServiceSlugs: ["access-control-systems", "commercial-cctv-installation", "security-system-integration"],
-    ctaMessage:
-      "For hospital and healthcare security systems, request a security consultation. We can survey your site and outline a compliant, practical solution.",
-  },
-  {
-    slug: "data-centre-perimeter-security",
-    title: "Data centre perimeter security",
-    causes:
-      "Data centres require perimeter intrusion detection, access control and CCTV that meet contractual and compliance requirements. Layered security typically includes fence or boundary detection, controlled entry (e.g. mantrap), badging and full surveillance with recording and audit.",
-    howFixed:
-      "We design and install perimeter security, access control and CCTV for data centres. Solutions include detection systems, access control with mantrap options, and IP camera systems with integration to BMS or monitoring. We work with facilities teams to minimise disruption.",
-    whenToCall:
-      "Call a professional when specifying or upgrading data centre security. Early design input ensures the solution meets compliance and operational needs.",
-    relatedServiceSlugs: ["perimeter-security-systems", "access-control-systems", "ip-camera-systems", "security-system-integration"],
-    ctaMessage:
-      "For data centre perimeter and access security, request a security consultation. We survey your site and propose a layered solution.",
-  },
-  {
     slug: "how-many-cameras-for-commercial-building",
     title: "How many cameras for commercial building",
     causes:
