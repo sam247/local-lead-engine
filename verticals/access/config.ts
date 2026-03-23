@@ -28,6 +28,7 @@ const serviceTypesBySlug: Record<string, string[]> = {
 export const verticalConfig: VerticalConfig = {
   verticalId: "access",
   siteName: "Mainline Access",
+  imageAltNoLocationSuffix: "security service",
   baseUrl: "https://mainlineaccess.co.uk",
   primaryService: "Access Control Systems",
   industry: "Commercial access control and security systems",

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Phone, Search } from "lucide-react";
+import { Phone, ClipboardCheck } from "lucide-react";
 import { companyInfo } from "@/lib/data";
 
 const InspectionCTA = () => {
@@ -8,16 +8,16 @@ const InspectionCTA = () => {
     <div className="rounded-lg border border-primary/20 bg-primary/5 p-6 md:p-8">
       <div className="flex items-start gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary">
-          <Search className="h-6 w-6 text-primary-foreground" />
+          <ClipboardCheck className="h-6 w-6 text-primary-foreground" />
         </div>
         <div className="flex-1">
-          <h3 className="mb-2 font-display text-xl font-bold">Need a Professional Drain Inspection?</h3>
+          <h3 className="mb-2 font-display text-xl font-bold">Need a Professional Site Assessment?</h3>
           <p className="mb-4 text-muted-foreground">
-            If you're experiencing persistent drainage issues, don't wait for the problem to worsen. Our engineers use CCTV technology to diagnose problems accurately — often within the same visit. Call us for emergency response or book a scheduled inspection.
+            Planning a construction project or concerned about ground conditions? Our experienced engineers carry out thorough site assessments to evaluate soil stability, foundation requirements, and access logistics — so your project starts on solid ground.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button variant="highlight" size="lg" asChild>
-              <Link href="/contact">Book an Inspection</Link>
+              <Link href="/contact">Book a Site Assessment</Link>
             </Button>
             <a
               href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Phone, Camera } from "lucide-react";
+import { Phone, HardHat } from "lucide-react";
 import { companyInfo } from "@/lib/data";
 
 interface MidContentCTAProps {
@@ -10,15 +10,15 @@ interface MidContentCTAProps {
 }
 
 const MidContentCTA = ({
-  message = "Think your drain may be damaged? A CCTV inspection will give you a definitive answer.",
-  buttonText = "Book a CCTV Inspection",
+  message = "Need expert groundworks for your next project? Get a detailed quote from our experienced team.",
+  buttonText = "Get a Groundworks Quote",
   buttonLink = "/contact",
 }: MidContentCTAProps) => {
   return (
     <div className="my-8 rounded-lg border-2 border-primary/20 bg-primary/5 p-6">
       <div className="flex items-start gap-4">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-          <Camera className="h-5 w-5 text-primary" />
+          <HardHat className="h-5 w-5 text-primary" />
         </div>
         <div className="flex-1">
           <p className="mb-4 font-medium">{message}</p>

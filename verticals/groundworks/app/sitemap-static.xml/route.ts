@@ -21,6 +21,7 @@ const staticPaths = [
   "",
   "/about",
   "/service-areas",
+  "/groundworks-contractors-near-me",
   "/services",
   "/contact",
   "/projects",

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { services, locations, companyInfo } from "@/lib/data";
-import { serviceImages } from "@/lib/images";
+import { getHeroImage } from "@/lib/images";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Phone, Mail, ArrowRight } from "lucide-react";
 import InspectionCTA from "@/components/sections/InspectionCTA";
@@ -29,12 +29,16 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
       answer: `Yes, we provide comprehensive ${service.title.toLowerCase()} services throughout ${location.name} and surrounding areas in ${location.area}.`,
     },
     {
-      question: `How quickly can you respond to a drainage emergency in ${location.name}?`,
-      answer: `Our emergency team typically arrives in ${location.name} within 1-2 hours, operating 24/7 including weekends and bank holidays.`,
+      question: `What groundworks do I need for a new build in ${location.name}?`,
+      answer: `The groundworks required depend on your site conditions and project scope. Typical new-build groundworks in ${location.name} include site clearance, excavation, foundations, and drainage installation. We carry out a full site assessment to recommend the right approach.`,
+    },
+    {
+      question: `How long do foundations take to complete in ${location.name}?`,
+      answer: `Foundation timescales vary by type and ground conditions. Strip foundations typically take 1–2 weeks, while piled foundations may take 2–4 weeks. We provide a detailed programme once we've assessed your ${location.name} site.`,
     },
     {
       question: `Do you offer free quotes in ${location.name}?`,
-      answer: `Absolutely. We provide free, no-obligation CCTV surveys and quotes for all ${location.name} drainage projects.`,
+      answer: `Yes, we provide free, no-obligation site assessments and quotes for all groundworks projects in ${location.name} and the wider ${location.area} area.`,
     },
   ];
 
@@ -69,8 +73,8 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
       <section className="relative bg-primary py-16 md:py-24">
         <div className="absolute inset-0">
           <img
-            src={serviceImages[service.slug] ?? "/images/services/drain-collapse-repair.jpg"}
-            alt={`${service.title} engineer working in ${location.name}, ${location.area}`}
+            src={getHeroImage({ serviceSlug: service.slug })}
+            alt={`${service.title} team working in ${location.name}, ${location.area}`}
             className="h-full w-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-primary/60" />
@@ -81,7 +85,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
               {service.title} in {location.name}
             </h1>
             <p className="text-lg text-primary-foreground/80">
-              Trusted {service.title.toLowerCase()} experts serving {location.name} and {location.area}.
+              Trusted {service.title.toLowerCase()} serving {location.name} and {location.area}.
             </p>
             <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button size="lg" variant="highlight" asChild>
@@ -100,10 +104,10 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <h2 className="mb-4 font-display text-2xl font-bold">
-                {service.title} Services in {location.name}
+                {service.title} in {location.name}
               </h2>
               <p className="mb-6 text-muted-foreground">
-                {companyInfo.name} provides expert {service.title.toLowerCase()} services in {location.name}, {location.area}. Our experienced groundworks teams deliver reliable project support tailored to your site and programme.
+                {companyInfo.name} provides expert {service.title.toLowerCase()} in {location.name}, {location.area}. Our experienced groundworks teams deliver reliable project support tailored to your site and programme.
               </p>
               <p className="mb-8 text-muted-foreground">{service.description}</p>
 
@@ -118,7 +122,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
 
               {locationWithExtras.propertyTypes && (
                 <div className="mb-8">
-                  <h3 className="mb-2 font-display text-lg font-bold">Common Property Types in {location.name}</h3>
+                  <h3 className="mb-2 font-display text-lg font-bold">Common Project Types in {location.name}</h3>
                   <p className="text-sm text-muted-foreground">{locationWithExtras.propertyTypes}</p>
                 </div>
               )}
@@ -126,16 +130,16 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
               <h3 className="mb-4 font-display text-xl font-bold">Why Choose Us for {service.title} in {location.name}?</h3>
               <ul className="mb-8 space-y-2">
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Local drainage expertise in {location.area}
+                  <CheckCircle className="h-5 w-5 text-primary" /> Local groundworks expertise across {location.area}
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> 24/7 emergency response across London
+                  <CheckCircle className="h-5 w-5 text-primary" /> Fully insured with structural warranties
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Fully insured with insurance-backed guarantees
+                  <CheckCircle className="h-5 w-5 text-primary" /> Health & safety compliant on every site
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Free CCTV surveys and no-obligation quotes
+                  <CheckCircle className="h-5 w-5 text-primary" /> Free site assessments and no-obligation quotes
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-5 w-5 text-primary" /> Transparent, competitive pricing

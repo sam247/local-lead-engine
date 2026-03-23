@@ -1,22 +1,30 @@
 import Link from "next/link";
 import { getCategoryPages, getHubData, hubPages, services, categoryImages, categoryAltText } from "@/lib/data";
-import { serviceImages } from "@/lib/images";
+import { getHeroImage } from "@/lib/images";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTABanner from "@/components/sections/CTABanner";
 
 function categorisePages(category: string) {
-  const symptomCategories = ["problems"];
-  const repairCategories = ["repair-methods"];
-  const inspectionCategories = ["inspection", "survey"];
-  const costCategories = ["costs"];
+  const guidesCategories = ["guides"];
+  const foundationCategories = ["foundation-problems"];
+  const groundCategories = ["ground-conditions"];
+  const costCategories = ["groundworks-costs"];
+  const siteCategories = ["site-preparation"];
+  const drivewayCategories = ["driveway-groundworks"];
+  const drainageCategories = ["construction-drainage"];
+
   const allCategories = [
-    { label: "Symptom Guides", cats: symptomCategories },
-    { label: "Repair Methods", cats: repairCategories },
-    { label: "Inspection Guides", cats: inspectionCategories },
+    { label: "General Guides", cats: guidesCategories },
+    { label: "Foundation Problems", cats: foundationCategories },
+    { label: "Ground Conditions", cats: groundCategories },
     { label: "Cost Guides", cats: costCategories },
+    { label: "Site Preparation", cats: siteCategories },
+    { label: "Driveway Groundworks", cats: drivewayCategories },
+    { label: "Construction Drainage", cats: drainageCategories },
   ];
+
   return allCategories
     .filter((section) => !section.cats.includes(category))
     .map((section) => ({
@@ -39,10 +47,10 @@ export default function HubPageContent({ category }: HubPageContentProps) {
   if (!hub || pages.length === 0) return null;
 
   const keyServices = services.filter((s) =>
-    ["drain-collapse-repair", "cctv-drain-surveys", "drain-excavation"].includes(s.slug)
-  );
-  const heroImage = serviceImages[categoryImages[category] || "cctv-drain-surveys"];
-  const heroAlt = categoryAltText[category] || `${hub.title} - drainage services`;
+    ["groundworks-contractors", "foundation-contractors", "piling-contractors"].includes(s.slug)
+  ).slice(0, 3);
+  const heroImage = getHeroImage({ category, categoryImagesMap: categoryImages });
+  const heroAlt = categoryAltText[category] || `${hub.title} - groundworks services`;
   const crossSections = categorisePages(category);
 
   return (

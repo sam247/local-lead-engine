@@ -1,10 +1,10 @@
-import { ShieldCheck, Camera, Clock, Building2 } from "lucide-react";
+import { ShieldCheck, Camera, Clock, Globe } from "lucide-react";
 
 const badges = [
-  { icon: ShieldCheck, label: "Fully Insured Drain Engineers" },
-  { icon: Camera, label: "CCTV Inspection Specialists" },
-  { icon: Clock, label: "24/7 Emergency Response" },
-  { icon: Building2, label: "Residential & Commercial" },
+  { icon: ShieldCheck, label: "NSI Approved Installer" },
+  { icon: Clock, label: "24/7 Monitoring Support" },
+  { icon: Camera, label: "BS EN Compliant Systems" },
+  { icon: Globe, label: "Nationwide Coverage" },
 ];
 
 const TrustBadgeStrip = () => {

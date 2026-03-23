@@ -7,15 +7,19 @@ import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTABanner from "@/components/sections/CTABanner";
 
 function categorisePages(category: string) {
-  const symptomCategories = ["problems"];
-  const repairCategories = ["repair-methods"];
-  const inspectionCategories = ["inspection", "survey"];
-  const costCategories = ["costs"];
+  const cctvProblemCategories = ["cctv-problems"];
+  const cctvGuideCategories = ["cctv-guides"];
+  const accessControlCategories = ["access-control-guides"];
+  const perimeterCategories = ["perimeter-security-guides"];
+  const dataCablingCategories = ["data-cabling-guides"];
+  const upgradeCategories = ["security-upgrades"];
   const allCategories = [
-    { label: "Symptom Guides", cats: symptomCategories },
-    { label: "Repair Methods", cats: repairCategories },
-    { label: "Inspection Guides", cats: inspectionCategories },
-    { label: "Cost Guides", cats: costCategories },
+    { label: "CCTV Troubleshooting", cats: cctvProblemCategories },
+    { label: "CCTV Guides", cats: cctvGuideCategories },
+    { label: "Access Control Guides", cats: accessControlCategories },
+    { label: "Perimeter Security", cats: perimeterCategories },
+    { label: "Data Cabling", cats: dataCablingCategories },
+    { label: "Security Upgrades", cats: upgradeCategories },
   ];
   return allCategories
     .filter((section) => !section.cats.includes(category))
@@ -39,7 +43,7 @@ export default function HubPageContent({ category }: HubPageContentProps) {
   if (!hub || pages.length === 0) return null;
 
   const keyServices = services.filter((s) =>
-    ["access-control-systems", "commercial-cctv-installation", "ip-camera-systems"].includes(s.slug)
+    ["access-control-systems", "commercial-cctv-installation", "ip-camera-systems", "perimeter-security-systems", "security-system-integration"].includes(s.slug)
   );
   const heroImage = serviceImages[categoryImages[category] || "access-control-systems"];
   const heroAlt = categoryAltText[category] || `${hub.title} - access and security services`;
@@ -96,8 +100,8 @@ export default function HubPageContent({ category }: HubPageContentProps) {
       ))}
       <section className="bg-secondary py-12">
         <div className="container">
-          <h2 className="mb-8 text-center font-display text-2xl font-bold">Related Services</h2>
-          <div className="grid gap-6 md:grid-cols-3">
+          <h2 className="mb-8 text-center font-display text-2xl font-bold">Our Security Services</h2>
+          <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-5">
             {keyServices.map((service) => (
               <Link key={service.id} href={`/services/${service.slug}`} className="group rounded-lg border border-border bg-background p-6 transition-all hover:shadow-lg">
                 <h3 className="mb-2 font-display text-lg font-semibold group-hover:text-primary">{service.title}</h3>

@@ -153,12 +153,12 @@ const Hero = () => {
               <Button variant="highlight" size="lg" asChild>
                 <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="gap-2" onClick={() => trackEvent("call_button_click")}>
                   <Phone className="h-5 w-5" />
-                  Request Security Consultation
+                  Call Now
                 </a>
               </Button>
               <Button variant="outline" size="lg" asChild className="border-primary-foreground/30 text-primary hover:bg-primary-foreground/10">
                 <Link href="/contact">
-                  {verticalConfig.heroSecondaryCtaText ?? "Get Security System Quote"}
+                  {verticalConfig.heroSecondaryCtaText ?? "Request Inspection"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>

@@ -23,8 +23,8 @@ export default function ServiceAreasPage() {
       heroSubtitle="Access control, CCTV and integrated security systems in towns and cities nationwide."
       introTitle="Coverage by region"
       introBody="See where we deliver access and security work, grouped by region. Each area page explains local coverage and how to scope your installation."
-      browseMoreHref="/services"
-      browseMoreLabel="Browse all security services"
+      browseMoreHref="/access-control-systems-near-me"
+      browseMoreLabel="Find access control near you"
     />
   );
 }

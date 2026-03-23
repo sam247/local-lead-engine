@@ -21,6 +21,7 @@ const staticPaths = [
   "",
   "/about",
   "/service-areas",
+  "/access-control-systems-near-me",
   "/services",
   "/contact",
   "/projects",

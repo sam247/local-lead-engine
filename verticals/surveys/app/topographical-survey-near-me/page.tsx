@@ -8,15 +8,15 @@ import type { Metadata } from "next";
 export const dynamic = "force-static";
 export const revalidate = false;
 
-const serviceSlug = "cctv-drain-surveys";
-const pagePath = "/drain-survey-near-me";
+const serviceSlug = "topographical-survey";
+const pagePath = "/topographical-survey-near-me";
 
 export async function generateMetadata(): Promise<Metadata> {
   const service = services.find((s) => s.slug === serviceSlug);
   if (!service) return { title: "Not Found" };
   return {
     title: `${service.title} Near Me | ${verticalConfig.siteName}`,
-    description: `Find ${service.title.toLowerCase()} services near you. ${verticalConfig.siteName} covers London and surrounding areas.`,
+    description: `Find ${service.title.toLowerCase()} near you. ${verticalConfig.siteName} delivers land, utility, measured building and drone surveys across the UK. Free quotes.`,
     alternates: { canonical: `${verticalConfig.baseUrl}${pagePath}` },
   };
 }
@@ -35,6 +35,17 @@ export default function NearMeRoute() {
       otherServices={otherServices}
       baseUrl={verticalConfig.baseUrl}
       pagePath={pagePath}
+      introParagraph={verticalConfig.relatedLocationsIntro}
+      sectionTitle={`${service.title} by Location`}
+      trustBlockTitle={`Why choose ${verticalConfig.siteName}`}
+      trustBlockPoints={[
+        "Planning-ready survey data for design and approval",
+        "Land, utility, measured building and drone capture under one roof",
+        "Clear programmes from brief through capture to delivery",
+      ]}
+      conversionHeading="Need survey data for your site?"
+      secondaryCtaLabel={verticalConfig.heroSecondaryCtaText}
+      secondaryCtaPath="/contact"
     />
   );
 }

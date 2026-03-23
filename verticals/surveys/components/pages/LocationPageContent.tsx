@@ -25,16 +25,24 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
 
   const localFaqs = [
     {
-      question: `Do you provide ${service.title.toLowerCase()} in ${location.name}?`,
-      answer: `Yes, we provide comprehensive ${service.title.toLowerCase()} services throughout ${location.name} and surrounding areas in ${location.area}.`,
+      question: `Do you provide ${service.title.toLowerCase()} services in ${location.name}?`,
+      answer: `Yes. We connect you with qualified survey partners who carry out ${service.title.toLowerCase()} throughout ${location.name} and surrounding areas in ${location.area}.`,
     },
     {
-      question: `How quickly can you respond to a drainage emergency in ${location.name}?`,
-      answer: `Our emergency team typically arrives in ${location.name} within 1-2 hours, operating 24/7 including weekends and bank holidays.`,
+      question: `Do I need a survey for planning permission in ${location.name}?`,
+      answer: `In most cases, yes. Local planning authorities in ${location.area} typically require a topographical survey and sometimes a measured building survey as part of a planning application.`,
     },
     {
-      question: `Do you offer free quotes in ${location.name}?`,
-      answer: `Absolutely. We provide free, no-obligation CCTV surveys and quotes for all ${location.name} drainage projects.`,
+      question: `What does a topographical survey include in ${location.name}?`,
+      answer: `A topographical survey captures ground levels, boundaries, buildings, trees, access routes and underground services across your site. The output is a scaled CAD drawing used by architects and engineers.`,
+    },
+    {
+      question: `How long does a survey take to complete in ${location.name}?`,
+      answer: `Most residential surveys in ${location.name} are completed in one to two days on site, with final drawings issued within five to ten working days depending on complexity.`,
+    },
+    {
+      question: `Do you offer free quotes for surveys in ${location.name}?`,
+      answer: `Absolutely. We provide free, no-obligation quotes for all survey types in ${location.name}. Contact us with your project details and we will recommend the right survey scope.`,
     },
   ];
 
@@ -126,19 +134,19 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
               <h3 className="mb-4 font-display text-xl font-bold">Why Choose Us for {service.title} in {location.name}?</h3>
               <ul className="mb-8 space-y-2">
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Local drainage expertise in {location.area}
+                  <CheckCircle className="h-5 w-5 text-primary" /> RICS-linked survey partners across {location.area}
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> 24/7 emergency response across London
+                  <CheckCircle className="h-5 w-5 text-primary" /> Topographical, measured building, utility and drone surveys
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Fully insured with insurance-backed guarantees
+                  <CheckCircle className="h-5 w-5 text-primary" /> Fully insured with professional indemnity cover
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Free CCTV surveys and no-obligation quotes
+                  <CheckCircle className="h-5 w-5 text-primary" /> Fixed-price quotes with no hidden fees
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Transparent, competitive pricing
+                  <CheckCircle className="h-5 w-5 text-primary" /> CAD, BIM and 3D deliverables to industry standards
                 </li>
               </ul>
 

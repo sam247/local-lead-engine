@@ -64,6 +64,15 @@ The engine is **agnostic** to vertical-specific URLs, topic sets, or content. Ve
 
 L1–L4 exist in all verticals. L5 (topic × location) exists only in the Access vertical, using a fixed set of 10 topic slugs and the shared location dataset.
 
+### 1.7 Service areas and primary near-me hubs
+
+- **`/service-areas`:** Regional browse page on every vertical, implemented with engine **`ServiceAreasHub`** (UK region/county grouping from `engine/data/uk-location-hierarchy`). Links resolve to `/{primaryServiceSlug}/{locationId}`.
+- **Primary near-me route:** Exactly **one** richer local SEO / conversion hub per vertical, implemented with engine **`NearMePage`** (hero, trust/conversion blocks, **`NearMeLocationList`** with search and grouped location links). Paths are vertical-specific, e.g. drains `/drain-collapse-near-me`, groundworks `/groundworks-contractors-near-me`, access `/access-control-systems-near-me`, surveys `/topographical-survey-near-me`.
+- **`browseMoreHref`** on each vertical’s `app/service-areas/page.tsx` must target that vertical’s **primary near-me URL**, not `/services`.
+- **Header** “View all areas” and **`FooterServiceAreaGroups`** “All service areas →” must link to that vertical’s **primary near-me** route. The footer bottom bar may still include a separate “Service areas” link to **`/service-areas`** (regional browse).
+- **Surveys:** Legacy **`/drain-*-near-me`** paths on the surveys app must **301 redirect** to `/topographical-survey-near-me`. Static sitemaps should list the **canonical** near-me path only, not the legacy URLs.
+- **Do not merge** `ServiceAreasHub` and `NearMePage` into one component; roles stay separate unless product explicitly changes this.
+
 ---
 
 ## 2. Repository structure

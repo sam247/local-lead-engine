@@ -23,8 +23,8 @@ export default function ServiceAreasPage() {
       heroSubtitle="Topographical, measured building, utility and drone surveys in towns and cities nationwide."
       introTitle="Coverage by region"
       introBody="Explore areas we survey, grouped by region. Each link leads to local survey context and next steps for your site or project."
-      browseMoreHref="/services"
-      browseMoreLabel="Browse all survey services"
+      browseMoreHref="/topographical-survey-near-me"
+      browseMoreLabel="Find topographical survey near you"
     />
   );
 }

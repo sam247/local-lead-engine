@@ -6,28 +6,25 @@ import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTABanner from "@/components/sections/CTABanner";
 
 const specialPages = [
-  { title: "Collapsed Drains Complete Guide", description: "Our comprehensive authority guide covering signs, causes, inspection, repair methods, costs and insurance for collapsed drains.", href: "/collapsed-drains-complete-guide", icon: BookOpen },
-  { title: "Do I Need a Drain Survey?", description: "Not sure if you need a professional survey? Use our decision helper to find out based on your symptoms.", href: "/do-i-need-a-drain-survey", icon: HelpCircle },
-  { title: "Drainage FAQ", description: "Answers to the most common questions about drain problems, repairs, costs and insurance.", href: "/drainage-faq", icon: HelpCircle },
+  { title: "Security FAQ", description: "Answers to common questions about access control, CCTV installation, system integration, and ongoing maintenance.", href: "/faq", icon: HelpCircle },
+  { title: "Security System Costs", description: "Typical pricing for commercial CCTV, access control, IP camera systems, and perimeter security installations.", href: "/cost", icon: BookOpen },
+  { title: "Industries We Serve", description: "How we support warehouses, offices, retail, education, healthcare, and public-sector sites with tailored security solutions.", href: "/industries", icon: BookOpen },
 ];
 
 const nearMePages = [
-  { title: "Drain Collapse Near Me", href: "/drain-collapse-near-me" },
-  { title: "Drain Survey Near Me", href: "/drain-survey-near-me" },
-  { title: "Emergency Drain Engineer Near Me", href: "/emergency-drain-engineer-near-me" },
-  { title: "Drain Unblocking Near Me", href: "/drain-unblocking-near-me" },
-  { title: "Collapsed Drain Repair Near Me", href: "/collapsed-drain-repair-near-me" },
+  { title: "Access Control Near Me", href: "/access-control-systems-near-me" },
+  { title: "Coverage by Region", href: "/service-areas" },
 ];
 
 export default function GuidesIndexContent() {
   return (
     <>
-      <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Drainage Guides", url: "/drainage-guides" }] }} />
+      <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Security Guides", url: "/guides" }] }} />
       <section className="bg-primary py-16 md:py-24">
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">Drainage Guides & Resources</h1>
-            <p className="text-lg text-primary-foreground/80">Expert advice on drain problems, repair methods, costs and insurance. Everything you need to understand your drainage issue.</p>
+            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">Security Guides & Resources</h1>
+            <p className="text-lg text-primary-foreground/80">Expert advice on access control, CCTV, perimeter security, data cabling, and system upgrades for commercial properties.</p>
           </div>
         </div>
       </section>

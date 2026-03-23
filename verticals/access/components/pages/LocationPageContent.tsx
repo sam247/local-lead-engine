@@ -25,16 +25,20 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
 
   const localFaqs = [
     {
-      question: `Do you provide ${service.title.toLowerCase()} in ${location.name}?`,
-      answer: `Yes, we provide comprehensive ${service.title.toLowerCase()} services throughout ${location.name} and surrounding areas in ${location.area}.`,
+      question: `Do you install ${service.title.toLowerCase()} in ${location.name}?`,
+      answer: `Yes. We design, install, and maintain ${service.title.toLowerCase()} for commercial and public-sector premises throughout ${location.name} and the wider ${location.area} area.`,
     },
     {
-      question: `How quickly can you respond to a drainage emergency in ${location.name}?`,
-      answer: `Our emergency team typically arrives in ${location.name} within 1-2 hours, operating 24/7 including weekends and bank holidays.`,
+      question: `How much does ${service.title.toLowerCase()} cost in ${location.name}?`,
+      answer: `Every site is different. We carry out a free site survey in ${location.name} and provide a detailed, no-obligation quotation based on your specific requirements.`,
     },
     {
-      question: `Do you offer free quotes in ${location.name}?`,
-      answer: `Absolutely. We provide free, no-obligation CCTV surveys and quotes for all ${location.name} drainage projects.`,
+      question: `What access control system is best for my ${location.name} premises?`,
+      answer: `It depends on the size and nature of your site. Our engineers assess entry points, staff numbers, and compliance needs before recommending a system — from standalone keypads to enterprise-grade biometric and cloud-managed platforms.`,
+    },
+    {
+      question: `Do you offer ongoing maintenance and monitoring in ${location.name}?`,
+      answer: `Yes. We provide 24/7 remote monitoring, scheduled maintenance plans, and emergency call-out support for all systems we install across ${location.name} and ${location.area}.`,
     },
   ];
 
@@ -70,7 +74,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
         <div className="absolute inset-0">
           <img
             src={serviceImages[service.slug] ?? serviceImages["access-control-systems"]}
-            alt={`${service.title} engineer working in ${location.name}, ${location.area}`}
+            alt={`${service.title} installation in ${location.name}, ${location.area}`}
             className="h-full w-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-primary/60" />
@@ -81,7 +85,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
               {service.title} in {location.name}
             </h1>
             <p className="text-lg text-primary-foreground/80">
-              Trusted {service.title.toLowerCase()} experts serving {location.name} and {location.area}.
+              Professional {service.title.toLowerCase()} for commercial premises in {location.name} and {location.area}.
             </p>
             <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button size="lg" variant="highlight" asChild>
@@ -100,10 +104,10 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <h2 className="mb-4 font-display text-2xl font-bold">
-                {service.title} Services in {location.name}
+                {service.title} in {location.name}
               </h2>
               <p className="mb-6 text-muted-foreground">
-                {companyInfo.name} provides expert {service.title.toLowerCase()} services in {location.name}, {location.area}. Our experienced engineers deliver reliable solutions tailored to commercial and public-sector site requirements.
+                {companyInfo.name} designs and installs {service.title.toLowerCase()} for businesses, public-sector buildings, and multi-site organisations across {location.name} and {location.area}. Every solution is tailored to your site&apos;s security requirements and compliance obligations.
               </p>
               <p className="mb-8 text-muted-foreground">{service.description}</p>
 
@@ -118,24 +122,24 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
 
               {locationWithExtras.propertyTypes && (
                 <div className="mb-8">
-                  <h3 className="mb-2 font-display text-lg font-bold">Common Property Types in {location.name}</h3>
+                  <h3 className="mb-2 font-display text-lg font-bold">Typical Premises in {location.name}</h3>
                   <p className="text-sm text-muted-foreground">{locationWithExtras.propertyTypes}</p>
                 </div>
               )}
 
-              <h3 className="mb-4 font-display text-xl font-bold">Why Choose Us for {service.title} in {location.name}?</h3>
+              <h3 className="mb-4 font-display text-xl font-bold">Why Choose Us in {location.name}?</h3>
               <ul className="mb-8 space-y-2">
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Local drainage expertise in {location.area}
+                  <CheckCircle className="h-5 w-5 text-primary" /> NSI-approved security installers
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> 24/7 emergency response across London
+                  <CheckCircle className="h-5 w-5 text-primary" /> 24/7 remote monitoring and emergency call-out
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Fully insured with insurance-backed guarantees
+                  <CheckCircle className="h-5 w-5 text-primary" /> BS EN compliant systems and installations
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-primary" /> Free CCTV surveys and no-obligation quotes
+                  <CheckCircle className="h-5 w-5 text-primary" /> Free site survey and no-obligation quotation
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-5 w-5 text-primary" /> Transparent, competitive pricing
@@ -176,7 +180,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
               <div className="rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">Nearby Areas We Cover</h3>
                 <p className="mb-3 text-xs text-muted-foreground">
-                  We also provide {service.title.toLowerCase()} in these areas:
+                  We also install {service.title.toLowerCase()} in these areas:
                 </p>
                 <div className="grid grid-cols-2 gap-2">
                   {nearbyLocations.map((loc) => (
@@ -209,7 +213,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
           <h2 className="mb-4 font-display text-3xl font-bold text-primary-foreground">
             Need {service.title} in {location.name}?
           </h2>
-          <p className="mb-6 text-primary-foreground/80">Contact us today for a free, no-obligation quote.</p>
+          <p className="mb-6 text-primary-foreground/80">Contact us today for a free site survey and no-obligation quote.</p>
           <Button size="lg" variant="highlight" asChild>
             <Link href="/contact">Get Your Free Quote</Link>
           </Button>

@@ -121,7 +121,12 @@ const Footer = () => {
 
         {/* Location Links Row */}
         <div className="mt-10 border-t border-primary-foreground/10 pt-6">
-          <FooterServiceAreaGroups primaryServiceSlug="drain-collapse-repair" locations={locations} variant="onPrimary" />
+          <FooterServiceAreaGroups
+            primaryServiceSlug="drain-collapse-repair"
+            locations={locations}
+            variant="onPrimary"
+            viewAllAreasHref="/drain-collapse-near-me"
+          />
         </div>
       </div>
 

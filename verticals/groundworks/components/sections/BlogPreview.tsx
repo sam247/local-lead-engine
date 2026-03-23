@@ -7,12 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 const categoryServiceMap: Record<string, { slug: string; label: string }> = {
-  "Drain Repair": { slug: "drain-collapse-repair", label: "Drain Collapse Repair" },
-  "Drain Surveys": { slug: "cctv-drain-surveys", label: "CCTV Drain Surveys" },
-  "Blocked Drains": { slug: "blocked-drains", label: "Blocked Drains" },
-  "Emergency": { slug: "emergency-drainage", label: "Emergency Drainage" },
-  "Maintenance": { slug: "drain-jetting", label: "Drain Jetting" },
-  "Commercial": { slug: "commercial-drainage", label: "Commercial Drainage" },
+  "Foundations": { slug: "foundation-contractors", label: "Foundation Contractors" },
+  "Piling": { slug: "piling-contractors", label: "Piling Contractors" },
+  "Excavation": { slug: "excavation-contractors", label: "Excavation Contractors" },
+  "Site Clearance": { slug: "site-clearance-contractors", label: "Site Clearance Contractors" },
+  "Groundworks": { slug: "groundworks-contractors", label: "Groundworks Contractors" },
+  "Commercial": { slug: "enabling-works-contractors", label: "Enabling Works Contractors" },
 };
 
 const BlogPreview = () => {

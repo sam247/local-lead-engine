@@ -293,7 +293,7 @@ const Hero = () => {
               </form>
 
               <p className="mt-3 text-center text-xs text-muted-foreground">
-                No obligation · No call-out charge · Free CCTV quote
+                No obligation · Free groundworks quote
               </p>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getCategoryPages, getHubData, hubPages, companyInfo, categoryImages, categoryAltText } from "@/lib/data";
-import { serviceImages } from "@/lib/images";
+import { getHeroImage } from "@/lib/images";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Phone } from "lucide-react";
 import InspectionCTA from "@/components/sections/InspectionCTA";
@@ -22,8 +22,8 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
   if (!hub || !page) return null;
 
   const otherPages = pages.filter((p) => p.slug !== page.slug).slice(0, 4);
-  const heroImage = serviceImages[categoryImages[category] || "cctv-drain-surveys"];
-  const heroAlt = categoryAltText[category] || `${page.title} - professional drainage service`;
+  const heroImage = getHeroImage({ category, categoryImagesMap: categoryImages });
+  const heroAlt = categoryAltText[category] || `${page.title} - professional groundworks service`;
   const pageFaqs = [
     { question: `What are the signs of ${page.title.toLowerCase()}?`, answer: page.signs.slice(0, 3).join(". ") + "." },
     { question: `How do you diagnose ${page.title.toLowerCase()}?`, answer: page.diagnosis.slice(0, 200) + "..." },

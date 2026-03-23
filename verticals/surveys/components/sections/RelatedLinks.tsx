@@ -13,17 +13,15 @@ const RelatedLinks = ({ relatedServices = [], category, currentSlug }: RelatedLi
   const firstServiceSlug = relatedServices[0] || "topographical-survey";
   const featuredLocations = locations.slice(0, 6);
 
-  // Find related hub pages based on services
   const relatedHubs = hubPages.filter(
     (h) => h.category !== category && getCategoryPages(h.category).length > 0
   ).slice(0, 4);
 
   return (
     <div className="space-y-6">
-      {/* Related Services */}
       {matchedServices.length > 0 && (
         <div className="rounded-lg bg-secondary p-6">
-          <h3 className="mb-4 font-display text-lg font-bold">Related Drain Repairs</h3>
+          <h3 className="mb-4 font-display text-lg font-bold">Related Survey Services</h3>
           <div className="space-y-3">
             {matchedServices.map((service) => (
               <Link
@@ -39,10 +37,9 @@ const RelatedLinks = ({ relatedServices = [], category, currentSlug }: RelatedLi
         </div>
       )}
 
-      {/* Related Drain Problems */}
       {relatedHubs.length > 0 && (
         <div className="rounded-lg bg-secondary p-6">
-          <h3 className="mb-4 font-display text-lg font-bold">Related Drain Problems</h3>
+          <h3 className="mb-4 font-display text-lg font-bold">Related Survey Guides</h3>
           <div className="space-y-2">
             {relatedHubs.map((hub) => (
               <Link
@@ -57,9 +54,8 @@ const RelatedLinks = ({ relatedServices = [], category, currentSlug }: RelatedLi
         </div>
       )}
 
-      {/* Local Drain Services */}
       <div className="rounded-lg bg-secondary p-6">
-        <h3 className="mb-4 font-display text-lg font-bold">Local Drain Services</h3>
+        <h3 className="mb-4 font-display text-lg font-bold">Local Survey Services</h3>
         <div className="grid grid-cols-2 gap-2">
           {featuredLocations.map((loc) => (
             <Link

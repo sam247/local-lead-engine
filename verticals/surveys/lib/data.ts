@@ -2178,14 +2178,12 @@ export const serviceFaqsBySlug: Record<string, { question: string; answer: strin
 
 // Guides index page: featured guides and near-me links (survey-focused). Icon keys mapped in component.
 export const guidesIndexFeatured: { title: string; description: string; href: string; iconKey: "BookOpen" | "HelpCircle" }[] = [
-  { title: "Survey Guides Overview", description: "When you need a survey, which type to choose, and how much it costs. Planning, development and construction.", href: "/collapsed-drains-complete-guide", iconKey: "BookOpen" },
+  { title: "Survey Guides Overview", description: "When you need a survey, which type to choose, and how much it costs. Planning, development and construction.", href: "/guides", iconKey: "BookOpen" },
   { title: "Do I Need a Land Survey?", description: "Not sure if you need a professional survey? Use our decision guide to find out based on your project.", href: "/do-i-need-a-drain-survey", iconKey: "HelpCircle" },
   { title: "Survey FAQ", description: "Answers to common questions about survey types, costs, planning and when to use drone or ground surveys.", href: "/drainage-faq", iconKey: "HelpCircle" },
 ];
 
 export const guidesIndexNearMe = [
-  { title: "Topographical Survey Near Me", href: "/drain-collapse-near-me" },
-  { title: "Drone Survey Near Me", href: "/service-areas" },
-  { title: "Measured Building Survey Near Me", href: "/service-areas" },
-  { title: "Utility Survey Near Me", href: "/drain-unblocking-near-me" },
+  { title: "Topographical Survey Near Me", href: "/topographical-survey-near-me" },
+  { title: "Coverage by region", href: "/service-areas" },
 ];

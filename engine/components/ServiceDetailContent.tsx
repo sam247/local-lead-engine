@@ -595,7 +595,11 @@ export function ServiceDetailContent({
                       </>
                     )}
                     {showRelatedLocations && (
-                      <>
+                      <div
+                        className={
+                          showRelatedServices ? "mt-14 space-y-8" : "space-y-8"
+                        }
+                      >
                         <SectionIntro
                           title={`${service.title} by Location`}
                           description={
@@ -615,7 +619,7 @@ export function ServiceDetailContent({
                             </Link>
                           ))}
                         </div>
-                      </>
+                      </div>
                     )}
                   </div>
                 );

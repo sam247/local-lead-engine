@@ -23,8 +23,8 @@ export default function ServiceAreasPage() {
       heroSubtitle="Piling, excavation, foundations, site clearance and enabling works in major towns and cities."
       introTitle="Coverage by region"
       introBody="Key groundworks locations grouped by region. Follow a link for local context on piling, foundations, excavation and site preparation in that area."
-      browseMoreHref="/services"
-      browseMoreLabel="Browse all groundworks services"
+      browseMoreHref="/groundworks-contractors-near-me"
+      browseMoreLabel="Find groundworks contractors near you"
     />
   );
 }

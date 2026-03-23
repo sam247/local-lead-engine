@@ -65,23 +65,33 @@ const Footer = () => {
             <h3 className="mb-4 font-display text-lg font-semibold">Guides & Resources</h3>
             <ul className="space-y-2">
               <li>
+                <Link href="/cctv-guides" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  CCTV Guides
+                </Link>
+              </li>
+              <li>
+                <Link href="/access-control-guides" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Access Control Guides
+                </Link>
+              </li>
+              <li>
+                <Link href="/data-cabling-guides" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Data Cabling Guides
+                </Link>
+              </li>
+              <li>
+                <Link href="/perimeter-security-guides" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Perimeter Security
+                </Link>
+              </li>
+              <li>
+                <Link href="/security-upgrades" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Security Upgrades
+                </Link>
+              </li>
+              <li>
                 <Link href="/industries" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
                   Industries
-                </Link>
-              </li>
-              <li>
-                <Link href="/cctv-problems" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Access & Security Guides
-                </Link>
-              </li>
-              <li>
-                <Link href="/access-problems/access-control-system-cost" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Access Control Cost Guide
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Contact Us
                 </Link>
               </li>
             </ul>
@@ -111,7 +121,12 @@ const Footer = () => {
 
         {/* Location Links Row */}
         <div className="mt-10 border-t border-primary-foreground/10 pt-6">
-          <FooterServiceAreaGroups primaryServiceSlug="access-control-systems" locations={locations} variant="onPrimary" />
+          <FooterServiceAreaGroups
+            primaryServiceSlug="access-control-systems"
+            locations={locations}
+            variant="onPrimary"
+            viewAllAreasHref="/access-control-systems-near-me"
+          />
         </div>
       </div>
 

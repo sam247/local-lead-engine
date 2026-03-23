@@ -18,7 +18,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { trackEvent, ResourcesMenu, getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "engine";
+import { ResourcesMenu, getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "engine/components";
+import { trackEvent } from "engine/utils";
 import { verticalConfig } from "@/config";
 import { cn } from "@/lib/utils";
 
@@ -99,7 +100,7 @@ const Header = () => {
                     <li className="col-span-2 border-t border-border pt-1">
                       <NavigationMenuLink asChild>
                         <Link
-                          href="/service-areas"
+                          href="/access-control-systems-near-me"
                           className="block select-none rounded-md p-3 text-sm font-medium text-primary no-underline outline-none transition-colors hover:bg-accent focus:bg-accent"
                         >
                           View All Areas →
@@ -217,7 +218,7 @@ const Header = () => {
                       {loc.name}
                     </Link>
                   ))}
-                  <Link href="/service-areas" className="block py-2 text-sm font-medium text-primary" onClick={() => setMobileMenuOpen(false)}>
+                  <Link href="/access-control-systems-near-me" className="block py-2 text-sm font-medium text-primary" onClick={() => setMobileMenuOpen(false)}>
                     View All Areas →
                   </Link>
                 </div>

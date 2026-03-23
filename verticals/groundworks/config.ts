@@ -31,6 +31,7 @@ const serviceTypesBySlug: Record<string, string[]> = {
 export const verticalConfig: VerticalConfig = {
   verticalId: "groundworks",
   siteName: "Mainline Groundworks",
+  imageAltNoLocationSuffix: "groundworks service",
   baseUrl: "https://mainlinegroundworks.co.uk",
   primaryService: "Groundworks Contractors",
   industry: "groundworks",

@@ -36,13 +36,7 @@ const staticPaths = [
   ...standardGuidePaths,
 ];
 
-const nearMePaths = [
-  "/drain-collapse-near-me",
-  "/drain-survey-near-me",
-  "/emergency-drain-engineer-near-me",
-  "/drain-unblocking-near-me",
-  "/collapsed-drain-repair-near-me",
-];
+const nearMePaths = ["/topographical-survey-near-me"];
 
 export async function GET() {
   const baseUrl = verticalConfig.baseUrl.replace(/\/$/, "");

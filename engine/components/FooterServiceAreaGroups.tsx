@@ -11,12 +11,15 @@ export type FooterServiceAreaGroupsProps = {
   locations: readonly Location[];
   /** When true, use light text for primary (footer on brand) background */
   variant?: "onPrimary" | "default";
+  /** Primary near-me hub (matches header “view all areas”), not `/service-areas` */
+  viewAllAreasHref: string;
 };
 
 export function FooterServiceAreaGroups({
   primaryServiceSlug,
   locations,
   variant = "onPrimary",
+  viewAllAreasHref,
 }: FooterServiceAreaGroupsProps) {
   const idToName = Object.fromEntries(locations.map((l) => [l.id, l.name]));
   const groups = getFooterAreaGroups(idToName, FOOTER_LOCATION_LINK_MAX);
@@ -62,7 +65,7 @@ export function FooterServiceAreaGroups({
       ))}
       <div className="pt-1">
         <Link
-          href="/service-areas"
+          href={viewAllAreasHref}
           className={cn(
             "text-sm font-medium transition-colors",
             onPrimary

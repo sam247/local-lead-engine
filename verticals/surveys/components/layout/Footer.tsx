@@ -70,27 +70,27 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/drainage-faq" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                <Link href="/faq" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
                   Survey FAQ
                 </Link>
               </li>
               <li>
-                <Link href="/drain-survey-cost" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                <Link href="/cost" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
                   Survey Costs
                 </Link>
               </li>
               <li>
-                <Link href="/do-i-need-a-drain-survey" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Do I Need a Survey?
+                <Link href="/drain-survey" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Survey Types
                 </Link>
               </li>
               <li>
-                <Link href="/collapsed-drains-complete-guide" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Complete Guide
+                <Link href="/guides" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  All Guides
                 </Link>
               </li>
               <li>
-                <Link href="/drainage-guides" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                <Link href="/homebuyer-drainage" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
                   Homebuyer Guides
                 </Link>
               </li>
@@ -121,7 +121,12 @@ const Footer = () => {
 
         {/* Location Links Row */}
         <div className="mt-10 border-t border-primary-foreground/10 pt-6">
-          <FooterServiceAreaGroups primaryServiceSlug="topographical-survey" locations={locations} variant="onPrimary" />
+          <FooterServiceAreaGroups
+            primaryServiceSlug="topographical-survey"
+            locations={locations}
+            variant="onPrimary"
+            viewAllAreasHref="/topographical-survey-near-me"
+          />
         </div>
       </div>
 

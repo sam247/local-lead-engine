@@ -7,15 +7,15 @@ import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTABanner from "@/components/sections/CTABanner";
 
 function categorisePages(category: string) {
-  const symptomCategories = ["problems"];
-  const repairCategories = ["repair-methods"];
-  const inspectionCategories = ["inspection", "survey"];
-  const costCategories = ["costs"];
+  const scopeCategories = ["problems", "collapse"];
+  const costCategories = ["costs", "insurance"];
+  const technologyCategories = ["inspection", "causes"];
+  const methodCategories = ["repair-methods", "survey"];
   const allCategories = [
-    { label: "Symptom Guides", cats: symptomCategories },
-    { label: "Repair Methods", cats: repairCategories },
-    { label: "Inspection Guides", cats: inspectionCategories },
-    { label: "Cost Guides", cats: costCategories },
+    { label: "Survey Scope Guides", cats: scopeCategories },
+    { label: "Cost & Quote Guides", cats: costCategories },
+    { label: "Technology Guides", cats: technologyCategories },
+    { label: "Method & Deliverable Guides", cats: methodCategories },
   ];
   return allCategories
     .filter((section) => !section.cats.includes(category))
@@ -39,7 +39,7 @@ export default function HubPageContent({ category }: HubPageContentProps) {
   if (!hub || pages.length === 0) return null;
 
   const keyServices = services.filter((s) =>
-    ["drain-collapse-repair", "cctv-drain-surveys", "drain-excavation"].includes(s.slug)
+    ["topographical-survey", "measured-building-survey", "drone-survey"].includes(s.slug)
   );
   const heroImage = serviceImages[categoryImages[category] || "topographical-survey"];
   const heroAlt = categoryAltText[category] || `${hub.title} - survey services`;

@@ -137,10 +137,7 @@ const Hero = () => {
             <h1 className="mb-5 font-display text-3xl font-bold tracking-tight text-primary-foreground md:text-4xl lg:text-5xl">
               Professional Land &amp; Drone Surveys
             </h1>
-            <p className="mb-3 text-xl font-medium text-primary-foreground md:text-2xl">
-              Across London &amp; the South East
-            </p>
-            <p className="mb-4 text-base text-primary-foreground/80 md:text-lg">
+            <p className="mb-3 text-base text-primary-foreground/80 md:text-lg">
               We provide topographical, measured building, utility and drone surveys for planning, design and construction decisions.
             </p>
             <p className="mb-4 text-base text-primary-foreground/80 md:text-lg">
@@ -161,7 +158,7 @@ const Hero = () => {
               </Button>
               <Button variant="outline" size="lg" asChild className="border-primary-foreground/30 text-primary hover:bg-primary-foreground/10">
                 <Link href="/contact">
-                  Request a Survey Quote
+                  {verticalConfig.heroSecondaryCtaText ?? "Request Inspection"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>

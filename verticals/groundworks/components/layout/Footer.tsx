@@ -70,18 +70,28 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/guides/foundation-cost" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Foundation Cost
+                <Link href="/faq" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Groundworks FAQ
                 </Link>
               </li>
               <li>
-                <Link href="/guides/piling-cost" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Piling Cost
+                <Link href="/cost" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Cost Guides
                 </Link>
               </li>
               <li>
-                <Link href="/guides/groundworks-process" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  Groundworks Process
+                <Link href="/foundation-problems" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Foundation Problems
+                </Link>
+              </li>
+              <li>
+                <Link href="/ground-conditions" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Ground Conditions
+                </Link>
+              </li>
+              <li>
+                <Link href="/homeowners" className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  Homeowner Guides
                 </Link>
               </li>
             </ul>
@@ -111,7 +121,12 @@ const Footer = () => {
 
         {/* Location Links Row */}
         <div className="mt-10 border-t border-primary-foreground/10 pt-6">
-          <FooterServiceAreaGroups primaryServiceSlug="groundworks-contractors" locations={locations} variant="onPrimary" />
+          <FooterServiceAreaGroups
+            primaryServiceSlug="groundworks-contractors"
+            locations={locations}
+            variant="onPrimary"
+            viewAllAreasHref="/groundworks-contractors-near-me"
+          />
         </div>
       </div>
 

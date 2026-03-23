@@ -1,10 +1,10 @@
-import { ShieldCheck, Camera, Clock, Building2 } from "lucide-react";
+import { ShieldCheck, HeartPulse, Award, MapPin } from "lucide-react";
 
 const badges = [
   { icon: ShieldCheck, label: "Fully Insured Contractors" },
-  { icon: Camera, label: "CCTV Inspection Specialists" },
-  { icon: Clock, label: "24/7 Emergency Response" },
-  { icon: Building2, label: "Residential & Commercial" },
+  { icon: HeartPulse, label: "Health & Safety Compliant" },
+  { icon: Award, label: "Structural Warranty" },
+  { icon: MapPin, label: "UK-Wide Coverage" },
 ];
 
 const TrustBadgeStrip = () => {
