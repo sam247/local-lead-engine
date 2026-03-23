@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "engine";
+import { Button } from "engine/components/ui/button";
 import type { ProgrammaticTopic } from "@/data/programmaticTopicTypes";
 import type { Location } from "engine";
 import { TOPIC_HUB_PATH, TOPIC_PAGE_SERVICES } from "@/lib/topicLocationConfig";

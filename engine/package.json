@@ -7,6 +7,9 @@
   "exports": {
     ".": "./index.ts",
     "./components": "./components/index.ts",
+    "./components/ui/button": "./components/ui/button.tsx",
+    "./components/NearMeLocationList": "./components/NearMeLocationList.tsx",
+    "./components/navigation/ResourcesMenu": "./components/navigation/ResourcesMenu.tsx",
     "./components/navigation/resources-menu-utils": "./components/navigation/resources-menu-utils.ts",
     "./data/locations": "./data/locations.ts",
     "./data/uk-location-hierarchy": "./data/uk-location-hierarchy.ts",

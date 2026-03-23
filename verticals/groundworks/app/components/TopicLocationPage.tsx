@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "engine";
+import { Button } from "engine/components/ui/button";
 import type { TopicLocationTopic } from "@/lib/topicLocationConfig";
 import type { Location } from "engine";
 import { TOPIC_PAGE_SERVICES } from "@/lib/topicLocationConfig";
