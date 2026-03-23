@@ -152,9 +152,11 @@ function buildEmailBody(lead: LeadInput & { lead_id: string; timestamp: string }
     "",
     "Description / requirements:",
     lead.description,
-    "",
-    `Source site: ${lead.source_site}`,
   ].join("\n");
+}
+
+function escapeHtmlText(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
 export async function POST(req: Request) {
@@ -196,6 +198,24 @@ export async function POST(req: Request) {
         text: buildEmailBody(lead),
       });
       if (!error) {
+        const ackTo = lead.email.trim();
+        if (ackTo.includes("@")) {
+          try {
+            const first = lead.first_name.trim() ? escapeHtmlText(lead.first_name.trim()) : "there";
+            await resend.emails.send({
+              from: emailFrom,
+              to: ackTo,
+              subject: "Thanks – we've received your enquiry",
+              html: `<p>Hi ${first},</p>
+<p>Thanks for getting in touch — we've received your enquiry and will review the details.</p>
+<p>We'll either come back to you directly or pass this to a relevant contractor in your area, who will be in touch shortly.</p>
+<p>If your enquiry is urgent, feel free to reply to this email.</p>
+<p>Thanks,<br/>Mainline Team</p>`,
+            });
+          } catch (autoErr) {
+            console.error("[leads] Auto-response failed:", autoErr);
+          }
+        }
         return NextResponse.json({ ok: true, lead_id, timestamp });
       }
       lastError = error;
