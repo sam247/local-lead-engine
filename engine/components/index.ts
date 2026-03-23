@@ -17,6 +17,8 @@ export { MidContentCTA, type MidContentCTAProps } from "./MidContentCTA";
 export { ContentRelatedLinks, type ContentRelatedLinksProps } from "./ContentRelatedLinks";
 export { CTABanner, type CTABannerProps } from "./CTABanner";
 export { MainlineGroupLinks, type MainlineGroupLinksProps } from "./MainlineGroupLinks";
+export { FooterServiceAreaGroups, type FooterServiceAreaGroupsProps } from "./FooterServiceAreaGroups";
+export { ServiceAreasHub, type ServiceAreasHubProps } from "./ServiceAreasHub";
 export { ProblemCTA, type ProblemCTAProps } from "./ProblemCTA";
 export { ProblemPage, type ProblemPageProps } from "./ProblemPage";
 export { ProjectCardWithLinks, type ProjectCardWithLinksProps, type ProjectForCard } from "./ProjectCardWithLinks";

@@ -14,7 +14,31 @@ import { TrustReassuranceStrip } from "./TrustReassuranceStrip";
 import { ActionPanel } from "./ActionPanel";
 import { getImageAlt } from "../utils/imageAlt";
 import { getVariantIndex } from "../lib/contentVariants";
+import { KEY_SERVICE_DETAIL_LOCATION_IDS } from "../data/key-location-ids";
 import type { Service, Location, VerticalConfig } from "../types";
+
+function pickServiceDetailFeaturedLocations(
+  all: Location[],
+  serviceSlug: string,
+  verticalId: string
+): Location[] {
+  const pool = all
+    .filter((l) => KEY_SERVICE_DETAIL_LOCATION_IDS.includes(l.id))
+    .sort((a, b) => a.id.localeCompare(b.id));
+  if (pool.length === 0) return [];
+  const seed = `${serviceSlug}:${verticalId}:service-detail-locs`;
+  const count = 3 + getVariantIndex(seed, 3);
+  const maxStart = Math.max(0, pool.length - count);
+  const start = maxStart === 0 ? 0 : getVariantIndex(`${seed}:start`, maxStart + 1);
+  return pool.slice(start, start + count);
+}
+
+function pickServiceDetailSidebarLocations(all: Location[]): Location[] {
+  return all
+    .filter((l) => KEY_SERVICE_DETAIL_LOCATION_IDS.includes(l.id))
+    .sort((a, b) => a.id.localeCompare(b.id))
+    .slice(0, 20);
+}
 
 const DEFAULT_INDUSTRIES = [
   "Hospitals",
@@ -522,7 +546,11 @@ export function ServiceDetailContent({
 
               {(() => {
                 const otherServices = services.filter((s) => s.slug !== service.slug);
-                const featuredLocations = locations.slice(0, 12);
+                const featuredLocations = pickServiceDetailFeaturedLocations(
+                  locations,
+                  service.slug,
+                  verticalConfig.verticalId
+                );
                 const showRelatedServices =
                   otherServices.length > 0 && verticalConfig.relatedServicesIntro;
                 const showRelatedLocations = featuredLocations.length > 0;
@@ -622,8 +650,11 @@ export function ServiceDetailContent({
               </div>
               <div className="rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">Areas We Cover</h3>
+                <p className="mb-3 text-xs text-muted-foreground">
+                  Key towns and cities — see service areas for full coverage.
+                </p>
                 <div className="grid grid-cols-2 gap-2">
-                  {locations.map((loc) => (
+                  {pickServiceDetailSidebarLocations(locations).map((loc) => (
                     <Link
                       key={loc.id}
                       href={locationLinkPath(service.slug, loc.id)}
@@ -633,6 +664,11 @@ export function ServiceDetailContent({
                     </Link>
                   ))}
                 </div>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  <Link href="/service-areas" className="text-primary hover:underline">
+                    All service areas →
+                  </Link>
+                </p>
               </div>
               <Button asChild className="w-full" variant="highlight">
                 <Link href={contactPath}>{sidebarCta}</Link>

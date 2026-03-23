@@ -1,0 +1,35 @@
+/**
+ * Curated pool for service-detail featured location links (commercial intent).
+ * Selection is deterministic via getVariantIndex over this sorted pool — not the full locations list.
+ */
+export const KEY_SERVICE_DETAIL_LOCATION_IDS: readonly string[] = [
+  "aberdeen",
+  "birmingham",
+  "bournemouth",
+  "bristol",
+  "bromley",
+  "cambridge",
+  "cardiff",
+  "coventry",
+  "croydon",
+  "dartford",
+  "edinburgh",
+  "glasgow",
+  "guildford",
+  "kingston",
+  "leeds",
+  "liverpool",
+  "london",
+  "manchester",
+  "milton-keynes",
+  "newcastle",
+  "nottingham",
+  "oxford",
+  "reading",
+  "richmond",
+  "sheffield",
+  "slough",
+  "southampton",
+  "swansea",
+  "watford",
+].sort((a, b) => a.localeCompare(b));

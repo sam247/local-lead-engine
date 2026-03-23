@@ -3,12 +3,11 @@ import Image from "next/image";
 import { Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
 import { companyInfo, services, locations } from "@/lib/data";
 import { verticalConfig } from "@/config";
-import { MainlineGroupLinks } from "engine";
+import { FooterServiceAreaGroups, MainlineGroupLinks } from "engine";
 import { mainlineGroupLinksForSite } from "engine/data/mainline-group";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const topLocations = locations.slice(0, 8);
   const groupLinks = mainlineGroupLinksForSite(verticalConfig.baseUrl);
 
   return (
@@ -122,17 +121,7 @@ const Footer = () => {
 
         {/* Location Links Row */}
         <div className="mt-10 border-t border-primary-foreground/10 pt-6">
-          <h4 className="mb-3 text-sm font-semibold text-primary-foreground/60">Areas We Cover</h4>
-          <div className="flex flex-wrap gap-x-6 gap-y-2">
-            {topLocations.map((loc) => (
-              <Link key={loc.id} href={`/topographical-survey/${loc.id}`} className="text-sm text-primary-foreground/70 transition-colors hover:text-primary-foreground">
-                {loc.name}
-              </Link>
-            ))}
-            <Link href="/drain-collapse-near-me" className="text-sm font-medium text-primary-foreground/70 transition-colors hover:text-primary-foreground">
-              All Areas →
-            </Link>
-          </div>
+          <FooterServiceAreaGroups primaryServiceSlug="topographical-survey" locations={locations} variant="onPrimary" />
         </div>
       </div>
 

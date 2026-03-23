@@ -1,94 +1,30 @@
-import Link from "next/link";
+import { ServiceAreasHub } from "engine";
 import { locations } from "@/lib/data";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
 export const revalidate = false;
 
-const PRIMARY_SERVICE_SLUG = "drain-collapse-repair";
-
-const MAJOR_CITY_IDS = [
-  "london",
-  "richmond",
-  "wimbledon",
-  "kingston",
-  "kensington",
-  "chelsea",
-  "croydon",
-  "bromley",
-  "greenwich",
-  "reading",
-  "oxford",
-  "brighton",
-  "bristol",
-  "bath",
-  "watford",
-  "st-albans",
-  "milton-keynes",
-  "luton",
-  "slough",
-  "maidstone",
-];
+const PRIMARY_SERVICE_SLUG = "groundworks-contractors";
 
 export const metadata: Metadata = {
   title: "Service Areas | Mainline Groundworks",
-  description: "Groundworks services across the UK. Find piling, excavation, foundations and site preparation in your area.",
+  description:
+    "Groundworks services across the UK. Find piling, excavation, foundations and site preparation in your area.",
   alternates: { canonical: "https://mainlinegroundworks.co.uk/service-areas" },
 };
 
 export default function ServiceAreasPage() {
-  const majorCities = MAJOR_CITY_IDS.map((id) => locations.find((l) => l.id === id)).filter((l): l is (typeof locations)[number] => l != null);
-
   return (
-    <>
-      <section className="bg-primary py-16 md:py-24">
-        <div className="container">
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">
-              Drainage Services Across the UK
-            </h1>
-            <p className="text-lg text-primary-foreground/80">
-              Expert drain repair, CCTV surveys and emergency drainage in towns and cities nationwide.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding">
-        <div className="container">
-          <h2 className="mb-6 font-display text-2xl font-bold">Major Cities</h2>
-          <p className="mb-6 text-muted-foreground">
-            We provide drainage services across the UK. Select your area for local information and quotes.
-          </p>
-          <ul className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {majorCities.map((loc) => (
-              <li key={loc.id}>
-                <Link
-                  href={`/${PRIMARY_SERVICE_SLUG}/${loc.id}`}
-                  className="text-primary hover:underline"
-                >
-                  {loc.name} <span className="text-muted-foreground">({loc.area})</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="border-t border-border bg-secondary/30 py-12">
-        <div className="container">
-          <h2 className="mb-4 font-display text-2xl font-bold">Browse by Location</h2>
-          <p className="mb-4 text-muted-foreground">
-            View all areas we cover and find groundworks services near you.
-          </p>
-          <Link
-            href="/services"
-            className="inline-flex font-medium text-primary hover:underline"
-          >
-            Browse all services →
-          </Link>
-        </div>
-      </section>
-    </>
+    <ServiceAreasHub
+      primaryServiceSlug={PRIMARY_SERVICE_SLUG}
+      locations={locations}
+      heroTitle="Groundworks & Civil Engineering Across the UK"
+      heroSubtitle="Piling, excavation, foundations, site clearance and enabling works in major towns and cities."
+      introTitle="Coverage by region"
+      introBody="Key groundworks locations grouped by region. Follow a link for local context on piling, foundations, excavation and site preparation in that area."
+      browseMoreHref="/services"
+      browseMoreLabel="Browse all groundworks services"
+    />
   );
 }

@@ -13,6 +13,8 @@ import { ProcessTimeline } from "./ProcessTimeline";
 import { TrustReassuranceStrip } from "./TrustReassuranceStrip";
 import { ActionPanel } from "./ActionPanel";
 import { getVariantIndex } from "../lib/contentVariants";
+import { locations as allLocationsDataset } from "../data/locations";
+import { getCountyPeerLocationIds, getUkGroupingForLocationId } from "../data/uk-location-hierarchy";
 import type { Service, Location, CompanyInfo } from "../types";
 
 const INTRO_VARIANTS = [
@@ -358,6 +360,40 @@ export function LocationPage({
 }: LocationPageProps) {
   const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
   const displayTitle = service.titleSingular ?? service.title;
+
+  const allLocIds = allLocationsDataset.map((l) => l.id);
+  const ukGroup = getUkGroupingForLocationId(location.id);
+  const countyPeerIds = getCountyPeerLocationIds(location.id, 6, allLocIds);
+  const countyPeerLocations = countyPeerIds
+    .map((id) => allLocationsDataset.find((l) => l.id === id))
+    .filter((l): l is Location => l != null);
+
+  const mergedNearby = (() => {
+    const seen = new Set<string>([location.id]);
+    const out: Location[] = [];
+    for (const l of countyPeerLocations) {
+      if (seen.has(l.id)) continue;
+      seen.add(l.id);
+      out.push(l);
+    }
+    for (const l of nearbyLocations) {
+      if (out.length >= 8) break;
+      if (seen.has(l.id)) continue;
+      seen.add(l.id);
+      out.push(l);
+    }
+    if (out.length > 0) return out;
+    return nearbyLocations.slice(0, 8);
+  })();
+
+  const countyLineVariant = getVariantIndex(`county-line:${service.slug}:${location.id}`, 3);
+  const countyContextTemplates = ukGroup
+    ? [
+        `This area sits within ${ukGroup.countyName}, where we support projects across ${location.name} and nearby centres for both residential and commercial clients.`,
+        `${location.name} is part of ${ukGroup.countyName} in ${ukGroup.regionName}; local work often spans mixed housing stock, commercial premises, and sites with varied access conditions.`,
+        `Within ${ukGroup.countyName}, ${location.name} is one of the areas we serve with structured delivery and consistent standards across comparable projects.`,
+      ]
+    : [];
   const introVariantIndex = getVariantIndex(`intro:${service.slug}:${location.id}`, INTRO_VARIANTS.length);
   const whenNeededVariantIndex = getVariantIndex(
     `when-needed:${service.slug}:${location.id}`,
@@ -385,7 +421,7 @@ export function LocationPage({
     LOCATION_CONTEXT_VARIANTS[locationContextVariantIndex](location.name, location.area, displayTitle);
   const activeLocationContext = locationContextParagraph ?? fallbackLocationContext;
   const relatedService = otherServices[linksVariantIndex % Math.max(otherServices.length, 1)];
-  const nearbyLocation = nearbyLocations[linksVariantIndex % Math.max(nearbyLocations.length, 1)];
+  const nearbyLocation = mergedNearby[linksVariantIndex % Math.max(mergedNearby.length, 1)];
   const nearbyAnchorText = NEARBY_ANCHOR_VARIANTS[linksVariantIndex].replace(
     "{location}",
     nearbyLocation?.name ?? "nearby areas"
@@ -456,6 +492,7 @@ export function LocationPage({
             </h1>
             <p className="text-lg text-primary-foreground/80">
               Trusted {service.title.toLowerCase()} experts serving {location.name} and {location.area}.
+              {ukGroup ? ` We cover the wider ${ukGroup.regionName} area, including ${ukGroup.countyName}.` : ""}
             </p>
             <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button size="lg" variant="highlight" asChild>
@@ -507,7 +544,34 @@ export function LocationPage({
                 {introLines.map((line) => (
                   <p key={line}>{line}</p>
                 ))}
+                {ukGroup && (
+                  <>
+                    <p>
+                      We provide {displayTitle.toLowerCase()} across {ukGroup.regionName}, including{" "}
+                      {location.name} and the wider {ukGroup.countyName} area, for typical residential and
+                      commercial project requirements.
+                    </p>
+                    <p>{countyContextTemplates[countyLineVariant]}</p>
+                  </>
+                )}
               </div>
+              {countyPeerLocations.length > 0 && (
+                <div className="mb-8">
+                  <h3 className="mb-3 font-display text-xl font-bold">Nearby areas we cover</h3>
+                  <p className="mb-3 text-sm text-muted-foreground">
+                    Other locations in {ukGroup?.countyName ?? location.area} where we deliver the same service:
+                  </p>
+                  <ul className="flex flex-wrap gap-x-4 gap-y-2 text-primary">
+                    {countyPeerLocations.map((loc) => (
+                      <li key={loc.id}>
+                        <Link href={`/${service.slug}/${loc.id}`} className="hover:underline">
+                          {displayTitle} in {loc.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {neighbourLocationsForContext && neighbourLocationsForContext.length > 0 && (
                 <>
                   <LocationContext
@@ -703,7 +767,7 @@ export function LocationPage({
                   We also provide {service.title.toLowerCase()} in these areas:
                 </p>
                 <div className="grid grid-cols-2 gap-2">
-                  {nearbyLocations.map((loc) => (
+                  {mergedNearby.slice(0, 8).map((loc) => (
                     <Link
                       key={loc.id}
                       href={`/${service.slug}/${loc.id}`}
@@ -787,7 +851,7 @@ export function LocationPage({
               `Compare ${displayTitle.toLowerCase()} options in nearby towns and cities around ${location.name}.`}
           </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-            {nearbyLocations.slice(0, 8).map((loc) => (
+            {mergedNearby.slice(0, 8).map((loc) => (
               <Link
                 key={loc.id}
                 href={`/${service.slug}/${loc.id}`}
@@ -803,7 +867,7 @@ export function LocationPage({
       <section className="section-padding pt-0">
         <div className="container">
           <h2 className="mb-6 font-display text-2xl font-bold text-center">
-            Other Services in {location.name}
+            Services in this area
           </h2>
           <p className="mb-4 text-center text-sm text-muted-foreground">
             Explore related services that are often commissioned alongside this work in {location.name}.

@@ -8,6 +8,8 @@
     ".": "./index.ts",
     "./components": "./components/index.ts",
     "./data/locations": "./data/locations.ts",
+    "./data/uk-location-hierarchy": "./data/uk-location-hierarchy.ts",
+    "./data/key-location-ids": "./data/key-location-ids.ts",
     "./data/mainline-group": "./data/mainline-group.ts",
     "./schema": "./schema/index.ts",
     "./tools": "./tools/index.ts",
