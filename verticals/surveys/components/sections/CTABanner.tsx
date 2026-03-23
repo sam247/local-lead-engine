@@ -8,10 +8,10 @@ const CTABanner = () => {
       <div className="container">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="mb-4 font-display text-3xl font-bold md:text-4xl text-primary">
-            Need a Survey Quote?
+            Request a Survey Quote
           </h2>
           <p className="mb-8 text-lg text-primary">
-            Get in touch for a free, no-obligation survey quote. Speak with a survey specialist or book a site survey.
+            Share your location and project brief to receive a no-obligation quote for the right survey scope.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">

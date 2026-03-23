@@ -13,6 +13,8 @@ interface FAQProps {
 }
 
 const FAQ = ({ items = faqs, title = "Frequently Asked Questions", subtitle }: FAQProps) => {
+  const homepageFaqs = items.slice(0, 5);
+
   return (
     <section className="section-padding">
       <div className="container">
@@ -25,7 +27,7 @@ const FAQ = ({ items = faqs, title = "Frequently Asked Questions", subtitle }: F
           </div>
 
           <Accordion type="single" collapsible className="w-full">
-            {items.map((faq, index) => (
+            {homepageFaqs.map((faq, index) => (
               <AccordionItem key={index} value={`item-${index}`}>
                 <AccordionTrigger className="text-left font-display font-semibold">
                   {faq.question}

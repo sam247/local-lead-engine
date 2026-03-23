@@ -8,16 +8,16 @@ const CTABanner = () => {
       <div className="container">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="mb-4 font-display text-3xl font-bold md:text-4xl text-primary">
-            Need a Security Expert?
+            Request a Security System Quote
           </h2>
           <p className="mb-8 text-lg text-primary">
-            Get in touch today for a free, no-obligation quote. Our team is ready to help with access control, CCTV and security systems.
+            Tell us about your site and risk profile to receive a no-obligation quote for access, CCTV or integrated security works.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button size="lg" variant="highlight" className="text-base" asChild>
               <Link href="/contact">
-                Get a Free Quote
+                Request a Quote
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

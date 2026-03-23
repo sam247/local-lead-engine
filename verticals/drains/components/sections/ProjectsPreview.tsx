@@ -17,7 +17,7 @@ const ProjectsPreview = () => {
             Recent Projects
           </h2>
           <p className="text-muted-foreground">
-            Take a look at some of our recently completed drainage projects across London.
+            These are real drainage jobs showing a mix of emergency repairs, investigative surveys and planned remedial works.
           </p>
         </div>
 

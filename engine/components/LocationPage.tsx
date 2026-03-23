@@ -12,7 +12,274 @@ import { SectionIntro } from "./SectionIntro";
 import { ProcessTimeline } from "./ProcessTimeline";
 import { TrustReassuranceStrip } from "./TrustReassuranceStrip";
 import { ActionPanel } from "./ActionPanel";
+import { getVariantIndex } from "../lib/contentVariants";
 import type { Service, Location, CompanyInfo } from "../types";
+
+const INTRO_VARIANTS = [
+  (serviceTitle: string, locationName: string) => [
+    `${serviceTitle} focuses on assessing requirements and delivering the right scope for each property or site in ${locationName}.`,
+    "It is used when work needs to be planned clearly, delivered safely, and aligned with practical constraints such as access, sequencing, or condition.",
+    "The outcome is a dependable solution with fewer repeat issues and clearer next steps for owners, project teams, and facilities managers.",
+  ],
+  (serviceTitle: string, locationName: string) => [
+    `Many projects in ${locationName} start with a practical problem rather than a clear method, and ${serviceTitle} helps define the right route forward.`,
+    "It is often used when recurring issues, repair decisions, or planned works need evidence-based scoping before major commitments are made.",
+    "This approach helps reduce uncertainty, limit disruption, and achieve a more reliable long-term result.",
+  ],
+  (serviceTitle: string, locationName: string) => [
+    `When a project moves from early planning into delivery, ${serviceTitle} provides a structured way to scope and execute work in ${locationName}.`,
+    "It is commonly used across new-builds, remedial programmes, and upgrades where technical choices affect programme, cost, and ongoing performance.",
+    "The goal is to resolve the underlying need with a practical method that fits the site and the intended outcome.",
+  ],
+] as const;
+
+const WHEN_NEEDED_VARIANTS = [
+  {
+    first:
+      "This service is typically commissioned when early signs point to a wider issue, when work needs to be planned before construction starts, or when existing systems are no longer performing as expected.",
+    second:
+      "It is also common on extension and redevelopment projects where practical constraints, permissions, or sequencing need to be considered before work begins.",
+    third:
+      "For residential owners and commercial teams alike, getting clear advice at this stage helps avoid repeat disruption, controls costs, and leads to a more reliable long-term result.",
+  },
+  {
+    first:
+      "Most projects start with a practical problem: recurring faults, visible deterioration, or uncertainty about the right method before committing to work.",
+    second:
+      "The same service is often used during new-build and major refurbishment phases, where design choices, planning requirements, and site conditions affect what can be done safely and efficiently.",
+    third:
+      "Whether the priority is compliance, stability, or restoring normal operation quickly, early scoping usually prevents avoidable delays and rework.",
+  },
+  {
+    first:
+      "People usually request this service when a property or site needs dependable performance, when repairs become more frequent, or when a planned project requires the right groundwork before later stages begin.",
+    second:
+      "It is equally relevant where structural movement, access limits, or planning expectations make a straightforward fix unrealistic without a proper assessment first.",
+    third:
+      "In practice, a clear plan from the start gives owners, facilities teams, and contractors a safer path to completion with fewer surprises during delivery.",
+  },
+] as const;
+
+const LOCATION_CONTEXT_VARIANTS = [
+  (locationName: string, area: string, serviceTitle: string) =>
+    `${locationName} in ${area} includes a mix of site conditions and project constraints, so delivery usually depends on choosing the right method early. We plan ${serviceTitle.toLowerCase()} work around local access and programme requirements to keep disruption manageable and outcomes reliable.`,
+  (locationName: string, area: string, serviceTitle: string) =>
+    `Projects in ${locationName} and the wider ${area} area often involve different property types, priorities, and timelines. We scope ${serviceTitle.toLowerCase()} work to those conditions so the solution remains practical during delivery and dependable after handover.`,
+  (locationName: string, area: string, serviceTitle: string) =>
+    `In ${locationName}, project requirements can vary by site condition, building type, and sequencing needs across other trades. Our ${serviceTitle.toLowerCase()} approach is structured to fit those local realities while maintaining clear decisions from assessment to completion.`,
+] as const;
+
+const NEARBY_ANCHOR_VARIANTS = [
+  "similar work in {location}",
+  "see related work in {location}",
+  "view nearby options in {location}",
+] as const;
+
+const SERVICE_ANCHOR_VARIANTS = [
+  "related services for this type of work",
+  "alternative approaches to this project",
+  "compare options for {service}",
+] as const;
+
+const LOCATION_EXTRA_HEADINGS = [
+  "Things to consider before starting",
+  "What to plan before starting this work",
+  "Before you begin",
+] as const;
+
+function getServiceFamily(service: Service): "drains" | "surveys" | "access" | "groundworks" | "generic" {
+  const slug = service.slug.toLowerCase();
+  const title = service.title.toLowerCase();
+  if (slug.includes("survey") || title.includes("survey")) return "surveys";
+  if (slug.includes("drain") || slug.includes("drainage") || title.includes("drain")) return "drains";
+  if (
+    slug.includes("access") ||
+    slug.includes("cctv") ||
+    slug.includes("security") ||
+    slug.includes("camera") ||
+    title.includes("access") ||
+    title.includes("security")
+  ) {
+    return "access";
+  }
+  if (
+    slug.includes("groundworks") ||
+    slug.includes("piling") ||
+    slug.includes("excavation") ||
+    slug.includes("foundation") ||
+    slug.includes("enabling")
+  ) {
+    return "groundworks";
+  }
+  return "generic";
+}
+
+function buildFaqItems(service: Service, location: Location, variantIndex: number): FAQItem[] {
+  const title = service.titleSingular ?? service.title;
+  const processHint = service.process[0]?.toLowerCase() ?? "an initial assessment";
+  const variants = [
+    [
+      {
+        question: `How long does ${title.toLowerCase()} take in ${location.name}?`,
+        answer: `Timescales depend on scope and site access, but most projects begin with ${processHint} so the programme can be planned clearly.`,
+      },
+      {
+        question: `When is ${title.toLowerCase()} typically required?`,
+        answer: `${title} is usually needed when a project has recurring issues, planned upgrades, or site constraints that require a structured method.`,
+      },
+      {
+        question: `What should I consider before starting ${title.toLowerCase()}?`,
+        answer: `Key considerations are site condition, access constraints, sequencing with other works, and how much scope is needed for a reliable result.`,
+      },
+    ],
+    [
+      {
+        question: `How quickly can ${title.toLowerCase()} be completed?`,
+        answer: `Completion speed is driven by complexity and access, so the work is usually scoped first to confirm practical timing.`,
+      },
+      {
+        question: `Do I need ${title.toLowerCase()} for my project?`,
+        answer: `If your site has performance issues, planned redevelopment, or uncertain requirements, ${title.toLowerCase()} helps define the right approach.`,
+      },
+      {
+        question: `What affects the cost of ${title.toLowerCase()}?`,
+        answer: `Cost is mainly influenced by project scope, site conditions, access, and whether supporting works are needed alongside the core service.`,
+      },
+    ],
+    [
+      {
+        question: `How long should I allow for ${title.toLowerCase()} in ${location.name}?`,
+        answer: `Allow enough time for initial assessment and delivery planning, as programme length varies with site complexity and logistics.`,
+      },
+      {
+        question: `When should ${title.toLowerCase()} be planned?`,
+        answer: `It is best planned early when project decisions can still be adjusted around site conditions and sequencing.`,
+      },
+      {
+        question: `What practical factors should be checked first?`,
+        answer: `Before starting, confirm access, constraints, dependencies with other trades, and the level of work needed to avoid repeat disruption.`,
+      },
+    ],
+  ] as const;
+  return [...variants[variantIndex]];
+}
+
+function buildExtraSectionParagraph(service: Service, family: ReturnType<typeof getServiceFamily>): string[] {
+  const processHint = service.process.slice(0, 2).join(" then ").toLowerCase();
+  const generic =
+    "Before work begins, confirm access constraints, programme expectations, and how this scope fits with any related works so delivery can stay efficient.";
+  const byFamily: Record<ReturnType<typeof getServiceFamily>, string[]> = {
+    drains: [
+      `Drainage projects are smoother when access points, likely disruption, and sequencing are agreed early; most jobs start with ${processHint || "a clear assessment process"} to avoid repeat callouts.`,
+      "Check whether nearby surfaces, property access, and any concurrent building works could affect repair sequencing before starting.",
+      generic,
+    ],
+    surveys: [
+      `Survey work is more useful when required outputs, coverage areas, and delivery format are confirmed before capture begins, usually from ${processHint || "a clear survey brief"}.`,
+      "Define project milestones in advance so data collection and reporting align with planning, design, or construction deadlines.",
+      generic,
+    ],
+    access: [
+      `Security and access projects benefit from early agreement on operational requirements, user flows, and integration needs, typically following ${processHint || "initial requirements review"}.`,
+      "Clarify access windows, live-site constraints, and interfaces with existing systems before installation starts.",
+      generic,
+    ],
+    groundworks: [
+      `Groundworks programmes perform better when site constraints, logistics, and dependencies are set out before mobilisation, often beginning with ${processHint || "an early site assessment"}.`,
+      "Plan around site access, sequencing with structural packages, and temporary works requirements to reduce downstream delays.",
+      generic,
+    ],
+    generic: [generic, generic, generic],
+  };
+  return byFamily[family];
+}
+
+function inferProjectTypes(service: Service): { intro: string; items: string[] } {
+  const slug = service.slug.toLowerCase();
+  const title = service.title.toLowerCase();
+  const isSurvey = slug.includes("survey") || title.includes("survey");
+  const isDrain =
+    slug.includes("drain") ||
+    slug.includes("drainage") ||
+    title.includes("drain") ||
+    title.includes("drainage");
+  const isAccess =
+    slug.includes("access") ||
+    slug.includes("cctv") ||
+    slug.includes("security") ||
+    slug.includes("camera") ||
+    title.includes("access") ||
+    title.includes("security");
+  const isGroundworks =
+    slug.includes("groundworks") ||
+    slug.includes("piling") ||
+    slug.includes("excavation") ||
+    slug.includes("foundation") ||
+    slug.includes("enabling");
+
+  if (isSurvey) {
+    return {
+      intro:
+        "We support survey scopes from early feasibility through to delivery, with outputs aligned to planning, design, and compliance expectations.",
+      items: [
+        "Property purchase surveys where hidden constraints need to be identified early",
+        "Planning and pre-construction submissions requiring reliable site data",
+        "Construction-stage surveys for setting out, verification, and reporting",
+        "Compliance and record deliverables to support approvals and handover",
+      ],
+    };
+  }
+
+  if (isAccess) {
+    return {
+      intro:
+        "Our teams deliver practical security scopes that match how each site is used day to day, from single buildings to multi-area estates.",
+      items: [
+        "Commercial premises that need controlled access and monitored coverage",
+        "Industrial and logistics sites with perimeter and operational risk points",
+        "Shared access environments where user groups need different permissions",
+        "Managed properties requiring upgrades, integration, or phased rollouts",
+      ],
+    };
+  }
+
+  if (isGroundworks) {
+    return {
+      intro:
+        "Groundworks scopes are planned around sequencing, buildability, and long-term site performance so later construction stages can proceed confidently.",
+      items: [
+        "New-build developments requiring coordinated early-phase site works",
+        "Extensions where existing structures and services influence methodology",
+        "Site preparation and enabling activities before main construction",
+        "Redevelopment projects involving clearance, excavation, and foundations",
+      ],
+    };
+  }
+
+  if (isDrain) {
+    return {
+      intro:
+        "Drainage work is often commissioned when performance drops suddenly or when a broader project needs dependable drainage before handover.",
+      items: [
+        "Emergency callouts where flow failure or backing up needs rapid response",
+        "Investigations and inspections to confirm root cause before repair",
+        "Targeted repairs or replacements to restore reliable operation",
+        "Commercial drainage scopes with planned maintenance requirements",
+      ],
+    };
+  }
+
+  return {
+    intro:
+      "Projects are scoped to match site conditions, project goals, and the practical constraints of delivery.",
+    items: [
+      "Planned works where early technical advice improves decision making",
+      "Repair and renewal projects requiring clear options and sequencing",
+      "Compliance-led scopes with documented process and handover",
+      "Mixed-use properties needing coordination across multiple priorities",
+    ],
+  };
+}
 
 const locationBreadcrumbs = (
   serviceTitle: string,
@@ -91,6 +358,43 @@ export function LocationPage({
 }: LocationPageProps) {
   const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
   const displayTitle = service.titleSingular ?? service.title;
+  const introVariantIndex = getVariantIndex(`intro:${service.slug}:${location.id}`, INTRO_VARIANTS.length);
+  const whenNeededVariantIndex = getVariantIndex(
+    `when-needed:${service.slug}:${location.id}`,
+    WHEN_NEEDED_VARIANTS.length
+  );
+  const projectVariantIndex = getVariantIndex(`projects:${service.slug}:${location.id}`, 3);
+  const locationContextVariantIndex = getVariantIndex(
+    `location-context:${service.slug}:${location.id}`,
+    LOCATION_CONTEXT_VARIANTS.length
+  );
+  const linksVariantIndex = getVariantIndex(`inline-links:${service.slug}:${location.id}`, 3);
+  const faqVariantIndex = getVariantIndex(`${service.slug}:${location.id}-faq`, 3);
+  const extraVariantIndex = getVariantIndex(`${service.slug}:${location.id}-extra`, 3);
+
+  const introLines = INTRO_VARIANTS[introVariantIndex](displayTitle, location.name);
+  const whenNeeded = WHEN_NEEDED_VARIANTS[whenNeededVariantIndex];
+  const generatedFaqs = buildFaqItems(service, location, faqVariantIndex);
+  const shouldAppendSingleFaq = localFaqs.length >= 3;
+  const appendedFaqs = shouldAppendSingleFaq ? generatedFaqs.slice(0, 1) : generatedFaqs;
+  const combinedLocalFaqs = [...localFaqs, ...appendedFaqs].slice(0, 5);
+  const serviceFamily = getServiceFamily(service);
+  const extraParagraph = buildExtraSectionParagraph(service, serviceFamily)[extraVariantIndex];
+  const projectTypes = inferProjectTypes(service);
+  const fallbackLocationContext =
+    LOCATION_CONTEXT_VARIANTS[locationContextVariantIndex](location.name, location.area, displayTitle);
+  const activeLocationContext = locationContextParagraph ?? fallbackLocationContext;
+  const relatedService = otherServices[linksVariantIndex % Math.max(otherServices.length, 1)];
+  const nearbyLocation = nearbyLocations[linksVariantIndex % Math.max(nearbyLocations.length, 1)];
+  const nearbyAnchorText = NEARBY_ANCHOR_VARIANTS[linksVariantIndex].replace(
+    "{location}",
+    nearbyLocation?.name ?? "nearby areas"
+  );
+  const serviceAnchorTemplate = SERVICE_ANCHOR_VARIANTS[(linksVariantIndex + 1) % SERVICE_ANCHOR_VARIANTS.length];
+  const serviceAnchorText = serviceAnchorTemplate.replace(
+    "{service}",
+    relatedService?.title?.toLowerCase() ?? "related services"
+  );
   const defaultTrustPoints = [
     `Local expertise in ${location.area}`,
     "Clear communication from quote to completion",
@@ -198,13 +502,12 @@ export function LocationPage({
               <h2 className="mb-4 font-display text-2xl font-bold">
                 {displayTitle} Services in {location.name}
               </h2>
-              {introParagraph ? (
-                <p className="mb-6 text-muted-foreground">{introParagraph}</p>
-              ) : (
-                <p className="mb-6 text-muted-foreground">
-                  Expert {service.title.toLowerCase()} services to residential and commercial clients in {location.name}, {location.area}. Our experienced engineers deliver fast, reliable solutions tailored to your property&apos;s specific needs.
-                </p>
-              )}
+              <div className="mb-6 space-y-4 text-muted-foreground">
+                {introParagraph && <p>{introParagraph}</p>}
+                {introLines.map((line) => (
+                  <p key={line}>{line}</p>
+                ))}
+              </div>
               {neighbourLocationsForContext && neighbourLocationsForContext.length > 0 && (
                 <>
                   <LocationContext
@@ -220,6 +523,55 @@ export function LocationPage({
                     neighbourLocations={neighbourLocationsForContext.slice(0, 8).map((l) => ({ id: l.id, name: l.name }))}
                   />
                 </>
+              )}
+              <div className="mb-8">
+                <h3 className="mb-3 font-display text-xl font-bold">
+                  When you might need this service
+                </h3>
+                <div className="space-y-4 text-muted-foreground">
+                  <p>{whenNeeded.first}</p>
+                  <p>{whenNeeded.second}</p>
+                  <p>{whenNeeded.third}</p>
+                </div>
+              </div>
+              <div className="mb-8">
+                <h3 className="mb-3 font-display text-xl font-bold">Typical projects we support</h3>
+                <p className="mb-4 text-muted-foreground">
+                  {
+                    [
+                      projectTypes.intro,
+                      `Typical ${displayTitle.toLowerCase()} scopes include planned works, urgent priorities, and multi-stage projects where delivery needs to stay coordinated.`,
+                      `The examples below reflect common ${displayTitle.toLowerCase()} briefs and show how project requirements can vary by site and objective.`,
+                    ][projectVariantIndex]
+                  }
+                </p>
+                <ul className="list-disc space-y-2 pl-6 text-muted-foreground">
+                  {projectTypes.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mb-8">
+                <h3 className="mb-3 font-display text-xl font-bold">Project context in {location.name}</h3>
+                <p className="text-muted-foreground">{activeLocationContext}</p>
+              </div>
+              {(nearbyLocation || relatedService) && (
+                <p className="mb-8 text-muted-foreground">
+                  {nearbyLocation && (
+                    <>
+                      <Link href={`/${service.slug}/${nearbyLocation.id}`} className="text-primary hover:underline">
+                        {nearbyAnchorText}
+                      </Link>
+                      {relatedService ? ", or " : "."}
+                    </>
+                  )}
+                  {relatedService && (
+                    <Link href={`/${relatedService.slug}/${location.id}`} className="text-primary hover:underline">
+                      {serviceAnchorText}
+                    </Link>
+                  )}
+                  {relatedService ? "." : ""}
+                </p>
               )}
               <p className="mb-8 text-muted-foreground">{service.description}</p>
 
@@ -288,6 +640,20 @@ export function LocationPage({
                   </div>
                 </>
               )}
+              <div className="mb-8">
+                <h3 className="mb-3 font-display text-xl font-bold">
+                  {LOCATION_EXTRA_HEADINGS[extraVariantIndex]}
+                </h3>
+                <p className="text-muted-foreground">{extraParagraph}</p>
+              </div>
+
+              <ActionPanel
+                companyInfo={companyInfo}
+                contactPath={contactPath}
+                heading={`Need guidance before starting ${displayTitle.toLowerCase()} work?`}
+                body={`Share your site details and priorities in ${location.name}; we will recommend the right scope, likely timeline, and practical next step.`}
+                ctaText="Get project advice"
+              />
 
               <ActionPanel
                 companyInfo={companyInfo}
@@ -409,7 +775,7 @@ export function LocationPage({
         </section>
       )}
 
-      <FAQSchema items={localFaqs} title={`${displayTitle} FAQs for ${location.name}`} />
+      <FAQSchema items={combinedLocalFaqs} title="Frequently Asked Questions" />
 
       <section className="bg-secondary/50 py-12">
         <div className="container">

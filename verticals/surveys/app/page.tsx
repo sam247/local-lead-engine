@@ -34,10 +34,10 @@ export default function HomePage() {
         <div className="container max-w-3xl">
           <div className="mb-6 text-center">
             <h2 className="mb-3 font-display text-3xl font-bold text-foreground md:text-4xl">
-              Survey Types for Construction and Property
+              Not Sure Which Survey You Need?
             </h2>
             <p className="text-muted-foreground">
-              Not sure which survey you need? Our survey partners help you choose the right scope for planning, extensions and development.
+              Our survey partners help you define the right scope before design or construction begins, so you only commission the survey outputs your project actually needs.
             </p>
           </div>
           <InspectionCTA />

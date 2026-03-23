@@ -17,7 +17,7 @@ const ProjectsPreview = () => {
             Recent Projects
           </h2>
           <p className="text-muted-foreground">
-            Take a look at some of our recently completed security and access control projects.
+            These live project examples cover access control, CCTV and integrated upgrades across a range of operational site types.
           </p>
         </div>
 

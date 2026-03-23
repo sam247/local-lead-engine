@@ -137,7 +137,10 @@ const Hero = () => {
               Across London &amp; the South East
             </p>
             <p className="mb-4 text-base text-primary-foreground/80 md:text-lg">
-              Topographical, measured building, utility and drone surveys for planning, development and construction. Request a survey quote or speak with a survey specialist.
+              We provide topographical, measured building, utility and drone surveys for planning, design and construction decisions.
+            </p>
+            <p className="mb-4 text-base text-primary-foreground/80 md:text-lg">
+              Support is built for architects, developers and property owners across London, the South East and surrounding UK locations.
             </p>
             <p className="mb-8 text-xs text-primary-foreground/60">
               <Link href="/about" className="underline-offset-2 hover:underline">

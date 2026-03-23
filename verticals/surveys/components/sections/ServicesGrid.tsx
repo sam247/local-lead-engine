@@ -34,7 +34,8 @@ const ServicesGrid = () => {
             Land &amp; Drone Surveying Services
           </h2>
           <p className="text-muted-foreground">
-            Topographical, measured building, utility and drone surveys for planning, development and construction.
+            From early feasibility through delivery, we provide survey outputs for planning applications, design coordination and construction control.
+            Typical work includes boundary checks, utility risk mapping and measured surveys for extensions, redevelopments and commercial sites.
           </p>
         </div>
 

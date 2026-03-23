@@ -138,7 +138,7 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-primary-foreground/10">
-        <div className="container border-b border-primary-foreground/10 py-5">
+        <div className="container border-b border-primary-foreground/10 py-6">
           <MainlineGroupLinks items={groupLinks} variant="footerOnPrimary" />
         </div>
         <div className="container flex flex-col items-center justify-between gap-4 py-6 md:flex-row">

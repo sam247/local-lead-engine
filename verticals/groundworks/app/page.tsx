@@ -31,10 +31,10 @@ export default function HomePage() {
       <section className="section-padding bg-background">
         <div className="container max-w-3xl text-center">
           <h2 className="mb-3 font-display text-3xl font-bold text-foreground md:text-4xl">
-            Need a Groundworks Quote?
+            Need Early Groundworks Advice?
           </h2>
           <p className="mb-6 text-muted-foreground">
-            Send us your site details and project requirements. We will come back with a detailed quote and programme.
+            Share your scope and site constraints for practical advice on sequencing, enabling works and programme risks before full pricing.
           </p>
           <Button size="lg" asChild>
             <Link href="/contact">Get a Quote</Link>

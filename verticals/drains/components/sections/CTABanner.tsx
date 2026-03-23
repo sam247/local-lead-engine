@@ -8,16 +8,16 @@ const CTABanner = () => {
       <div className="container">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="mb-4 font-display text-3xl font-bold md:text-4xl text-primary">
-            Need a Drainage Expert?
+            Request Your Drainage Quote
           </h2>
           <p className="mb-8 text-lg text-primary">
-            Get in touch today for a free, no-obligation quote. Our team is ready to help with all your drainage needs — 24/7.
+            Send your issue details for a clear, no-obligation drainage quotation with recommended next steps from our team.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button size="lg" variant="highlight" className="text-base" asChild>
               <Link href="/contact">
-                Get a Free Quote
+                Request a Quote
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

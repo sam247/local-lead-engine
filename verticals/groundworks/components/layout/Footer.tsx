@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
+import { Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
 import { companyInfo, services, locations } from "@/lib/data";
 import { verticalConfig } from "@/config";
 import { MainlineGroupLinks } from "engine";
@@ -93,13 +93,6 @@ const Footer = () => {
             <h3 className="mb-4 font-display text-lg font-semibold">Contact Us</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
-                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
-                  <Phone className="h-4 w-4 shrink-0" />
-                  Call Now
-                </a>
-              </li>
-              <li className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
                 <a href={`mailto:${companyInfo.email}`} className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
                   {companyInfo.email}
@@ -135,7 +128,7 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-primary-foreground/10">
-        <div className="container border-b border-primary-foreground/10 py-5">
+        <div className="container border-b border-primary-foreground/10 py-6">
           <MainlineGroupLinks items={groupLinks} variant="footerOnPrimary" />
         </div>
         <div className="container flex flex-col items-center justify-between gap-4 py-6 md:flex-row">

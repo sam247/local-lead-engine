@@ -32,7 +32,8 @@ const ServicesGrid = () => {
             Our Groundworks Services
           </h2>
           <p className="text-muted-foreground">
-            Piling, excavation, site clearance, foundations and enabling works for commercial and residential projects.
+            We support projects from pre-construction enabling works through to foundation and structural ground package delivery.
+            Typical scopes include piling platforms, bulk excavation, concrete foundations and site clearance for commercial and residential schemes.
           </p>
         </div>
 

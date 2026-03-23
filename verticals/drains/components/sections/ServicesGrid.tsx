@@ -45,7 +45,8 @@ const ServicesGrid = () => {
             Our Core Drainage Services
           </h2>
           <p className="text-muted-foreground">
-            Comprehensive drain repair and drainage solutions tailored to your property's needs.
+            We cover emergency repairs, planned remediation and preventative drainage works for homes, blocks and commercial premises.
+            Each service is scoped around the fault condition, access constraints and long-term reliability of the network.
           </p>
         </div>
 

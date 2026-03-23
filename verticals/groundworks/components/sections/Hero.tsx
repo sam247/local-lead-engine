@@ -145,7 +145,10 @@ const Hero = () => {
               Piling, Excavation &amp; Foundation Contractors Across the UK
             </h1>
             <p className="mb-4 text-base text-primary-foreground/80 md:text-lg">
-              Commercial groundworks contractors providing piling, excavation, site clearance and foundation construction for housing, commercial and industrial projects.
+              We deliver piling, excavation, foundation construction, enabling works and site preparation for live and new-build developments.
+            </p>
+            <p className="mb-4 text-base text-primary-foreground/80 md:text-lg">
+              Main contractors, developers and site managers use our teams across UK project locations where programme certainty matters.
             </p>
             <p className="mb-8 text-xs text-primary-foreground/60">
               <Link href="/about" className="underline-offset-2 hover:underline">

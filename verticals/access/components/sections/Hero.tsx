@@ -135,7 +135,10 @@ const Hero = () => {
               Commercial Access Control and Security Systems
             </h1>
             <p className="mb-4 text-base text-primary-foreground/80 md:text-lg">
-              Access control, CCTV and integrated security systems for hospitals, data centres and commercial facilities.
+              We design and install access control, CCTV and integrated security systems for operationally demanding sites.
+            </p>
+            <p className="mb-4 text-base text-primary-foreground/80 md:text-lg">
+              Our work supports facilities managers, estates teams and business owners across London and wider UK service areas.
             </p>
             <p className="mb-8 text-xs text-primary-foreground/60">
               <Link href="/about" className="underline-offset-2 hover:underline">

@@ -28,7 +28,8 @@ const ServicesGrid = () => {
             Our Core Security Services
           </h2>
           <p className="text-muted-foreground">
-            Access control, CCTV and integrated security systems for commercial and public-sector sites.
+            We deliver access, CCTV and integrated security packages for business-critical sites with compliance and operational uptime requirements.
+            Projects include new fit-outs, phased upgrades and multi-system integration for healthcare, education, logistics and commercial estates.
           </p>
         </div>
 

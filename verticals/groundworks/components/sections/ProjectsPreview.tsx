@@ -17,7 +17,7 @@ const ProjectsPreview = () => {
             Recent Projects
           </h2>
           <p className="text-muted-foreground">
-            A selection of our completed groundworks projects across the UK.
+            These project snapshots show real foundations, piling and excavation packages delivered across mixed groundworks programmes.
           </p>
         </div>
 

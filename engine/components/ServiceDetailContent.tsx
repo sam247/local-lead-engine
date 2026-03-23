@@ -13,6 +13,7 @@ import { ProcessTimeline } from "./ProcessTimeline";
 import { TrustReassuranceStrip } from "./TrustReassuranceStrip";
 import { ActionPanel } from "./ActionPanel";
 import { getImageAlt } from "../utils/imageAlt";
+import { getVariantIndex } from "../lib/contentVariants";
 import type { Service, Location, VerticalConfig } from "../types";
 
 const DEFAULT_INDUSTRIES = [
@@ -23,6 +24,161 @@ const DEFAULT_INDUSTRIES = [
   "Manufacturing sites",
   "Commercial property",
 ];
+
+const CTA_BY_VERTICAL: Record<
+  string,
+  { discuss: string[]; request: string[]; sidebar: string[]; actionHeading: string[] }
+> = {
+  drains: {
+    discuss: ["Get drainage advice", "Speak to our team about your drainage plans"],
+    request: ["Request a drainage quote", "Get a drainage quote"],
+    sidebar: ["Request a drainage quote", "Get a drainage quote"],
+    actionHeading: ["Get drainage advice for your project", "Discuss your drainage project requirements"],
+  },
+  surveys: {
+    discuss: ["Ask about the right survey", "Speak to our team about your survey needs"],
+    request: ["Request a survey quote", "Get a survey quote"],
+    sidebar: ["Request a survey quote", "Get a survey quote"],
+    actionHeading: ["Ask about the right survey for your site", "Discuss your survey requirements"],
+  },
+  access: {
+    discuss: ["Discuss your security requirements", "Speak to our team about your security plans"],
+    request: ["Request a system quote", "Get a system quote"],
+    sidebar: ["Request a system quote", "Get a system quote"],
+    actionHeading: ["Discuss your security requirements", "Discuss your security project requirements"],
+  },
+  groundworks: {
+    discuss: ["Get advice on your project", "Speak to our team about your plans"],
+    request: ["Request a groundworks quote", "Get a groundworks quote"],
+    sidebar: ["Request a groundworks quote", "Get a groundworks quote"],
+    actionHeading: ["Get advice on your groundworks project", "Discuss your groundworks project requirements"],
+  },
+};
+
+const SERVICE_EXTRA_HEADINGS = [
+  "What affects cost and timelines",
+  "Factors that can influence your project",
+  "Things that can impact the work",
+] as const;
+
+function getServiceFamily(service: Service): "drains" | "surveys" | "access" | "groundworks" | "generic" {
+  const slug = service.slug.toLowerCase();
+  const title = service.title.toLowerCase();
+  if (slug.includes("survey") || title.includes("survey")) return "surveys";
+  if (slug.includes("drain") || slug.includes("drainage") || title.includes("drain")) return "drains";
+  if (
+    slug.includes("access") ||
+    slug.includes("cctv") ||
+    slug.includes("security") ||
+    slug.includes("camera") ||
+    title.includes("access") ||
+    title.includes("security")
+  ) {
+    return "access";
+  }
+  if (
+    slug.includes("groundworks") ||
+    slug.includes("piling") ||
+    slug.includes("excavation") ||
+    slug.includes("foundation") ||
+    slug.includes("enabling")
+  ) {
+    return "groundworks";
+  }
+  return "generic";
+}
+
+function buildFaqItems(service: Service, verticalId: string, variantIndex: number): FAQItem[] {
+  const title = service.titleSingular ?? service.title;
+  const processHint = service.process[0]?.toLowerCase() ?? "an initial assessment";
+  const family = getServiceFamily(service);
+  const familyHints: Record<typeof family, string> = {
+    drains: "drain condition, access to runs, and whether related repair work is needed",
+    surveys: "required outputs, site access, and level of detail needed for project decisions",
+    access: "site operations, integration scope, and access constraints during installation",
+    groundworks: "ground conditions, logistics, and dependencies with other construction packages",
+    generic: "site conditions, access constraints, and project scope",
+  };
+  const variants = [
+    [
+      {
+        question: `What affects the scope of ${title.toLowerCase()}?`,
+        answer: `Scope is set by project requirements, site constraints, and what is needed to deliver a reliable long-term result.`,
+      },
+      {
+        question: `What should be prepared before ${title.toLowerCase()} starts?`,
+        answer: `Prepare access details, confirm constraints, and align dependencies so ${processHint} can move straight into clear delivery planning.`,
+      },
+      {
+        question: `What typically influences programme length?`,
+        answer: `Programme length mainly reflects complexity, access windows, and the amount of supporting work around the core service.`,
+      },
+    ],
+    [
+      {
+        question: `How is the right approach selected for ${title.toLowerCase()}?`,
+        answer: `The approach is selected from site findings and project goals so the method matches practical conditions rather than assumptions.`,
+      },
+      {
+        question: `What can change the amount of work involved?`,
+        answer: `Work volume can change with existing condition, required outcomes, and whether related elements need to be addressed together.`,
+      },
+      {
+        question: `What should teams align on before delivery?`,
+        answer: `Teams should align on access, sequencing, responsibilities, and handover expectations before the main works begin.`,
+      },
+    ],
+    [
+      {
+        question: `What practical factors should be reviewed first?`,
+        answer: `Review ${familyHints[family]} early to keep scope realistic and avoid unnecessary rework.`,
+      },
+      {
+        question: `How can project risk be reduced before starting?`,
+        answer: `Risk is reduced by confirming scope, constraints, and sequencing before committing to delivery dates.`,
+      },
+      {
+        question: `When should requirements be finalised?`,
+        answer: `Requirements are best finalised during initial planning so the chosen method can be delivered consistently from start to handover.`,
+      },
+    ],
+  ] as const;
+  return [...variants[variantIndex]];
+}
+
+function buildExtraSectionParagraph(
+  service: Service,
+  family: ReturnType<typeof getServiceFamily>
+): string[] {
+  const byFamily: Record<ReturnType<typeof getServiceFamily>, string[]> = {
+    drains: [
+      "Drainage cost and timing usually depend on drain condition, access to the affected run, and whether supporting repair or reinstatement is required alongside the core work.",
+      "For drainage projects, programme certainty improves when access constraints and any adjacent remedial works are scoped before delivery begins.",
+      "The biggest drainage timeline drivers are site access, defect complexity, and how much surrounding work is needed to complete the fix properly.",
+    ],
+    surveys: [
+      "Survey timelines are influenced by site access, required level of detail, and the format/turnaround expected for deliverables used in planning or design.",
+      "Survey scope can vary with project stage, data specification, and constraints on capture windows, all of which affect delivery pace.",
+      "For survey projects, complexity, access permissions, and reporting requirements are the main factors shaping programme and effort.",
+    ],
+    access: [
+      "Security project timelines usually reflect site operations, installation access windows, and integration complexity with existing systems.",
+      "Access and security scope can expand when integration, phased rollout needs, or live-site constraints require additional coordination.",
+      "The main influences on delivery are site condition, system complexity, and how installation is sequenced to minimise operational disruption.",
+    ],
+    groundworks: [
+      "Groundworks programmes are mainly influenced by ground conditions, site logistics, and sequencing with structural or utility packages.",
+      "Groundworks scope and timing can shift with access constraints, enabling requirements, and the complexity of supporting site preparation activities.",
+      "For groundworks projects, complexity, mobilisation constraints, and interdependencies with adjacent trades are key delivery factors.",
+    ],
+    generic: [
+      "Cost and timeline are typically influenced by site conditions, access constraints, complexity, and total scope required for a complete outcome.",
+      "Project duration and effort usually vary with site access, level of complexity, and how this scope interacts with related works.",
+      "The most common programme drivers are site constraints, delivery complexity, and the amount of coordinated work needed around the core service.",
+    ],
+  };
+  return byFamily[family];
+}
 
 export interface SymptomLink {
   slug: string;
@@ -102,6 +258,61 @@ export function ServiceDetailContent({
     "Reliable scheduling with minimal disruption",
     "Experienced teams aligned to site requirements",
   ];
+  const ctaCopy = CTA_BY_VERTICAL[verticalConfig.verticalId] ?? {
+    discuss: ["Discuss your requirements"],
+    request: ["Request a quote"],
+    sidebar: ["Request a quote"],
+    actionHeading: [`Discuss your ${displayTitle.toLowerCase()} requirements`],
+  };
+  const overviewVariant = getVariantIndex(
+    `overview:${verticalConfig.verticalId}:${service.slug}`,
+    3
+  );
+  const whenUsedVariant = getVariantIndex(
+    `when-used:${verticalConfig.verticalId}:${service.slug}`,
+    3
+  );
+  const reassuranceVariant = getVariantIndex(
+    `reassurance:${verticalConfig.verticalId}:${service.slug}`,
+    3
+  );
+  const ctaVariant = getVariantIndex(`cta:${verticalConfig.verticalId}:${service.slug}`, 2);
+  const faqVariant = getVariantIndex(`${service.slug}:${verticalConfig.verticalId}-faq`, 3);
+  const extraVariant = getVariantIndex(`${service.slug}:${verticalConfig.verticalId}-extra`, 3);
+  const processSteps = service.process.slice(0, 5);
+  const generatedFaqs = buildFaqItems(service, verticalConfig.verticalId, faqVariant);
+  const shouldAppendOneFaq = faqs.length >= 3;
+  const mergedFaqs = [...faqs, ...(shouldAppendOneFaq ? generatedFaqs.slice(0, 1) : generatedFaqs.slice(0, 2))].slice(0, 5);
+  const serviceFamily = getServiceFamily(service);
+  const extraParagraph = buildExtraSectionParagraph(service, serviceFamily)[extraVariant];
+  const whenUsedParagraphs = [
+    [
+      "This service is commonly used when existing conditions create uncertainty around cost, scope, or programme and a clear technical route is needed before committing to work.",
+      "It is also commissioned during upgrades, refurbishments, and new-build stages where sequencing, access, and compliance requirements must be addressed early to avoid delays.",
+    ],
+    [
+      "Most clients request this service when recurring issues, changing site requirements, or planned development work make a straightforward fix unlikely without proper assessment.",
+      "It is particularly useful where project teams need clear options, documented next steps, and a delivery plan that aligns with other trades and milestones.",
+    ],
+    [
+      "Teams usually bring in this service when the priority is reliable outcomes over short-term patching, especially on sites where conditions can change quickly.",
+      "It is frequently part of broader project scopes involving planning, remedial work, or staged improvements where decisions need to be practical and evidence-led.",
+    ],
+  ][whenUsedVariant];
+  const overviewDescriptions = [
+    "This service is designed to deliver a practical outcome: resolve the root issue, protect long-term performance, and keep delivery predictable from first assessment to handover.",
+    "The focus of this service is straightforward: define the right scope, deliver it safely, and achieve a reliable result that avoids unnecessary repeat work.",
+    "This service helps turn uncertainty into a clear delivery plan so projects can progress with dependable outcomes and fewer avoidable delays.",
+  ];
+  const reassuranceCopy = [
+    "Our approach focuses on selecting the right method based on site conditions and project requirements, then documenting each stage so decisions stay clear throughout delivery.",
+    "We prioritise method selection around real site constraints and project goals, with clear documentation to keep delivery aligned from start to finish.",
+    "Each project is delivered using the most suitable method for site conditions and requirements, supported by clear reporting at every stage.",
+  ];
+  const discussCta = ctaCopy.discuss[ctaVariant % ctaCopy.discuss.length];
+  const requestCta = ctaCopy.request[ctaVariant % ctaCopy.request.length];
+  const sidebarCta = ctaCopy.sidebar[ctaVariant % ctaCopy.sidebar.length];
+  const actionHeading = ctaCopy.actionHeading[ctaVariant % ctaCopy.actionHeading.length];
 
   const breadcrumbs = [
     { name: "Home", url: "/" },
@@ -152,7 +363,7 @@ export function ServiceDetailContent({
             <div className="lg:col-span-2">
               <SectionIntro
                 title="Overview"
-                description={`This service is designed to solve the underlying issue quickly and safely, while keeping disruption, uncertainty, and repeat costs to a minimum.`}
+                description={overviewDescriptions[overviewVariant]}
               />
               <p className="mb-8 text-muted-foreground">{service.description}</p>
               {overviewExtra && <div className="mb-8">{overviewExtra}</div>}
@@ -166,6 +377,14 @@ export function ServiceDetailContent({
                 </figure>
               )}
               <TrustReassuranceStrip points={trustPoints} />
+              <SectionIntro
+                title="When this service is used"
+                description="These are the situations where this service typically adds the most value and helps prevent avoidable rework."
+              />
+              <div className="mb-8 space-y-4 text-muted-foreground">
+                <p>{whenUsedParagraphs[0]}</p>
+                <p>{whenUsedParagraphs[1]}</p>
+              </div>
 
               {serviceTypes.length > 0 && (
                 <>
@@ -235,7 +454,16 @@ export function ServiceDetailContent({
                   "Each stage is structured to keep decisions clear and delivery predictable from first assessment to sign-off."
                 }
               />
-              <ProcessTimeline steps={service.process} />
+              <ProcessTimeline steps={processSteps} />
+              <div className="mb-8 rounded-lg border border-border bg-secondary/40 p-4 text-sm text-muted-foreground">
+                {reassuranceCopy[reassuranceVariant]}
+              </div>
+              <div className="mb-8">
+                <h3 className="mb-3 font-display text-xl font-bold">
+                  {SERVICE_EXTRA_HEADINGS[extraVariant]}
+                </h3>
+                <p className="text-muted-foreground">{extraParagraph}</p>
+              </div>
 
               <SectionIntro
                 title="Industries We Work With"
@@ -367,9 +595,9 @@ export function ServiceDetailContent({
               <ActionPanel
                 companyInfo={verticalConfig.companyInfo}
                 contactPath={contactPath}
-                heading={`Discuss your ${displayTitle.toLowerCase()} requirements`}
+                heading={actionHeading}
                 body="Share your site details and goals. We will recommend the right scope and provide a clear quote."
-                ctaText="Book a Site Survey"
+                ctaText={discussCta}
               />
             </div>
 
@@ -407,20 +635,23 @@ export function ServiceDetailContent({
                 </div>
               </div>
               <Button asChild className="w-full" variant="highlight">
-                <Link href={contactPath}>Get a Free Quote</Link>
+                <Link href={contactPath}>{sidebarCta}</Link>
               </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {faqs.length > 0 && (
-        <FAQSchema items={faqs} title={`${service.title} FAQ`} />
+      {mergedFaqs.length > 0 && (
+        <FAQSchema items={mergedFaqs} title="Frequently Asked Questions" />
       )}
 
       <CTABanner
         companyInfo={verticalConfig.companyInfo}
         contactPath={contactPath}
+        heading={secondCtaHeading}
+        body={secondCtaBody}
+        ctaText={secondCtaButtonText ?? requestCta}
       />
     </>
   );

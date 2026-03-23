@@ -17,7 +17,7 @@ const ProjectsPreview = () => {
             Recent Projects
           </h2>
           <p className="text-muted-foreground">
-            Take a look at some of our recently completed survey projects across London and the South East.
+            These examples show recent survey projects across different property types, from planning-led reports to construction support surveys.
           </p>
         </div>
 

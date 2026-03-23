@@ -31,10 +31,10 @@ export default function HomePage() {
         <div className="container max-w-3xl">
           <div className="mb-6 text-center">
             <h2 className="mb-3 font-display text-3xl font-bold text-foreground md:text-4xl">
-              Need a Security System Quote?
+              Planning a Security Upgrade?
             </h2>
             <p className="text-muted-foreground">
-              Our team designs and installs access control, CCTV and perimeter security for commercial and public-sector sites. Get a free, no-obligation consultation.
+              Speak to our team first to review site risks, compliance needs and integration options before you request a final system quotation.
             </p>
           </div>
           <InspectionCTA />
