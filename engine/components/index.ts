@@ -18,13 +18,12 @@ export { ContentRelatedLinks, type ContentRelatedLinksProps } from "./ContentRel
 export { CTABanner, type CTABannerProps } from "./CTABanner";
 export { MainlineGroupLinks, type MainlineGroupLinksProps } from "./MainlineGroupLinks";
 export { GroupFooter, type GroupFooterProps } from "./footer/GroupFooter";
+export { ResourcesMenu, type ResourcesMenuProps } from "./navigation/ResourcesMenu";
 export {
-  ResourcesMenu,
   getDefaultResourcesMenuLabels,
   getResourcesMenuFlatLinks,
-  type ResourcesMenuProps,
   type ResourcesMenuLabels,
-} from "./navigation/ResourcesMenu";
+} from "./navigation/resources-menu-utils";
 export { TrustPoints, type TrustPointsProps } from "./home/TrustPoints";
 export { HomepageArticles, type HomepageArticlesProps, type HomepageArticleCard } from "./home/HomepageArticles";
 export { GuidePage, type GuidePageProps, type GuidePageSection } from "./content/GuidePage";
