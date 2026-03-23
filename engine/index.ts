@@ -3,7 +3,6 @@ export { getVariantIndex } from "./lib/contentVariants";
 export * from "./utils";
 export * from "./schema";
 export * from "./validation";
-export * from "./tools";
 export * from "./data/location-neighbours";
 export { locations } from "./data/locations";
 export * from "./data/projects";
