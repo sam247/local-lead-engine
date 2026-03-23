@@ -30,6 +30,12 @@ export const KEY_SERVICE_DETAIL_LOCATION_IDS: readonly string[] = [
   "sheffield",
   "slough",
   "southampton",
+  "basildon",
+  "braintree",
+  "brentwood",
+  "chelmsford",
+  "colchester",
+  "essex",
   "swansea",
   "watford",
 ].sort((a, b) => a.localeCompare(b));

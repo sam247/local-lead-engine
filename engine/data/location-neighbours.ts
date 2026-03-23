@@ -5,6 +5,7 @@
 import { getCountyPeerLocationIds } from "./uk-location-hierarchy";
 
 export const locationNeighbours: Record<string, string[]> = {
+  essex: ["chelmsford", "colchester", "basildon", "brentwood", "braintree", "southend"],
   london: ["camden", "islington", "westminster", "kensington", "fulham"],
   watford: ["st-albans", "hemel-hempstead", "bushey", "rickmansworth", "radlett"],
   manchester: ["salford", "trafford", "stockport", "oldham", "rochdale"],

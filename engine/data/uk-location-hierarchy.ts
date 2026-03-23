@@ -82,7 +82,11 @@ const UK_REGIONS: readonly RegionDef[] = [
   {
     regionName: "East of England",
     counties: [
-      { countyName: "Essex", countySlug: "essex", locationIds: ["chelmsford", "colchester", "southend"] },
+      {
+        countyName: "Essex",
+        countySlug: "essex",
+        locationIds: ["basildon", "braintree", "brentwood", "chelmsford", "colchester", "essex", "southend"],
+      },
       { countyName: "Cambridgeshire", countySlug: "cambridgeshire", locationIds: ["cambridge", "peterborough"] },
       { countyName: "Bedfordshire", countySlug: "bedfordshire", locationIds: ["bedford", "luton"] },
       { countyName: "Norfolk", countySlug: "norfolk", locationIds: ["norwich"] },
@@ -223,6 +227,8 @@ export const FOOTER_LOCATION_LINK_PRIORITY: readonly string[] = [
   "bournemouth",
   "norwich",
   "chelmsford",
+  "colchester",
+  "basildon",
   "swansea",
   "aberdeen",
 ] as const;
