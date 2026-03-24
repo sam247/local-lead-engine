@@ -101,25 +101,79 @@ export function InfoPage({
         <div className="container">
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <p className="mb-8 text-lg text-muted-foreground">{page.intro}</p>
-              <h2 className="mb-4 font-display text-2xl font-bold">What to Look For</h2>
+              <h2 className="mb-4 font-display text-2xl font-bold">Contextual opening</h2>
+              <p className="mb-6 text-lg text-muted-foreground">{page.contextualOpening ?? page.intro}</p>
+              <h2 className="mb-4 font-display text-2xl font-bold">When this is needed</h2>
+              <p className="mb-8 text-muted-foreground">
+                {page.whenNeeded ??
+                  `Teams usually investigate ${page.title.toLowerCase()} when early warning signs start affecting reliability, compliance, or project timelines. This is often the point where decision makers move from observation into scoped technical action.`}
+              </p>
+              <h2 className="mb-4 font-display text-2xl font-bold">Common scenarios and signs</h2>
+              <p className="mb-3 text-muted-foreground">
+                The symptoms below are the most common triggers we see before diagnosis and repair planning.
+              </p>
               <ul className="mb-8 space-y-2">
-                {page.signs.map((sign) => (
+                {page.signs.slice(0, 5).map((sign) => (
                   <li key={sign} className="flex items-start gap-2">
                     <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                     <span>{sign}</span>
                   </li>
                 ))}
               </ul>
-              <h2 className="mb-4 font-display text-2xl font-bold">How We Diagnose the Problem</h2>
-              <p className="mb-4 text-muted-foreground">{page.diagnosis}</p>
+              <h2 className="mb-4 font-display text-2xl font-bold">What the work involves</h2>
+              <p className="mb-4 text-muted-foreground">{page.workInvolves ?? page.diagnosis}</p>
               <MidContentCTA
                 companyInfo={companyInfo}
                 message={`Think you might have ${page.title.toLowerCase()}? A professional inspection will confirm the diagnosis.`}
                 buttonLink={contactPath}
               />
-              <h2 className="mb-4 font-display text-2xl font-bold">How We Fix It</h2>
+              <h2 className="mb-4 font-display text-2xl font-bold">How we fix it</h2>
               <p className="mb-8 text-muted-foreground">{page.resolution}</p>
+              <h2 className="mb-4 font-display text-2xl font-bold">What affects cost and complexity</h2>
+              <p className="mb-8 text-muted-foreground">
+                {page.costComplexity ??
+                  "Cost and complexity usually depend on access constraints, total scope, existing condition, and whether related works need to be coordinated in the same programme window."}
+              </p>
+              <h2 className="mb-4 font-display text-2xl font-bold">Process and timeline</h2>
+              <p className="mb-3 text-muted-foreground">
+                We keep delivery structured so scope, sequencing, and sign-off remain clear.
+              </p>
+              <ol className="mb-8 space-y-3">
+                {(page.processStepsDetailed ?? [
+                  { title: "Initial assessment", outcome: "Root cause and scope are confirmed." },
+                  { title: "Method planning", outcome: "Practical repair strategy is agreed." },
+                  { title: "Delivery and verification", outcome: "Work is completed and validated." },
+                ]).slice(0, 5).map((step, idx) => (
+                  <li key={`${step.title}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
+                    <p className="font-medium">
+                      Step {idx + 1}: {step.title}
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">Outcome: {step.outcome}</p>
+                  </li>
+                ))}
+              </ol>
+              {(page.topicLocationLink || page.serviceLocationLink) && (
+                <p className="mb-8 text-muted-foreground">
+                  {page.topicLocationLink && (
+                    <>
+                      For local context, see{" "}
+                      <Link href={page.topicLocationLink.href} className="text-primary hover:underline">
+                        {page.topicLocationLink.linkText}
+                      </Link>
+                      {page.serviceLocationLink ? " or " : "."}
+                    </>
+                  )}
+                  {page.serviceLocationLink && (
+                    <>
+                      review{" "}
+                      <Link href={page.serviceLocationLink.href} className="text-primary hover:underline">
+                        {page.serviceLocationLink.linkText}
+                      </Link>
+                      .
+                    </>
+                  )}
+                </p>
+              )}
               {relatedPageLinks.length > 0 && (
                 <div className="mb-8 rounded-lg border border-border bg-secondary/50 p-6">
                   <h3 className="mb-4 font-display text-lg font-bold">

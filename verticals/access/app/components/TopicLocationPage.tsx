@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Button } from "engine/components/ui/button";
+import { TopicLocationPage as EngineTopicLocationPage } from "engine/components";
 import type { ProgrammaticTopic } from "@/data/programmaticTopicTypes";
 import type { Location } from "engine";
 import { TOPIC_HUB_PATH, TOPIC_PAGE_SERVICES } from "@/lib/topicLocationConfig";
@@ -15,106 +14,57 @@ type Props = {
 
 export function TopicLocationPage({
   topic,
-  location,
+  location, // kept for route compatibility
   topicSlug,
   locationSlug,
   topicHubPath,
 }: Props) {
   const primaryServiceSlug = topic.relatedServiceSlugs[0];
   const primaryServiceLocationPath = primaryServiceSlug ? `/${primaryServiceSlug}/${locationSlug}` : null;
+  const resolvedHubPath = topicHubPath || TOPIC_HUB_PATH[topic.slug] || "/cctv-guides";
+  const processStepsDetailed = [
+    {
+      title: "Site and requirements review",
+      outcome: `Security objectives, constraints, and delivery priorities are defined for ${location.name}.`,
+    },
+    {
+      title: "Scope and system planning",
+      outcome: "System architecture, installation approach, and integration requirements are agreed.",
+    },
+    {
+      title: "Installation and configuration",
+      outcome: "Core infrastructure and devices are installed to match site operations.",
+    },
+    {
+      title: "Testing and handover",
+      outcome: "Coverage, access rules, and user workflows are validated before sign-off.",
+    },
+  ];
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <nav className="mb-6 text-sm text-muted-foreground">
-        <Link href="/" className="hover:underline">
-          Home
-        </Link>
-        <span className="mx-2">/</span>
-        <Link href={topicHubPath} className="hover:underline">
-          {topic.title}
-        </Link>
-        <span className="mx-2">/</span>
-        <span>{topic.title} in {location.name}</span>
-      </nav>
-
-      <h1 className="mb-4 font-display text-3xl font-bold">
-        {topic.title} in {location.name}
-      </h1>
-
-      <p className="mb-6 max-w-3xl text-lg text-muted-foreground">
-        {topic.intro} Businesses in {location.name} and {location.area} often look for {topic.title.toLowerCase()} to support security, operations and compliance. This page summarises what you need to know and how we can help in your area.
-      </p>
-
-      <section className="mb-8">
-        <h2 className="mb-3 font-display text-xl font-semibold">About {topic.title}</h2>
-        <p className="max-w-3xl text-muted-foreground">{topic.explanation}</p>
-      </section>
-
-      {topic.commonProblems.length > 0 && (
-        <section className="mb-8">
-          <h2 className="mb-3 font-display text-xl font-semibold">Common problems businesses face</h2>
-          <ul className="list-disc space-y-2 pl-6 text-muted-foreground">
-            {topic.commonProblems.map((problem, i) => (
-              <li key={i}>{problem}</li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {topic.sectorUseCases.length > 0 && (
-        <section className="mb-8">
-          <h2 className="mb-3 font-display text-xl font-semibold">Sector use cases</h2>
-          <ul className="list-disc space-y-2 pl-6 text-muted-foreground">
-            {topic.sectorUseCases.map((useCase, i) => (
-              <li key={i}>{useCase}</li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      <section className="mb-8">
-        <p className="max-w-3xl text-muted-foreground">
-          We provide {topic.title.toLowerCase()} and related security solutions across {location.name} and {location.area}. Our team designs and installs systems for commercial and public-sector sites, with free no-obligation site surveys and quotes.
-        </p>
-      </section>
-
-      <section className="mb-8 flex flex-wrap gap-4">
-        <Link href={topicHubPath}>
-          <Button variant="outline">View topic guide: {topic.title}</Button>
-        </Link>
-        {primaryServiceLocationPath && (
-          <Link href={primaryServiceLocationPath}>
-            <Button>{topic.ctaText}</Button>
-          </Link>
-        )}
-      </section>
-
-      <section className="border-t pt-8">
-        <h2 className="mb-4 font-display text-2xl font-bold">
-          Security services in {location.name}
-        </h2>
-        <p className="mb-4 text-muted-foreground">
-          We offer the following security and access services in {location.name} and {location.area}. Each links to the service page for your area.
-        </p>
-        <ul className="flex flex-wrap gap-x-6 gap-y-2">
-          {TOPIC_PAGE_SERVICES.map((service) => (
-            <li key={service.slug}>
-              <Link
-                href={`/${service.slug}/${locationSlug}`}
-                className="text-primary hover:underline"
-              >
-                {service.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="mt-8">
-        <Link href="/contact" className="text-primary hover:underline">
-          Contact {verticalConfig.companyInfo.name} for a quote
-        </Link>
-      </section>
-    </main>
+    <EngineTopicLocationPage
+      topicTitle={topic.title}
+      topicSlug={topicSlug}
+      location={location}
+      locationSlug={locationSlug}
+      topicHubPath={resolvedHubPath}
+      contextualOpening={`${topic.intro} In ${location.name} and ${location.area}, this is usually considered where operations, risk, and compliance need to be aligned before installation decisions are locked in.`}
+      whenNeeded={`This is typically needed when businesses are comparing options for site coverage, access control, and integration, especially during refurbishments, relocations, or operational upgrades where delayed decisions can increase risk.`}
+      workInvolves={topic.explanation}
+      commonScenarios={topic.commonProblems}
+      costComplexity={`Cost and complexity are mainly influenced by site access, scale of coverage, integration with existing systems, and operational constraints such as installation windows and business continuity requirements in ${location.name}.`}
+      typicalUseCases={topic.sectorUseCases}
+      processStepsDetailed={processStepsDetailed}
+      bodyContextLine={`We deliver ${topic.title.toLowerCase()} work across ${location.name} and ${location.area}, and this often sits alongside broader service scopes such as ${TOPIC_PAGE_SERVICES[0]?.title.toLowerCase() || "security upgrades"} and access control deployment.`}
+      servicesHeading="Security services"
+      servicesIntro={`We offer the following security and access services in ${location.name} and ${location.area}. Each links to the service page for your area.`}
+      serviceLinks={TOPIC_PAGE_SERVICES.map((service) => ({ slug: service.slug, title: service.title }))}
+      primaryCtaText={topic.ctaText}
+      primaryCtaHref={primaryServiceLocationPath ?? "/contact"}
+      secondaryCtaText={`View topic guide: ${topic.title}`}
+      secondaryCtaHref={resolvedHubPath}
+      contactQuoteText={`contact ${verticalConfig.companyInfo.name} for a quote`}
+      companyName={verticalConfig.companyInfo.name}
+    />
   );
 }

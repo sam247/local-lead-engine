@@ -91,9 +91,13 @@ export function HubPage({
       <section className="section-padding">
         <div className="container">
           <SectionIntro
-            title="Guides in this hub"
-            description="Start with a featured guide below, then explore the full collection to compare options and next steps."
+            title="Contextual opening"
+            description={`This hub helps you evaluate ${hub.title.toLowerCase()} decisions with practical guidance before moving into live project delivery.`}
           />
+          <p className="mb-8 max-w-3xl text-muted-foreground">
+            Start with the featured guides below to understand when each route is appropriate, what affects scope and
+            cost, and which service path is likely to fit your site or project stage.
+          </p>
           {keyServices.length > 0 && (
             <ActionPanel
               companyInfo={companyInfo}
@@ -133,7 +137,7 @@ export function HubPage({
             <>
               <SectionIntro
                 title="More related topics"
-                description="Use these supporting guides to deepen your understanding or compare approaches before booking work."
+                description="Use these supporting guides to compare options, reduce project risk, and refine your next step."
               />
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {remainingPages.map((page) => (

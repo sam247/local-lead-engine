@@ -110,6 +110,12 @@ export function ProblemPage({
             {problem.title} – Causes and Repair
           </h1>
 
+          <h2 className="mb-2 font-display text-xl font-bold">Contextual opening</h2>
+          <p className="mb-8 text-muted-foreground">
+            {problem.contextualOpening ??
+              `${problem.title} is usually investigated when visible symptoms begin affecting reliability, safety, or project delivery. Early diagnosis helps confirm whether this is an isolated issue or part of a wider condition.`}
+          </p>
+
           {allProblems.length > 0 && diagnosisSectionTitle && (
             <>
               <h2 className="mb-2 font-display text-xl font-bold">{diagnosisSectionTitle}</h2>
@@ -131,6 +137,12 @@ export function ProblemPage({
           <h2 className="mb-2 font-display text-xl font-bold">{causesSectionTitle}</h2>
           <p className="mb-8 text-muted-foreground">{problem.causes}</p>
 
+          <h2 className="mb-2 font-display text-xl font-bold">When this is needed</h2>
+          <p className="mb-8 text-muted-foreground">
+            {problem.whenNeeded ??
+              "This is typically needed when recurring symptoms, project risk, or compliance concerns mean a patch repair is no longer a reliable option."}
+          </p>
+
           {problem.quickChecks && (
             <>
               <h2 className="mb-2 font-display text-xl font-bold">Quick checks you can try</h2>
@@ -146,7 +158,46 @@ export function ProblemPage({
           )}
 
           <h2 className="mb-2 font-display text-xl font-bold">How it is normally fixed</h2>
-          <p className="mb-8 text-muted-foreground">{problem.howFixed}</p>
+          <p className="mb-8 text-muted-foreground">{problem.workInvolves ?? problem.howFixed}</p>
+
+          <h2 className="mb-2 font-display text-xl font-bold">What affects cost and complexity</h2>
+          <p className="mb-8 text-muted-foreground">
+            {problem.costComplexity ??
+              "Cost and complexity usually depend on access, scale of remedial work, existing condition, and whether supporting works are needed to complete the fix safely."}
+          </p>
+
+          {problem.typicalUseCases && problem.typicalUseCases.length > 0 && (
+            <>
+              <h2 className="mb-2 font-display text-xl font-bold">Typical scenarios</h2>
+              <p className="mb-3 text-muted-foreground">
+                These are the most common project contexts where this issue is resolved.
+              </p>
+              <ul className="mb-8 list-inside list-disc space-y-1 text-muted-foreground">
+                {problem.typicalUseCases.slice(0, 5).map((scenario) => (
+                  <li key={scenario}>{scenario}</li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {(problem.processStepsDetailed?.length ?? 0) > 0 && (
+            <>
+              <h2 className="mb-2 font-display text-xl font-bold">Process and timeline</h2>
+              <p className="mb-3 text-muted-foreground">
+                Work is delivered in stages so decisions, safety, and outcomes stay clear.
+              </p>
+              <ol className="mb-8 space-y-3">
+                {problem.processStepsDetailed!.slice(0, 5).map((step, idx) => (
+                  <li key={`${step.title}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
+                    <p className="font-medium">
+                      Step {idx + 1}: {step.title}
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">Outcome: {step.outcome}</p>
+                  </li>
+                ))}
+              </ol>
+            </>
+          )}
 
           <h2 className="mb-2 font-display text-xl font-bold">{whenToCallSectionTitle}</h2>
           <p className="mb-8 text-muted-foreground">{problem.whenToCall}</p>

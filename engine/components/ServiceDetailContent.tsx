@@ -101,6 +101,23 @@ function getServiceFamily(service: Service): "drains" | "surveys" | "access" | "
 
 const SERVICE_DETAIL_ABOUT_LABELS = ["Learn more about our team", "About our approach"] as const;
 
+function buildProcessOutcome(step: string): string {
+  const lowered = step.toLowerCase();
+  if (lowered.includes("survey") || lowered.includes("inspect") || lowered.includes("assess")) {
+    return "Requirements and constraints are confirmed before commitments are made.";
+  }
+  if (lowered.includes("plan") || lowered.includes("design") || lowered.includes("scope")) {
+    return "The right method, sequence, and dependencies are agreed for predictable delivery.";
+  }
+  if (lowered.includes("install") || lowered.includes("repair") || lowered.includes("deliver")) {
+    return "Core works are completed against agreed scope and programme.";
+  }
+  if (lowered.includes("test") || lowered.includes("handover") || lowered.includes("report")) {
+    return "Completion is validated and handed over with clear next steps.";
+  }
+  return "This stage improves certainty and reduces avoidable rework.";
+}
+
 function buildFaqItems(service: Service, verticalId: string, variantIndex: number): FAQItem[] {
   const title = service.titleSingular ?? service.title;
   const processHint = service.process[0]?.toLowerCase() ?? "an initial assessment";
@@ -376,7 +393,7 @@ export function ServiceDetailContent({
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <SectionIntro
-                title="Overview"
+                title="Contextual opening"
                 description={overviewDescriptions[overviewVariant]}
               />
               <p className="mb-8 text-muted-foreground">{service.description}</p>
@@ -402,16 +419,31 @@ export function ServiceDetailContent({
               />
               <div className="mb-8 space-y-4 text-muted-foreground">
                 <p>{whenUsedParagraphs[0]}</p>
-                <p>{whenUsedParagraphs[1]}</p>
+                <p>
+                  {whenUsedParagraphs[1]} At this stage, teams usually need clear commercial options before committing
+                  to delivery windows and budgets.
+                </p>
+                {services.find((s) => s.slug !== service.slug) && (
+                  <p>
+                    If your scope includes adjacent packages, compare{" "}
+                    <Link
+                      href={`${servicesPath}/${services.find((s) => s.slug !== service.slug)?.slug}`}
+                      className="text-primary hover:underline"
+                    >
+                      related services
+                    </Link>{" "}
+                    before finalising programme and procurement.
+                  </p>
+                )}
               </div>
 
               {serviceTypes.length > 0 && (
                 <>
                   <SectionIntro
-                    title={`Types of ${displayTitle}`}
+                    title={`Where ${displayTitle.toLowerCase()} applies`}
                     description={
                       sectionIntros.types ??
-                      "Choose the right scope based on site conditions, urgency, and long-term performance requirements."
+                      "These grouped scenarios explain where this work is typically commissioned and why scope can differ by site and objective."
                     }
                   />
                   <ul className="mb-8 list-disc space-y-2 pl-6 text-muted-foreground">
@@ -473,7 +505,16 @@ export function ServiceDetailContent({
                   "Each stage is structured to keep decisions clear and delivery predictable from first assessment to sign-off."
                 }
               />
-              <ProcessTimeline steps={processSteps} />
+              <ol className="mb-8 space-y-3">
+                {processSteps.map((step, idx) => (
+                  <li key={`${step}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
+                    <p className="font-medium">
+                      Step {idx + 1}: {step}
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">Outcome: {buildProcessOutcome(step)}</p>
+                  </li>
+                ))}
+              </ol>
               <div className="mb-8 rounded-lg border border-border bg-secondary/40 p-4 text-sm text-muted-foreground">
                 {reassuranceCopy[reassuranceVariant]}
               </div>

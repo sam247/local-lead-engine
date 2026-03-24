@@ -9,7 +9,6 @@ import { MapEmbed } from "./MapEmbed";
 import { LocationContext } from "./LocationContext";
 import { NearbyAreas } from "./NearbyAreas";
 import { SectionIntro } from "./SectionIntro";
-import { ProcessTimeline } from "./ProcessTimeline";
 import { TrustReassuranceStrip } from "./TrustReassuranceStrip";
 import { ActionPanel } from "./ActionPanel";
 import { getVariantIndex } from "../lib/contentVariants";
@@ -89,6 +88,12 @@ const LOCATION_EXTRA_HEADINGS = [
   "Things to consider before starting",
   "What to plan before starting this work",
   "Before you begin",
+] as const;
+
+const COST_COMPLEXITY_HEADINGS = [
+  "What affects cost and complexity",
+  "Cost and complexity factors",
+  "Factors that influence cost and programme",
 ] as const;
 
 function getServiceFamily(service: Service): "drains" | "surveys" | "access" | "groundworks" | "generic" {
@@ -287,6 +292,23 @@ function inferProjectTypes(service: Service): { intro: string; items: string[] }
       "Mixed-use properties needing coordination across multiple priorities",
     ],
   };
+}
+
+function buildProcessOutcome(step: string, service: Service, location: Location): string {
+  const lowered = step.toLowerCase();
+  if (lowered.includes("survey") || lowered.includes("assessment") || lowered.includes("inspect")) {
+    return `You get a clear technical baseline for ${service.title.toLowerCase()} decisions in ${location.name}.`;
+  }
+  if (lowered.includes("plan") || lowered.includes("design") || lowered.includes("scope")) {
+    return "Delivery scope, method, and sequencing are agreed before operational work starts.";
+  }
+  if (lowered.includes("install") || lowered.includes("repair") || lowered.includes("excavat") || lowered.includes("deliver")) {
+    return "Core works are completed in line with site constraints and project priorities.";
+  }
+  if (lowered.includes("test") || lowered.includes("handover") || lowered.includes("report")) {
+    return "Completion is validated with clear sign-off and next-step guidance.";
+  }
+  return `This step keeps ${service.title.toLowerCase()} delivery predictable and aligned to project requirements.`;
 }
 
 const locationBreadcrumbs = (
@@ -550,7 +572,10 @@ export function LocationPage({
                 {displayTitle} Services in {location.name}
               </h2>
               <div className="mb-6 space-y-4 text-muted-foreground">
-                {introParagraph && <p>{introParagraph}</p>}
+                <p>
+                  {introParagraph ??
+                    `${displayTitle} in ${location.name} is usually commissioned when project teams need dependable outcomes, clear technical scope, and delivery that aligns with site constraints.`}
+                </p>
                 {extraServiceLocationLinks && extraServiceLocationLinks.length > 0 && (
                   <p className="text-muted-foreground">
                     {extraServiceLocationLinks.map((link, i) => (
@@ -564,9 +589,9 @@ export function LocationPage({
                     .
                   </p>
                 )}
-                {introLines.map((line) => (
-                  <p key={line}>{line}</p>
-                ))}
+                <p>{introLines[0]}</p>
+                <p>{introLines[1]}</p>
+                <p>{introLines[2]}</p>
                 {ukGroup && (
                   <>
                     <p>
@@ -617,7 +642,10 @@ export function LocationPage({
                 </h3>
                 <div className="space-y-4 text-muted-foreground">
                   <p>{whenNeeded.first}</p>
-                  <p>{whenNeeded.second}</p>
+                  <p>
+                    {whenNeeded.second} In decision-stage terms, this is often where teams move from broad options
+                    into method selection, sequencing, and budget alignment.
+                  </p>
                   <p>{whenNeeded.third}</p>
                 </div>
               </div>
@@ -637,6 +665,16 @@ export function LocationPage({
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
+              </div>
+              <div className="mb-8">
+                <h3 className="mb-3 font-display text-xl font-bold">
+                  {COST_COMPLEXITY_HEADINGS[extraVariantIndex]}
+                </h3>
+                <p className="text-muted-foreground">
+                  Cost and complexity are shaped by site access, work scale, and technical constraints in{" "}
+                  {location.name}. Programme certainty also depends on local logistics, sequencing with other trades,
+                  and any compliance or operational requirements that affect delivery windows.
+                </p>
               </div>
               <div className="mb-8">
                 <h3 className="mb-3 font-display text-xl font-bold">Project context in {location.name}</h3>
@@ -698,7 +736,18 @@ export function LocationPage({
                 title={`How our ${displayTitle.toLowerCase()} service works`}
                 description="Our process is designed to keep things straightforward: define the issue, explain your options clearly, carry out the right work, and confirm everything before handover."
               />
-              <ProcessTimeline steps={service.process} />
+              <ol className="mb-8 space-y-3">
+                {service.process.slice(0, 5).map((step, idx) => (
+                  <li key={`${step}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
+                    <p className="font-medium">
+                      Step {idx + 1}: {step}
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Outcome: {buildProcessOutcome(step, service, location)}
+                    </p>
+                  </li>
+                ))}
+              </ol>
 
               {nearbyProjects && nearbyProjects.length > 0 && (
                 <>

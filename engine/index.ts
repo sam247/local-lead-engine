@@ -44,4 +44,9 @@ export { ProjectCardWithLinks, type ProjectCardWithLinksProps, type ProjectForCa
 export { RelatedLinks, type RelatedLinksProps } from "./components/RelatedLinks";
 export { ServiceImageGallery, type ServiceImageGalleryProps } from "./components/ServiceImageGallery";
 export { ServiceDetailContent, type ServiceDetailContentProps, type SymptomLink } from "./components/ServiceDetailContent";
+export {
+  TopicLocationPage,
+  type TopicLocationPageProps,
+  type TopicLocationProcessStep,
+} from "./components/TopicLocationPage";
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "./components/ui/card";

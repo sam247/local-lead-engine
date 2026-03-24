@@ -35,4 +35,9 @@ export { ProjectCardWithLinks, type ProjectCardWithLinksProps, type ProjectForCa
 export { RelatedLinks, type RelatedLinksProps } from "./RelatedLinks";
 export { ServiceImageGallery, type ServiceImageGalleryProps } from "./ServiceImageGallery";
 export { ServiceDetailContent, type ServiceDetailContentProps, type SymptomLink } from "./ServiceDetailContent";
+export {
+  TopicLocationPage,
+  type TopicLocationPageProps,
+  type TopicLocationProcessStep,
+} from "./TopicLocationPage";
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "./ui/card";

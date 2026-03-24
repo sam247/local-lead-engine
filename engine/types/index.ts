@@ -26,6 +26,12 @@ export interface Service {
   description: string;
   benefits: string[];
   process: string[];
+  contextualOpening?: string;
+  whenNeeded?: string;
+  workInvolves?: string;
+  costComplexity?: string;
+  typicalUseCases?: string[];
+  processStepsDetailed?: Array<{ title: string; outcome: string }>;
   icon: string;
 }
 
@@ -58,6 +64,12 @@ export interface InfoPageData {
   ctaText: string;
   relatedServices: string[];
   relatedPages?: { slug: string; category: string; title: string }[];
+  contextualOpening?: string;
+  whenNeeded?: string;
+  workInvolves?: string;
+  costComplexity?: string;
+  typicalUseCases?: string[];
+  processStepsDetailed?: Array<{ title: string; outcome: string }>;
   /** Optional in-content link to a topic×location page for crawl flow (e.g. guide → topic-location). */
   topicLocationLink?: { href: string; linkText: string };
   /** Optional in-content link to a service×location page for crawl flow (e.g. guide → service-location). */
@@ -130,6 +142,12 @@ export interface ProblemData {
   whenToCall: string;
   relatedServiceSlugs: string[];
   ctaMessage: string;
+  contextualOpening?: string;
+  whenNeeded?: string;
+  workInvolves?: string;
+  costComplexity?: string;
+  typicalUseCases?: string[];
+  processStepsDetailed?: Array<{ title: string; outcome: string }>;
   /** Optional: plain-language troubleshooting steps (paragraph or short list). */
   quickChecks?: string;
   /** Optional: when the issue may indicate collapse or severe blockage. */
