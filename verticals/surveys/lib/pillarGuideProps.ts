@@ -115,5 +115,6 @@ export function getCollapsedDrainsGuideProps() {
     bottomCtaTitle: "Need a Survey Quote?",
     bottomCtaBody:
       "Contact us for a free, no-obligation quote. We'll match you with a qualified survey partner.",
+    callTrackVertical: verticalConfig.verticalId,
   };
 }

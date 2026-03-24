@@ -1,4 +1,10 @@
 export * from "./types";
+export {
+  handleCallClick,
+  digitsFromPhone,
+  type TrackCallClickContext,
+} from "./lib/phone/handleCallClick";
+export { TrackablePhoneLink, type TrackablePhoneLinkProps } from "./components/TrackablePhoneLink";
 export { getVariantIndex } from "./lib/contentVariants";
 export * from "./utils";
 export * from "./schema";

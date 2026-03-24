@@ -8,7 +8,8 @@ import CostEstimator from "@/components/sections/CostEstimator";
 import DiagnosisTool from "@/components/sections/DiagnosisTool";
 import FAQSchema from "@/components/sections/FAQSchema";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import { getServiceUrl } from "engine";
+import { getServiceUrl, TrackablePhoneLink } from "engine";
+import { verticalConfig } from "@/config";
 
 const sections = [
   { id: "signs", title: "Signs of a Collapsed Drain" },
@@ -55,9 +56,16 @@ export default function PillarGuideContent() {
               <Button size="lg" variant="secondary" asChild>
                 <Link href="/contact">Get a Free Quote</Link>
               </Button>
-              <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-primary-foreground">
+              <TrackablePhoneLink
+                phone={companyInfo.phone}
+                vertical={verticalConfig.verticalId}
+                serviceSlug={null}
+                locationSlug={null}
+                pagePath="/collapsed-drains-complete-guide"
+                className="flex items-center gap-2 text-primary-foreground"
+              >
                 <Phone className="h-5 w-5" /> Call Now
-              </a>
+              </TrackablePhoneLink>
             </div>
           </div>
         </div>

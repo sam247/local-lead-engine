@@ -8,6 +8,7 @@ import { MidContentCTA } from "./MidContentCTA";
 import { RelatedLinks } from "./RelatedLinks";
 import { BreadcrumbNav } from "./BreadcrumbNav";
 import { CTABanner } from "./CTABanner";
+import { TrackablePhoneLink } from "./TrackablePhoneLink";
 import { getVariantIndex } from "../lib/contentVariants";
 import type { HubData, InfoPageData, Service, Location, CompanyInfo } from "../types";
 
@@ -33,6 +34,7 @@ export interface InfoPageProps {
   getCategoryPages: (category: string) => InfoPageData[];
   /** Title for the related guides block in sidebar. Default "Related Articles". */
   relatedGuidesTitle?: string;
+  callTrackVertical: string;
 }
 
 export function InfoPage({
@@ -51,6 +53,7 @@ export function InfoPage({
   hubPages,
   getCategoryPages,
   relatedGuidesTitle = "Related Articles",
+  callTrackVertical,
 }: InfoPageProps) {
   const relatedGuides = otherPages.slice(0, 5);
   const signs = page.signs.slice(0, 5);
@@ -160,6 +163,9 @@ export function InfoPage({
                 companyInfo={companyInfo}
                 message={`Think you might have ${page.title.toLowerCase()}? A professional inspection will confirm the diagnosis.`}
                 buttonLink={contactPath}
+                callTrackVertical={callTrackVertical}
+                callTrackServiceSlug={page.relatedServices?.[0] ?? services[0]?.slug ?? null}
+                callTrackLocationSlug={null}
               />
               <h2 className="mb-4 font-display text-2xl font-bold">How we approach the fix</h2>
               <p className="mb-8 text-muted-foreground">{page.resolution}</p>
@@ -258,7 +264,13 @@ export function InfoPage({
                 </div>
               )}
               <div className="mb-8">
-                <InspectionCTA companyInfo={companyInfo} contactPath={contactPath} />
+                <InspectionCTA
+                  companyInfo={companyInfo}
+                  contactPath={contactPath}
+                  callTrackVertical={callTrackVertical}
+                  callTrackServiceSlug={page.relatedServices?.[0] ?? services[0]?.slug ?? null}
+                  callTrackLocationSlug={null}
+                />
               </div>
               <div className="rounded-lg bg-primary p-6 text-center">
                 <p className="mb-4 text-lg font-medium text-primary-foreground">{page.ctaText}</p>
@@ -266,12 +278,15 @@ export function InfoPage({
                   <Button size="lg" variant="secondary" asChild>
                     <Link href={contactPath}>Discuss your project</Link>
                   </Button>
-                  <a
-                    href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}
+                  <TrackablePhoneLink
+                    phone={companyInfo.phone}
+                    vertical={callTrackVertical}
+                    serviceSlug={page.relatedServices?.[0] ?? services[0]?.slug ?? null}
+                    locationSlug={null}
                     className="flex items-center gap-2 text-primary-foreground"
                   >
                     <Phone className="h-5 w-5" /> {companyInfo.phone}
-                  </a>
+                  </TrackablePhoneLink>
                 </div>
               </div>
             </div>
@@ -303,12 +318,15 @@ export function InfoPage({
               )}
               <div className="rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">Contact Us</h3>
-                <a
-                  href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}
+                <TrackablePhoneLink
+                  phone={companyInfo.phone}
+                  vertical={callTrackVertical}
+                  serviceSlug={page.relatedServices?.[0] ?? services[0]?.slug ?? null}
+                  locationSlug={null}
                   className="flex items-center gap-2 text-primary hover:underline"
                 >
                   <Phone className="h-4 w-4" /> {companyInfo.phone}
-                </a>
+                </TrackablePhoneLink>
                 <Button asChild className="mt-4 w-full">
                   <Link href={contactPath}>Get a Free Quote</Link>
                 </Button>

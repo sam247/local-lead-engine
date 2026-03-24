@@ -9,7 +9,8 @@ import InspectionCTA from "@/components/sections/InspectionCTA";
 import MidContentCTA from "@/components/sections/MidContentCTA";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTABanner from "@/components/sections/CTABanner";
-import { getServiceUrl } from "engine";
+import { getServiceUrl, TrackablePhoneLink } from "engine";
+import { verticalConfig } from "@/config";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -96,7 +97,16 @@ export default function DrainSurveyCostPage() {
               </div>
               <div className="rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">Contact Us</h3>
-                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-primary hover:underline"><Phone className="h-4 w-4" /> Call Now</a>
+                <TrackablePhoneLink
+                  phone={companyInfo.phone}
+                  vertical={verticalConfig.verticalId}
+                  serviceSlug="cctv-drain-surveys"
+                  locationSlug={null}
+                  pagePath="/drain-survey-cost"
+                  className="flex items-center gap-2 text-primary hover:underline"
+                >
+                  <Phone className="h-4 w-4" /> Call Now
+                </TrackablePhoneLink>
                 <Button asChild className="mt-4 w-full"><Link href="/contact">Get a Free Quote</Link></Button>
               </div>
               <div className="rounded-lg bg-secondary p-6">

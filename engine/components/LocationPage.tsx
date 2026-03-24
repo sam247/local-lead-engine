@@ -11,6 +11,7 @@ import { NearbyAreas } from "./NearbyAreas";
 import { SectionIntro } from "./SectionIntro";
 import { TrustReassuranceStrip } from "./TrustReassuranceStrip";
 import { ActionPanel } from "./ActionPanel";
+import { TrackablePhoneLink } from "./TrackablePhoneLink";
 import { getVariantIndex } from "../lib/contentVariants";
 import { locations as allLocationsDataset } from "../data/locations";
 import { getCountyPeerLocationIds, getUkGroupingForLocationId } from "../data/uk-location-hierarchy";
@@ -363,6 +364,8 @@ export interface LocationPageProps {
   relatedTopicsSectionTitle?: string;
   /** Optional intro paragraph for the related topics block. */
   relatedTopicsSectionIntro?: string;
+  /** Vertical id for call-click analytics (e.g. verticalConfig.verticalId). */
+  callTrackVertical: string;
 }
 
 export function LocationPage({
@@ -390,6 +393,7 @@ export function LocationPage({
   relatedTopicLinks,
   relatedTopicsSectionTitle,
   relatedTopicsSectionIntro,
+  callTrackVertical,
 }: LocationPageProps) {
   const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
   const displayTitle = service.titleSingular ?? service.title;
@@ -595,12 +599,15 @@ export function LocationPage({
               <Button size="lg" variant="highlight" asChild>
                 <Link href={contactPath}>Get a Free Quote</Link>
               </Button>
-              <a
-                href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}
+              <TrackablePhoneLink
+                phone={companyInfo.phone}
+                vertical={callTrackVertical}
+                serviceSlug={service.slug}
+                locationSlug={location.id}
                 className="flex items-center gap-2 text-primary-foreground"
               >
                 <Phone className="h-5 w-5" /> Call Now
-              </a>
+              </TrackablePhoneLink>
             </div>
           </div>
         </div>
@@ -832,6 +839,9 @@ export function LocationPage({
                 heading={`Need guidance before starting ${displayTitle.toLowerCase()} work?`}
                 body={`Share your site details and priorities in ${location.name}; we will recommend the right scope, likely timeline, and practical next step.`}
                 ctaText="Get project advice"
+                callTrackVertical={callTrackVertical}
+                callTrackServiceSlug={service.slug}
+                callTrackLocationSlug={location.id}
               />
 
               <ActionPanel
@@ -840,8 +850,17 @@ export function LocationPage({
                 heading={`Need ${displayTitle.toLowerCase()} in ${location.name}?`}
                 body="Tell us what you need and we will advise on the right approach, timeline, and next step for your property."
                 ctaText="Get pricing for your site"
+                callTrackVertical={callTrackVertical}
+                callTrackServiceSlug={service.slug}
+                callTrackLocationSlug={location.id}
               />
-              <InspectionCTA companyInfo={companyInfo} contactPath={contactPath} />
+              <InspectionCTA
+                companyInfo={companyInfo}
+                contactPath={contactPath}
+                callTrackVertical={callTrackVertical}
+                callTrackServiceSlug={service.slug}
+                callTrackLocationSlug={location.id}
+              />
             </div>
 
             <div className="space-y-6">
@@ -858,12 +877,15 @@ export function LocationPage({
               <div className="rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">Contact Us</h3>
                 <div className="space-y-3">
-                  <a
-                    href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}
+                  <TrackablePhoneLink
+                    phone={companyInfo.phone}
+                    vertical={callTrackVertical}
+                    serviceSlug={service.slug}
+                    locationSlug={location.id}
                     className="flex items-center gap-2 text-primary hover:underline"
                   >
                     <Phone className="h-4 w-4" /> Call Now
-                  </a>
+                  </TrackablePhoneLink>
                   <a
                     href={`mailto:${companyInfo.email}`}
                     className="flex items-center gap-2 text-primary hover:underline"

@@ -6,6 +6,8 @@ import { CheckCircle, Phone, Mail, ArrowRight } from "lucide-react";
 import InspectionCTA from "@/components/sections/InspectionCTA";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import FAQSchema from "@/components/sections/FAQSchema";
+import { TrackablePhoneLink } from "engine";
+import { CALL_TRACK_VERTICAL } from "@/lib/callTrackVertical";
 type Service = (typeof services)[number];
 type Location = (typeof locations)[number] & { nearbyTowns?: string[]; propertyTypes?: string };
 
@@ -87,9 +89,15 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
               <Button size="lg" variant="highlight" asChild>
                 <Link href="/contact">Get a Free Quote</Link>
               </Button>
-              <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-primary-foreground">
+              <TrackablePhoneLink
+                phone={companyInfo.phone}
+                vertical={CALL_TRACK_VERTICAL}
+                serviceSlug={service.slug}
+                locationSlug={location.id}
+                className="flex items-center gap-2 text-primary-foreground"
+              >
                 <Phone className="h-5 w-5" /> {companyInfo.phone}
-              </a>
+              </TrackablePhoneLink>
             </div>
           </div>
         </div>
@@ -161,9 +169,15 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
               <div className="rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">Contact Us</h3>
                 <div className="space-y-3">
-                  <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-primary hover:underline">
+                  <TrackablePhoneLink
+                    phone={companyInfo.phone}
+                    vertical={CALL_TRACK_VERTICAL}
+                    serviceSlug={service.slug}
+                    locationSlug={location.id}
+                    className="flex items-center gap-2 text-primary hover:underline"
+                  >
                     <Phone className="h-4 w-4" /> {companyInfo.phone}
-                  </a>
+                  </TrackablePhoneLink>
                   <a href={`mailto:${companyInfo.email}`} className="flex items-center gap-2 text-primary hover:underline">
                     <Mail className="h-4 w-4" /> {companyInfo.email}
                   </a>

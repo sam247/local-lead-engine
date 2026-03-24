@@ -16,8 +16,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { ResourcesMenu, getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "engine/components/navigation/ResourcesMenu";
-import { trackEvent } from "engine/utils";
-import { getServiceUrl, isServiceHubPath } from "engine";
+import { getServiceUrl, isServiceHubPath, TrackablePhoneLink } from "engine";
 import { verticalConfig } from "@/config";
 import { cn } from "@/lib/utils";
 
@@ -143,10 +142,16 @@ const Header = () => {
 
         {/* CTA Button */}
         <div className="hidden items-center gap-4 lg:flex">
-          <a href="tel:02012345678" className="flex items-center gap-2 text-sm font-medium text-primary" onClick={() => trackEvent("call_button_click")}>
+          <TrackablePhoneLink
+            phone={verticalConfig.companyInfo.phone}
+            vertical={verticalConfig.verticalId}
+            serviceSlug={null}
+            locationSlug={null}
+            className="flex items-center gap-2 text-sm font-medium text-primary"
+          >
             <Phone className="h-4 w-4" />
             Call Now
-          </a>
+          </TrackablePhoneLink>
           <Button asChild>
             <Link href="/contact">Get a Quote</Link>
           </Button>
@@ -223,10 +228,16 @@ const Header = () => {
             
 
             <div className="mt-4 flex flex-col gap-3 border-t border-border pt-4">
-              <a href="tel:02012345678" className="flex items-center gap-2 text-sm font-medium text-primary" onClick={() => trackEvent("call_button_click")}>
+              <TrackablePhoneLink
+                phone={verticalConfig.companyInfo.phone}
+                vertical={verticalConfig.verticalId}
+                serviceSlug={null}
+                locationSlug={null}
+                className="flex items-center gap-2 text-sm font-medium text-primary"
+              >
                 <Phone className="h-4 w-4" />
                 Call Now
-              </a>
+              </TrackablePhoneLink>
               <Button asChild className="w-full">
                 <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>Get a Quote</Link>
               </Button>

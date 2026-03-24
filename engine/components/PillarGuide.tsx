@@ -6,6 +6,7 @@ import { FAQSchema, type FAQItem } from "../schema/FAQSchema";
 import { InspectionCTA } from "./InspectionCTA";
 import { getImageAlt } from "../utils/imageAlt";
 import type { CompanyInfo } from "../types";
+import { TrackablePhoneLink } from "./TrackablePhoneLink";
 
 export interface PillarGuideSection {
   id: string;
@@ -28,6 +29,7 @@ export interface PillarGuideProps {
   bottomCtaBody?: string;
   /** Optional: render DiagnosisTool, CostEstimator, etc. between sections */
   extraSections?: { id: string; title: string; content: React.ReactNode }[];
+  callTrackVertical: string;
 }
 
 export function PillarGuide({
@@ -43,6 +45,7 @@ export function PillarGuide({
   bottomCtaTitle = "Need Expert Help?",
   bottomCtaBody = "Contact us for a free inspection and no-obligation quote.",
   extraSections = [],
+  callTrackVertical,
 }: PillarGuideProps) {
   const toc: { id: string; title: string }[] = [
     ...sections.map((s) => ({ id: s.id, title: s.title })),
@@ -91,12 +94,16 @@ export function PillarGuide({
               <Button size="lg" variant="secondary" asChild>
                 <Link href={contactPath}>Get a Free Quote</Link>
               </Button>
-              <a
-                href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}
+              <TrackablePhoneLink
+                phone={companyInfo.phone}
+                vertical={callTrackVertical}
+                serviceSlug={null}
+                locationSlug={null}
+                pagePath={guidePath}
                 className="flex items-center gap-2 text-primary-foreground"
               >
                 <Phone className="h-5 w-5" /> {companyInfo.phone}
-              </a>
+              </TrackablePhoneLink>
             </div>
           </div>
         </div>
@@ -137,7 +144,12 @@ export function PillarGuide({
                 </div>
               </div>
             ))}
-            <InspectionCTA companyInfo={companyInfo} contactPath={contactPath} />
+            <InspectionCTA
+              companyInfo={companyInfo}
+              contactPath={contactPath}
+              callTrackVertical={callTrackVertical}
+              callTrackPagePath={guidePath}
+            />
             {extraSections.map((s) => (
               <div key={s.id} id={s.id}>
                 <h2 className="mb-4 font-display text-3xl font-bold">{s.title}</h2>

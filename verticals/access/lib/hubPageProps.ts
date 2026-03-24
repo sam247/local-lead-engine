@@ -31,5 +31,6 @@ export function getHubPageProps(category: string) {
     keyServices,
     companyInfo: verticalConfig.companyInfo,
     baseUrl: verticalConfig.baseUrl,
+    callTrackVertical: verticalConfig.verticalId,
   };
 }

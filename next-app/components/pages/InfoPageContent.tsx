@@ -9,6 +9,8 @@ import RelatedLinks from "@/components/sections/RelatedLinks";
 import FAQSchema from "@/components/sections/FAQSchema";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTABanner from "@/components/sections/CTABanner";
+import { TrackablePhoneLink } from "engine";
+import { CALL_TRACK_VERTICAL } from "@/lib/callTrackVertical";
 
 interface InfoPageContentProps {
   category: string;
@@ -106,9 +108,15 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
                   <Button size="lg" variant="secondary" asChild>
                     <Link href="/contact">Get a Free Quote</Link>
                   </Button>
-                  <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-primary-foreground">
+                  <TrackablePhoneLink
+                    phone={companyInfo.phone}
+                    vertical={CALL_TRACK_VERTICAL}
+                    serviceSlug={page.relatedServices?.[0] ?? null}
+                    locationSlug={null}
+                    className="flex items-center gap-2 text-primary-foreground"
+                  >
                     <Phone className="h-5 w-5" /> {companyInfo.phone}
-                  </a>
+                  </TrackablePhoneLink>
                 </div>
               </div>
             </div>
@@ -128,9 +136,15 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
               )}
               <div className="rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">Contact Us</h3>
-                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-primary hover:underline">
+                <TrackablePhoneLink
+                  phone={companyInfo.phone}
+                  vertical={CALL_TRACK_VERTICAL}
+                  serviceSlug={page.relatedServices?.[0] ?? null}
+                  locationSlug={null}
+                  className="flex items-center gap-2 text-primary hover:underline"
+                >
                   <Phone className="h-4 w-4" /> {companyInfo.phone}
-                </a>
+                </TrackablePhoneLink>
                 <Button asChild className="mt-4 w-full">
                   <Link href="/contact">Get a Free Quote</Link>
                 </Button>

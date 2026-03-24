@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Phone, Camera } from "lucide-react";
 import { companyInfo } from "@/lib/data";
+import { verticalConfig } from "@/config";
+import { TrackablePhoneLink } from "engine";
 
 interface MidContentCTAProps {
   message?: string;
@@ -26,12 +28,15 @@ const MidContentCTA = ({
             <Button size="default" variant="highlight" asChild>
               <Link href={buttonLink}>{buttonText}</Link>
             </Button>
-            <a
-              href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}
+            <TrackablePhoneLink
+              phone={companyInfo.phone}
+              vertical={verticalConfig.verticalId}
+              serviceSlug={null}
+              locationSlug={null}
               className="flex items-center gap-2 text-sm font-medium text-primary hover:underline"
             >
               <Phone className="h-4 w-4" /> Call Now
-            </a>
+            </TrackablePhoneLink>
           </div>
         </div>
       </div>

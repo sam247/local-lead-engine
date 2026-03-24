@@ -5,6 +5,8 @@ import { Phone } from "lucide-react";
 import FAQSchema from "@/components/sections/FAQSchema";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTABanner from "@/components/sections/CTABanner";
+import { TrackablePhoneLink } from "engine";
+import { verticalConfig } from "@/config";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -93,9 +95,16 @@ export default function DrainageFaqPage() {
                 <Button size="lg" variant="secondary" asChild>
                   <Link href="/contact">Contact Us</Link>
                 </Button>
-                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-primary-foreground">
+                <TrackablePhoneLink
+                  phone={companyInfo.phone}
+                  vertical={verticalConfig.verticalId}
+                  serviceSlug={null}
+                  locationSlug={null}
+                  pagePath="/drainage-faq"
+                  className="flex items-center gap-2 text-primary-foreground"
+                >
                   <Phone className="h-5 w-5" /> Call Now
-                </a>
+                </TrackablePhoneLink>
               </div>
             </div>
           </div>

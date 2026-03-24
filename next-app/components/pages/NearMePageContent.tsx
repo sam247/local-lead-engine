@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Phone, MapPin } from "lucide-react";
 import InspectionCTA from "@/components/sections/InspectionCTA";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
+import { TrackablePhoneLink } from "engine";
+import { CALL_TRACK_VERTICAL } from "@/lib/callTrackVertical";
 
 interface NearMePageContentProps {
   serviceSlug: string;
@@ -34,9 +36,16 @@ export default function NearMePageContent({ serviceSlug }: NearMePageContentProp
               <Button size="lg" variant="highlight" asChild>
                 <Link href="/contact">Get a Free Quote</Link>
               </Button>
-              <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-primary-foreground">
+              <TrackablePhoneLink
+                phone={companyInfo.phone}
+                vertical={CALL_TRACK_VERTICAL}
+                serviceSlug={serviceSlug}
+                locationSlug={null}
+                pagePath={`/${serviceSlug}-near-me`}
+                className="flex items-center gap-2 text-primary-foreground"
+              >
                 <Phone className="h-5 w-5" /> {companyInfo.phone}
-              </a>
+              </TrackablePhoneLink>
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import { SchemaMarkup } from "../schema/SchemaMarkup";
 import { BreadcrumbNav } from "./BreadcrumbNav";
 import { InspectionCTA } from "./InspectionCTA";
 import { NearMeLocationList } from "./NearMeLocationList";
+import { TrackablePhoneLink } from "./TrackablePhoneLink";
 import type { Service, Location, CompanyInfo } from "../types";
 import { getServiceUrl } from "../utils/serviceUrls";
 
@@ -31,6 +32,7 @@ export interface NearMePageProps {
   secondaryCtaLabel?: string;
   /** Secondary CTA path (defaults to contactPath). */
   secondaryCtaPath?: string;
+  callTrackVertical: string;
 }
 
 export function NearMePage({
@@ -49,6 +51,7 @@ export function NearMePage({
   conversionHeading,
   secondaryCtaLabel,
   secondaryCtaPath,
+  callTrackVertical,
 }: NearMePageProps) {
   const pageTitle = `${service.title} Near Me`;
   const secondaryPath = secondaryCtaPath ?? contactPath;
@@ -101,12 +104,16 @@ export function NearMePage({
               <Button size="lg" variant="highlight" asChild>
                 <Link href={contactPath}>Get a Free Quote</Link>
               </Button>
-              <a
-                href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}
+              <TrackablePhoneLink
+                phone={companyInfo.phone}
+                vertical={callTrackVertical}
+                serviceSlug={service.slug}
+                locationSlug={null}
+                pagePath={pagePath}
                 className="flex items-center gap-2 text-primary-foreground"
               >
                 <Phone className="h-5 w-5" /> {companyInfo.phone}
-              </a>
+              </TrackablePhoneLink>
             </div>
           </div>
         </div>
@@ -140,10 +147,17 @@ export function NearMePage({
             </h2>
             <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
               <Button size="lg" variant="highlight" className="min-h-12 flex-1 sm:flex-initial" asChild>
-                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}>
+                <TrackablePhoneLink
+                  phone={companyInfo.phone}
+                  vertical={callTrackVertical}
+                  serviceSlug={service.slug}
+                  locationSlug={null}
+                  pagePath={pagePath}
+                  className="inline-flex items-center justify-center"
+                >
                   <Phone className="mr-2 h-5 w-5" />
                   Call Now
-                </a>
+                </TrackablePhoneLink>
               </Button>
               {secondaryCtaLabel && (
                 <Button size="lg" variant="outline" className="min-h-12 flex-1 border-2 sm:flex-initial" asChild>
@@ -210,7 +224,14 @@ export function NearMePage({
         </div>
       </section>
       <div className="container pb-12">
-        <InspectionCTA companyInfo={companyInfo} contactPath={contactPath} />
+        <InspectionCTA
+          companyInfo={companyInfo}
+          contactPath={contactPath}
+          callTrackVertical={callTrackVertical}
+          callTrackServiceSlug={service.slug}
+          callTrackLocationSlug={null}
+          callTrackPagePath={pagePath}
+        />
       </div>
       <section className="bg-primary py-16">
         <div className="container text-center">

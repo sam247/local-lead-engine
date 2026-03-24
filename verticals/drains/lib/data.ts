@@ -392,7 +392,7 @@ export const blogPosts = [
 // Company info
 export const companyInfo = {
   name: "Mainline Drains",
-  phone: "020 1234 5678",
+  phone: "+44 7455 493536",
   email: "info@mainlinedrains.co.uk",
   address: "128 City Road, London, EC1V 2NX",
   hours: "24/7 Emergency Service Available",

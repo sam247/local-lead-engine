@@ -2,6 +2,8 @@ import { companyInfo } from "@/lib/data";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import ContactForm from "@/components/sections/ContactForm";
+import { TrackablePhoneLink } from "engine";
+import { CALL_TRACK_VERTICAL } from "@/lib/callTrackVertical";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -39,7 +41,15 @@ export default function ContactPage() {
                   <Phone className="h-5 w-5 shrink-0 text-primary" />
                   <div>
                     <h3 className="font-display font-semibold">Phone</h3>
-                    <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="text-sm text-muted-foreground hover:text-primary">{companyInfo.phone}</a>
+                    <TrackablePhoneLink
+                      phone={companyInfo.phone}
+                      vertical={CALL_TRACK_VERTICAL}
+                      serviceSlug={null}
+                      locationSlug={null}
+                      className="text-sm text-muted-foreground hover:text-primary"
+                    >
+                      {companyInfo.phone}
+                    </TrackablePhoneLink>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 rounded-lg border p-5">

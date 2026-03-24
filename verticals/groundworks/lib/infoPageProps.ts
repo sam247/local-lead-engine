@@ -67,5 +67,6 @@ export function getInfoPageProps(category: string, slug: string) {
     hubPages,
     getCategoryPages,
     relatedGuidesTitle: "Related Groundworks Guides",
+    callTrackVertical: verticalConfig.verticalId,
   };
 }

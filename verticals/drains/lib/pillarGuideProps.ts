@@ -123,5 +123,6 @@ export function getCollapsedDrainsGuideProps() {
     bottomCtaTitle: "Need Expert Help with a Collapsed Drain?",
     bottomCtaBody:
       "Contact us for a free CCTV survey and no-obligation repair quote.",
+    callTrackVertical: verticalConfig.verticalId,
   };
 }

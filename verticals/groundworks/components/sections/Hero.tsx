@@ -11,7 +11,7 @@ import { heroBg } from "@/lib/images";
 import { companyInfo } from "@/lib/data";
 import { verticalConfig } from "@/config";
 import { useToast } from "@/hooks/use-toast";
-import { trackEvent, getVariantIndex } from "engine";
+import { trackEvent, getVariantIndex, TrackablePhoneLink } from "engine";
 import { cn } from "@/lib/utils";
 
 const HERO_ABOUT_LABELS = ["Learn more about our team", "How we work with clients"] as const;
@@ -176,10 +176,16 @@ const Hero = () => {
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button variant="highlight" size="lg" asChild>
-                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="gap-2" onClick={() => trackEvent("call_button_click")}>
+                <TrackablePhoneLink
+                  phone={companyInfo.phone}
+                  vertical={verticalConfig.verticalId}
+                  serviceSlug={null}
+                  locationSlug={null}
+                  className="gap-2"
+                >
                   <Phone className="h-5 w-5" />
                   Call Now
-                </a>
+                </TrackablePhoneLink>
               </Button>
               <Button variant="outline" size="lg" asChild className="border-primary-foreground/30 text-primary hover:bg-primary-foreground/10">
                 <Link href="/contact">

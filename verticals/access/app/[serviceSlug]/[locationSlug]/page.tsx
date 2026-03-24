@@ -197,6 +197,7 @@ export default async function LocationRoute({ params }: Props) {
       nearbyProjects={nearbyProjectsList.length > 0 ? nearbyProjectsList : undefined}
       relatedTopicLinks={relatedTopicLinks.length > 0 ? relatedTopicLinks : undefined}
       relatedTopicsSectionTitle={relatedTopicLinks.length > 0 ? `Security advice for businesses in ${location.name}` : undefined}
+      callTrackVertical={verticalConfig.verticalId}
     />
   );
 }

@@ -7,6 +7,8 @@ import InspectionCTA from "@/components/sections/InspectionCTA";
 import FAQSchema from "@/components/sections/FAQSchema";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTABanner from "@/components/sections/CTABanner";
+import { TrackablePhoneLink } from "engine";
+import { verticalConfig } from "@/config";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -76,9 +78,16 @@ export default function DoINeedADrainSurveyPage() {
                 <Button size="lg" asChild>
                   <Link href="/contact">Book a Survey</Link>
                 </Button>
-                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 font-medium text-primary">
+                <TrackablePhoneLink
+                  phone={companyInfo.phone}
+                  vertical={verticalConfig.verticalId}
+                  serviceSlug="cctv-drain-surveys"
+                  locationSlug={null}
+                  pagePath="/do-i-need-a-drain-survey"
+                  className="flex items-center gap-2 font-medium text-primary"
+                >
                   <Phone className="h-5 w-5" /> Call Now
-                </a>
+                </TrackablePhoneLink>
               </div>
             </div>
             <h2 className="mb-6 font-display text-2xl font-bold">Check Your Symptoms</h2>

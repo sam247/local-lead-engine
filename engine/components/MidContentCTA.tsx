@@ -2,12 +2,17 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Phone, Camera } from "lucide-react";
 import type { CompanyInfo } from "../types";
+import { TrackablePhoneLink } from "./TrackablePhoneLink";
 
 export interface MidContentCTAProps {
   companyInfo: CompanyInfo;
   message?: string;
   buttonText?: string;
   buttonLink?: string;
+  callTrackVertical?: string;
+  callTrackServiceSlug?: string | null;
+  callTrackLocationSlug?: string | null;
+  callTrackPagePath?: string;
 }
 
 export function MidContentCTA({
@@ -15,7 +20,13 @@ export function MidContentCTA({
   message = "Think you may have an issue? A professional inspection will give you a definitive answer.",
   buttonText = "Book an Inspection",
   buttonLink = "/contact",
+  callTrackVertical,
+  callTrackServiceSlug = null,
+  callTrackLocationSlug = null,
+  callTrackPagePath,
 }: MidContentCTAProps) {
+  const phoneDigits = companyInfo.phone.replace(/\s/g, "");
+  const telHref = `tel:${phoneDigits}`;
   return (
     <div className="my-8 rounded-lg border-2 border-primary/20 bg-primary/5 p-6">
       <div className="flex items-start gap-4">
@@ -28,12 +39,22 @@ export function MidContentCTA({
             <Button size="default" variant="highlight" asChild>
               <Link href={buttonLink}>{buttonText}</Link>
             </Button>
-            <a
-              href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}
-              className="flex items-center gap-2 text-sm font-medium text-primary hover:underline"
-            >
-              <Phone className="h-4 w-4" /> {companyInfo.phone}
-            </a>
+            {callTrackVertical ? (
+              <TrackablePhoneLink
+                phone={companyInfo.phone}
+                vertical={callTrackVertical}
+                serviceSlug={callTrackServiceSlug}
+                locationSlug={callTrackLocationSlug}
+                pagePath={callTrackPagePath}
+                className="flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+              >
+                <Phone className="h-4 w-4" /> {companyInfo.phone}
+              </TrackablePhoneLink>
+            ) : (
+              <a href={telHref} className="flex items-center gap-2 text-sm font-medium text-primary hover:underline">
+                <Phone className="h-4 w-4" /> {companyInfo.phone}
+              </a>
+            )}
           </div>
         </div>
       </div>

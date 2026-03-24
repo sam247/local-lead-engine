@@ -5,7 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { locations } from "@/lib/data";
+import { locations, companyInfo } from "@/lib/data";
+import { TrackablePhoneLink } from "engine";
+import { CALL_TRACK_VERTICAL } from "@/lib/callTrackVertical";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -181,10 +183,16 @@ const Header = () => {
 
         {/* CTA Button */}
         <div className="hidden items-center gap-4 lg:flex">
-          <a href="tel:02012345678" className="flex items-center gap-2 text-sm font-medium text-primary">
+          <TrackablePhoneLink
+            phone={companyInfo.phone}
+            vertical={CALL_TRACK_VERTICAL}
+            serviceSlug={null}
+            locationSlug={null}
+            className="flex items-center gap-2 text-sm font-medium text-primary"
+          >
             <Phone className="h-4 w-4" />
-            020 1234 5678
-          </a>
+            {companyInfo.phone}
+          </TrackablePhoneLink>
           <Button asChild>
             <Link href="/contact">Get a Quote</Link>
           </Button>
@@ -254,10 +262,16 @@ const Header = () => {
             
 
             <div className="mt-4 flex flex-col gap-3 border-t border-border pt-4">
-              <a href="tel:02012345678" className="flex items-center gap-2 text-sm font-medium text-primary">
+              <TrackablePhoneLink
+                phone={companyInfo.phone}
+                vertical={CALL_TRACK_VERTICAL}
+                serviceSlug={null}
+                locationSlug={null}
+                className="flex items-center gap-2 text-sm font-medium text-primary"
+              >
                 <Phone className="h-4 w-4" />
-                020 1234 5678
-              </a>
+                {companyInfo.phone}
+              </TrackablePhoneLink>
               <Button asChild className="w-full">
                 <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>Get a Quote</Link>
               </Button>

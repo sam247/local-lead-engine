@@ -35,6 +35,7 @@ export interface HubPageProps {
   serviceCtaHeading?: string;
   serviceCtaBody?: string;
   serviceCtaText?: string;
+  callTrackVertical: string;
 }
 
 export function HubPage({
@@ -51,6 +52,7 @@ export function HubPage({
   serviceCtaHeading,
   serviceCtaBody,
   serviceCtaText,
+  callTrackVertical,
 }: HubPageProps) {
   const featuredPages = pages.slice(0, 3);
   const remainingPages = pages.slice(3);
@@ -111,6 +113,9 @@ export function HubPage({
                 "If you need direct advice on your situation, speak to our team and we will help you choose the right service."
               }
               ctaText={serviceCtaText ?? "Speak to an Expert"}
+              callTrackVertical={callTrackVertical}
+              callTrackServiceSlug={keyServices[0]?.slug ?? null}
+              callTrackLocationSlug={null}
             />
           )}
           <div className="mb-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">

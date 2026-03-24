@@ -19,7 +19,8 @@
     "./tools": "./tools/index.ts",
     "./utils": "./utils/index.ts",
     "./types": "./types/index.ts",
-    "./validation": "./validation/index.ts"
+    "./validation": "./validation/index.ts",
+    "./lib/phone/handleCallClick": "./lib/phone/handleCallClick.ts"
   },
   "peerDependencies": {
     "next": ">=14",

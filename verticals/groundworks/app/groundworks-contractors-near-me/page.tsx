@@ -48,6 +48,7 @@ export default function NearMeRoute() {
       conversionHeading="Planning a groundworks package?"
       secondaryCtaLabel={verticalConfig.heroSecondaryCtaText}
       secondaryCtaPath="/contact"
+      callTrackVertical={verticalConfig.verticalId}
     />
   );
 }

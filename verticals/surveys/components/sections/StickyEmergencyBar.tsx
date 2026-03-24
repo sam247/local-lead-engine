@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Phone, ArrowRight } from "lucide-react";
-import { trackEvent } from "engine";
+import { TrackablePhoneLink } from "engine";
 import { companyInfo } from "@/lib/data";
 import { verticalConfig } from "@/config";
 
@@ -16,11 +16,17 @@ const StickyEmergencyBar = () => {
         </span>
         <div className="flex w-full items-center gap-2 md:w-auto">
           <Button variant="highlight" asChild className="flex-1 md:flex-none">
-            <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="gap-2" onClick={() => trackEvent("call_button_click")}>
+            <TrackablePhoneLink
+              phone={companyInfo.phone}
+              vertical={verticalConfig.verticalId}
+              serviceSlug={null}
+              locationSlug={null}
+              className="gap-2"
+            >
               <Phone className="h-4 w-4" />
               <span className="md:hidden">Call Now</span>
               <span className="hidden md:inline">Call Now</span>
-            </a>
+            </TrackablePhoneLink>
           </Button>
           <Button asChild className="flex-1 md:flex-none">
             <Link href="/contact" className="gap-2">

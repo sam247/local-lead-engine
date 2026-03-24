@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Phone, Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
 import { companyInfo, services, locations } from "@/lib/data";
+import { TrackablePhoneLink } from "engine";
+import { CALL_TRACK_VERTICAL } from "@/lib/callTrackVertical";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -98,9 +100,15 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />
-                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                <TrackablePhoneLink
+                  phone={companyInfo.phone}
+                  vertical={CALL_TRACK_VERTICAL}
+                  serviceSlug={null}
+                  locationSlug={null}
+                  className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+                >
                   {companyInfo.phone}
-                </a>
+                </TrackablePhoneLink>
               </li>
               <li className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary-foreground/60" />

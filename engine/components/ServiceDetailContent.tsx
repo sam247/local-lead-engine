@@ -695,6 +695,9 @@ export function ServiceDetailContent({
                 heading={secondCtaHeading}
                 body={secondCtaBody}
                 ctaText={secondCtaButtonText}
+                callTrackVertical={verticalConfig.verticalId}
+                callTrackServiceSlug={service.slug}
+                callTrackLocationSlug={null}
               />
               <ActionPanel
                 companyInfo={verticalConfig.companyInfo}
@@ -702,6 +705,9 @@ export function ServiceDetailContent({
                 heading={actionHeading}
                 body="Share your site details and goals. We will recommend the right scope and provide a clear quote."
                 ctaText={discussCta.replace("quote", "site visit")}
+                callTrackVertical={verticalConfig.verticalId}
+                callTrackServiceSlug={service.slug}
+                callTrackLocationSlug={null}
               />
             </div>
 

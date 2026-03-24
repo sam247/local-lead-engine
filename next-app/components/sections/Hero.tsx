@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowRight, ArrowLeft, Phone, Ban, Wind, Droplets, TrendingDown, Search } from "lucide-react";
 import { heroBg } from "@/lib/images";
 import { companyInfo } from "@/lib/data";
+import { TrackablePhoneLink } from "engine";
+import { CALL_TRACK_VERTICAL } from "@/lib/callTrackVertical";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
@@ -71,10 +73,16 @@ const Hero = () => {
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button variant="highlight" size="lg" asChild>
-                <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="gap-2">
+                <TrackablePhoneLink
+                  phone={companyInfo.phone}
+                  vertical={CALL_TRACK_VERTICAL}
+                  serviceSlug={null}
+                  locationSlug={null}
+                  className="gap-2"
+                >
                   <Phone className="h-5 w-5" />
                   Call Now
-                </a>
+                </TrackablePhoneLink>
               </Button>
               <Button variant="outline" size="lg" asChild className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
                 <Link href="/contact">

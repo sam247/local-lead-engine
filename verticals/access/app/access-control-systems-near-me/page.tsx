@@ -46,6 +46,7 @@ export default function NearMeRoute() {
       conversionHeading="Need a security or access survey?"
       secondaryCtaLabel={verticalConfig.heroSecondaryCtaText}
       secondaryCtaPath="/contact"
+      callTrackVertical={verticalConfig.verticalId}
     />
   );
 }

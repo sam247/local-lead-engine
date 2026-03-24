@@ -1,3 +1,4 @@
+export { TrackablePhoneLink, type TrackablePhoneLinkProps } from "./TrackablePhoneLink";
 export { BreadcrumbNav, type BreadcrumbNavProps, type BreadcrumbItem } from "./BreadcrumbNav";
 export { LocationContext, type LocationContextProps } from "./LocationContext";
 export { LocationPage, type LocationPageProps } from "./LocationPage";
