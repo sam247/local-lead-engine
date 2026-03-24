@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { services, locations } from "@/lib/data";
-import { cctvProblems, getCctvProblemBySlug } from "@/data/cctvProblems";
+import { cctvProblemPages } from "@/data/problemPages";
 import { ProblemPage } from "engine";
 import { verticalConfig } from "@/config";
 import type { Metadata } from "next";
@@ -12,13 +12,13 @@ const SERVICES_NEAR_YOU_INTRO =
   "We provide commercial CCTV installation, IP camera systems and security integration across the area. Find a local service below.";
 
 export async function generateStaticParams() {
-  return cctvProblems.map((p) => ({ slug: p.slug }));
+  return cctvProblemPages.map((p) => ({ slug: p.slug }));
 }
 
 type Props = { params: { slug: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const problem = getCctvProblemBySlug(params.slug);
+  const problem = cctvProblemPages.find((p) => p.slug === params.slug);
   if (!problem) return { title: "Not Found" };
   return {
     title: `${problem.title} – Causes and Fix | ${verticalConfig.siteName}`,
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function CctvProblemSlugPage({ params }: Props) {
-  const problem = getCctvProblemBySlug(params.slug);
+  const problem = cctvProblemPages.find((p) => p.slug === params.slug);
   if (!problem) notFound();
 
   return (
@@ -41,14 +41,14 @@ export default function CctvProblemSlugPage({ params }: Props) {
       basePath="/services"
       problemsBasePath="/cctv-problems"
       problemsBreadcrumbLabel="CCTV Problems"
-      allProblems={cctvProblems}
+      allProblems={cctvProblemPages}
       relatedProblemsTitle="Related CCTV issues"
       diagnosisSectionTitle="CCTV problem diagnosis"
       causesSectionTitle="What causes this CCTV problem"
       whenToCallSectionTitle="When to call a security professional"
-      featuredLocations={locations.slice(0, 8).map((loc) => ({ id: loc.id, name: loc.name }))}
-      primaryServiceSlug="commercial-cctv-installation"
-      primaryServiceLabel="Commercial CCTV installation"
+      featuredLocations={locations.slice(0, 1).map((loc) => ({ id: loc.id, name: loc.name }))}
+      primaryServiceSlug={problem.primaryServiceSlug}
+      primaryServiceLabel={problem.primaryServiceLabel}
       locationLinkPath={(slug, id) => `/${slug}/${id}`}
       servicesNearYouTitle="CCTV services near you"
       servicesNearYouIntro={SERVICES_NEAR_YOU_INTRO}

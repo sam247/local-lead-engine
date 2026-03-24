@@ -172,7 +172,7 @@ export function ProblemPage({
 
           {problem.seriousSigns && (
             <>
-              <h2 className="mb-2 font-display text-xl font-bold">Signs of a serious drainage issue</h2>
+              <h2 className="mb-2 font-display text-xl font-bold">Signs this issue is becoming serious</h2>
               <p className="mb-8 text-muted-foreground">{problem.seriousSigns}</p>
             </>
           )}

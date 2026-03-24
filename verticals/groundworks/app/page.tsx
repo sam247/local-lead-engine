@@ -5,9 +5,10 @@ import ProjectsPreview from "@/components/sections/ProjectsPreview";
 import Testimonials from "@/components/sections/Testimonials";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import { TrustPoints, HomepageArticles, pickHomepageArticleCards } from "engine";
+import { TrustPoints, HomepageArticles, pickHomepageArticleCards, ProblemPreviewSection } from "engine";
 import { verticalConfig } from "@/config";
 import { blogPosts, getCategoryPages, getHubData } from "@/lib/data";
+import { groundworksProblemPages } from "@/data/problemPages";
 
 export const metadata: Metadata = {
   title: "Mainline Groundworks | Piling, Excavation & Foundation Contractors UK",
@@ -29,11 +30,21 @@ export default function HomePage() {
     blogPosts.map((p) => ({ id: p.id, title: p.title, excerpt: p.excerpt })),
     fallbacks
   );
+  const problemItems = groundworksProblemPages.slice(0, 6).map((problem) => ({
+    title: problem.title,
+    href: `/foundation-problems/${problem.slug}`,
+    context: problem.whenToCall,
+  }));
 
   return (
     <>
       <SchemaMarkup type="LocalBusiness" data={{ areaServed: "UK" }} />
       <Hero />
+      <ProblemPreviewSection
+        title="Common ground and foundation issues"
+        intro="When subsidence, unstable ground, waterlogged formations, or foundation cracking start to affect programme certainty, these issue pages help teams move from concern to action."
+        items={problemItems}
+      />
       <ServicesGrid />
       <TrustPoints items={verticalConfig.homepageTrustPoints} />
       <ProjectsPreview />

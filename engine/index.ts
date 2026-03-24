@@ -40,6 +40,11 @@ export { FooterServiceAreaGroups, type FooterServiceAreaGroupsProps } from "./co
 export { ServiceAreasHub, type ServiceAreasHubProps } from "./components/ServiceAreasHub";
 export { ProblemCTA, type ProblemCTAProps } from "./components/ProblemCTA";
 export { ProblemPage, type ProblemPageProps } from "./components/ProblemPage";
+export {
+  ProblemPreviewSection,
+  type ProblemPreviewSectionProps,
+  type ProblemPreviewItem,
+} from "./components/ProblemPreviewSection";
 export { ProjectCardWithLinks, type ProjectCardWithLinksProps, type ProjectForCard } from "./components/ProjectCardWithLinks";
 export { RelatedLinks, type RelatedLinksProps } from "./components/RelatedLinks";
 export { ServiceImageGallery, type ServiceImageGalleryProps } from "./components/ServiceImageGallery";

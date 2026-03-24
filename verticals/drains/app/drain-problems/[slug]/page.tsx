@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getHubData, getCategoryPages, services, locations } from "@/lib/data";
-import { drainProblems, getDrainProblemBySlug } from "@/data/problems";
+import { drainProblemPages, getDrainProblemPageBySlug } from "@/data/problemPages";
 import { InfoPage, ProblemPage } from "engine";
 import { buildInfoMetadata } from "engine";
 import { verticalConfig } from "@/config";
@@ -17,14 +17,14 @@ const category = "problems";
 
 export async function generateStaticParams() {
   const hubSlugs = getCategoryPages(category).map((page) => ({ slug: page.slug }));
-  const programmaticSlugs = drainProblems.map((p) => ({ slug: p.slug }));
+  const programmaticSlugs = drainProblemPages.map((p) => ({ slug: p.slug }));
   return [...programmaticSlugs, ...hubSlugs];
 }
 
 type Props = { params: { slug: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const problem = getDrainProblemBySlug(params.slug);
+  const problem = getDrainProblemPageBySlug(params.slug);
   if (problem) {
     return {
       title: `${problem.title} – Causes and Repair | ${verticalConfig.siteName}`,
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function DrainProblemsSlugPage({ params }: Props) {
-  const problem = getDrainProblemBySlug(params.slug);
+  const problem = getDrainProblemPageBySlug(params.slug);
   if (problem) {
     return (
       <ProblemPage
@@ -51,14 +51,14 @@ export default function DrainProblemsSlugPage({ params }: Props) {
         basePath="/services"
         problemsBasePath="/drain-problems"
         problemsBreadcrumbLabel={verticalConfig.problemLabel ?? "Problems"}
-        allProblems={drainProblems}
+        allProblems={drainProblemPages}
         relatedProblemsTitle="Related drain issues"
         diagnosisSectionTitle="Drain problem diagnosis"
         causesSectionTitle="What causes this drain problem"
         whenToCallSectionTitle="When to call a drainage engineer"
-        featuredLocations={locations.slice(0, 8).map((loc) => ({ id: loc.id, name: loc.name }))}
-        primaryServiceSlug="drain-collapse-repair"
-        primaryServiceLabel="Drain collapse repair"
+        featuredLocations={locations.slice(0, 1).map((loc) => ({ id: loc.id, name: loc.name }))}
+        primaryServiceSlug={problem.primaryServiceSlug}
+        primaryServiceLabel={problem.primaryServiceLabel}
         locationLinkPath={(slug, id) => `/${slug}/${id}`}
         servicesNearYouTitle="Drain repair services near you"
         servicesNearYouIntro={SERVICES_NEAR_YOU_INTRO}

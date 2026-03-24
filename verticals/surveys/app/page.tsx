@@ -5,9 +5,10 @@ import ProjectsPreview from "@/components/sections/ProjectsPreview";
 import Testimonials from "@/components/sections/Testimonials";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import { TrustPoints, HomepageArticles, pickHomepageArticleCards } from "engine";
+import { TrustPoints, HomepageArticles, pickHomepageArticleCards, ProblemPreviewSection } from "engine";
 import { verticalConfig } from "@/config";
 import { blogPosts, getCategoryPages, getHubData } from "@/lib/data";
+import { surveyProblemPages } from "@/data/problemPages";
 
 export const metadata: Metadata = {
   title: "Mainline Surveys | Land & Drone Surveying Across the UK",
@@ -29,11 +30,21 @@ export default function HomePage() {
     blogPosts.map((p) => ({ id: p.id, title: p.title, excerpt: p.excerpt })),
     fallbacks
   );
+  const problemItems = surveyProblemPages.slice(0, 6).map((problem) => ({
+    title: problem.title,
+    href: `/drain-problems/${problem.slug}`,
+    context: problem.whenToCall,
+  }));
 
   return (
     <>
       <SchemaMarkup type="LocalBusiness" data={{ areaServed: "London and surrounding areas" }} />
       <Hero />
+      <ProblemPreviewSection
+        title="Situations where a survey may be needed"
+        intro="When planning decisions, boundary uncertainty, utility risk, or pre-purchase concerns appear, a targeted survey usually gives the evidence needed to move forward with confidence."
+        items={problemItems}
+      />
       <ServicesGrid />
       <TrustPoints items={verticalConfig.homepageTrustPoints} />
       <ProjectsPreview />
