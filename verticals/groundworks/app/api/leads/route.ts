@@ -250,7 +250,7 @@ async function appendLeadRow(
   });
 }
 
-function buildEmailSubject(lead: { lead_id: string; town: string; service: string }) {
+function buildEmailSubject(lead: LeadRecord) {
   return `New Groundworks Lead – ${lead.lead_id} – ${lead.town} – ${lead.service}`;
 }
 
