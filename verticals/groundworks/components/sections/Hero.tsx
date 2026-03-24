@@ -27,6 +27,7 @@ const SERVICE_OPTIONS = [
   "Enabling Works Contractors",
   "Advice",
 ] as const;
+const PROJECT_STAGE_OPTIONS = ["planning", "ready", "exploring"] as const;
 
 const projectTypeOptions = [
   { id: "new-build", label: "New Build", icon: Ban },
@@ -50,6 +51,7 @@ const Hero = () => {
     town: "",
     service: "",
     issueType: "",
+    projectStage: "",
     details: "",
   });
   const [submitting, setSubmitting] = useState(false);
@@ -63,6 +65,16 @@ const Hero = () => {
       // ignore
     }
   }, []);
+
+  const getPathMetadata = () => {
+    const pagePath = window.location.pathname || "/";
+    const segments = pagePath.split("/").filter(Boolean);
+    return {
+      page_path: pagePath,
+      service_slug: segments[0] ?? "",
+      location_slug: segments[1] ?? "",
+    };
+  };
 
   const handleContinue = () => {
     if (!formData.firstName || !formData.lastName || !formData.postcode || !formData.town) {
@@ -101,8 +113,10 @@ const Hero = () => {
           town: formData.town,
           service: formData.service,
           description: formData.details,
+          project_stage: formData.projectStage || "",
           source_site: "groundworks",
           utm_source: utmSource,
+          ...getPathMetadata(),
         }),
       });
       if (!res.ok) throw new Error("Request failed");
@@ -115,6 +129,7 @@ const Hero = () => {
         town: "",
         service: "",
         issueType: "",
+        projectStage: "",
         details: "",
       });
       setStep(1);
@@ -274,6 +289,23 @@ const Hero = () => {
                       onChange={(e) => setFormData((p) => ({ ...p, details: e.target.value }))}
                       className="min-h-[60px]"
                     />
+                    <div>
+                      <p className="mb-2 text-sm font-medium text-muted-foreground">Project stage (optional)</p>
+                      <div className="grid grid-cols-3 gap-2">
+                        {PROJECT_STAGE_OPTIONS.map((option) => (
+                          <label key={option} className="flex items-center gap-2 rounded-md border px-3 py-2 text-sm capitalize">
+                            <input
+                              type="radio"
+                              name="project_stage"
+                              value={option}
+                              checked={formData.projectStage === option}
+                              onChange={(e) => setFormData((p) => ({ ...p, projectStage: e.target.value }))}
+                            />
+                            {option}
+                          </label>
+                        ))}
+                      </div>
+                    </div>
 
                     <Button type="submit" size="lg" variant="highlight" className="w-full text-base" disabled={submitting}>
                       {submitting ? "Submitting…" : "Request a Callback"}

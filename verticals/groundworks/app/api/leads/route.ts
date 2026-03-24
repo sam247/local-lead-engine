@@ -15,28 +15,11 @@ const SERVICE_OPTIONS = [
   "Enabling Works Contractors",
   "Advice",
 ] as const;
-
-const LeadInputSchema = z.object({
-  first_name: z.string().trim().min(1).max(50),
-  last_name: z.string().trim().min(1).max(50),
-  email: leadEmailField,
-  phone: leadPhoneField,
-  postcode: leadPostcodeField,
-  town: z.string().trim().min(1).max(100),
-  service: z.enum(SERVICE_OPTIONS),
-  description: z.string().trim().min(1).max(2000),
-  source_site: z.literal("groundworks"),
-  utm_source: z.string().trim().max(100).optional(),
-});
-
-type LeadInput = z.infer<typeof LeadInputSchema>;
-
-const SHEET_HEADERS = [
+const EXPECTED_SHEET_HEADERS = [
   "timestamp",
   "lead_id",
   "vertical",
   "source_site",
-  "utm_source",
   "service",
   "postcode",
   "town",
@@ -45,10 +28,43 @@ const SHEET_HEADERS = [
   "email",
   "phone",
   "description",
+  "project_stage",
   "status",
-  "contractor",
-  "value",
+  "utm_source",
+  "page_path",
+  "service_slug",
+  "location_slug",
+  "assigned_to",
+  "date_sent_to_contractor",
+  "response_received",
+  "lead_quality",
+  "estimated_value",
+  "won",
+  "quote_sent",
 ] as const;
+const PROJECT_STAGE_OPTIONS = new Set(["planning", "ready", "exploring"]);
+const ASSIGNED_TO = "Jamie";
+const VERTICAL = "groundworks";
+
+const LeadInputSchema = z.object({
+  first_name: z.string().trim().min(1).max(50),
+  last_name: z.string().trim().min(1).max(50),
+  email: leadEmailField,
+  phone: leadPhoneField,
+  postcode: leadPostcodeField,
+  town: z.string().trim().max(100).optional(),
+  service: z.enum(SERVICE_OPTIONS),
+  description: z.string().trim().min(1).max(2000),
+  source_site: z.string().trim().max(255).optional(),
+  utm_source: z.string().trim().max(100).optional(),
+  page_path: z.string().trim().max(500).optional(),
+  service_slug: z.string().trim().max(150).optional(),
+  location_slug: z.string().trim().max(150).optional(),
+  project_stage: z.string().trim().max(50).optional(),
+});
+
+type LeadInput = z.infer<typeof LeadInputSchema>;
+type LeadRecord = Record<string, string>;
 
 function requireEnv(name: string): string {
   const v = process.env[name];
@@ -82,23 +98,121 @@ async function getSheetsClient() {
   return google.sheets({ version: "v4", auth });
 }
 
-async function ensureHeaderRow(sheets: ReturnType<typeof google.sheets>, spreadsheetId: string) {
-  const headerRange = "Sheet1!A1:P1";
-  const existing = await sheets.spreadsheets.values.get({ spreadsheetId, range: headerRange });
-  const row = existing.data.values?.[0] ?? [];
-  const normalized = row.map((c) => String(c ?? "").trim());
-  const matches = SHEET_HEADERS.every((h, idx) => normalized[idx] === h);
-  if (matches) return;
-  await sheets.spreadsheets.values.update({
-    spreadsheetId,
-    range: headerRange,
-    valueInputOption: "RAW",
-    requestBody: { values: [Array.from(SHEET_HEADERS)] },
-  });
+function trimToString(value: unknown): string {
+  return String(value ?? "").trim();
 }
 
-async function getNextLeadId(sheets: ReturnType<typeof google.sheets>, spreadsheetId: string): Promise<string> {
-  const colRange = "Sheet1!B:B";
+function parsePathParts(pagePath: string): { service_slug: string; location_slug: string } {
+  const segments = trimToString(pagePath).split("/").filter(Boolean);
+  return {
+    service_slug: segments[0] ?? "",
+    location_slug: segments[1] ?? "",
+  };
+}
+
+function deriveLeadOrigin(pagePath: string): string {
+  const normalized = trimToString(pagePath).toLowerCase();
+  if (!normalized) return "";
+  if (normalized.includes("near-me")) return "near_me";
+  if (normalized.includes("guides")) return "content";
+  const segments = normalized.split("/").filter(Boolean);
+  return segments.length >= 2 ? "service_location" : "";
+}
+
+function normalizeProjectStage(value: string): string {
+  const normalized = trimToString(value).toLowerCase();
+  return PROJECT_STAGE_OPTIONS.has(normalized) ? normalized : "";
+}
+
+function getRequestDomain(req: Request): string {
+  try {
+    const url = new URL(req.url);
+    return trimToString(url.hostname);
+  } catch {
+    return "";
+  }
+}
+
+function normalizeLeadData(input: LeadInput, req: Request): LeadRecord {
+  const pagePath = trimToString(input.page_path);
+  const derivedFromPath = parsePathParts(pagePath);
+  const serviceSlug = trimToString(input.service_slug) || derivedFromPath.service_slug;
+  const locationSlug = trimToString(input.location_slug) || derivedFromPath.location_slug;
+
+  const lead: LeadRecord = {
+    first_name: trimToString(input.first_name),
+    last_name: trimToString(input.last_name),
+    email: trimToString(input.email),
+    phone: trimToString(input.phone),
+    postcode: trimToString(input.postcode),
+    town: trimToString(input.town),
+    service: trimToString(input.service),
+    description: trimToString(input.description),
+    utm_source: trimToString(input.utm_source),
+    page_path: pagePath,
+    service_slug: serviceSlug,
+    location_slug: locationSlug,
+    project_stage: normalizeProjectStage(trimToString(input.project_stage)),
+    source_site: getRequestDomain(req),
+    status: "new",
+    assigned_to: ASSIGNED_TO,
+    date_sent_to_contractor: "",
+    response_received: "no",
+    lead_quality: "",
+    estimated_value: "",
+    won: "",
+    quote_sent: "",
+  };
+
+  if (!trimToString(input.service_slug) && lead.service_slug) {
+    console.warn("[leads] Derived service_slug from page_path", { page_path: pagePath, service_slug: lead.service_slug });
+  }
+  if (!trimToString(input.location_slug) && lead.location_slug) {
+    console.warn("[leads] Derived location_slug from page_path", { page_path: pagePath, location_slug: lead.location_slug });
+  }
+
+  return lead;
+}
+
+async function getSheetHeaders(sheets: ReturnType<typeof google.sheets>, spreadsheetId: string): Promise<string[]> {
+  const resp = await sheets.spreadsheets.values.get({ spreadsheetId, range: "Sheet1!1:1" });
+  const row = resp.data.values?.[0] ?? [];
+  const headers = row.map((value) => trimToString(value)).filter((header) => header.length > 0);
+  if (headers.length > 0) return headers;
+  console.warn("[leads] Header row missing; writing expected schema headers");
+  await sheets.spreadsheets.values.update({
+    spreadsheetId,
+    range: "Sheet1!A1",
+    valueInputOption: "RAW",
+    requestBody: { values: [Array.from(EXPECTED_SHEET_HEADERS)] },
+  });
+  return Array.from(EXPECTED_SHEET_HEADERS);
+}
+
+function validateSchema(headers: string[]) {
+  const expectedSet = new Set(EXPECTED_SHEET_HEADERS);
+  const headerSet = new Set(headers);
+  const missing = EXPECTED_SHEET_HEADERS.filter((header) => !headerSet.has(header));
+  const extra = headers.filter((header) => !expectedSet.has(header as (typeof EXPECTED_SHEET_HEADERS)[number]));
+  const orderMismatch = EXPECTED_SHEET_HEADERS.some((header, index) => headers[index] !== header);
+
+  if (missing.length > 0) console.warn("[leads] Missing expected sheet columns", { missing });
+  if (extra.length > 0) console.warn("[leads] Unexpected sheet columns", { extra });
+  if (orderMismatch) console.warn("[leads] Sheet column order mismatch detected");
+}
+
+async function getNextLeadId(
+  sheets: ReturnType<typeof google.sheets>,
+  spreadsheetId: string,
+  headers: string[]
+): Promise<string> {
+  const leadIdColumnIndex = headers.indexOf("lead_id");
+  if (leadIdColumnIndex < 0) {
+    console.warn("[leads] lead_id header missing, starting sequence from 1");
+    return formatLeadId(1);
+  }
+  const columnLetter = String.fromCharCode(65 + leadIdColumnIndex);
+  const colRange = `Sheet1!${columnLetter}:${columnLetter}`;
   const resp = await sheets.spreadsheets.values.get({ spreadsheetId, range: colRange });
   const values = resp.data.values ?? [];
   for (let i = values.length - 1; i >= 0; i--) {
@@ -113,30 +227,23 @@ async function getNextLeadId(sheets: ReturnType<typeof google.sheets>, spreadshe
 async function appendLeadRow(
   sheets: ReturnType<typeof google.sheets>,
   spreadsheetId: string,
-  lead: LeadInput & { lead_id: string; timestamp: string }
+  headers: string[],
+  lead: LeadRecord
 ) {
-  const row = [
-    lead.timestamp,
-    lead.lead_id,
-    "groundworks",
-    lead.source_site,
-    lead.utm_source ?? "",
-    lead.service,
-    lead.postcode,
-    lead.town,
-    lead.first_name,
-    lead.last_name,
-    lead.email,
-    lead.phone,
-    lead.description,
-    "new",
-    "",
-    "",
-  ];
+  const row = headers.map((header) => {
+    if (header === "lead_origin") {
+      const derivedLeadOrigin = deriveLeadOrigin(lead.page_path);
+      if (derivedLeadOrigin) {
+        console.warn("[leads] Derived lead_origin from page_path", { page_path: lead.page_path, lead_origin: derivedLeadOrigin });
+      }
+      return derivedLeadOrigin;
+    }
+    return trimToString(lead[header] ?? "");
+  });
 
   await sheets.spreadsheets.values.append({
     spreadsheetId,
-    range: "Sheet1!A:P",
+    range: "Sheet1!A:ZZ",
     valueInputOption: "RAW",
     insertDataOption: "INSERT_ROWS",
     requestBody: { values: [row] },
@@ -147,7 +254,7 @@ function buildEmailSubject(lead: { lead_id: string; town: string; service: strin
   return `New Groundworks Lead – ${lead.lead_id} – ${lead.town} – ${lead.service}`;
 }
 
-function buildEmailBody(lead: LeadInput & { lead_id: string; timestamp: string }) {
+function buildEmailBody(lead: LeadRecord) {
   return [
     `Lead Reference: ${lead.lead_id}`,
     `Timestamp: ${lead.timestamp}`,
@@ -182,14 +289,20 @@ export async function POST(req: Request) {
     const timestamp = new Date().toISOString();
     const spreadsheetId = requireEnv("GOOGLE_SHEETS_SHEET_ID");
     const sheets = await getSheetsClient();
-    await ensureHeaderRow(sheets, spreadsheetId);
+    const headers = await getSheetHeaders(sheets, spreadsheetId);
+    validateSchema(headers);
+    const lead_id = await getNextLeadId(sheets, spreadsheetId, headers);
 
-    const lead_id = await getNextLeadId(sheets, spreadsheetId);
-
-    const lead: LeadInput & { lead_id: string; timestamp: string } = { ...parsed.data, lead_id, timestamp };
+    const normalizedLead = normalizeLeadData(parsed.data, req);
+    const lead: LeadRecord = {
+      ...normalizedLead,
+      lead_id,
+      timestamp,
+      vertical: VERTICAL,
+    };
 
     // Persist first so we never lose a lead if email fails
-    await appendLeadRow(sheets, spreadsheetId, lead);
+    await appendLeadRow(sheets, spreadsheetId, headers, lead);
 
     const resend = new Resend(requireEnv("RESEND_API_KEY"));
     // Hardcoded test inbox until leads@* MX records receive mail.

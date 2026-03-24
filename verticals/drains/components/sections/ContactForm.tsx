@@ -11,6 +11,7 @@ import { trackEvent, leadEmailField, leadPhoneField, leadPostcodeField } from "e
 import { z } from "zod";
 
 const SERVICE_OPTIONS = ["Drain survey", "Blocked drain", "Drain repair", "Drain inspection", "Advice"] as const;
+const PROJECT_STAGE_OPTIONS = ["planning", "ready", "exploring"] as const;
 
 const enquirySchema = z.object({
   first_name: z.string().trim().min(1, "First name is required").max(50),
@@ -22,9 +23,20 @@ const enquirySchema = z.object({
   service: z.enum(SERVICE_OPTIONS, { message: "Please select a service" }),
   description: z.string().trim().min(1, "Please describe the issue").max(2000),
   source_site: z.literal("drains"),
+  project_stage: z.enum(PROJECT_STAGE_OPTIONS).optional(),
 });
 
 type EnquiryData = z.infer<typeof enquirySchema>;
+
+function getPathMetadata() {
+  const pagePath = window.location.pathname || "/";
+  const segments = pagePath.split("/").filter(Boolean);
+  return {
+    page_path: pagePath,
+    service_slug: segments[0] ?? "",
+    location_slug: segments[1] ?? "",
+  };
+}
 
 export default function ContactForm() {
   const { toast } = useToast();
@@ -66,7 +78,7 @@ export default function ContactForm() {
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...result.data, utm_source: utmSource }),
+        body: JSON.stringify({ ...result.data, ...getPathMetadata(), utm_source: utmSource }),
       });
       if (!res.ok) {
         throw new Error("Request failed");
@@ -141,6 +153,23 @@ export default function ContactForm() {
           </SelectContent>
         </Select>
         {errors.service && <p className="mt-1 text-xs text-destructive">{errors.service}</p>}
+      </div>
+      <div>
+        <Label className="mb-2 block">Project stage (optional)</Label>
+        <div className="grid gap-2 sm:grid-cols-3">
+          {PROJECT_STAGE_OPTIONS.map((option) => (
+            <label key={option} className="flex items-center gap-2 rounded-md border px-3 py-2 text-sm capitalize">
+              <input
+                type="radio"
+                name="project_stage"
+                value={option}
+                checked={formData.project_stage === option}
+                onChange={(e) => updateField("project_stage", e.target.value)}
+              />
+              {option}
+            </label>
+          ))}
+        </div>
       </div>
       <div>
         <Label htmlFor="description">Description of issue *</Label>
