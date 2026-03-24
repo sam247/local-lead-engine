@@ -8,6 +8,7 @@ import { MidContentCTA } from "./MidContentCTA";
 import { RelatedLinks } from "./RelatedLinks";
 import { BreadcrumbNav } from "./BreadcrumbNav";
 import { CTABanner } from "./CTABanner";
+import { getVariantIndex } from "../lib/contentVariants";
 import type { HubData, InfoPageData, Service, Location, CompanyInfo } from "../types";
 
 export interface RelatedPageLink {
@@ -52,6 +53,29 @@ export function InfoPage({
   relatedGuidesTitle = "Related Articles",
 }: InfoPageProps) {
   const relatedGuides = otherPages.slice(0, 5);
+  const signs = page.signs.slice(0, 5);
+  const shouldUseSignsList = signs.length >= 3;
+  const signsNarrative =
+    signs.length > 0
+      ? signs.join(signs.length > 2 ? ", " : " and ")
+      : "early warning signs affecting reliability, compliance, or project pace";
+  const openingVariant = getVariantIndex(`info-opening:${hub.category}:${page.slug}`, 3);
+  const openingLead = [
+    `Most teams review ${page.title.toLowerCase()} when live project risk needs turning into a clear technical decision with practical next steps.`,
+    `${page.title} usually becomes urgent when recurring symptoms begin affecting programme confidence, compliance, or delivery reliability.`,
+    `The commercial value of resolving ${page.title.toLowerCase()} early is fewer delays, clearer budgeting, and reduced repeat disruption.`,
+  ][openingVariant];
+  if (process.env.NODE_ENV !== "production") {
+    const estimatedOpeningWords = `${page.contextualOpening ?? page.intro} ${openingLead}`.trim().split(/\s+/).length;
+    if (estimatedOpeningWords < 45) {
+      console.warn("[page-quality-warning]", {
+        pageType: "topic",
+        variant: ["A", "B", "C"][openingVariant],
+        slug: page.slug,
+        estimatedOpeningWords,
+      });
+    }
+  }
   return (
     <>
       <SchemaMarkup
@@ -97,12 +121,13 @@ export function InfoPage({
           </div>
         </div>
       </section>
-      <section className="section-padding">
+      <section className="section-padding" data-page-type="topic" data-layout-variant={["A", "B", "C"][openingVariant]}>
         <div className="container">
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <h2 className="mb-4 font-display text-2xl font-bold">Contextual opening</h2>
               <p className="mb-6 text-lg text-muted-foreground">{page.contextualOpening ?? page.intro}</p>
+              <p className="mb-8 text-muted-foreground">{openingLead}</p>
               <h2 className="mb-4 font-display text-2xl font-bold">When this is needed</h2>
               <p className="mb-8 text-muted-foreground">
                 {page.whenNeeded ??
@@ -112,14 +137,21 @@ export function InfoPage({
               <p className="mb-3 text-muted-foreground">
                 The symptoms below are the most common triggers we see before diagnosis and repair planning.
               </p>
-              <ul className="mb-8 space-y-2">
-                {page.signs.slice(0, 5).map((sign) => (
-                  <li key={sign} className="flex items-start gap-2">
-                    <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                    <span>{sign}</span>
-                  </li>
-                ))}
-              </ul>
+              {shouldUseSignsList ? (
+                <ul className="mb-8 space-y-2">
+                  {signs.map((sign) => (
+                    <li key={sign} className="flex items-start gap-2">
+                      <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                      <span>{sign}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mb-8 text-muted-foreground">
+                  Typical triggers include {signsNarrative}, which is usually the point where teams move from
+                  monitoring into scoped delivery planning.
+                </p>
+              )}
               <h2 className="mb-4 font-display text-2xl font-bold">What the work involves</h2>
               <p className="mb-4 text-muted-foreground">{page.workInvolves ?? page.diagnosis}</p>
               <MidContentCTA
@@ -230,7 +262,7 @@ export function InfoPage({
                 <p className="mb-4 text-lg font-medium text-primary-foreground">{page.ctaText}</p>
                 <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                   <Button size="lg" variant="secondary" asChild>
-                    <Link href={contactPath}>Get a Free Quote</Link>
+                    <Link href={contactPath}>Discuss your project</Link>
                   </Button>
                   <a
                     href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BreadcrumbNav } from "./BreadcrumbNav";
 import { Button } from "./ui/button";
 import type { Location } from "../types";
+import { getVariantIndex } from "../lib/contentVariants";
 
 export interface TopicLocationProcessStep {
   title: string;
@@ -37,6 +38,8 @@ function clampItems(items: string[], max = 5): string[] {
   return items.slice(0, max);
 }
 
+const LAYOUT_VARIANTS = ["A", "B", "C"] as const;
+
 export function TopicLocationPage({
   topicTitle,
   topicSlug,
@@ -61,12 +64,73 @@ export function TopicLocationPage({
   contactQuoteText,
   companyName,
 }: TopicLocationPageProps) {
+  const layoutVariantIndex = getVariantIndex(`layout:topic-location:${topicSlug}:${locationSlug}`, LAYOUT_VARIANTS.length);
+  const layoutVariant = LAYOUT_VARIANTS[layoutVariantIndex];
   const scenarioItems = clampItems(commonScenarios);
   const useCaseItems = clampItems(typicalUseCases);
   const processItems = processStepsDetailed.slice(0, 5);
+  const topicCategory = topicHubPath.replace(/^\//, "").split("/")[0] || undefined;
+  const openingStructure = [
+    `Most enquiries for ${topicTitle.toLowerCase()} in ${location.name} involve active project scopes where decisions on delivery method and timing affect overall outcomes.`,
+    `Projects usually reach this stage when a practical issue becomes time-sensitive and teams need a clear, location-aware implementation route.`,
+    `The best outcomes usually come when ${topicTitle.toLowerCase()} is scoped early enough to align risk, budget, and programme constraints.`,
+  ][layoutVariantIndex];
+
+  const whenNeededSection = (
+    <section className="mb-8">
+      <h2 className="mb-3 font-display text-xl font-semibold">When this is needed</h2>
+      <p className="max-w-3xl text-muted-foreground">{whenNeeded}</p>
+    </section>
+  );
+
+  const workInvolvesSection = (
+    <section className="mb-8">
+      <h2 className="mb-3 font-display text-xl font-semibold">What the work involves</h2>
+      <p className="max-w-3xl text-muted-foreground">{workInvolves}</p>
+    </section>
+  );
+
+  const processSection = (
+    <section className="mb-8">
+      <h2 className="mb-3 font-display text-xl font-semibold">Process and timeline</h2>
+      <p className="mb-3 max-w-3xl text-muted-foreground">
+        We keep delivery structured so decisions, dependencies, and handover remain clear from start to finish.
+      </p>
+      <ol className="space-y-3">
+        {processItems.map((step, idx) => (
+          <li key={`${step.title}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
+            <p className="font-medium">
+              Step {idx + 1}: {step.title}
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">Outcome: {step.outcome}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+
+  if (process.env.NODE_ENV !== "production") {
+    const estimatedOpeningWords = `${contextualOpening} ${openingStructure}`.trim().split(/\s+/).length;
+    const estimatedPrimarySections = 7;
+    if (estimatedOpeningWords < 45 || estimatedPrimarySections > 7) {
+      console.warn("[page-quality-warning]", {
+        pageType: "topic-location",
+        variant: layoutVariant,
+        topicSlug,
+        locationSlug,
+        estimatedOpeningWords,
+        estimatedPrimarySections,
+      });
+    }
+  }
 
   return (
-    <main className="container mx-auto px-4 py-8">
+    <main
+      className="container mx-auto px-4 py-8"
+      data-page-type="topic-location"
+      data-layout-variant={layoutVariant}
+      data-topic-category={topicCategory}
+    >
       <BreadcrumbNav
         items={[
           { name: "Home", url: "/" },
@@ -82,17 +146,21 @@ export function TopicLocationPage({
       <section className="mb-8">
         <h2 className="mb-3 font-display text-xl font-semibold">Contextual opening</h2>
         <p className="max-w-3xl text-muted-foreground">{contextualOpening}</p>
+        <p className="mt-3 max-w-3xl text-muted-foreground">{openingStructure}</p>
       </section>
 
-      <section className="mb-8">
-        <h2 className="mb-3 font-display text-xl font-semibold">When this is needed</h2>
-        <p className="max-w-3xl text-muted-foreground">{whenNeeded}</p>
-      </section>
-
-      <section className="mb-8">
-        <h2 className="mb-3 font-display text-xl font-semibold">What the work involves</h2>
-        <p className="max-w-3xl text-muted-foreground">{workInvolves}</p>
-      </section>
+      {layoutVariant === "B" ? (
+        <>
+          {whenNeededSection}
+          {workInvolvesSection}
+        </>
+      ) : (
+        <>
+          {workInvolvesSection}
+          {whenNeededSection}
+        </>
+      )}
+      {layoutVariant === "C" && processSection}
 
       <section className="mb-8">
         <h2 className="mb-3 font-display text-xl font-semibold">Common scenarios and problems</h2>
@@ -129,22 +197,7 @@ export function TopicLocationPage({
         )}
       </section>
 
-      <section className="mb-8">
-        <h2 className="mb-3 font-display text-xl font-semibold">Process and timeline</h2>
-        <p className="mb-3 max-w-3xl text-muted-foreground">
-          We keep delivery structured so decisions, dependencies, and handover remain clear from start to finish.
-        </p>
-        <ol className="space-y-3">
-          {processItems.map((step, idx) => (
-            <li key={`${step.title}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
-              <p className="font-medium">
-                Step {idx + 1}: {step.title}
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground">Outcome: {step.outcome}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
+      {layoutVariant !== "C" && processSection}
 
       {bodyContextLine && (
         <section className="mb-8">

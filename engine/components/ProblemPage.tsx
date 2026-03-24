@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BreadcrumbNav } from "./BreadcrumbNav";
 import { ProblemCTA } from "./ProblemCTA";
 import { SchemaMarkup } from "../schema/SchemaMarkup";
+import { getVariantIndex } from "../lib/contentVariants";
 import type { ProblemData, Service, CompanyInfo } from "../types";
 
 export interface FeaturedLocation {
@@ -69,9 +70,19 @@ export function ProblemPage({
   servicesNearYouTitle,
   servicesNearYouIntro,
 }: ProblemPageProps) {
+  const openingVariant = getVariantIndex(`problem-opening:${problem.slug}`, 3);
+  const openingLead = [
+    `Most projects facing ${problem.title.toLowerCase()} need a rapid diagnosis so remediation can be planned before disruption escalates.`,
+    `${problem.title} is typically addressed when teams need to move from symptoms to a scoped, commercially realistic repair plan.`,
+    `The earlier this issue is assessed, the easier it is to protect programme certainty and avoid repeat intervention costs.`,
+  ][openingVariant];
   const relatedServices = problem.relatedServiceSlugs
     .map((slug) => services.find((s) => s.slug === slug))
     .filter((s): s is Service => s != null);
+  const shouldUseDiagnosisList = allProblems.length >= 4;
+  const diagnosisNarrative = allProblems.slice(0, 3).map((p) => p.title);
+  const shouldUseRelatedServicesList = relatedServices.length >= 3;
+  const relatedServiceNarrative = relatedServices.slice(0, 2);
 
   const serviceLinks = relatedServices.map((s) => ({
     slug: s.slug,
@@ -103,7 +114,11 @@ export function ProblemPage({
         baseUrl={baseUrl}
         data={{ breadcrumbs }}
       />
-      <section className="section-padding">
+      <section
+        className="section-padding"
+        data-page-type="problem"
+        data-layout-variant={["A", "B", "C"][openingVariant]}
+      >
         <div className="container max-w-3xl">
           <BreadcrumbNav items={breadcrumbs} />
           <h1 className="mb-6 font-display text-3xl font-bold md:text-4xl">
@@ -115,22 +130,27 @@ export function ProblemPage({
             {problem.contextualOpening ??
               `${problem.title} is usually investigated when visible symptoms begin affecting reliability, safety, or project delivery. Early diagnosis helps confirm whether this is an isolated issue or part of a wider condition.`}
           </p>
+          <p className="mb-8 text-muted-foreground">{openingLead}</p>
 
           {allProblems.length > 0 && diagnosisSectionTitle && (
             <>
               <h2 className="mb-2 font-display text-xl font-bold">{diagnosisSectionTitle}</h2>
-              <ul className="mb-8 flex flex-wrap gap-x-4 gap-y-1 text-muted-foreground">
-                {allProblems.map((p) => (
-                  <li key={p.slug}>
-                    <Link
-                      href={`${problemsBasePath}/${p.slug}`}
-                      className="text-primary hover:underline"
-                    >
-                      {p.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              {shouldUseDiagnosisList ? (
+                <ul className="mb-8 flex flex-wrap gap-x-4 gap-y-1 text-muted-foreground">
+                  {allProblems.map((p) => (
+                    <li key={p.slug}>
+                      <Link href={`${problemsBasePath}/${p.slug}`} className="text-primary hover:underline">
+                        {p.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mb-8 text-muted-foreground">
+                  Start by checking {diagnosisNarrative.join(", ")} so likely causes and repair paths can be compared
+                  before committing to site works.
+                </p>
+              )}
             </>
           )}
 
@@ -203,34 +223,56 @@ export function ProblemPage({
           <p className="mb-8 text-muted-foreground">{problem.whenToCall}</p>
 
           <h2 className="mb-2 font-display text-xl font-bold">Related services</h2>
-          <ul className="mb-8 list-inside list-disc space-y-1 text-muted-foreground">
-            {relatedServices.map((s) => (
-              <li key={s.id}>
-                <Link href={`${basePath}/${s.slug}`} className="text-primary hover:underline">
-                  {s.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <p className="mb-3 text-muted-foreground">
+            These services are typically commissioned when this issue progresses from diagnosis into delivery.
+          </p>
+          {shouldUseRelatedServicesList ? (
+            <ul className="mb-8 list-inside list-disc space-y-1 text-muted-foreground">
+              {relatedServices.map((s) => (
+                <li key={s.id}>
+                  <Link href={`${basePath}/${s.slug}`} className="text-primary hover:underline">
+                    {s.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mb-8 text-muted-foreground">
+              Common next steps include{" "}
+              {relatedServiceNarrative.map((service, idx) => (
+                <span key={service.id}>
+                  {idx > 0 ? " and " : ""}
+                  <Link href={`${basePath}/${service.slug}`} className="text-primary hover:underline">
+                    {service.title}
+                  </Link>
+                </span>
+              ))}
+              .
+            </p>
+          )}
 
           {allProblems.length > 0 && relatedProblemsTitle && (
             <>
               <h2 className="mb-2 font-display text-xl font-bold">{relatedProblemsTitle}</h2>
-              <ul className="mb-8 list-inside list-disc space-y-1 text-muted-foreground">
-                {allProblems
-                  .filter((p) => p.slug !== problem.slug)
-                  .slice(0, RELATED_PROBLEMS_MAX)
-                  .map((p) => (
-                    <li key={p.slug}>
-                      <Link
-                        href={`${problemsBasePath}/${p.slug}`}
-                        className="text-primary hover:underline"
-                      >
-                        {p.title}
-                      </Link>
-                    </li>
-                  ))}
-              </ul>
+              {allProblems.filter((p) => p.slug !== problem.slug).length >= 3 ? (
+                <ul className="mb-8 list-inside list-disc space-y-1 text-muted-foreground">
+                  {allProblems
+                    .filter((p) => p.slug !== problem.slug)
+                    .slice(0, RELATED_PROBLEMS_MAX)
+                    .map((p) => (
+                      <li key={p.slug}>
+                        <Link href={`${problemsBasePath}/${p.slug}`} className="text-primary hover:underline">
+                          {p.title}
+                        </Link>
+                      </li>
+                    ))}
+                </ul>
+              ) : (
+                <p className="mb-8 text-muted-foreground">
+                  Related issues can indicate a wider condition, so it is worth reviewing neighbouring problem patterns
+                  before finalising remediation scope.
+                </p>
+              )}
             </>
           )}
 

@@ -14,9 +14,9 @@ export interface CTABannerProps {
 export function CTABanner({
   companyInfo,
   contactPath = "/contact",
-  heading = "Need an Expert?",
-  body = "Get in touch today for a free, no-obligation quote. Our team is ready to help — 24/7.",
-  ctaText = "Get a Free Quote",
+  heading = "Need project guidance?",
+  body = "Share your site details and priorities. We will outline a practical scope, likely timeline, and next steps.",
+  ctaText = "Request a site visit",
 }: CTABannerProps) {
   return (
     <section className="bg-secondary py-16 text-primary md:py-20">

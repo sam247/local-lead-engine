@@ -100,6 +100,7 @@ function getServiceFamily(service: Service): "drains" | "surveys" | "access" | "
 }
 
 const SERVICE_DETAIL_ABOUT_LABELS = ["Learn more about our team", "About our approach"] as const;
+const LAYOUT_VARIANTS = ["A", "B", "C"] as const;
 
 function buildProcessOutcome(step: string): string {
   const lowered = step.toLowerCase();
@@ -310,6 +311,9 @@ export function ServiceDetailContent({
   const faqVariant = getVariantIndex(`${service.slug}:${verticalConfig.verticalId}-faq`, 3);
   const extraVariant = getVariantIndex(`${service.slug}:${verticalConfig.verticalId}-extra`, 3);
   const aboutLinkVariant = getVariantIndex(`about:svc:${service.slug}`, SERVICE_DETAIL_ABOUT_LABELS.length);
+  const layoutVariantIndex = getVariantIndex(`layout:service:${service.slug}`, LAYOUT_VARIANTS.length);
+  const layoutVariant = LAYOUT_VARIANTS[layoutVariantIndex];
+  const isProcessEarly = layoutVariant === "C";
   const processSteps = service.process.slice(0, 5);
   const generatedFaqs = buildFaqItems(service, verticalConfig.verticalId, faqVariant);
   const shouldAppendOneFaq = faqs.length >= 3;
@@ -344,6 +348,49 @@ export function ServiceDetailContent({
   const requestCta = ctaCopy.request[ctaVariant % ctaCopy.request.length];
   const sidebarCta = ctaCopy.sidebar[ctaVariant % ctaCopy.sidebar.length];
   const actionHeading = ctaCopy.actionHeading[ctaVariant % ctaCopy.actionHeading.length];
+  const openingLead = [
+    `Most enquiries for ${displayTitle.toLowerCase()} involve balancing programme, cost certainty, and practical delivery constraints before site works begin.`,
+    `Most projects involving ${displayTitle.toLowerCase()} are typically scoped when teams need a clear route from issue to implementation.`,
+    `Typically required when operational pressure or project sequencing makes a generic fix too risky.`,
+  ][layoutVariantIndex];
+
+  const processSection = (
+    <>
+      <SectionIntro
+        title="Our Process"
+        description={
+          sectionIntros.process ??
+          "Each stage is structured to keep decisions clear and delivery predictable from first assessment to sign-off."
+        }
+      />
+      <ol className="mb-8 space-y-3">
+        {processSteps.map((step, idx) => (
+          <li key={`${step}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
+            <p className="font-medium">
+              Step {idx + 1}: {step}
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">Outcome: {buildProcessOutcome(step)}</p>
+          </li>
+        ))}
+      </ol>
+    </>
+  );
+
+  if (process.env.NODE_ENV !== "production") {
+    const estimatedOpeningWords = `${overviewDescriptions[overviewVariant]} ${service.description} ${openingLead}`
+      .trim()
+      .split(/\s+/).length;
+    const estimatedPrimarySections = 7;
+    if (estimatedOpeningWords < 45 || estimatedPrimarySections > 7) {
+      console.warn("[page-quality-warning]", {
+        pageType: "service",
+        variant: layoutVariant,
+        serviceSlug: service.slug,
+        estimatedOpeningWords,
+        estimatedPrimarySections,
+      });
+    }
+  }
 
   const breadcrumbs = [
     { name: "Home", url: "/" },
@@ -372,7 +419,7 @@ export function ServiceDetailContent({
         data={{ breadcrumbs }}
       />
 
-      <section className="relative bg-primary py-16 md:py-24">
+      <section className="relative bg-primary py-16 md:py-24" data-page-type="service" data-layout-variant={layoutVariant}>
         <div className="absolute inset-0">
           <img src={heroImageSrc} alt={heroImageAlt} className="h-full w-full object-cover opacity-20" />
           <div className="absolute inset-0 bg-primary/60" />
@@ -397,6 +444,7 @@ export function ServiceDetailContent({
                 description={overviewDescriptions[overviewVariant]}
               />
               <p className="mb-8 text-muted-foreground">{service.description}</p>
+              <p className="mb-8 text-muted-foreground">{openingLead}</p>
               <p className="mb-8 text-sm text-muted-foreground">
                 <Link href="/about" className="text-primary hover:underline">
                   {SERVICE_DETAIL_ABOUT_LABELS[aboutLinkVariant]}
@@ -497,24 +545,7 @@ export function ServiceDetailContent({
                   </ul>
                 </>
               )}
-
-              <SectionIntro
-                title="Our Process"
-                description={
-                  sectionIntros.process ??
-                  "Each stage is structured to keep decisions clear and delivery predictable from first assessment to sign-off."
-                }
-              />
-              <ol className="mb-8 space-y-3">
-                {processSteps.map((step, idx) => (
-                  <li key={`${step}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
-                    <p className="font-medium">
-                      Step {idx + 1}: {step}
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">Outcome: {buildProcessOutcome(step)}</p>
-                  </li>
-                ))}
-              </ol>
+              {isProcessEarly && processSection}
               <div className="mb-8 rounded-lg border border-border bg-secondary/40 p-4 text-sm text-muted-foreground">
                 {reassuranceCopy[reassuranceVariant]}
               </div>
@@ -524,6 +555,7 @@ export function ServiceDetailContent({
                 </h3>
                 <p className="text-muted-foreground">{extraParagraph}</p>
               </div>
+              {!isProcessEarly && processSection}
 
               <SectionIntro
                 title="Industries We Work With"
@@ -665,7 +697,7 @@ export function ServiceDetailContent({
                 contactPath={contactPath}
                 heading={actionHeading}
                 body="Share your site details and goals. We will recommend the right scope and provide a clear quote."
-                ctaText={discussCta}
+                ctaText={discussCta.replace("quote", "site visit")}
               />
             </div>
 

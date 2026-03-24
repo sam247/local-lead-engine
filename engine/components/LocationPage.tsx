@@ -96,6 +96,8 @@ const COST_COMPLEXITY_HEADINGS = [
   "Factors that influence cost and programme",
 ] as const;
 
+const LAYOUT_VARIANTS = ["A", "B", "C"] as const;
+
 function getServiceFamily(service: Service): "drains" | "surveys" | "access" | "groundworks" | "generic" {
   const slug = service.slug.toLowerCase();
   const title = service.title.toLowerCase();
@@ -439,6 +441,10 @@ export function LocationPage({
   const faqVariantIndex = getVariantIndex(`${service.slug}:${location.id}-faq`, 3);
   const extraVariantIndex = getVariantIndex(`${service.slug}:${location.id}-extra`, 3);
   const aboutLinkVariantIndex = getVariantIndex(`about:loc:${serviceSlug}:${locationSlug}`, LOCATION_ABOUT_LABELS.length);
+  const layoutVariantIndex = getVariantIndex(`layout:location:${serviceSlug}:${locationSlug}`, LAYOUT_VARIANTS.length);
+  const layoutVariant = LAYOUT_VARIANTS[layoutVariantIndex];
+  const isWhenNeededEarly = layoutVariant === "B";
+  const isProcessEarly = layoutVariant === "C";
 
   const introLines = INTRO_VARIANTS[introVariantIndex](displayTitle, location.name);
   const whenNeeded = WHEN_NEEDED_VARIANTS[whenNeededVariantIndex];
@@ -471,6 +477,61 @@ export function LocationPage({
   ];
   const activeTrustPoints =
     trustPoints && trustPoints.length > 0 ? trustPoints : defaultTrustPoints;
+  const toneLead = {
+    drains: "Most enquiries for this involve recurring disruption or urgent reliability issues that need a durable fix.",
+    access: "Most enquiries for this involve risk reduction, compliance confidence, and dependable day-to-day security performance.",
+    surveys: "Most enquiries for this involve decision-grade reporting that can be relied on for planning and delivery.",
+    groundworks: "Most enquiries for this involve early programme planning, site constraints, and buildability before major spend.",
+    generic: "Most enquiries for this involve reducing uncertainty before committing to project delivery.",
+  }[serviceFamily];
+
+  const whenNeededSection = (
+    <div className="mb-8">
+      <h3 className="mb-3 font-display text-xl font-bold">When you might need this service</h3>
+      <div className="space-y-4 text-muted-foreground">
+        <p>{whenNeeded.first}</p>
+        <p>
+          {whenNeeded.second} In decision-stage terms, this is often where teams move from broad options into method
+          selection, sequencing, and budget alignment.
+        </p>
+        <p>{whenNeeded.third}</p>
+      </div>
+    </div>
+  );
+
+  const processSection = (
+    <>
+      <SectionIntro
+        title={`How our ${displayTitle.toLowerCase()} service works`}
+        description="Our process is designed to keep things straightforward: define the issue, explain your options clearly, carry out the right work, and confirm everything before handover."
+      />
+      <ol className="mb-8 space-y-3">
+        {service.process.slice(0, 5).map((step, idx) => (
+          <li key={`${step}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
+            <p className="font-medium">
+              Step {idx + 1}: {step}
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">Outcome: {buildProcessOutcome(step, service, location)}</p>
+          </li>
+        ))}
+      </ol>
+    </>
+  );
+
+  if (process.env.NODE_ENV !== "production") {
+    const estimatedOpeningWords = `${introParagraph ?? ""} ${introLines.join(" ")} ${toneLead}`.trim().split(/\s+/).length;
+    const estimatedPrimarySections = 7;
+    if (estimatedOpeningWords < 45 || estimatedPrimarySections > 7) {
+      console.warn("[page-quality-warning]", {
+        pageType: "location",
+        variant: layoutVariant,
+        serviceSlug,
+        locationSlug,
+        estimatedOpeningWords,
+        estimatedPrimarySections,
+      });
+    }
+  }
 
   return (
     <>
@@ -504,7 +565,11 @@ export function LocationPage({
         }}
       />
 
-      <section className="relative bg-primary py-16 md:py-24">
+      <section
+        className="relative bg-primary py-16 md:py-24"
+        data-page-type="location"
+        data-layout-variant={layoutVariant}
+      >
         <div className="absolute inset-0">
           <img
             src={serviceImage}
@@ -576,6 +641,7 @@ export function LocationPage({
                   {introParagraph ??
                     `${displayTitle} in ${location.name} is usually commissioned when project teams need dependable outcomes, clear technical scope, and delivery that aligns with site constraints.`}
                 </p>
+                <p>{toneLead}</p>
                 {extraServiceLocationLinks && extraServiceLocationLinks.length > 0 && (
                   <p className="text-muted-foreground">
                     {extraServiceLocationLinks.map((link, i) => (
@@ -636,19 +702,7 @@ export function LocationPage({
                   />
                 </>
               )}
-              <div className="mb-8">
-                <h3 className="mb-3 font-display text-xl font-bold">
-                  When you might need this service
-                </h3>
-                <div className="space-y-4 text-muted-foreground">
-                  <p>{whenNeeded.first}</p>
-                  <p>
-                    {whenNeeded.second} In decision-stage terms, this is often where teams move from broad options
-                    into method selection, sequencing, and budget alignment.
-                  </p>
-                  <p>{whenNeeded.third}</p>
-                </div>
-              </div>
+              {isWhenNeededEarly && whenNeededSection}
               <div className="mb-8">
                 <h3 className="mb-3 font-display text-xl font-bold">Typical projects we support</h3>
                 <p className="mb-4 text-muted-foreground">
@@ -680,6 +734,8 @@ export function LocationPage({
                 <h3 className="mb-3 font-display text-xl font-bold">Project context in {location.name}</h3>
                 <p className="text-muted-foreground">{activeLocationContext}</p>
               </div>
+              {!isWhenNeededEarly && whenNeededSection}
+              {isProcessEarly && processSection}
               {(nearbyLocation || relatedService) && (
                 <p className="mb-8 text-muted-foreground">
                   {nearbyLocation && (
@@ -732,22 +788,7 @@ export function LocationPage({
                 title={trustSectionTitle ?? "What you can expect"}
               />
 
-              <SectionIntro
-                title={`How our ${displayTitle.toLowerCase()} service works`}
-                description="Our process is designed to keep things straightforward: define the issue, explain your options clearly, carry out the right work, and confirm everything before handover."
-              />
-              <ol className="mb-8 space-y-3">
-                {service.process.slice(0, 5).map((step, idx) => (
-                  <li key={`${step}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
-                    <p className="font-medium">
-                      Step {idx + 1}: {step}
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      Outcome: {buildProcessOutcome(step, service, location)}
-                    </p>
-                  </li>
-                ))}
-              </ol>
+              {!isProcessEarly && processSection}
 
               {nearbyProjects && nearbyProjects.length > 0 && (
                 <>
@@ -801,7 +842,7 @@ export function LocationPage({
                 contactPath={contactPath}
                 heading={`Need ${displayTitle.toLowerCase()} in ${location.name}?`}
                 body="Tell us what you need and we will advise on the right approach, timeline, and next step for your property."
-                ctaText="Request a Free Quote"
+                ctaText="Get pricing for your site"
               />
               <InspectionCTA companyInfo={companyInfo} contactPath={contactPath} />
             </div>
