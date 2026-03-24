@@ -67,7 +67,7 @@ const Hero = () => {
   }, []);
 
   const getPathMetadata = () => {
-    const pagePath = window.location.pathname || "/";
+    const pagePath = window.location.pathname || "";
     const segments = pagePath.split("/").filter(Boolean);
     return {
       page_path: pagePath,

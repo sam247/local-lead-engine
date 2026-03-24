@@ -92,8 +92,72 @@ function trimToString(value: unknown): string {
   return String(value ?? "").trim();
 }
 
+function normalizeWhitespace(value: string): string {
+  return value.replace(/\s+/g, " ").trim();
+}
+
+function toTitleCaseService(value: string): string {
+  const normalized = normalizeWhitespace(value);
+  if (!normalized) return "";
+
+  const tokens = normalized.split(" ").filter(Boolean);
+  const deduped = tokens.filter((token, index) => index === 0 || token.toLowerCase() !== tokens[index - 1].toLowerCase());
+
+  return deduped
+    .map((token) =>
+      token
+        .split("-")
+        .map((part) => {
+          if (!part) return "";
+          if (/^[A-Z0-9]{2,}$/.test(part)) return part;
+          return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+        })
+        .join("-")
+    )
+    .join(" ");
+}
+
+function slugifyText(value: string): string {
+  const normalized = normalizeWhitespace(value).toLowerCase();
+  if (!normalized) return "";
+  return normalized
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function sanitizePathname(value: string): string {
+  const input = trimToString(value);
+  if (!input) return "";
+
+  try {
+    const parsed = new URL(input);
+    return sanitizePathname(parsed.pathname);
+  } catch {
+    // Not a full URL, keep processing.
+  }
+
+  const withoutQuery = input.split(/[?#]/)[0] ?? "";
+  const normalized = trimToString(withoutQuery);
+  if (!normalized) return "";
+  return normalized.startsWith("/") ? normalized : `/${normalized}`;
+}
+
+function getEffectivePathname(req: Request, payloadPagePath?: string): string {
+  const fromPayload = sanitizePathname(payloadPagePath ?? "");
+  if (fromPayload) return fromPayload;
+
+  const refererPath = sanitizePathname(req.headers.get("referer") ?? "");
+  if (refererPath) return refererPath;
+
+  const fromRequest = sanitizePathname(req.url);
+  if (fromRequest.startsWith("/api/")) return "";
+  return fromRequest;
+}
+
 function parsePathParts(pagePath: string): { service_slug: string; location_slug: string } {
-  const segments = trimToString(pagePath).split("/").filter(Boolean);
+  const segments = sanitizePathname(pagePath).split("/").filter(Boolean);
   return {
     service_slug: segments[0] ?? "",
     location_slug: segments[1] ?? "",
@@ -124,10 +188,15 @@ function getRequestDomain(req: Request): string {
 }
 
 function normalizeLeadData(input: LeadInput, req: Request): LeadRecord {
-  const pagePath = trimToString(input.page_path);
+  const pagePath = getEffectivePathname(req, input.page_path);
   const derivedFromPath = parsePathParts(pagePath);
-  const serviceSlug = trimToString(input.service_slug) || derivedFromPath.service_slug;
-  const locationSlug = trimToString(input.location_slug) || derivedFromPath.location_slug;
+  const providedServiceSlug = trimToString(input.service_slug);
+  const providedLocationSlug = trimToString(input.location_slug);
+  const normalizedService = toTitleCaseService(trimToString(input.service));
+  const normalizedTown = normalizeWhitespace(trimToString(input.town));
+
+  const serviceSlug = derivedFromPath.service_slug || providedServiceSlug || slugifyText(normalizedService) || "";
+  const locationSlug = derivedFromPath.location_slug || providedLocationSlug || slugifyText(normalizedTown) || "";
 
   const lead: LeadRecord = {
     first_name: trimToString(input.first_name),
@@ -135,11 +204,11 @@ function normalizeLeadData(input: LeadInput, req: Request): LeadRecord {
     email: trimToString(input.email),
     phone: trimToString(input.phone),
     postcode: trimToString(input.postcode),
-    town: trimToString(input.town),
-    service: trimToString(input.service),
+    town: normalizedTown,
+    service: normalizedService,
     description: trimToString(input.description),
     utm_source: trimToString(input.utm_source),
-    page_path: pagePath,
+    page_path: pagePath || "",
     service_slug: serviceSlug,
     location_slug: locationSlug,
     project_stage: normalizeProjectStage(trimToString(input.project_stage)),
@@ -154,11 +223,12 @@ function normalizeLeadData(input: LeadInput, req: Request): LeadRecord {
     quote_sent: "",
   };
 
-  if (!trimToString(input.service_slug) && lead.service_slug) {
-    console.warn("[leads] Derived service_slug from page_path", { page_path: pagePath, service_slug: lead.service_slug });
-  }
-  if (!trimToString(input.location_slug) && lead.location_slug) {
-    console.warn("[leads] Derived location_slug from page_path", { page_path: pagePath, location_slug: lead.location_slug });
+  if (process.env.NODE_ENV !== "production" && (!lead.service_slug || !lead.location_slug || lead.page_path === "/")) {
+    console.warn("Lead missing routing metadata", {
+      page_path: lead.page_path,
+      service: lead.service,
+      town: lead.town,
+    });
   }
 
   return lead;
