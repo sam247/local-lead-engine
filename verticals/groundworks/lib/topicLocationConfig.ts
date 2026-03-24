@@ -40,6 +40,18 @@ export const TOPIC_LOCATION_SLUGS = [
   "groundworks-and-enabling-works",
 ] as const;
 
+export type TopicScaleClass = "GLOBAL_CONTENT" | "LOCATION_VALID" | "GREY";
+
+const GLOBAL_KEYWORDS = ["cost", "price", "pricing", "per-metre", "per-m2", "guide", "what-is", "vs", "how-to"];
+const LOCATION_VALID_KEYWORDS = ["contractors", "installation", "repair", "services", "near-me", "emergency"];
+
+function classifyTopicText(text: string): TopicScaleClass {
+  const input = text.toLowerCase();
+  if (GLOBAL_KEYWORDS.some((keyword) => input.includes(keyword))) return "GLOBAL_CONTENT";
+  if (LOCATION_VALID_KEYWORDS.some((keyword) => input.includes(keyword))) return "LOCATION_VALID";
+  return "GREY";
+}
+
 const TOPIC_DATA: Record<(typeof TOPIC_LOCATION_SLUGS)[number], TopicLocationTopic> = {
   "foundation-settlement": {
     title: "Foundation settlement",
@@ -463,6 +475,37 @@ const TOPIC_DATA: Record<(typeof TOPIC_LOCATION_SLUGS)[number], TopicLocationTop
   },
 };
 
+const GLOBAL_TOPIC_CANONICAL_PATH_BY_ROUTE_SLUG: Partial<Record<(typeof TOPIC_LOCATION_SLUGS)[number], string>> = {
+  "foundation-cost-per-metre": "/groundworks-costs/foundation-cost-per-metre",
+  "groundworks-cost-new-build": "/groundworks-costs/groundworks-cost-new-build-house",
+};
+
+export function getTopicScaleClassByRouteSlug(routeSlug: string): TopicScaleClass {
+  const topic = TOPIC_DATA[routeSlug as (typeof TOPIC_LOCATION_SLUGS)[number]];
+  if (!topic) return classifyTopicText(routeSlug);
+  return classifyTopicText(`${routeSlug} ${topic.title}`);
+}
+
+export function getGlobalTopicRouteSlugs(): string[] {
+  return TOPIC_LOCATION_SLUGS.filter((slug) => getTopicScaleClassByRouteSlug(slug) === "GLOBAL_CONTENT");
+}
+
+export function getLocationScalableTopicSlugs(): string[] {
+  return TOPIC_LOCATION_SLUGS.filter((slug) => getTopicScaleClassByRouteSlug(slug) !== "GLOBAL_CONTENT");
+}
+
+export function isGlobalTopicSlugForLocation(routeSlug: string): boolean {
+  return getGlobalTopicRouteSlugs().includes(routeSlug);
+}
+
+export function getGlobalTopicCanonicalPath(routeSlug: string): string | null {
+  return (
+    GLOBAL_TOPIC_CANONICAL_PATH_BY_ROUTE_SLUG[
+      routeSlug as (typeof TOPIC_LOCATION_SLUGS)[number]
+    ] ?? null
+  );
+}
+
 export function isTopicLocationSlug(slug: string): boolean {
   return TOPIC_LOCATION_SLUGS.includes(slug as (typeof TOPIC_LOCATION_SLUGS)[number]);
 }
@@ -475,7 +518,7 @@ export function getTopicForRouteSlug(routeSlug: string): TopicLocationTopic | un
 export const TOPIC_PAGE_SERVICES = services;
 
 export function getTopicLocationStaticParams(locations: Location[]) {
-  return TOPIC_LOCATION_SLUGS.flatMap((topicSlug) =>
+  return getLocationScalableTopicSlugs().flatMap((topicSlug) =>
     locations.map((loc) => ({ serviceSlug: topicSlug, locationSlug: loc.id }))
   );
 }

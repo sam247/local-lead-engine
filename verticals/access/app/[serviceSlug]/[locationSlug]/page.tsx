@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { services, locations, getRelevantTopicsForService } from "@/lib/data";
 import { projects } from "@/data/projects";
 import { getHeroImage, getProjectImage } from "@/lib/images";
@@ -7,7 +7,14 @@ import { LocationPage, getNeighbourLocationIds, buildLocationContextParagraph } 
 import { buildLocationMetadata } from "engine";
 import type { Location } from "engine";
 import type { Metadata } from "next";
-import { isTopicLocationSlug, getTopicForRouteSlug, getTopicLocationStaticParams, TOPIC_HUB_PATH } from "@/lib/topicLocationConfig";
+import {
+  isTopicLocationSlug,
+  isGlobalTopicSlugForLocation,
+  getGlobalTopicCanonicalPath,
+  getTopicForRouteSlug,
+  getTopicLocationStaticParams,
+  TOPIC_HUB_PATH,
+} from "@/lib/topicLocationConfig";
 import { TopicLocationPage } from "@/app/components/TopicLocationPage";
 
 export const dynamic = "force-static";
@@ -29,6 +36,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!location) return { title: "Not Found" };
 
   if (isTopicLocationSlug(serviceSlug)) {
+    if (isGlobalTopicSlugForLocation(serviceSlug)) {
+      const canonicalTopicPath = getGlobalTopicCanonicalPath(serviceSlug);
+      if (!canonicalTopicPath) return { title: "Not Found" };
+      return {
+        title: "Redirecting",
+        alternates: { canonical: `${verticalConfig.baseUrl}${canonicalTopicPath}` },
+      };
+    }
     const topic = getTopicForRouteSlug(serviceSlug);
     if (!topic) return { title: "Not Found" };
     const title = `${topic.title} in ${location.name} | Business Security Systems`;
@@ -54,6 +69,11 @@ export default async function LocationRoute({ params }: Props) {
   if (!location) notFound();
 
   if (isTopicLocationSlug(serviceSlug)) {
+    if (isGlobalTopicSlugForLocation(serviceSlug)) {
+      const canonicalTopicPath = getGlobalTopicCanonicalPath(serviceSlug);
+      if (!canonicalTopicPath) notFound();
+      redirect(canonicalTopicPath);
+    }
     const topic = getTopicForRouteSlug(serviceSlug);
     if (!topic) notFound();
     const topicHubPath = TOPIC_HUB_PATH[topic.slug] ?? "/cctv-guides";

@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { services, locations, getRelevantTopicsForService } from "@/lib/data";
 import { projects } from "@/data/projects";
 import { getHeroImage, getProjectImage } from "@/lib/images";
@@ -8,6 +8,8 @@ import { buildLocationMetadata } from "engine";
 import type { Metadata } from "next";
 import {
   isTopicLocationSlug,
+  isGlobalTopicSlugForLocation,
+  getGlobalTopicCanonicalPath,
   getTopicForRouteSlug,
   getTopicLocationStaticParams,
 } from "@/lib/topicLocationConfig";
@@ -32,6 +34,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!location) return { title: "Not Found" };
 
   if (isTopicLocationSlug(serviceSlug)) {
+    if (isGlobalTopicSlugForLocation(serviceSlug)) {
+      const canonicalTopicPath = getGlobalTopicCanonicalPath(serviceSlug);
+      if (!canonicalTopicPath) return { title: "Not Found" };
+      return {
+        title: "Redirecting",
+        alternates: { canonical: `${verticalConfig.baseUrl}${canonicalTopicPath}` },
+      };
+    }
     const topic = getTopicForRouteSlug(serviceSlug);
     if (!topic) return { title: "Not Found" };
     const title = `${topic.title} in ${location.name} | ${verticalConfig.siteName}`;
@@ -53,6 +63,11 @@ export default async function LocationRoute({ params }: Props) {
   if (!location) notFound();
 
   if (isTopicLocationSlug(serviceSlug)) {
+    if (isGlobalTopicSlugForLocation(serviceSlug)) {
+      const canonicalTopicPath = getGlobalTopicCanonicalPath(serviceSlug);
+      if (!canonicalTopicPath) notFound();
+      redirect(canonicalTopicPath);
+    }
     const topic = getTopicForRouteSlug(serviceSlug);
     if (!topic) notFound();
     return (

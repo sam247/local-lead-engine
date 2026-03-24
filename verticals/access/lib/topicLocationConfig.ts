@@ -35,6 +35,42 @@ export const ROUTE_SLUG_TO_TOPIC_SLUG: Record<string, string> = {
   "structured-cabling-contractors": "structured-cabling",
 };
 
+export type TopicScaleClass = "GLOBAL_CONTENT" | "LOCATION_VALID" | "GREY";
+
+const GLOBAL_KEYWORDS = ["cost", "price", "pricing", "per-metre", "per-m2", "guide", "what-is", "vs", "how-to"];
+const LOCATION_VALID_KEYWORDS = ["contractors", "installation", "repair", "services", "near-me", "emergency"];
+
+function classifyRouteSlug(routeSlug: string): TopicScaleClass {
+  const input = routeSlug.toLowerCase();
+  if (GLOBAL_KEYWORDS.some((keyword) => input.includes(keyword))) return "GLOBAL_CONTENT";
+  if (LOCATION_VALID_KEYWORDS.some((keyword) => input.includes(keyword))) return "LOCATION_VALID";
+  return "GREY";
+}
+
+export function getTopicScaleClassByRouteSlug(routeSlug: string): TopicScaleClass {
+  return classifyRouteSlug(routeSlug);
+}
+
+export function getGlobalTopicRouteSlugs(): string[] {
+  return TOPIC_LOCATION_SLUGS.filter((slug) => classifyRouteSlug(slug) === "GLOBAL_CONTENT");
+}
+
+export function getLocationScalableTopicSlugs(): string[] {
+  return TOPIC_LOCATION_SLUGS.filter((slug) => classifyRouteSlug(slug) !== "GLOBAL_CONTENT");
+}
+
+export function isGlobalTopicSlugForLocation(routeSlug: string): boolean {
+  return getGlobalTopicRouteSlugs().includes(routeSlug);
+}
+
+export function getGlobalTopicCanonicalPath(routeSlug: string): string | null {
+  const programmaticSlug = ROUTE_SLUG_TO_TOPIC_SLUG[routeSlug];
+  if (!programmaticSlug) return null;
+  const hubPath = TOPIC_HUB_PATH[programmaticSlug];
+  if (!hubPath) return null;
+  return `${hubPath}/${programmaticSlug}`;
+}
+
 export function isTopicLocationSlug(slug: string): boolean {
   return TOPIC_LOCATION_SLUGS.includes(slug as (typeof TOPIC_LOCATION_SLUGS)[number]);
 }
@@ -64,7 +100,7 @@ export const TOPIC_PAGE_SERVICES = services.filter((s) =>
 );
 
 export function getTopicLocationStaticParams(locations: Location[]) {
-  return TOPIC_LOCATION_SLUGS.flatMap((topicSlug) =>
+  return getLocationScalableTopicSlugs().flatMap((topicSlug) =>
     locations.map((loc) => ({ serviceSlug: topicSlug, locationSlug: loc.id }))
   );
 }
