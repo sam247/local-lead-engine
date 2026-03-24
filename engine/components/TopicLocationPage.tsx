@@ -78,21 +78,21 @@ export function TopicLocationPage({
 
   const whenNeededSection = (
     <section className="mb-8">
-      <h2 className="mb-3 font-display text-xl font-semibold">When this is needed</h2>
+      <h2 className="mb-3 font-display text-xl font-semibold">When you might need this</h2>
       <p className="max-w-3xl text-muted-foreground">{whenNeeded}</p>
     </section>
   );
 
   const workInvolvesSection = (
     <section className="mb-8">
-      <h2 className="mb-3 font-display text-xl font-semibold">What the work involves</h2>
+      <h2 className="mb-3 font-display text-xl font-semibold">What the work typically involves</h2>
       <p className="max-w-3xl text-muted-foreground">{workInvolves}</p>
     </section>
   );
 
   const processSection = (
     <section className="mb-8">
-      <h2 className="mb-3 font-display text-xl font-semibold">Process and timeline</h2>
+      <h2 className="mb-3 font-display text-xl font-semibold">How we work through the job</h2>
       <p className="mb-3 max-w-3xl text-muted-foreground">
         We keep delivery structured so decisions, dependencies, and handover remain clear from start to finish.
       </p>
@@ -102,7 +102,7 @@ export function TopicLocationPage({
             <p className="font-medium">
               Step {idx + 1}: {step.title}
             </p>
-            <p className="mt-1 text-sm text-muted-foreground">Outcome: {step.outcome}</p>
+            <p className="mt-1 text-sm text-muted-foreground">What this step delivers: {step.outcome}</p>
           </li>
         ))}
       </ol>
@@ -143,10 +143,9 @@ export function TopicLocationPage({
         {topicTitle} in {location.name}
       </h1>
 
-      <section className="mb-8">
-        <h2 className="mb-3 font-display text-xl font-semibold">Contextual opening</h2>
-        <p className="max-w-3xl text-muted-foreground">{contextualOpening}</p>
-        <p className="mt-3 max-w-3xl text-muted-foreground">{openingStructure}</p>
+      <section className="mb-8 max-w-3xl space-y-3">
+        <p className="text-muted-foreground">{contextualOpening}</p>
+        <p className="text-muted-foreground">{openingStructure}</p>
       </section>
 
       {layoutVariant === "B" ? (
@@ -163,7 +162,7 @@ export function TopicLocationPage({
       {layoutVariant === "C" && processSection}
 
       <section className="mb-8">
-        <h2 className="mb-3 font-display text-xl font-semibold">Common scenarios and problems</h2>
+        <h2 className="mb-3 font-display text-xl font-semibold">Signs and common situations</h2>
         <p className="mb-3 max-w-3xl text-muted-foreground">
           These are typical triggers we see across {location.name} and {location.area} before teams move to
           implementation.

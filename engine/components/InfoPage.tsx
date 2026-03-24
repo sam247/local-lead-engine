@@ -65,8 +65,9 @@ export function InfoPage({
     `${page.title} usually becomes urgent when recurring symptoms begin affecting programme confidence, compliance, or delivery reliability.`,
     `The commercial value of resolving ${page.title.toLowerCase()} early is fewer delays, clearer budgeting, and reduced repeat disruption.`,
   ][openingVariant];
+  const primaryOpening = (page.contextualOpening ?? page.intro)?.trim() ?? "";
   if (process.env.NODE_ENV !== "production") {
-    const estimatedOpeningWords = `${page.contextualOpening ?? page.intro} ${openingLead}`.trim().split(/\s+/).length;
+    const estimatedOpeningWords = `${primaryOpening} ${openingLead}`.trim().split(/\s+/).length;
     if (estimatedOpeningWords < 45) {
       console.warn("[page-quality-warning]", {
         pageType: "topic",
@@ -125,15 +126,16 @@ export function InfoPage({
         <div className="container">
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <h2 className="mb-4 font-display text-2xl font-bold">Contextual opening</h2>
-              <p className="mb-6 text-lg text-muted-foreground">{page.contextualOpening ?? page.intro}</p>
+              {primaryOpening ? (
+                <p className="mb-6 text-lg text-muted-foreground">{primaryOpening}</p>
+              ) : null}
               <p className="mb-8 text-muted-foreground">{openingLead}</p>
-              <h2 className="mb-4 font-display text-2xl font-bold">When this is needed</h2>
+              <h2 className="mb-4 font-display text-2xl font-bold">When you might need this</h2>
               <p className="mb-8 text-muted-foreground">
                 {page.whenNeeded ??
                   `Teams usually investigate ${page.title.toLowerCase()} when early warning signs start affecting reliability, compliance, or project timelines. This is often the point where decision makers move from observation into scoped technical action.`}
               </p>
-              <h2 className="mb-4 font-display text-2xl font-bold">Common scenarios and signs</h2>
+              <h2 className="mb-4 font-display text-2xl font-bold">Signs and common situations</h2>
               <p className="mb-3 text-muted-foreground">
                 The symptoms below are the most common triggers we see before diagnosis and repair planning.
               </p>
@@ -152,21 +154,21 @@ export function InfoPage({
                   monitoring into scoped delivery planning.
                 </p>
               )}
-              <h2 className="mb-4 font-display text-2xl font-bold">What the work involves</h2>
+              <h2 className="mb-4 font-display text-2xl font-bold">What the work typically involves</h2>
               <p className="mb-4 text-muted-foreground">{page.workInvolves ?? page.diagnosis}</p>
               <MidContentCTA
                 companyInfo={companyInfo}
                 message={`Think you might have ${page.title.toLowerCase()}? A professional inspection will confirm the diagnosis.`}
                 buttonLink={contactPath}
               />
-              <h2 className="mb-4 font-display text-2xl font-bold">How we fix it</h2>
+              <h2 className="mb-4 font-display text-2xl font-bold">How we approach the fix</h2>
               <p className="mb-8 text-muted-foreground">{page.resolution}</p>
               <h2 className="mb-4 font-display text-2xl font-bold">What affects cost and complexity</h2>
               <p className="mb-8 text-muted-foreground">
                 {page.costComplexity ??
                   "Cost and complexity usually depend on access constraints, total scope, existing condition, and whether related works need to be coordinated in the same programme window."}
               </p>
-              <h2 className="mb-4 font-display text-2xl font-bold">Process and timeline</h2>
+              <h2 className="mb-4 font-display text-2xl font-bold">How we work through the job</h2>
               <p className="mb-3 text-muted-foreground">
                 We keep delivery structured so scope, sequencing, and sign-off remain clear.
               </p>
@@ -180,7 +182,7 @@ export function InfoPage({
                     <p className="font-medium">
                       Step {idx + 1}: {step.title}
                     </p>
-                    <p className="mt-1 text-sm text-muted-foreground">Outcome: {step.outcome}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">What this step delivers: {step.outcome}</p>
                   </li>
                 ))}
               </ol>

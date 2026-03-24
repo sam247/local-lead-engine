@@ -91,14 +91,16 @@ export function HubPage({
       </section>
       <section className="section-padding">
         <div className="container">
-          <SectionIntro
-            title="Contextual opening"
-            description={`This hub helps you evaluate ${hub.title.toLowerCase()} decisions with practical guidance before moving into live project delivery.`}
-          />
-          <p className="mb-8 max-w-3xl text-muted-foreground">
-            Start with the featured guides below to understand when each route is appropriate, what affects scope and
-            cost, and which service path is likely to fit your site or project stage.
-          </p>
+          <div className="mb-8 max-w-3xl space-y-4 text-muted-foreground">
+            <p>
+              This hub helps you evaluate {hub.title.toLowerCase()} decisions with practical guidance before moving
+              into live project delivery.
+            </p>
+            <p>
+              Start with the featured guides below to understand when each route is appropriate, what affects scope and
+              cost, and which service path is likely to fit your site or project stage.
+            </p>
+          </div>
           {keyServices.length > 0 && (
             <ActionPanel
               companyInfo={companyInfo}

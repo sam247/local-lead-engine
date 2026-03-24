@@ -166,7 +166,6 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
         <div className="container">
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <h2 className="mb-4 font-display text-2xl font-bold">Overview</h2>
               <p className="mb-8 text-muted-foreground">{service.description}</p>
               {symptoms.length > 0 && (
                 <>

@@ -76,6 +76,11 @@ export function ProblemPage({
     `${problem.title} is typically addressed when teams need to move from symptoms to a scoped, commercially realistic repair plan.`,
     `The earlier this issue is assessed, the easier it is to protect programme certainty and avoid repeat intervention costs.`,
   ][openingVariant];
+  const defaultContextualOpening = `${problem.title} is usually investigated when visible symptoms begin affecting reliability, safety, or project delivery. Early diagnosis helps confirm whether this is an isolated issue or part of a wider condition.`;
+  const primaryOpening =
+    problem.contextualOpening !== undefined && problem.contextualOpening !== null
+      ? problem.contextualOpening.trim() || null
+      : defaultContextualOpening;
   const relatedServices = problem.relatedServiceSlugs
     .map((slug) => services.find((s) => s.slug === slug))
     .filter((s): s is Service => s != null);
@@ -125,11 +130,7 @@ export function ProblemPage({
             {problem.title} – Causes and Repair
           </h1>
 
-          <h2 className="mb-2 font-display text-xl font-bold">Contextual opening</h2>
-          <p className="mb-8 text-muted-foreground">
-            {problem.contextualOpening ??
-              `${problem.title} is usually investigated when visible symptoms begin affecting reliability, safety, or project delivery. Early diagnosis helps confirm whether this is an isolated issue or part of a wider condition.`}
-          </p>
+          {primaryOpening ? <p className="mb-8 text-muted-foreground">{primaryOpening}</p> : null}
           <p className="mb-8 text-muted-foreground">{openingLead}</p>
 
           {allProblems.length > 0 && diagnosisSectionTitle && (
@@ -157,7 +158,7 @@ export function ProblemPage({
           <h2 className="mb-2 font-display text-xl font-bold">{causesSectionTitle}</h2>
           <p className="mb-8 text-muted-foreground">{problem.causes}</p>
 
-          <h2 className="mb-2 font-display text-xl font-bold">When this is needed</h2>
+          <h2 className="mb-2 font-display text-xl font-bold">When you might need this</h2>
           <p className="mb-8 text-muted-foreground">
             {problem.whenNeeded ??
               "This is typically needed when recurring symptoms, project risk, or compliance concerns mean a patch repair is no longer a reliable option."}
@@ -177,7 +178,7 @@ export function ProblemPage({
             </>
           )}
 
-          <h2 className="mb-2 font-display text-xl font-bold">How it is normally fixed</h2>
+          <h2 className="mb-2 font-display text-xl font-bold">How we approach the fix</h2>
           <p className="mb-8 text-muted-foreground">{problem.workInvolves ?? problem.howFixed}</p>
 
           <h2 className="mb-2 font-display text-xl font-bold">What affects cost and complexity</h2>
@@ -202,7 +203,7 @@ export function ProblemPage({
 
           {(problem.processStepsDetailed?.length ?? 0) > 0 && (
             <>
-              <h2 className="mb-2 font-display text-xl font-bold">Process and timeline</h2>
+              <h2 className="mb-2 font-display text-xl font-bold">How we work through the job</h2>
               <p className="mb-3 text-muted-foreground">
                 Work is delivered in stages so decisions, safety, and outcomes stay clear.
               </p>
@@ -212,7 +213,7 @@ export function ProblemPage({
                     <p className="font-medium">
                       Step {idx + 1}: {step.title}
                     </p>
-                    <p className="mt-1 text-sm text-muted-foreground">Outcome: {step.outcome}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">What this step delivers: {step.outcome}</p>
                   </li>
                 ))}
               </ol>

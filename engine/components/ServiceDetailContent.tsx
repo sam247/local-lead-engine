@@ -100,7 +100,7 @@ function getServiceFamily(service: Service): "drains" | "surveys" | "access" | "
   return "generic";
 }
 
-const SERVICE_DETAIL_ABOUT_LABELS = ["Learn more about our team", "About our approach"] as const;
+const SERVICE_DETAIL_ABOUT_LABELS = ["Learn more about our team", "How we work with clients"] as const;
 const LAYOUT_VARIANTS = ["A", "B", "C"] as const;
 
 function buildProcessOutcome(step: string): string {
@@ -362,7 +362,7 @@ export function ServiceDetailContent({
   const processSection = (
     <>
       <SectionIntro
-        title="Our Process"
+        title="How we work through the job"
         description={
           sectionIntros.process ??
           "Each stage is structured to keep decisions clear and delivery predictable from first assessment to sign-off."
@@ -374,7 +374,7 @@ export function ServiceDetailContent({
             <p className="font-medium">
               Step {idx + 1}: {step}
             </p>
-            <p className="mt-1 text-sm text-muted-foreground">Outcome: {buildProcessOutcome(step)}</p>
+            <p className="mt-1 text-sm text-muted-foreground">What this step delivers: {buildProcessOutcome(step)}</p>
           </li>
         ))}
       </ol>
@@ -444,10 +444,7 @@ export function ServiceDetailContent({
         <div className="container">
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <SectionIntro
-                title="Contextual opening"
-                description={overviewDescriptions[overviewVariant]}
-              />
+              <p className="mb-4 text-muted-foreground">{overviewDescriptions[overviewVariant]}</p>
               <p className="mb-8 text-muted-foreground">{service.description}</p>
               <p className="mb-8 text-muted-foreground">{openingLead}</p>
               <p className="mb-8 text-sm text-muted-foreground">
@@ -467,7 +464,7 @@ export function ServiceDetailContent({
               )}
               <TrustReassuranceStrip points={trustPoints} />
               <SectionIntro
-                title="When this service is used"
+                title="Typical situations for this service"
                 description="These are the situations where this service typically adds the most value and helps prevent avoidable rework."
               />
               <div className="mb-8 space-y-4 text-muted-foreground">
@@ -604,7 +601,7 @@ export function ServiceDetailContent({
               )}
 
               <SectionIntro
-                title="Benefits"
+                title="What you can expect from this service"
                 description={
                   sectionIntros.benefits ??
                   "The outcomes below reflect what clients typically gain when this service is scoped and delivered correctly."

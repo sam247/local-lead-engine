@@ -48,6 +48,10 @@ export default function BlogArticleContent({
     { name: post.title, url: `/blog/${post.id}` },
   ];
 
+  const genericFirstHeadings = new Set(["introduction", "intro", "overview"]);
+  const omitFirstSectionHeading = (index: number, heading: string) =>
+    index === 0 && genericFirstHeadings.has(heading.trim().toLowerCase());
+
   return (
     <>
       <section className="bg-primary py-16 md:py-24">
@@ -79,7 +83,9 @@ export default function BlogArticleContent({
           <div className="mx-auto max-w-3xl">
             {content.sections.map((section, i) => (
               <section key={i} className="mb-10">
-                <h2 className="mb-4 font-display text-2xl font-bold">{section.heading}</h2>
+                {!omitFirstSectionHeading(i, section.heading) && (
+                  <h2 className="mb-4 font-display text-2xl font-bold">{section.heading}</h2>
+                )}
                 <p className="text-muted-foreground leading-relaxed">
                   {parseBodyWithLinks(section.body).map((segment, j) =>
                     segment.type === "text" ? (

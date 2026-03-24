@@ -14,7 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { trackEvent, getVariantIndex } from "engine";
 import { cn } from "@/lib/utils";
 
-const HERO_ABOUT_LABELS = ["Learn more about our team", "About our approach"] as const;
+const HERO_ABOUT_LABELS = ["Learn more about our team", "How we work with clients"] as const;
 
 const SERVICE_OPTIONS = [
   "Groundworks Contractors",

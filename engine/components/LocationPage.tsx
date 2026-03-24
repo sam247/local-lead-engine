@@ -16,7 +16,7 @@ import { locations as allLocationsDataset } from "../data/locations";
 import { getCountyPeerLocationIds, getUkGroupingForLocationId } from "../data/uk-location-hierarchy";
 import type { Service, Location, CompanyInfo } from "../types";
 
-const LOCATION_ABOUT_LABELS = ["Learn more about our team", "About our approach"] as const;
+const LOCATION_ABOUT_LABELS = ["Learn more about our team", "How we work with clients"] as const;
 
 const INTRO_VARIANTS = [
   (serviceTitle: string, locationName: string) => [
@@ -502,7 +502,7 @@ export function LocationPage({
   const processSection = (
     <>
       <SectionIntro
-        title={`How our ${displayTitle.toLowerCase()} service works`}
+        title="How we work through the job"
         description="Our process is designed to keep things straightforward: define the issue, explain your options clearly, carry out the right work, and confirm everything before handover."
       />
       <ol className="mb-8 space-y-3">
@@ -511,7 +511,7 @@ export function LocationPage({
             <p className="font-medium">
               Step {idx + 1}: {step}
             </p>
-            <p className="mt-1 text-sm text-muted-foreground">Outcome: {buildProcessOutcome(step, service, location)}</p>
+            <p className="mt-1 text-sm text-muted-foreground">What this step delivers: {buildProcessOutcome(step, service, location)}</p>
           </li>
         ))}
       </ol>
@@ -633,9 +633,6 @@ export function LocationPage({
         <div className="container">
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <h2 className="mb-4 font-display text-2xl font-bold">
-                {displayTitle} Services in {location.name}
-              </h2>
               <div className="mb-6 space-y-4 text-muted-foreground">
                 <p>
                   {introParagraph ??
