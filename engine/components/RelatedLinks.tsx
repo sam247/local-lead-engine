@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Service, Location, HubData, InfoPageData } from "../types";
+import { getServiceUrl } from "../utils/serviceUrls";
 
 export interface RelatedLinksProps {
   relatedServices: string[];
@@ -27,7 +28,7 @@ export function RelatedLinks({
   relatedServicesTitle = "Related Services",
   relatedHubsTitle = "Related Topics",
   localServicesTitle = "Local Services",
-  serviceDetailPath = (slug) => `/services/${slug}`,
+  serviceDetailPath = getServiceUrl,
   locationPagePath = (serviceSlug, locationId) => `/${serviceSlug}/${locationId}`,
 }: RelatedLinksProps) {
   const matchedServices = services.filter((s) => relatedServices.includes(s.slug));

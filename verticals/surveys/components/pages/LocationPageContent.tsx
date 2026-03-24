@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle, Phone, Mail, ArrowRight } from "lucide-react";
 import InspectionCTA from "@/components/sections/InspectionCTA";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
+import { getServiceUrl } from "engine";
 import FAQSchema from "@/components/sections/FAQSchema";
 type Service = (typeof services)[number];
 type Location = (typeof locations)[number] & { nearbyTowns?: string[]; propertyTypes?: string };
@@ -68,7 +69,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
         data={{
           breadcrumbs: [
             { name: "Home", url: "/" },
-            { name: service.title, url: `/services/${service.slug}` },
+            { name: service.title, url: getServiceUrl(service.slug) },
             { name: `${service.title} in ${location.name}`, url: `/${serviceSlug}/${locationSlug}` },
           ],
         }}

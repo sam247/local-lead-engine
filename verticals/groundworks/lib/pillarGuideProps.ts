@@ -1,7 +1,7 @@
 import { getCategoryPages } from "@/lib/data";
 import { serviceImages } from "@/lib/images";
 import { verticalConfig } from "@/config";
-import type { PillarGuideSection } from "engine";
+import { getServiceUrl, type PillarGuideSection } from "engine";
 
 const guideFaqs = [
   {
@@ -80,9 +80,9 @@ export function getCollapsedDrainsGuideProps() {
           label: p.title,
           href: `/drain-repair-methods/${p.slug}`,
         })),
-        { label: "Drain Relining", href: "/services/drain-relining" },
-        { label: "Drain Excavation", href: "/services/drain-excavation" },
-        { label: "Drain Collapse Repair", href: "/services/drain-collapse-repair" },
+        { label: "Drain Relining", href: getServiceUrl("drain-relining") },
+        { label: "Drain Excavation", href: getServiceUrl("drain-excavation") },
+        { label: "Drain Collapse Repair", href: getServiceUrl("drain-collapse-repair") },
       ],
     },
     {

@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTABanner from "@/components/sections/CTABanner";
+import { getServiceUrl } from "engine";
 
 function categorisePages(category: string) {
   const scopeCategories = ["problems", "collapse"];
@@ -99,7 +100,7 @@ export default function HubPageContent({ category }: HubPageContentProps) {
           <h2 className="mb-8 text-center font-display text-2xl font-bold">Related Services</h2>
           <div className="grid gap-6 md:grid-cols-3">
             {keyServices.map((service) => (
-              <Link key={service.id} href={`/services/${service.slug}`} className="group rounded-lg border border-border bg-background p-6 transition-all hover:shadow-lg">
+              <Link key={service.id} href={getServiceUrl(service.slug)} className="group rounded-lg border border-border bg-background p-6 transition-all hover:shadow-lg">
                 <h3 className="mb-2 font-display text-lg font-semibold group-hover:text-primary">{service.title}</h3>
                 <p className="text-sm text-muted-foreground">{service.shortDescription}</p>
               </Link>

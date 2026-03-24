@@ -9,6 +9,7 @@ import RelatedLinks from "@/components/sections/RelatedLinks";
 import FAQSchema from "@/components/sections/FAQSchema";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTABanner from "@/components/sections/CTABanner";
+import { getServiceUrl } from "engine";
 
 interface InfoPageContentProps {
   category: string;
@@ -78,7 +79,12 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
                   <ol className="space-y-2">
                     {page.relatedPages.map((rp, idx) => {
                       const categoryHub = hubPages.find((h) => h.category === rp.category);
-                      const linkPath = rp.category === "service" ? `/services/${rp.slug}` : categoryHub ? `${categoryHub.basePath}/${rp.slug}` : `/services/${rp.slug}`;
+                      const linkPath =
+                        rp.category === "service"
+                          ? getServiceUrl(rp.slug)
+                          : categoryHub
+                            ? `${categoryHub.basePath}/${rp.slug}`
+                            : getServiceUrl(rp.slug);
                       return (
                         <li key={rp.slug} className="flex items-center gap-2">
                           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{idx + 1}</span>

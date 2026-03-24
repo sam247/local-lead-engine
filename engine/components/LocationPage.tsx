@@ -321,7 +321,7 @@ const locationBreadcrumbs = (
   locationSlugParam: string
 ) => [
   { name: "Home", url: "/" },
-  { name: serviceTitle, url: `/services/${serviceSlug}` },
+  { name: serviceTitle, url: `/${serviceSlug}` },
   { name: `${serviceTitle} in ${locationName}`, url: `/${serviceSlugParam}/${locationSlugParam}` },
 ];
 
@@ -899,7 +899,7 @@ export function LocationPage({
 
               <div className="rounded-lg bg-secondary p-6">
                 <p className="mb-2 text-sm text-muted-foreground">
-                  <Link href={`/services/${service.slug}`} className="text-primary hover:underline">
+                  <Link href={`/${service.slug}`} className="text-primary hover:underline">
                     View {displayTitle} overview
                   </Link>
                 </p>

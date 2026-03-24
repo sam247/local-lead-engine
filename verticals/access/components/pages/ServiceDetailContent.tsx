@@ -60,6 +60,7 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
       heroImageSrc={heroImageSrc}
       contactPath="/contact"
       servicesPath="/services"
+      servicePageHref={(slug) => `/${slug}`}
       locationLinkPath={(slug, id) => `/${slug}/${id}`}
       symptomLinks={symptomLinks}
       faqs={faqs}

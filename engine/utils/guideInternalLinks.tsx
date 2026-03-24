@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Location, Service } from "../types";
+import { getServiceUrl } from "./serviceUrls";
 import { KEY_SERVICE_DETAIL_LOCATION_IDS } from "../data/key-location-ids";
 
 export interface GuideInternalLinksModel {
@@ -19,8 +20,8 @@ export function buildGuideInternalLinksWithLocations(
   const primary = sorted.find((s) => s.slug === primaryServiceSlug) ?? sorted[0];
   const secondary = sorted.find((s) => s.slug !== primary?.slug);
   const serviceLinks: { href: string; label: string }[] = [];
-  if (primary) serviceLinks.push({ href: `/services/${primary.slug}`, label: primary.title });
-  if (secondary) serviceLinks.push({ href: `/services/${secondary.slug}`, label: secondary.title });
+  if (primary) serviceLinks.push({ href: getServiceUrl(primary.slug), label: primary.title });
+  if (secondary) serviceLinks.push({ href: getServiceUrl(secondary.slug), label: secondary.title });
   const locMap = new Map(locations.map((l) => [l.id, l]));
   const orderedIds = [...KEY_SERVICE_DETAIL_LOCATION_IDS].filter((id) => locMap.has(id)).sort();
   const picked = orderedIds.slice(0, 2).map((id) => locMap.get(id)!);

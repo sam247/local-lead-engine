@@ -16,6 +16,7 @@ import { getImageAlt } from "../utils/imageAlt";
 import { KEY_SERVICE_DETAIL_LOCATION_IDS } from "../data/key-location-ids";
 import { getVariantIndex } from "../lib/contentVariants";
 import { pickServiceDetailFeaturedLocations } from "../utils/pickFeaturedLocations";
+import { getServiceUrl } from "../utils/serviceUrls";
 import type { Service, Location, VerticalConfig } from "../types";
 
 function pickServiceDetailSidebarLocations(all: Location[]): Location[] {
@@ -225,6 +226,8 @@ export interface ServiceDetailContentProps {
   heroImageSrc: string;
   contactPath?: string;
   servicesPath?: string;
+  /** Path for this and related service hub pages. Default: `${servicesPath}/${slug}`. */
+  servicePageHref?: (serviceSlug: string) => string;
   locationLinkPath?: (serviceSlug: string, locationId: string) => string;
   symptomLinks?: SymptomLink[];
   faqs?: FAQItem[];
@@ -254,6 +257,7 @@ export function ServiceDetailContent({
   heroImageSrc,
   contactPath = "/contact",
   servicesPath = "/services",
+  servicePageHref: servicePageHrefProp,
   locationLinkPath = (slug, id) => `/${slug}/${id}`,
   symptomLinks = [],
   faqs = [],
@@ -270,6 +274,7 @@ export function ServiceDetailContent({
   problemLinks = [],
   problemLinksSectionTitle,
 }: ServiceDetailContentProps) {
+  const hrefForService = servicePageHrefProp ?? getServiceUrl;
   const displayTitle = service.titleSingular ?? service.title;
   const serviceTypes = verticalConfig.serviceTypesBySlug?.[service.slug] ?? [];
   const industries = verticalConfig.industries ?? DEFAULT_INDUSTRIES;
@@ -395,7 +400,7 @@ export function ServiceDetailContent({
   const breadcrumbs = [
     { name: "Home", url: "/" },
     { name: "Services", url: servicesPath },
-    { name: service.title, url: `${servicesPath}/${service.slug}` },
+    { name: service.title, url: hrefForService(service.slug) },
   ];
 
   return (
@@ -407,7 +412,7 @@ export function ServiceDetailContent({
         data={{
           serviceName: service.title,
           serviceDescription: service.description,
-          url: `${servicesPath}/${service.slug}`,
+          url: hrefForService(service.slug),
           areaServed: "London and surrounding areas",
           serviceType: service.title,
         }}
@@ -471,18 +476,20 @@ export function ServiceDetailContent({
                   {whenUsedParagraphs[1]} At this stage, teams usually need clear commercial options before committing
                   to delivery windows and budgets.
                 </p>
-                {services.find((s) => s.slug !== service.slug) && (
-                  <p>
-                    If your scope includes adjacent packages, compare{" "}
-                    <Link
-                      href={`${servicesPath}/${services.find((s) => s.slug !== service.slug)?.slug}`}
-                      className="text-primary hover:underline"
-                    >
-                      related services
-                    </Link>{" "}
-                    before finalising programme and procurement.
-                  </p>
-                )}
+                {(() => {
+                  const other = services.find((s) => s.slug !== service.slug);
+                  return (
+                    other && (
+                      <p>
+                        If your scope includes adjacent packages, compare{" "}
+                        <Link href={hrefForService(other.slug)} className="text-primary hover:underline">
+                          related services
+                        </Link>{" "}
+                        before finalising programme and procurement.
+                      </p>
+                    )
+                  );
+                })()}
               </div>
 
               {serviceTypes.length > 0 && (
@@ -638,7 +645,7 @@ export function ServiceDetailContent({
                           {otherServices.slice(0, 8).map((s) => (
                             <Link
                               key={s.id}
-                              href={`${servicesPath}/${s.slug}`}
+                              href={hrefForService(s.slug)}
                               className="group rounded-lg border border-border bg-background p-4 transition-all hover:border-primary hover:shadow-md"
                             >
                               <h3 className="mb-1 font-display text-lg font-semibold group-hover:text-primary">
@@ -711,7 +718,7 @@ export function ServiceDetailContent({
                     .map((s) => (
                       <li key={s.id}>
                         <Link
-                          href={`${servicesPath}/${s.slug}`}
+                          href={hrefForService(s.slug)}
                           className="text-sm text-primary hover:underline"
                         >
                           {s.title}

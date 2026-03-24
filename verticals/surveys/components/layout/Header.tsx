@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { ResourcesMenu, getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "engine/components/navigation/ResourcesMenu";
 import { trackEvent } from "engine/utils";
+import { getServiceUrl, isServiceHubPath } from "engine";
 import { verticalConfig } from "@/config";
 import { cn } from "@/lib/utils";
 
@@ -51,28 +52,28 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
           <Link
-            href="/services/topographical-survey"
+            href={getServiceUrl("topographical-survey")}
             className={cn(
               "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
-              isActive("/services/topographical-survey") ? "text-primary" : "text-muted-foreground"
+              isServiceHubPath(pathname, "topographical-survey") ? "text-primary" : "text-muted-foreground"
             )}
           >
             Topographical
           </Link>
           <Link
-            href="/services/drone-survey"
+            href={getServiceUrl("drone-survey")}
             className={cn(
               "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
-              isActive("/services/drone-survey") ? "text-primary" : "text-muted-foreground"
+              isServiceHubPath(pathname, "drone-survey") ? "text-primary" : "text-muted-foreground"
             )}
           >
             Drone Survey
           </Link>
           <Link
-            href="/services/measured-building-survey"
+            href={getServiceUrl("measured-building-survey")}
             className={cn(
               "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
-              isActive("/services/measured-building-survey") ? "text-primary" : "text-muted-foreground"
+              isServiceHubPath(pathname, "measured-building-survey") ? "text-primary" : "text-muted-foreground"
             )}
           >
             Measured Building
@@ -166,9 +167,9 @@ const Header = () => {
         <div className="border-t border-border bg-background lg:hidden">
           <nav className="container py-4">
             
-            <Link href="/services/topographical-survey" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Topographical Survey</Link>
-            <Link href="/services/drone-survey" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drone Survey</Link>
-            <Link href="/services/measured-building-survey" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Measured Building Survey</Link>
+            <Link href={getServiceUrl("topographical-survey")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Topographical Survey</Link>
+            <Link href={getServiceUrl("drone-survey")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drone Survey</Link>
+            <Link href={getServiceUrl("measured-building-survey")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Measured Building Survey</Link>
             <Link href="/about" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>About</Link>
 
             {/* Mobile Locations Accordion */}

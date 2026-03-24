@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { ResourcesMenu, getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "engine/components/navigation/ResourcesMenu";
 import { trackEvent } from "engine/utils";
+import { getServiceUrl, isServiceHubPath } from "engine";
 import { verticalConfig } from "@/config";
 import { cn } from "@/lib/utils";
 
@@ -51,28 +52,28 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
           <Link
-            href="/services/drain-collapse-repair"
+            href={getServiceUrl("drain-collapse-repair")}
             className={cn(
               "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
-              isActive("/services/drain-collapse-repair") ? "text-primary" : "text-muted-foreground"
+              isServiceHubPath(pathname, "drain-collapse-repair") ? "text-primary" : "text-muted-foreground"
             )}
           >
             Drain Collapse
           </Link>
           <Link
-            href="/services/cctv-drain-surveys"
+            href={getServiceUrl("cctv-drain-surveys")}
             className={cn(
               "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
-              isActive("/services/cctv-drain-surveys") ? "text-primary" : "text-muted-foreground"
+              isServiceHubPath(pathname, "cctv-drain-surveys") ? "text-primary" : "text-muted-foreground"
             )}
           >
             Drain Surveys
           </Link>
           <Link
-            href="/services/blocked-drains"
+            href={getServiceUrl("blocked-drains")}
             className={cn(
               "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
-              isActive("/services/blocked-drains") ? "text-primary" : "text-muted-foreground"
+              isServiceHubPath(pathname, "blocked-drains") ? "text-primary" : "text-muted-foreground"
             )}
           >
             Blocked Drains
@@ -166,9 +167,9 @@ const Header = () => {
         <div className="border-t border-border bg-background lg:hidden">
           <nav className="container py-4">
             
-            <Link href="/services/drain-collapse-repair" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drain Collapse</Link>
-            <Link href="/services/cctv-drain-surveys" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drain Surveys</Link>
-            <Link href="/services/blocked-drains" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Blocked Drains</Link>
+            <Link href={getServiceUrl("drain-collapse-repair")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drain Collapse</Link>
+            <Link href={getServiceUrl("cctv-drain-surveys")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drain Surveys</Link>
+            <Link href={getServiceUrl("blocked-drains")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Blocked Drains</Link>
             <Link href="/about" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>About</Link>
 
             {/* Mobile Locations Accordion */}

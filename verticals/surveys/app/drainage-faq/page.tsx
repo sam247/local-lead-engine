@@ -5,6 +5,7 @@ import { Phone } from "lucide-react";
 import FAQSchema from "@/components/sections/FAQSchema";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTABanner from "@/components/sections/CTABanner";
+import { getServiceUrl } from "engine";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -32,7 +33,7 @@ const faqSections = [
     items: [
       { question: "When should I use a drone survey?", answer: "Drone surveys are ideal for large or inaccessible sites, roof inspections, progress monitoring and volume calculations. They often cost less than traditional surveys for big areas and deliver orthophotos, contours and 3D models.", link: "/drainage-guides/when-to-use-drone-surveys" },
       { question: "What is a utility survey?", answer: "Utility surveys locate and map buried services (electric, gas, water, telecoms, drainage) before excavation. They reduce the risk of service strikes and support CDM and design. Often combined with topographical surveys.", link: "/drainage-guides/what-is-gpr-utility-mapping" },
-      { question: "What is a measured building survey?", answer: "A measured building survey captures the as-built layout of a property — floor plans, elevations and sections — for extensions, refurbishments and change-of-use. Outputs are typically 2D CAD or 3D/BIM.", link: "/services/measured-building-survey" },
+      { question: "What is a measured building survey?", answer: "A measured building survey captures the as-built layout of a property — floor plans, elevations and sections — for extensions, refurbishments and change-of-use. Outputs are typically 2D CAD or 3D/BIM.", link: getServiceUrl("measured-building-survey") },
     ],
   },
 ];

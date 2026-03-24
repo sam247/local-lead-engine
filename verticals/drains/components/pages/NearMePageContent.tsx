@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, MapPin } from "lucide-react";
 import InspectionCTA from "@/components/sections/InspectionCTA";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
+import { getServiceUrl } from "engine";
 
 interface NearMePageContentProps {
   serviceSlug: string;
@@ -70,7 +71,7 @@ export default function NearMePageContent({ serviceSlug }: NearMePageContentProp
               ))}
             </ul>
             <Button asChild>
-              <Link href={`/services/${service.slug}`}>Learn More About {service.title}</Link>
+              <Link href={getServiceUrl(service.slug)}>Learn More About {service.title}</Link>
             </Button>
           </div>
         </div>
@@ -80,7 +81,7 @@ export default function NearMePageContent({ serviceSlug }: NearMePageContentProp
           <h2 className="mb-8 text-center font-display text-2xl font-bold">Other Services Near You</h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
             {services.filter((s) => s.slug !== service.slug).slice(0, 6).map((s) => (
-              <Link key={s.slug} href={`/services/${s.slug}`} className="rounded-lg border border-border p-4 transition-all hover:border-primary hover:shadow-md">
+              <Link key={s.slug} href={getServiceUrl(s.slug)} className="rounded-lg border border-border p-4 transition-all hover:border-primary hover:shadow-md">
                 <h3 className="mb-1 font-display text-sm font-semibold">{s.title}</h3>
                 <p className="text-xs text-muted-foreground">{s.shortDescription}</p>
               </Link>

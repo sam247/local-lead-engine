@@ -13,11 +13,11 @@ function ServiceCrossLinks({ slug }: { slug: string }) {
     return (
       <p className="mb-4 text-sm text-muted-foreground">
         For continuous flight auger work on vibration-sensitive or tight sites, see{" "}
-        <Link href="/services/cfa-piling" className="text-primary hover:underline">
+        <Link href="/cfa-piling" className="text-primary hover:underline">
           CFA piling
         </Link>
         . Where existing foundations need stabilising,{" "}
-        <Link href="/services/underpinning" className="text-primary hover:underline">
+        <Link href="/underpinning" className="text-primary hover:underline">
           underpinning
         </Link>{" "}
         may be specified alongside or instead of new piling.
@@ -28,7 +28,7 @@ function ServiceCrossLinks({ slug }: { slug: string }) {
     return (
       <p className="mb-4 text-sm text-muted-foreground">
         For driven, bored and sheet piling options, see our wider{" "}
-        <Link href="/services/piling-contractors" className="text-primary hover:underline">
+        <Link href="/piling-contractors" className="text-primary hover:underline">
           piling contractors
         </Link>{" "}
         service.
@@ -39,7 +39,7 @@ function ServiceCrossLinks({ slug }: { slug: string }) {
     return (
       <p className="mb-4 text-sm text-muted-foreground">
         For localised foundation defects without full underpinning, see{" "}
-        <Link href="/services/foundation-repair" className="text-primary hover:underline">
+        <Link href="/foundation-repair" className="text-primary hover:underline">
           foundation repair
         </Link>
         .
@@ -50,11 +50,11 @@ function ServiceCrossLinks({ slug }: { slug: string }) {
     return (
       <p className="mb-4 text-sm text-muted-foreground">
         Where the scheme requires deepening or widening support to the whole footprint,{" "}
-        <Link href="/services/underpinning" className="text-primary hover:underline">
+        <Link href="/underpinning" className="text-primary hover:underline">
           underpinning
         </Link>{" "}
         may be more appropriate — we work to structural design. For concrete element reinstatement only, see{" "}
-        <Link href="/services/concrete-repair" className="text-primary hover:underline">
+        <Link href="/concrete-repair" className="text-primary hover:underline">
           concrete repair
         </Link>
         .
@@ -65,11 +65,11 @@ function ServiceCrossLinks({ slug }: { slug: string }) {
     return (
       <p className="mb-4 text-sm text-muted-foreground">
         Wider foundation movement or bearing issues are usually handled under{" "}
-        <Link href="/services/foundation-repair" className="text-primary hover:underline">
+        <Link href="/foundation-repair" className="text-primary hover:underline">
           foundation repair
         </Link>{" "}
         or{" "}
-        <Link href="/services/underpinning" className="text-primary hover:underline">
+        <Link href="/underpinning" className="text-primary hover:underline">
           underpinning
         </Link>
         , depending on the engineer&apos;s scheme.
@@ -93,6 +93,7 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
       heroImageSrc={heroImageSrc}
       contactPath="/contact"
       servicesPath="/services"
+      servicePageHref={(slug) => `/${slug}`}
       locationLinkPath={(slug, id) => `/${slug}/${id}`}
       symptomLinks={symptomLinks}
       faqs={faqs}

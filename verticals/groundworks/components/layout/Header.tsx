@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { ResourcesMenu, getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "engine/components/navigation/ResourcesMenu";
 import { trackEvent } from "engine/utils";
+import { getServiceUrl, isServiceHubPath } from "engine";
 import { verticalConfig } from "@/config";
 import { cn } from "@/lib/utils";
 
@@ -51,28 +52,28 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
           <Link
-            href="/services/groundworks-contractors"
+            href={getServiceUrl("groundworks-contractors")}
             className={cn(
               "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
-              isActive("/services/groundworks-contractors") ? "text-primary" : "text-muted-foreground"
+              isServiceHubPath(pathname, "groundworks-contractors") ? "text-primary" : "text-muted-foreground"
             )}
           >
             Groundworks
           </Link>
           <Link
-            href="/services/piling-contractors"
+            href={getServiceUrl("piling-contractors")}
             className={cn(
               "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
-              isActive("/services/piling-contractors") ? "text-primary" : "text-muted-foreground"
+              isServiceHubPath(pathname, "piling-contractors") ? "text-primary" : "text-muted-foreground"
             )}
           >
             Piling
           </Link>
           <Link
-            href="/services/foundation-contractors"
+            href={getServiceUrl("foundation-contractors")}
             className={cn(
               "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
-              isActive("/services/foundation-contractors") ? "text-primary" : "text-muted-foreground"
+              isServiceHubPath(pathname, "foundation-contractors") ? "text-primary" : "text-muted-foreground"
             )}
           >
             Foundations
@@ -166,9 +167,9 @@ const Header = () => {
         <div className="border-t border-border bg-background lg:hidden">
           <nav className="container py-4">
             
-            <Link href="/services/groundworks-contractors" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Groundworks</Link>
-            <Link href="/services/piling-contractors" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Piling</Link>
-            <Link href="/services/foundation-contractors" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Foundations</Link>
+            <Link href={getServiceUrl("groundworks-contractors")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Groundworks</Link>
+            <Link href={getServiceUrl("piling-contractors")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Piling</Link>
+            <Link href={getServiceUrl("foundation-contractors")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Foundations</Link>
             <Link href="/about" className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>About</Link>
 
             {/* Mobile Locations Accordion */}

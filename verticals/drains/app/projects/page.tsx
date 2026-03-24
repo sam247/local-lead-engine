@@ -2,7 +2,7 @@ import Link from "next/link";
 import { projects } from "@/data/projects";
 import { services } from "@/lib/data";
 import { getProjectImage } from "@/lib/images";
-import { ProjectCardWithLinks } from "engine";
+import { ProjectCardWithLinks, getServiceUrl } from "engine";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import type { Metadata } from "next";
@@ -38,7 +38,7 @@ export default function ProjectsPage() {
                 {featuredServices.map((s) => (
                   <Link
                     key={s.id}
-                    href={`/services/${s.slug}`}
+                    href={getServiceUrl(s.slug)}
                     className="text-sm font-medium text-primary hover:underline"
                   >
                     {s.title}

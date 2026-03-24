@@ -11,7 +11,11 @@ export async function generateStaticParams() {
   return services.map((s) => ({ serviceSlug: s.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ serviceSlug: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ serviceSlug: string }>;
+}): Promise<Metadata> {
   const { serviceSlug } = await params;
   const service = services.find((s) => s.slug === serviceSlug);
   if (!service) return { title: "Not Found" };
@@ -24,7 +28,11 @@ export async function generateMetadata({ params }: { params: Promise<{ serviceSl
   };
 }
 
-export default async function ServiceDetailPage({ params }: { params: Promise<{ serviceSlug: string }> }) {
+export default async function RootServiceHubPage({
+  params,
+}: {
+  params: Promise<{ serviceSlug: string }>;
+}) {
   const { serviceSlug } = await params;
   const service = services.find((s) => s.slug === serviceSlug);
   if (!service) notFound();

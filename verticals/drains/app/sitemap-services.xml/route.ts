@@ -9,12 +9,20 @@ export const revalidate = false;
 export async function GET() {
   const baseUrl = verticalConfig.baseUrl.replace(/\/$/, "");
   const lastmod = new Date();
-  const entries = services.map((s) => ({
-    url: `${baseUrl}/services/${s.slug}`,
-    lastmod,
-    changefreq: "monthly" as const,
-    priority: 0.7,
-  }));
+  const entries = services.flatMap((s) => [
+    {
+      url: `${baseUrl}/services/${s.slug}`,
+      lastmod,
+      changefreq: "monthly" as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/${s.slug}`,
+      lastmod,
+      changefreq: "monthly" as const,
+      priority: 0.7,
+    },
+  ]);
   const xml = buildUrlset(entries);
   return new NextResponse(xml, {
     headers: {

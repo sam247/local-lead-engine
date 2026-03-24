@@ -8,6 +8,7 @@ import CostEstimator from "@/components/sections/CostEstimator";
 import DiagnosisTool from "@/components/sections/DiagnosisTool";
 import FAQSchema from "@/components/sections/FAQSchema";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
+import { getServiceUrl } from "engine";
 
 const sections = [
   { id: "signs", title: "Signs of a Collapsed Drain" },
@@ -119,7 +120,7 @@ export default function PillarGuideContent() {
                   </Link>
                 ))}
                 {services.filter((s) => ["drain-relining", "drain-excavation", "drain-collapse-repair"].includes(s.slug)).map((s) => (
-                  <Link key={s.slug} href={`/services/${s.slug}`} className="rounded border border-primary/30 bg-primary/5 p-3 text-sm font-medium transition-colors hover:border-primary">
+                  <Link key={s.slug} href={getServiceUrl(s.slug)} className="rounded border border-primary/30 bg-primary/5 p-3 text-sm font-medium transition-colors hover:border-primary">
                     {s.title} <ArrowRight className="ml-1 inline h-3 w-3" />
                   </Link>
                 ))}

@@ -7,6 +7,7 @@ import FAQSchema from "@/components/sections/FAQSchema";
 import InspectionCTA from "@/components/sections/InspectionCTA";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTABanner from "@/components/sections/CTABanner";
+import { getServiceUrl } from "engine";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -79,8 +80,8 @@ export default function SurveyCostPage() {
                   <Link href="/drainage-guides/survey-before-building-extension" className="text-sm text-primary hover:underline">Survey Before Extension →</Link>
                   <Link href="/drainage-guides/when-to-use-drone-surveys" className="text-sm text-primary hover:underline">When to Use Drone Surveys →</Link>
                   <Link href="/drain-costs" className="text-sm text-primary hover:underline">All Cost Guides →</Link>
-                  <Link href="/services/topographical-survey" className="text-sm text-primary hover:underline">Topographical Survey →</Link>
-                  <Link href="/services/drone-survey" className="text-sm text-primary hover:underline">Drone Survey →</Link>
+                  <Link href={getServiceUrl("topographical-survey")} className="text-sm text-primary hover:underline">Topographical Survey →</Link>
+                  <Link href={getServiceUrl("drone-survey")} className="text-sm text-primary hover:underline">Drone Survey →</Link>
                 </div>
               </div>
             </div>

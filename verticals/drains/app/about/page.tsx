@@ -5,7 +5,7 @@ import { services } from "@/lib/data";
 import { verticalConfig } from "@/config";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import { GroupFooter } from "engine";
+import { GroupFooter, getServiceUrl } from "engine";
 import { mainlineGroupLinksForSite } from "engine/data/mainline-group";
 import type { Metadata } from "next";
 
@@ -69,7 +69,7 @@ export default function AboutPage() {
           <ul className="mb-6 grid gap-2 sm:grid-cols-2">
             {servicePreview.map((s) => (
               <li key={s.slug}>
-                <Link href={`/services/${s.slug}`} className="text-sm text-primary hover:underline">
+                <Link href={getServiceUrl(s.slug)} className="text-sm text-primary hover:underline">
                   {s.title}
                 </Link>
               </li>

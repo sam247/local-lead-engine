@@ -6,6 +6,7 @@ import { BreadcrumbNav } from "./BreadcrumbNav";
 import { InspectionCTA } from "./InspectionCTA";
 import { NearMeLocationList } from "./NearMeLocationList";
 import type { Service, Location, CompanyInfo } from "../types";
+import { getServiceUrl } from "../utils/serviceUrls";
 
 export interface NearMePageProps {
   service: Service;
@@ -182,7 +183,7 @@ export function NearMePage({
               ))}
             </ul>
             <Button asChild>
-              <Link href={`/services/${service.slug}`}>
+              <Link href={getServiceUrl(service.slug)}>
                 Learn More About {service.title}
               </Link>
             </Button>
@@ -198,7 +199,7 @@ export function NearMePage({
             {otherServices.slice(0, 6).map((s) => (
               <Link
                 key={s.slug}
-                href={`/services/${s.slug}`}
+                href={getServiceUrl(s.slug)}
                 className="rounded-lg border border-border p-4 transition-all hover:border-primary hover:shadow-md"
               >
                 <h3 className="mb-1 font-display text-sm font-semibold">{s.title}</h3>

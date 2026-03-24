@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { homepageProjects } from "@/data/projects";
 import { getProjectImage } from "@/lib/images";
+import { getServiceUrl } from "engine";
 
 const ProjectsPreview = () => {
   return (
@@ -37,7 +38,7 @@ const ProjectsPreview = () => {
               </div>
               <div className="p-4">
                 <div className="mb-2">
-                  <Link href={`/services/${project.serviceSlug}`}>
+                  <Link href={getServiceUrl(project.serviceSlug)}>
                     <Badge variant="secondary" className="transition-colors hover:bg-primary hover:text-primary-foreground">
                       {project.service}
                     </Badge>
@@ -47,7 +48,7 @@ const ProjectsPreview = () => {
                 <p className="text-sm text-muted-foreground">{project.location}</p>
                 <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{project.description}</p>
                 <Link
-                  href={`/services/${project.serviceSlug}`}
+                  href={getServiceUrl(project.serviceSlug)}
                   className="mt-3 inline-flex items-center text-xs font-medium text-primary transition-colors hover:underline"
                 >
                   View Service

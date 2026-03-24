@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { industries, getIndustryBySlug } from "@/data/industries";
 import { services } from "@/lib/data";
 import { verticalConfig } from "@/config";
+import { getServiceUrl } from "engine";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -55,7 +56,7 @@ export default function IndustrySlugPage({ params }: Props) {
             <ul className="space-y-2">
               {relatedServices.map((s) => s && (
                 <li key={s.slug}>
-                  <Link href={`/services/${s.slug}`} className="text-primary hover:underline">
+                  <Link href={getServiceUrl(s.slug)} className="text-primary hover:underline">
                     {s.title}
                   </Link>
                 </li>

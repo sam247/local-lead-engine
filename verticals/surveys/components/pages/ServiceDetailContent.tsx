@@ -22,6 +22,7 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
       heroImageSrc={heroImageSrc}
       contactPath="/contact"
       servicesPath="/services"
+      servicePageHref={(slug) => `/${slug}`}
       locationLinkPath={(slug, id) => `/${slug}/${id}`}
       symptomLinks={symptomLinks}
       symptomLinksSectionTitle="Related guides"
@@ -49,15 +50,15 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
           </p>
           <p className="mb-8 text-sm text-muted-foreground">
             Explore our{" "}
-            <Link href="/services/topographical-survey" className="text-primary hover:underline">
+            <Link href="/topographical-survey" className="text-primary hover:underline">
               topographical
             </Link>
             ,{" "}
-            <Link href="/services/measured-building-survey" className="text-primary hover:underline">
+            <Link href="/measured-building-survey" className="text-primary hover:underline">
               measured building
             </Link>
             , and{" "}
-            <Link href="/services/utility-survey" className="text-primary hover:underline">
+            <Link href="/utility-survey" className="text-primary hover:underline">
               utility surveys
             </Link>{" "}
             for planning and construction projects.

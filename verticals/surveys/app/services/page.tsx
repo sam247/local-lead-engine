@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ArrowRight, AlertTriangle, Layers, Camera, Shovel, Siren, Ban, Droplets, TreeDeciduous, Wrench, Replace, Building2 } from "lucide-react";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
+import { getServiceUrl } from "engine";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -49,7 +50,7 @@ export default function ServicesPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="mb-4 text-sm text-muted-foreground">{service.description.slice(0, 150)}...</p>
-                    <Link href={`/services/${service.slug}`} className="inline-flex items-center text-sm font-medium text-primary hover:underline">
+                    <Link href={getServiceUrl(service.slug)} className="inline-flex items-center text-sm font-medium text-primary hover:underline">
                       Learn More <ArrowRight className="ml-1 h-4 w-4" />
                     </Link>
                     <div className="mt-4 border-t pt-4">

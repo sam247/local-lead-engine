@@ -7,6 +7,7 @@ import { CTABanner } from "./CTABanner";
 import { SectionIntro } from "./SectionIntro";
 import { ActionPanel } from "./ActionPanel";
 import type { HubData, InfoPageData, Service, CompanyInfo } from "../types";
+import { getServiceUrl } from "../utils/serviceUrls";
 
 export interface CrossSection {
   label: string;
@@ -226,7 +227,7 @@ export function HubPage({
             {keyServices.map((service) => (
               <Link
                 key={service.id}
-                href={`/services/${service.slug}`}
+                href={getServiceUrl(service.slug)}
                 className="group rounded-lg border border-border bg-background p-6 transition-all hover:shadow-lg"
               >
                 <h3 className="mb-2 font-display text-lg font-semibold group-hover:text-primary">

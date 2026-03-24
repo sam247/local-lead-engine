@@ -1,3 +1,4 @@
+export { getServiceUrl, getLegacyServiceUrl, isServiceHubPath } from "./serviceUrls";
 export { cn } from "./cn";
 export { getImageAlt, type GetImageAltParams } from "./imageAlt";
 export { buildLocationContextParagraph, type BuildLocationContextParams } from "./locationContext";

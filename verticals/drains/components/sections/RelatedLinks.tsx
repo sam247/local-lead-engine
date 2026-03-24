@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { services, locations, hubPages, getCategoryPages } from "@/lib/data";
+import { getServiceUrl } from "engine";
 
 interface RelatedLinksProps {
   relatedServices?: string[];
@@ -28,7 +29,7 @@ const RelatedLinks = ({ relatedServices = [], category, currentSlug }: RelatedLi
             {matchedServices.map((service) => (
               <Link
                 key={service.id}
-                href={`/services/${service.slug}`}
+                href={getServiceUrl(service.slug)}
                 className="block rounded border border-border bg-background p-3 transition-colors hover:border-primary"
               >
                 <span className="text-sm font-medium">{service.title}</span>

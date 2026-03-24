@@ -5,6 +5,7 @@ import { getBlogImage } from "@/lib/images";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { getServiceUrl } from "engine";
 
 const categoryServiceMap: Record<string, { slug: string; label: string }> = {
   Advice: { slug: "access-control-systems", label: "Access Control" },
@@ -50,7 +51,7 @@ const BlogPreview = () => {
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge variant="secondary">{post.category}</Badge>
                     {relatedService && (
-                      <Link href={`/services/${relatedService.slug}`}>
+                      <Link href={getServiceUrl(relatedService.slug)}>
                         <Badge variant="outline" className="text-primary transition-colors hover:bg-primary hover:text-primary-foreground">
                           {relatedService.label} →
                         </Badge>

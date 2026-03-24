@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Map, Building2, Waves, Network, Camera, AlertTriangle } from "lucide-react";
 import { services } from "@/lib/data";
+import { getServiceUrl } from "engine";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 
@@ -84,7 +85,7 @@ const ServicesGrid = () => {
                     </ul>
                   )}
                   <Link
-                    href={`/services/${service.slug}`}
+                    href={getServiceUrl(service.slug)}
                     className="inline-flex items-center text-sm font-medium text-primary transition-colors hover:underline"
                   >
                     Learn More
@@ -108,7 +109,7 @@ const ServicesGrid = () => {
               {homepageFeaturedServices.map((service) => (
                 <Link
                   key={service.id}
-                  href={`/services/${service.slug}`}
+                  href={getServiceUrl(service.slug)}
                   className="group overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary hover:shadow-lg"
                 >
                   <div className="relative h-48">

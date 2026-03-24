@@ -9,7 +9,7 @@ import {
 } from "@/lib/data";
 import { getHeroImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
-import type { RelatedPageLink } from "engine";
+import { getServiceUrl, type RelatedPageLink } from "engine";
 
 export function getInfoPageProps(category: string, slug: string) {
   const hub = getHubData(category);
@@ -44,10 +44,10 @@ export function getInfoPageProps(category: string, slug: string) {
       const categoryHub = hubPages.find((h) => h.category === rp.category);
       const href =
         rp.category === "service"
-          ? `/services/${rp.slug}`
+          ? getServiceUrl(rp.slug)
           : categoryHub
             ? `${categoryHub.basePath}/${rp.slug}`
-            : `/services/${rp.slug}`;
+            : getServiceUrl(rp.slug);
       return { title: rp.title, href };
     }
   );

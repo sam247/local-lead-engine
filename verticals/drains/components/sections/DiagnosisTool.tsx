@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { trackEvent } from "engine";
+import { trackEvent, getServiceUrl } from "engine";
 import { Stethoscope, CheckSquare, Square } from "lucide-react";
 
 const symptoms = [
@@ -117,8 +117,8 @@ const getDiagnosis = (selected: string[]): Diagnosis => {
     description: "Your symptoms may indicate a simple blockage or minor issue. If the problem persists, a professional inspection can rule out anything more serious.",
     severity: "low",
     links: [
-      { label: "Blocked Drains", url: "/services/blocked-drains" },
-      { label: "Drain Jetting", url: "/services/drain-jetting" },
+      { label: "Blocked Drains", url: getServiceUrl("blocked-drains") },
+      { label: "Drain Jetting", url: getServiceUrl("drain-jetting") },
       { label: "Book an Inspection", url: "/contact" },
     ],
   };

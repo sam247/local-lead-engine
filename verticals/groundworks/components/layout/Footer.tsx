@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
 import { companyInfo, services, locations } from "@/lib/data";
 import { verticalConfig } from "@/config";
-import { FooterServiceAreaGroups, GroupFooter } from "engine";
+import { FooterServiceAreaGroups, GroupFooter, getServiceUrl } from "engine";
 import { mainlineGroupLinksForSite } from "engine/data/mainline-group";
 
 const Footer = () => {
@@ -47,7 +47,7 @@ const Footer = () => {
             <ul className="space-y-2">
               {services.slice(0, 6).map((service) => (
                 <li key={service.id}>
-                  <Link href={`/services/${service.slug}`} className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
+                  <Link href={getServiceUrl(service.slug)} className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground">
                     {service.title}
                   </Link>
                 </li>

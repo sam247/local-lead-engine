@@ -9,6 +9,7 @@ import InspectionCTA from "@/components/sections/InspectionCTA";
 import MidContentCTA from "@/components/sections/MidContentCTA";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTABanner from "@/components/sections/CTABanner";
+import { getServiceUrl } from "engine";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -78,7 +79,7 @@ export default function DrainSurveyCostPage() {
                   <Link href="/drain-costs/drain-repair-cost" className="text-sm text-primary hover:underline">Drain Repair Cost Guide →</Link>
                   <Link href="/drain-costs/collapsed-drain-repair-cost" className="text-sm text-primary hover:underline">Collapsed Drain Repair Cost →</Link>
                   <Link href="/drain-insurance/collapsed-drain-insurance-claims" className="text-sm text-primary hover:underline">Insurance Claims Guide →</Link>
-                  <Link href="/services/cctv-drain-surveys" className="text-sm text-primary hover:underline">CCTV Drain Surveys Service →</Link>
+                  <Link href={getServiceUrl("cctv-drain-surveys")} className="text-sm text-primary hover:underline">CCTV Drain Surveys Service →</Link>
                 </div>
               </div>
             </div>
