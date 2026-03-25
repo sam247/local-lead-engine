@@ -6,6 +6,18 @@ export {
 } from "./lib/phone/handleCallClick";
 export { TrackablePhoneLink, type TrackablePhoneLinkProps } from "./components/TrackablePhoneLink";
 export { getVariantIndex } from "./lib/contentVariants";
+export {
+  getPageTier,
+  getPageType,
+  computeEmergencyEligible,
+  maybeApplyEmergencyMonetisation,
+  pageSeoDataAttrs,
+  EMERGENCY_MODE_ENABLED,
+  type PageTier,
+  type PageType,
+  type GetPageTierInput,
+  type GetPageTypeInput,
+} from "./lib/pageWeighting";
 export * from "./utils";
 export * from "./schema";
 export * from "./validation";
@@ -20,7 +32,7 @@ export { NearbyAreas, type NearbyAreasProps } from "./components/NearbyAreas";
 export { SectionIntro } from "./components/SectionIntro";
 export { ProcessTimeline } from "./components/ProcessTimeline";
 export { TrustReassuranceStrip } from "./components/TrustReassuranceStrip";
-export { ActionPanel } from "./components/ActionPanel";
+export { ActionPanel, type ActionPanelProps } from "./components/ActionPanel";
 export { HubPage, type HubPageProps, type CrossSection, type PillarGuideLink } from "./components/HubPage";
 export { InfoPage, type InfoPageProps, type RelatedPageLink } from "./components/InfoPage";
 export { NearMePage, type NearMePageProps } from "./components/NearMePage";

@@ -15,6 +15,7 @@ import { ActionPanel } from "./ActionPanel";
 import { getImageAlt } from "../utils/imageAlt";
 import { KEY_SERVICE_DETAIL_LOCATION_IDS } from "../data/key-location-ids";
 import { getVariantIndex } from "../lib/contentVariants";
+import { getPageTier, pageSeoDataAttrs, type PageType } from "../lib/pageWeighting";
 import { pickServiceDetailFeaturedLocations } from "../utils/pickFeaturedLocations";
 import { getServiceUrl } from "../utils/serviceUrls";
 import type { Service, Location, VerticalConfig } from "../types";
@@ -283,6 +284,8 @@ export interface ServiceDetailContentProps {
   problemLinks?: { path: string; label: string }[];
   /** Optional heading for the problem links section (e.g. "Drain problems we solve"). */
   problemLinksSectionTitle?: string;
+  /** Optional internal link count for page tiering (service hubs are tier1 regardless). */
+  inlinkCount?: number | null;
 }
 
 export function ServiceDetailContent({
@@ -309,7 +312,11 @@ export function ServiceDetailContent({
   symptomLinksSectionTitle,
   problemLinks = [],
   problemLinksSectionTitle,
+  inlinkCount,
 }: ServiceDetailContentProps) {
+  const seoPageType: PageType = "service";
+  const pageTier = getPageTier({ inlinks: inlinkCount ?? null, pageType: seoPageType });
+  const rootSeoAttrs = pageSeoDataAttrs(pageTier, seoPageType);
   const hrefForService = servicePageHrefProp ?? getServiceUrl;
   const displayTitle = service.titleSingular ?? service.title;
   const serviceTypes = verticalConfig.serviceTypesBySlug?.[service.slug] ?? [];
@@ -454,7 +461,7 @@ export function ServiceDetailContent({
   ];
 
   return (
-    <>
+    <div className="contents" {...rootSeoAttrs}>
       <SchemaMarkup
         type="Service"
         companyInfo={verticalConfig.companyInfo}
@@ -474,7 +481,7 @@ export function ServiceDetailContent({
         data={{ breadcrumbs }}
       />
 
-      <section className="relative bg-primary py-16 md:py-24" data-page-type="service" data-layout-variant={layoutVariant}>
+      <section className="relative bg-primary py-16 md:py-24" data-layout-variant={layoutVariant}>
         <div className="absolute inset-0">
           <img src={heroImageSrc} alt={heroImageAlt} className="h-full w-full object-cover opacity-20" />
           <div className="absolute inset-0 bg-primary/60" />
@@ -591,6 +598,11 @@ export function ServiceDetailContent({
                 message={firstCtaMessage}
                 buttonText={firstCtaButtonText}
                 buttonLink={firstCtaButtonLink}
+                callTrackVertical={verticalConfig.verticalId}
+                callTrackServiceSlug={service.slug}
+                callTrackLocationSlug={null}
+                pageTier={pageTier}
+                pageType={seoPageType}
               />
 
               {symptomLinks.length > 0 && (
@@ -785,6 +797,8 @@ export function ServiceDetailContent({
                 callTrackVertical={verticalConfig.verticalId}
                 callTrackServiceSlug={service.slug}
                 callTrackLocationSlug={null}
+                pageTier={pageTier}
+                pageType={seoPageType}
               />
               <ActionPanel
                 companyInfo={verticalConfig.companyInfo}
@@ -795,6 +809,8 @@ export function ServiceDetailContent({
                 callTrackVertical={verticalConfig.verticalId}
                 callTrackServiceSlug={service.slug}
                 callTrackLocationSlug={null}
+                pageTier={pageTier}
+                pageType={seoPageType}
               />
             </div>
 
@@ -857,7 +873,9 @@ export function ServiceDetailContent({
         heading={secondCtaHeading}
         body={secondCtaBody}
         ctaText={secondCtaButtonText ?? requestCta}
+        pageTier={pageTier}
+        pageType={seoPageType}
       />
-    </>
+    </div>
   );
 }

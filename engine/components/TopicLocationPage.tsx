@@ -3,6 +3,7 @@ import { BreadcrumbNav } from "./BreadcrumbNav";
 import { Button } from "./ui/button";
 import type { Location } from "../types";
 import { getVariantIndex } from "../lib/contentVariants";
+import { getPageTier, pageSeoDataAttrs, type PageType } from "../lib/pageWeighting";
 
 export interface TopicLocationProcessStep {
   title: string;
@@ -32,6 +33,8 @@ export interface TopicLocationPageProps {
   secondaryCtaHref?: string;
   contactQuoteText?: string;
   companyName?: string;
+  /** Optional internal link count for page tiering (future crawl/analytics feed). */
+  inlinkCount?: number | null;
 }
 
 function clampItems(items: string[], max = 5): string[] {
@@ -99,7 +102,11 @@ export function TopicLocationPage({
   secondaryCtaHref,
   contactQuoteText,
   companyName,
+  inlinkCount,
 }: TopicLocationPageProps) {
+  const seoPageType: PageType = "service_location";
+  const pageTier = getPageTier({ inlinks: inlinkCount ?? null, pageType: seoPageType });
+  const rootSeoAttrs = pageSeoDataAttrs(pageTier, seoPageType);
   const layoutVariantIndex = getVariantIndex(`layout:topic-location:${topicSlug}:${locationSlug}`, LAYOUT_VARIANTS.length);
   const layoutVariant = LAYOUT_VARIANTS[layoutVariantIndex];
   const scenarioItems = clampItems(commonScenarios);
@@ -184,7 +191,7 @@ export function TopicLocationPage({
   return (
     <main
       className="container mx-auto px-4 py-8"
-      data-page-type="topic-location"
+      {...rootSeoAttrs}
       data-layout-variant={layoutVariant}
       data-topic-category={topicCategory}
     >

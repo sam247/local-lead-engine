@@ -13,6 +13,7 @@ import { TrustReassuranceStrip } from "./TrustReassuranceStrip";
 import { ActionPanel } from "./ActionPanel";
 import { TrackablePhoneLink } from "./TrackablePhoneLink";
 import { getVariantIndex } from "../lib/contentVariants";
+import { getPageTier, pageSeoDataAttrs, type PageType } from "../lib/pageWeighting";
 import { locations as allLocationsDataset } from "../data/locations";
 import { getCountyPeerLocationIds, getUkGroupingForLocationId } from "../data/uk-location-hierarchy";
 import type { Service, Location, CompanyInfo } from "../types";
@@ -443,6 +444,8 @@ export interface LocationPageProps {
   relatedTopicsSectionIntro?: string;
   /** Vertical id for call-click analytics (e.g. verticalConfig.verticalId). */
   callTrackVertical: string;
+  /** Optional internal link count for page tiering (future crawl/analytics feed). */
+  inlinkCount?: number | null;
 }
 
 export function LocationPage({
@@ -471,9 +474,13 @@ export function LocationPage({
   relatedTopicsSectionTitle,
   relatedTopicsSectionIntro,
   callTrackVertical,
+  inlinkCount,
 }: LocationPageProps) {
   const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
   const displayTitle = service.titleSingular ?? service.title;
+  const seoPageType: PageType = "service_location";
+  const pageTier = getPageTier({ inlinks: inlinkCount ?? null, pageType: seoPageType });
+  const rootSeoAttrs = pageSeoDataAttrs(pageTier, seoPageType);
 
   const allLocIds = allLocationsDataset.map((l) => l.id);
   const ukGroup = getUkGroupingForLocationId(location.id);
@@ -643,7 +650,7 @@ export function LocationPage({
   }
 
   return (
-    <>
+    <div className="contents" {...rootSeoAttrs}>
       <SchemaMarkup
         type="LocalBusiness"
         companyInfo={companyInfo}
@@ -674,11 +681,7 @@ export function LocationPage({
         }}
       />
 
-      <section
-        className="relative bg-primary py-16 md:py-24"
-        data-page-type="location"
-        data-layout-variant={layoutVariant}
-      >
+      <section className="relative bg-primary py-16 md:py-24" data-layout-variant={layoutVariant}>
         <div className="absolute inset-0">
           <img
             src={serviceImage}
@@ -961,6 +964,8 @@ export function LocationPage({
                 callTrackVertical={callTrackVertical}
                 callTrackServiceSlug={service.slug}
                 callTrackLocationSlug={location.id}
+                pageTier={pageTier}
+                pageType={seoPageType}
               />
 
               <ActionPanel
@@ -972,6 +977,8 @@ export function LocationPage({
                 callTrackVertical={callTrackVertical}
                 callTrackServiceSlug={service.slug}
                 callTrackLocationSlug={location.id}
+                pageTier={pageTier}
+                pageType={seoPageType}
               />
               <InspectionCTA
                 companyInfo={companyInfo}
@@ -979,6 +986,8 @@ export function LocationPage({
                 callTrackVertical={callTrackVertical}
                 callTrackServiceSlug={service.slug}
                 callTrackLocationSlug={location.id}
+                pageTier={pageTier}
+                pageType={seoPageType}
               />
             </div>
 
@@ -1155,6 +1164,6 @@ export function LocationPage({
           </Button>
         </div>
       </section>
-    </>
+    </div>
   );
 }

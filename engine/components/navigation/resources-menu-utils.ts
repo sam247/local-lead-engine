@@ -35,8 +35,8 @@ export function getResourcesMenuFlatLinks(siteName: string): ResourcesMenuFlatLi
     { href: "/cost", label: l.costGuide },
     { href: "/services", label: l.allServices },
     { href: "/insurance", label: l.insurance },
-    { href: "/legal", label: l.legal },
     { href: "/homeowners", label: l.homeowners },
+    { href: "/legal", label: l.legal },
   ];
 }
 

@@ -2,9 +2,11 @@ import Link from "next/link";
 import { Phone } from "lucide-react";
 import { Button } from "./ui/button";
 import type { CompanyInfo } from "../types";
+import type { PageTier, PageType } from "../lib/pageWeighting";
+import { pageSeoDataAttrs } from "../lib/pageWeighting";
 import { TrackablePhoneLink } from "./TrackablePhoneLink";
 
-interface ActionPanelProps {
+export interface ActionPanelProps {
   companyInfo: CompanyInfo;
   contactPath?: string;
   heading: string;
@@ -15,6 +17,8 @@ interface ActionPanelProps {
   callTrackServiceSlug?: string | null;
   callTrackLocationSlug?: string | null;
   callTrackPagePath?: string;
+  pageTier?: PageTier;
+  pageType?: PageType;
 }
 
 export function ActionPanel({
@@ -28,9 +32,14 @@ export function ActionPanel({
   callTrackServiceSlug = null,
   callTrackLocationSlug = null,
   callTrackPagePath,
+  pageTier,
+  pageType,
 }: ActionPanelProps) {
   return (
-    <div className={className ?? "mb-8 rounded-lg border border-border bg-secondary/40 p-6"}>
+    <div
+      className={className ?? "mb-8 rounded-lg border border-border bg-secondary/40 p-6"}
+      {...pageSeoDataAttrs(pageTier, pageType)}
+    >
       <h3 className="mb-2 font-display text-xl font-bold">{heading}</h3>
       <p className="mb-4 text-muted-foreground">{body}</p>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

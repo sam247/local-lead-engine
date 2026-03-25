@@ -3,6 +3,7 @@ import { BreadcrumbNav } from "./BreadcrumbNav";
 import { ProblemCTA } from "./ProblemCTA";
 import { SchemaMarkup } from "../schema/SchemaMarkup";
 import { getVariantIndex } from "../lib/contentVariants";
+import { getPageTier, pageSeoDataAttrs, type PageType } from "../lib/pageWeighting";
 import type { ProblemData, Service, CompanyInfo } from "../types";
 
 export interface FeaturedLocation {
@@ -42,6 +43,8 @@ export interface ProblemPageProps {
   servicesNearYouTitle?: string;
   /** Intro copy for "services near you" section. */
   servicesNearYouIntro?: string;
+  /** Optional internal link count for page tiering (future crawl/analytics feed). */
+  inlinkCount?: number | null;
 }
 
 const RELATED_PROBLEMS_MAX = 5;
@@ -87,7 +90,11 @@ export function ProblemPage({
   locationLinkPath,
   servicesNearYouTitle,
   servicesNearYouIntro,
+  inlinkCount,
 }: ProblemPageProps) {
+  const seoPageType: PageType = "problem";
+  const pageTier = getPageTier({ inlinks: inlinkCount ?? null, pageType: seoPageType });
+  const rootSeoAttrs = pageSeoDataAttrs(pageTier, seoPageType);
   const openingVariant = getVariantIndex(`problem-opening:${problem.slug}`, 3);
   const openingLead = [
     `A clear diagnosis early usually limits disruption and cost, so you can choose a repair route that fits your programme and budget.`,
@@ -127,7 +134,7 @@ export function ProblemPage({
   ];
 
   return (
-    <>
+    <div className="contents" {...rootSeoAttrs}>
       <SchemaMarkup
         type="Article"
         companyInfo={companyInfo}
@@ -144,11 +151,7 @@ export function ProblemPage({
         baseUrl={baseUrl}
         data={{ breadcrumbs }}
       />
-      <section
-        className="section-padding"
-        data-page-type="problem"
-        data-layout-variant={["A", "B", "C"][openingVariant]}
-      >
+      <section className="section-padding" data-layout-variant={["A", "B", "C"][openingVariant]}>
         <div className="container max-w-3xl">
           <BreadcrumbNav items={breadcrumbs} />
           <h1 className="mb-6 font-display text-3xl font-bold md:text-4xl">{problem.title}</h1>
@@ -351,9 +354,11 @@ export function ProblemPage({
             serviceLinks={serviceLinks}
             basePath={basePath}
             contactPath={contactPath}
+            pageTier={pageTier}
+            pageType={seoPageType}
           />
         </div>
       </section>
-    </>
+    </div>
   );
 }

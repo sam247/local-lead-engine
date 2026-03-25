@@ -39,6 +39,7 @@ The **engine** (`engine/`) is **shared infrastructure** consumed by all vertical
 - **Components:** `LocationPage`, `HubPage`, `InfoPage`, `ProblemPage`, `ServiceDetailContent`, `BreadcrumbNav`, `NearbyAreas`, `MapEmbed`, UI primitives, etc. (see `engine/components/index.ts`).
 - **Data:** `locations` (shared location list), `locationNeighbours`, `getNeighbourLocationIds` (see `engine/data/`).
 - **Utils:** `buildLocationMetadata`, `buildLocationContextParagraph`, `buildSitemapEntries` (see `engine/utils/`).
+- **Lib:** `getPageTier`, `getPageType`, `pageSeoDataAttrs`, call-click helpers (see `engine/lib/pageWeighting.ts`, `engine/lib/phone/handleCallClick.ts`).
 - **Schema:** FAQ, LocalBusiness, and other structured data helpers (see `engine/schema/`).
 - **Validation:** Shared Zod or validation utilities (see `engine/validation/`).
 
@@ -442,6 +443,39 @@ The following are **planned or possible** evolutions; do not implement without e
 - **Lead routing:** Per-vertical or per-location lead capture and routing (not covered in this doc; would be separate services or APIs).
 - **Content enrichment:** Deeper programmatic content (e.g. more ProgrammaticTopic fields, localised intros) or integration with CMS for non-programmatic pages.
 - **Sitemap segmentation for other verticals:** If Drains, Surveys, or Groundworks grow URL count significantly, consider introducing a sitemap index and segment sitemaps similar to Access.
+
+---
+
+## 13. Analytics, page weighting, call tracking, and SEO implementation
+
+This section describes **implemented infrastructure** so agents can extend it without rediscovering files. **§9 SEO architecture rules** remain the binding constraints; subsections below are descriptive.
+
+### 13.1 Page weighting and emergency CTA scaffolding
+
+- **Module:** [`engine/lib/pageWeighting.ts`](engine/lib/pageWeighting.ts) (also `import { … } from "engine"`).
+- **Types:** `PageTier` (`tier1` | `tier2` | `tier3`), `PageType` (`service` | `service_location` | `problem` | `topic`).
+- **`getPageTier({ inlinks, pageType })`:** Service hubs (`pageType === "service"`) are always **tier1**. With no `inlinks` data: service → tier1, service_location → tier2, problem/topic → tier3. With counts: ≥100 → tier1, 20–99 → tier2, &lt;20 → tier3.
+- **`getPageType({ route, explicitPageType })`:** Prefer **`explicitPageType`** from the route when URLs are ambiguous (e.g. Access two-segment paths). Heuristics: `/services` and `/services/*` → `service`; two path segments → `service_location`; otherwise → `topic`.
+- **`computeEmergencyEligible`:** `true` when tier1 **or** `pageType === "problem"`.
+- **`EMERGENCY_MODE_ENABLED`:** `false` until product enables emergency monetisation. **`maybeApplyEmergencyMonetisation`** is a no-op hook for future alternate numbers/banners.
+- **`pageSeoDataAttrs(pageTier, pageType)`:** Returns `data-page-tier`, `data-page-type`, `data-emergency-eligible` for DevTools (used on page wrappers and CTAs when tier/type are passed).
+- **Where wired:** Engine templates [`LocationPage`](engine/components/LocationPage.tsx), [`ServiceDetailContent`](engine/components/ServiceDetailContent.tsx), [`InfoPage`](engine/components/InfoPage.tsx), [`ProblemPage`](engine/components/ProblemPage.tsx), [`TopicLocationPage`](engine/components/TopicLocationPage.tsx) compute tier/type and wrap output in `<div className="contents" …>` (or `<main>` on topic×location) with those attrs. Optional prop **`inlinkCount`** on each accepts future crawl/analytics feeds.
+- **CTAs:** [`InspectionCTA`](engine/components/InspectionCTA.tsx), [`MidContentCTA`](engine/components/MidContentCTA.tsx), [`ActionPanel`](engine/components/ActionPanel.tsx), [`CTABanner`](engine/components/CTABanner.tsx), [`ProblemCTA`](engine/components/ProblemCTA.tsx) accept optional `pageTier` / `pageType` and repeat attrs on their roots when provided.
+- **Topic×location:** Classified as **`service_location`** for tiering (same fallback tier as L4 service×location without inlink data).
+- **Vertical-local CTA duplicates** under `verticals/*/components/sections/` do **not** receive these props until refactored to use engine components or forwarding.
+
+### 13.2 Call tracking infrastructure
+
+- **[`engine/lib/phone/handleCallClick.ts`](engine/lib/phone/handleCallClick.ts):** `handleCallClick`, `digitsFromPhone`, `TrackCallClickContext` (`page_path`, `service_slug`, `location_slug`, `vertical`, `source`).
+- **[`engine/components/TrackablePhoneLink.tsx`](engine/components/TrackablePhoneLink.tsx):** Client component; `tel:` href; on click runs `handleCallClick` (optional GA4 `call_click` when `gtag` exists; fire-and-forget `POST` to **`/api/track-call-click`**). Props include `phone`, `vertical`, optional slugs, `pagePath`, `source` (`cta` | `header` | `footer` | `inline`).
+- **API route:** Implemented per vertical at `verticals/{vertical}/app/api/track-call-click/route.ts` (not in the engine package).
+- **Convention:** New phone CTAs in shared engine code should use **`TrackablePhoneLink`** and pass **`callTrackVertical`** (and service/location slugs when relevant).
+
+### 13.3 Shared SEO stack (metadata and on-page)
+
+- **Metadata:** [`engine/utils/metadata.ts`](engine/utils/metadata.ts) — shared builders (e.g. location, service hub, problem, topic×location, hub/info). Use deterministic title patterns / clamping; avoid vertical-specific drainage-only copy on non-drain sites. Vertical `generateMetadata` should call these helpers rather than duplicating strings.
+- **On-page:** Engine page components enforce heading discipline, section intros, first-paragraph and thin-content rules, and early contextual internal links where implemented.
+- **Indexation helpers:** Title candidate pools and rotation for clamp collisions; homepage “Core services” link strips live in each vertical’s `app/page.tsx`; sitemap rules remain per **§8**.
 
 ---
 

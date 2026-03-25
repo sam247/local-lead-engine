@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Phone, Search } from "lucide-react";
 import type { CompanyInfo } from "../types";
+import type { PageTier, PageType } from "../lib/pageWeighting";
+import { pageSeoDataAttrs } from "../lib/pageWeighting";
 import { TrackablePhoneLink } from "./TrackablePhoneLink";
 
 export interface InspectionCTAProps {
@@ -15,6 +17,8 @@ export interface InspectionCTAProps {
   callTrackServiceSlug?: string | null;
   callTrackLocationSlug?: string | null;
   callTrackPagePath?: string;
+  pageTier?: PageTier;
+  pageType?: PageType;
 }
 
 export function InspectionCTA({
@@ -27,9 +31,14 @@ export function InspectionCTA({
   callTrackServiceSlug = null,
   callTrackLocationSlug = null,
   callTrackPagePath,
+  pageTier,
+  pageType,
 }: InspectionCTAProps) {
   return (
-    <div className="rounded-lg border border-primary/20 bg-primary/5 p-6 md:p-8">
+    <div
+      className="rounded-lg border border-primary/20 bg-primary/5 p-6 md:p-8"
+      {...pageSeoDataAttrs(pageTier, pageType)}
+    >
       <div className="flex items-start gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary">
           <Search className="h-6 w-6 text-primary-foreground" />

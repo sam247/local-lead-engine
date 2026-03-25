@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Phone, Camera } from "lucide-react";
 import type { CompanyInfo } from "../types";
+import type { PageTier, PageType } from "../lib/pageWeighting";
+import { pageSeoDataAttrs } from "../lib/pageWeighting";
 import { TrackablePhoneLink } from "./TrackablePhoneLink";
 
 export interface MidContentCTAProps {
@@ -13,6 +15,8 @@ export interface MidContentCTAProps {
   callTrackServiceSlug?: string | null;
   callTrackLocationSlug?: string | null;
   callTrackPagePath?: string;
+  pageTier?: PageTier;
+  pageType?: PageType;
 }
 
 export function MidContentCTA({
@@ -24,9 +28,14 @@ export function MidContentCTA({
   callTrackServiceSlug = null,
   callTrackLocationSlug = null,
   callTrackPagePath,
+  pageTier,
+  pageType,
 }: MidContentCTAProps) {
   return (
-    <div className="my-8 rounded-lg border-2 border-primary/20 bg-primary/5 p-6">
+    <div
+      className="my-8 rounded-lg border-2 border-primary/20 bg-primary/5 p-6"
+      {...pageSeoDataAttrs(pageTier, pageType)}
+    >
       <div className="flex items-start gap-4">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
           <Camera className="h-5 w-5 text-primary" />

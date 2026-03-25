@@ -20,7 +20,8 @@
     "./utils": "./utils/index.ts",
     "./types": "./types/index.ts",
     "./validation": "./validation/index.ts",
-    "./lib/phone/handleCallClick": "./lib/phone/handleCallClick.ts"
+    "./lib/phone/handleCallClick": "./lib/phone/handleCallClick.ts",
+    "./lib/pageWeighting": "./lib/pageWeighting.ts"
   },
   "peerDependencies": {
     "next": ">=14",

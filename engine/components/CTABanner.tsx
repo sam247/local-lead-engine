@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 import type { CompanyInfo } from "../types";
+import type { PageTier, PageType } from "../lib/pageWeighting";
+import { pageSeoDataAttrs } from "../lib/pageWeighting";
 
 export interface CTABannerProps {
   companyInfo: CompanyInfo;
@@ -9,6 +11,8 @@ export interface CTABannerProps {
   heading?: string;
   body?: string;
   ctaText?: string;
+  pageTier?: PageTier;
+  pageType?: PageType;
 }
 
 export function CTABanner({
@@ -17,9 +21,14 @@ export function CTABanner({
   heading = "Need project guidance?",
   body = "Share your site details and priorities. We will outline a practical scope, likely timeline, and next steps.",
   ctaText = "Request a site visit",
+  pageTier,
+  pageType,
 }: CTABannerProps) {
   return (
-    <section className="bg-secondary py-16 text-primary md:py-20">
+    <section
+      className="bg-secondary py-16 text-primary md:py-20"
+      {...pageSeoDataAttrs(pageTier, pageType)}
+    >
       <div className="container">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="mb-4 font-display text-3xl font-bold text-primary md:text-4xl">

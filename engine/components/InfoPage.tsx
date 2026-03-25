@@ -10,6 +10,7 @@ import { BreadcrumbNav } from "./BreadcrumbNav";
 import { CTABanner } from "./CTABanner";
 import { TrackablePhoneLink } from "./TrackablePhoneLink";
 import { getVariantIndex } from "../lib/contentVariants";
+import { getPageTier, pageSeoDataAttrs, type PageType } from "../lib/pageWeighting";
 import { getServiceUrl } from "../utils/serviceUrls";
 import type { HubData, InfoPageData, Service, Location, CompanyInfo } from "../types";
 
@@ -72,6 +73,8 @@ export interface InfoPageProps {
   /** Title for the related guides block in sidebar. Default "Related Articles". */
   relatedGuidesTitle?: string;
   callTrackVertical: string;
+  /** Optional internal link count for page tiering (future crawl/analytics feed). */
+  inlinkCount?: number | null;
 }
 
 export function InfoPage({
@@ -91,7 +94,11 @@ export function InfoPage({
   getCategoryPages,
   relatedGuidesTitle = "Related Articles",
   callTrackVertical,
+  inlinkCount,
 }: InfoPageProps) {
+  const seoPageType: PageType = "topic";
+  const pageTier = getPageTier({ inlinks: inlinkCount ?? null, pageType: seoPageType });
+  const rootSeoAttrs = pageSeoDataAttrs(pageTier, seoPageType);
   const relatedGuides = otherPages.slice(0, 5);
   const signs = page.signs.slice(0, 5);
   const shouldUseSignsList = signs.length >= 4;
@@ -134,7 +141,7 @@ export function InfoPage({
     }
   }
   return (
-    <>
+    <div className="contents" {...rootSeoAttrs}>
       <SchemaMarkup
         type="Article"
         companyInfo={companyInfo}
@@ -178,7 +185,7 @@ export function InfoPage({
           </div>
         </div>
       </section>
-      <section className="section-padding" data-page-type="topic" data-layout-variant={["A", "B", "C"][openingVariant]}>
+      <section className="section-padding" data-layout-variant={["A", "B", "C"][openingVariant]}>
         <div className="container">
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
@@ -250,6 +257,8 @@ export function InfoPage({
                 callTrackVertical={callTrackVertical}
                 callTrackServiceSlug={page.relatedServices?.[0] ?? services[0]?.slug ?? null}
                 callTrackLocationSlug={null}
+                pageTier={pageTier}
+                pageType={seoPageType}
               />
               <h2 className="mb-4 font-display text-2xl font-bold">{h2Fix}</h2>
               <p className="mb-8 text-muted-foreground">{page.resolution}</p>
@@ -332,6 +341,8 @@ export function InfoPage({
                   callTrackVertical={callTrackVertical}
                   callTrackServiceSlug={page.relatedServices?.[0] ?? services[0]?.slug ?? null}
                   callTrackLocationSlug={null}
+                  pageTier={pageTier}
+                  pageType={seoPageType}
                 />
               </div>
               <div className="rounded-lg bg-primary p-6 text-center">
@@ -398,7 +409,12 @@ export function InfoPage({
         </div>
       </section>
       <FAQSchema items={pageFaqs} title={`${page.title} FAQ`} />
-      <CTABanner companyInfo={companyInfo} contactPath={contactPath} />
-    </>
+      <CTABanner
+        companyInfo={companyInfo}
+        contactPath={contactPath}
+        pageTier={pageTier}
+        pageType={seoPageType}
+      />
+    </div>
   );
 }

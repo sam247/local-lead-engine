@@ -106,20 +106,20 @@ export function ResourcesMenu({
       )}
       <div className="border-t border-border pt-3">
         <p className={sectionTitleCn}>Information</p>
-        <ul className="grid grid-cols-2 gap-1">
+        <ul className="space-y-1">
           <li>
             <Link href={LINK_HREFS.insurance} className={linkCn}>
               {labels.insurance}
             </Link>
           </li>
           <li>
-            <Link href={LINK_HREFS.legal} className={linkCn}>
-              {labels.legal}
-            </Link>
-          </li>
-          <li className="col-span-2">
             <Link href={LINK_HREFS.homeowners} className={linkCn}>
               {labels.homeowners}
+            </Link>
+          </li>
+          <li>
+            <Link href={LINK_HREFS.legal} className={linkCn}>
+              {labels.legal}
             </Link>
           </li>
         </ul>
