@@ -1,6 +1,6 @@
 import { services, locations } from "@/lib/data";
 import { getHeroImage } from "@/lib/images";
-import { verticalConfig, partnerBaseUrl, partnerTopographicalSurveyPath } from "@/config";
+import { verticalConfig } from "@/config";
 import { drainProblems } from "@/data/problems";
 import { ServiceDetailContent as EngineServiceDetailContent } from "engine";
 
@@ -163,20 +163,6 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
       firstCtaMessage="Not sure what's wrong with your drains? Book a professional CCTV drain survey for a clear diagnosis."
       firstCtaButtonText="Book a CCTV Survey"
       firstCtaButtonLink="/contact"
-      overviewExtra={
-        <p className="mb-8 text-sm text-muted-foreground">
-          Larger construction projects may require a{" "}
-          <a
-            href={`${partnerBaseUrl}${partnerTopographicalSurveyPath}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary hover:underline"
-          >
-            topographical or utility survey
-          </a>{" "}
-          before drainage work begins.
-        </p>
-      }
     />
   );
 }
