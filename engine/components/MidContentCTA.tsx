@@ -25,8 +25,6 @@ export function MidContentCTA({
   callTrackLocationSlug = null,
   callTrackPagePath,
 }: MidContentCTAProps) {
-  const phoneDigits = companyInfo.phone.replace(/\s/g, "");
-  const telHref = `tel:${phoneDigits}`;
   return (
     <div className="my-8 rounded-lg border-2 border-primary/20 bg-primary/5 p-6">
       <div className="flex items-start gap-4">
@@ -39,22 +37,17 @@ export function MidContentCTA({
             <Button size="default" variant="highlight" asChild>
               <Link href={buttonLink}>{buttonText}</Link>
             </Button>
-            {callTrackVertical ? (
-              <TrackablePhoneLink
-                phone={companyInfo.phone}
-                vertical={callTrackVertical}
-                serviceSlug={callTrackServiceSlug}
-                locationSlug={callTrackLocationSlug}
-                pagePath={callTrackPagePath}
-                className="flex items-center gap-2 text-sm font-medium text-primary hover:underline"
-              >
-                <Phone className="h-4 w-4" /> {companyInfo.phone}
-              </TrackablePhoneLink>
-            ) : (
-              <a href={telHref} className="flex items-center gap-2 text-sm font-medium text-primary hover:underline">
-                <Phone className="h-4 w-4" /> {companyInfo.phone}
-              </a>
-            )}
+            <TrackablePhoneLink
+              phone={companyInfo.phone}
+              vertical={callTrackVertical ?? ""}
+              serviceSlug={callTrackServiceSlug}
+              locationSlug={callTrackLocationSlug}
+              pagePath={callTrackPagePath}
+              source="cta"
+              className="flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+            >
+              <Phone className="h-4 w-4" /> {companyInfo.phone}
+            </TrackablePhoneLink>
           </div>
         </div>
       </div>

@@ -51,6 +51,24 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
           <Link
+            href={getServiceUrl("building-surveys")}
+            className={cn(
+              "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
+              isServiceHubPath(pathname, "building-surveys") ? "text-primary" : "text-muted-foreground"
+            )}
+          >
+            Building Surveys
+          </Link>
+          <Link
+            href={getServiceUrl("party-wall-surveyors")}
+            className={cn(
+              "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
+              isServiceHubPath(pathname, "party-wall-surveyors") ? "text-primary" : "text-muted-foreground"
+            )}
+          >
+            Party Wall
+          </Link>
+          <Link
             href={getServiceUrl("topographical-survey")}
             className={cn(
               "px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
@@ -172,6 +190,8 @@ const Header = () => {
         <div className="border-t border-border bg-background lg:hidden">
           <nav className="container py-4">
             
+            <Link href={getServiceUrl("building-surveys")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Building Surveys</Link>
+            <Link href={getServiceUrl("party-wall-surveyors")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Party Wall Surveyors</Link>
             <Link href={getServiceUrl("topographical-survey")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Topographical Survey</Link>
             <Link href={getServiceUrl("drone-survey")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Drone Survey</Link>
             <Link href={getServiceUrl("measured-building-survey")} className="flex min-h-[44px] items-center text-sm font-medium text-foreground" onClick={() => setMobileMenuOpen(false)}>Measured Building Survey</Link>

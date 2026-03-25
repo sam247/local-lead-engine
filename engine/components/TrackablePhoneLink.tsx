@@ -11,6 +11,7 @@ export type TrackablePhoneLinkProps = Omit<ComponentPropsWithoutRef<"a">, "href"
   locationSlug?: string | null;
   /** When set (e.g. static near-me path), used instead of `usePathname()` */
   pagePath?: string;
+  source?: "cta" | "header" | "footer" | "inline";
 };
 
 export function TrackablePhoneLink({
@@ -19,19 +20,21 @@ export function TrackablePhoneLink({
   serviceSlug = null,
   locationSlug = null,
   pagePath: pagePathProp,
+  source = "inline",
   children,
   ...rest
 }: TrackablePhoneLinkProps) {
   const pathname = usePathname();
   const digits = digitsFromPhone(phone);
   const href = `tel:${digits}`;
-  const page_path = pagePathProp ?? pathname ?? "/";
+  const page_path = pagePathProp ?? pathname ?? "";
 
   const context: TrackCallClickContext = {
     page_path,
     service_slug: serviceSlug,
     location_slug: locationSlug,
-    vertical,
+    vertical: vertical ?? "",
+    source,
   };
 
   return (

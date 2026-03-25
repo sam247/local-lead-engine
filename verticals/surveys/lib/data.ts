@@ -278,6 +278,56 @@ export const services = [
       "Share outputs via CAD, BIM or online viewers as required"
     ],
     icon: "Construction"
+  },
+  {
+    id: "building-surveys",
+    slug: "building-surveys",
+    title: "Building Surveys",
+    titleSingular: "Building Survey",
+    shortDescription: "Detailed property inspections to assess condition, risks, and required works.",
+    description:
+      "Building surveys provide a clear picture of a property's condition before you commit to purchase or planned works. They highlight defects, maintenance risks, and likely remedial requirements so buyers, owners and project teams can make confident decisions with fewer surprises.",
+    benefits: [
+      "Clear condition and defect overview before committing",
+      "Helps prioritise maintenance and planned repair works",
+      "Supports negotiations with evidence-led findings",
+      "Reduces risk of unexpected costs after purchase",
+      "Provides reassurance for homeowners and buyers"
+    ],
+    process: [
+      "Confirm the scope (pre-purchase, condition assessment, or specific concerns)",
+      "Undertake an on-site inspection of accessible elements",
+      "Record visible defects, materials and condition risks",
+      "Identify likely causes and practical next steps",
+      "Provide a clear written report with prioritised recommendations",
+      "Discuss findings and options with you if needed"
+    ],
+    icon: "Building2"
+  },
+  {
+    id: "party-wall-surveyors",
+    slug: "party-wall-surveyors",
+    title: "Party Wall Surveyors",
+    titleSingular: "Party Wall Surveyor",
+    shortDescription: "Professional advice and notices for works affecting shared walls and neighbouring properties.",
+    description:
+      "Party wall surveying supports projects where building works affect shared walls, boundary structures or neighbouring foundations. We help you understand the legal triggers, serve the right notices, and put agreements in place to keep programmes moving while reducing the risk of disputes.",
+    benefits: [
+      "Clarity on whether the Party Wall Act applies",
+      "Correct notices and documentation for compliance",
+      "Helps avoid disputes and neighbour delays",
+      "Supports smooth coordination with adjoining owners",
+      "Clear records that protect both parties"
+    ],
+    process: [
+      "Review proposed works and confirm relevant Party Wall Act triggers",
+      "Advise on notice types, timings and required information",
+      "Serve notices and manage responses from adjoining owners",
+      "Agree a schedule of condition where appropriate",
+      "Put awards/agreements in place to support delivery",
+      "Remain available to resolve questions during the works"
+    ],
+    icon: "AlertTriangle"
   }
 ];
 

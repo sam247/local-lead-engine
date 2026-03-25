@@ -1,25 +1,32 @@
 import Link from "next/link";
-import { ArrowRight, Map, Building2, Waves, Network, Camera, AlertTriangle } from "lucide-react";
+import { ArrowRight, Map as MapIcon, Building2, Waves, Network, Camera, AlertTriangle } from "lucide-react";
 import { services } from "@/lib/data";
 import { getServiceUrl } from "engine";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Map,
+  Map: MapIcon,
   Building2,
   Waves,
   Network,
-  SquareDashed: Map,
+  SquareDashed: MapIcon,
   ScanLine: Camera,
   Drone: Camera,
   Building: Building2,
-  Mountain: Map,
+  Mountain: MapIcon,
   Construction: Building2,
   AlertTriangle,
 };
 
-const prioritySlugs = ["topographical-survey", "drone-survey", "measured-building-survey", "utility-survey"];
+const prioritySlugs = [
+  "building-surveys",
+  "party-wall-surveyors",
+  "topographical-survey",
+  "drone-survey",
+  "measured-building-survey",
+  "utility-survey",
+];
 const homepageFeaturedSlugs = ["laser-scanning-survey", "boundary-survey"] as const;
 
 const homepageServiceImages: Record<(typeof homepageFeaturedSlugs)[number], string> = {
@@ -35,7 +42,10 @@ const serviceBenefits: Record<string, string[]> = {
 };
 
 const ServicesGrid = () => {
-  const priorityServices = services.filter((s) => prioritySlugs.includes(s.slug));
+  const serviceBySlug = new Map(services.map((s) => [s.slug, s]));
+  const priorityServices = prioritySlugs
+    .map((slug) => serviceBySlug.get(slug))
+    .filter((service): service is (typeof services)[number] => Boolean(service));
   const homepageFeaturedServices = services.filter((s) =>
     homepageFeaturedSlugs.includes(s.slug as (typeof homepageFeaturedSlugs)[number])
   );

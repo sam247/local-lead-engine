@@ -28,8 +28,6 @@ export function InspectionCTA({
   callTrackLocationSlug = null,
   callTrackPagePath,
 }: InspectionCTAProps) {
-  const phoneDigits = companyInfo.phone.replace(/\s/g, "");
-  const telHref = `tel:${phoneDigits}`;
   return (
     <div className="rounded-lg border border-primary/20 bg-primary/5 p-6 md:p-8">
       <div className="flex items-start gap-4">
@@ -43,27 +41,18 @@ export function InspectionCTA({
             <Button variant="highlight" size="lg" asChild>
               <Link href={contactPath}>{ctaText}</Link>
             </Button>
-            {callTrackVertical ? (
-              <TrackablePhoneLink
-                phone={companyInfo.phone}
-                vertical={callTrackVertical}
-                serviceSlug={callTrackServiceSlug}
-                locationSlug={callTrackLocationSlug}
-                pagePath={callTrackPagePath}
-                className="inline-flex items-center justify-center gap-2 rounded-md border border-primary px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-              >
-                <Phone className="h-4 w-4" />
-                {companyInfo.phone}
-              </TrackablePhoneLink>
-            ) : (
-              <a
-                href={telHref}
-                className="inline-flex items-center justify-center gap-2 rounded-md border border-primary px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-              >
-                <Phone className="h-4 w-4" />
-                {companyInfo.phone}
-              </a>
-            )}
+            <TrackablePhoneLink
+              phone={companyInfo.phone}
+              vertical={callTrackVertical ?? ""}
+              serviceSlug={callTrackServiceSlug}
+              locationSlug={callTrackLocationSlug}
+              pagePath={callTrackPagePath}
+              source="cta"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-primary px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+            >
+              <Phone className="h-4 w-4" />
+              {companyInfo.phone}
+            </TrackablePhoneLink>
           </div>
         </div>
       </div>
