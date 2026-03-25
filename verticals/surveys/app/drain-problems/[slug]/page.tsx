@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getHubData, getCategoryPages, services, locations } from "@/lib/data";
 import { InfoPage, ProblemPage } from "engine";
-import { buildInfoMetadata } from "engine";
+import { buildInfoMetadata, buildProblemMetadata } from "engine";
 import { verticalConfig } from "@/config";
 import { getInfoPageProps } from "@/lib/infoPageProps";
 import { surveyProblemPages, getSurveyProblemPageBySlug } from "@/data/problemPages";
@@ -23,11 +23,8 @@ type Props = { params: { slug: string } };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const problem = getSurveyProblemPageBySlug(params.slug);
   if (problem) {
-    return {
-      title: `${problem.title} – Causes and Next Steps | ${verticalConfig.siteName}`,
-      description: `${problem.causes.slice(0, 155)}...`,
-      alternates: { canonical: `${verticalConfig.baseUrl}/drain-problems/${problem.slug}` },
-    };
+    const base = verticalConfig.baseUrl.replace(/\/$/, "");
+    return buildProblemMetadata(problem, verticalConfig, `${base}/drain-problems/${problem.slug}`);
   }
   const hub = getHubData(category);
   const page = getCategoryPages(category).find((p) => p.slug === params.slug);

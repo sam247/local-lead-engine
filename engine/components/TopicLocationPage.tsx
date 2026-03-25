@@ -40,6 +40,42 @@ function clampItems(items: string[], max = 5): string[] {
 
 const LAYOUT_VARIANTS = ["A", "B", "C"] as const;
 
+const TL_H2_WHEN = [
+  "When you might need this",
+  "When this usually applies",
+  "Situations that call for action",
+] as const;
+
+const TL_H2_WORK = [
+  "What the work typically involves",
+  "How this service is carried out",
+  "What to expect from the work",
+] as const;
+
+const TL_H2_PROCESS = [
+  "How we work through the job",
+  "How delivery is structured",
+  "What the process looks like",
+] as const;
+
+const TL_H2_SIGNS = [
+  "Signs and common situations",
+  "Typical triggers before work starts",
+  "Common situations we see locally",
+] as const;
+
+const TL_H2_COST = [
+  "What affects cost and complexity",
+  "Cost and complexity factors",
+  "What drives budget and programme",
+] as const;
+
+const TL_H2_USE_CASES = [
+  "Typical projects and use cases",
+  "Where this often applies",
+  "Common project contexts",
+] as const;
+
 export function TopicLocationPage({
   topicTitle,
   topicSlug,
@@ -68,7 +104,17 @@ export function TopicLocationPage({
   const layoutVariant = LAYOUT_VARIANTS[layoutVariantIndex];
   const scenarioItems = clampItems(commonScenarios);
   const useCaseItems = clampItems(typicalUseCases);
-  const processItems = processStepsDetailed.slice(0, 5);
+  const processItems = processStepsDetailed.filter((s) => s.title?.trim()).slice(0, 5);
+  const workInvolvesEnriched =
+    scenarioItems.length === 1
+      ? `${workInvolves} A frequent early trigger in ${location.name}: ${scenarioItems[0]}.`
+      : workInvolves;
+  const scenarioItemsForList = scenarioItems.length >= 2 ? scenarioItems : [];
+  const useCaseItemsForList = useCaseItems.length >= 2 ? useCaseItems : [];
+  const costComplexityEnriched =
+    useCaseItems.length === 1
+      ? `${costComplexity} Example context in ${location.name}: ${useCaseItems[0]}.`
+      : costComplexity;
   const topicCategory = topicHubPath.replace(/^\//, "").split("/")[0] || undefined;
   const openingStructure = [
     `Most enquiries for ${topicTitle.toLowerCase()} in ${location.name} involve active project scopes where decisions on delivery method and timing affect overall outcomes.`,
@@ -76,38 +122,49 @@ export function TopicLocationPage({
     `The best outcomes usually come when ${topicTitle.toLowerCase()} is scoped early enough to align risk, budget, and programme constraints.`,
   ][layoutVariantIndex];
 
+  const h2Seed = `topic-loc-h2:${topicSlug}:${locationSlug}`;
+  const h2When = TL_H2_WHEN[getVariantIndex(`${h2Seed}:when`, TL_H2_WHEN.length)];
+  const h2Work = TL_H2_WORK[getVariantIndex(`${h2Seed}:work`, TL_H2_WORK.length)];
+  const h2ProcessTitle = TL_H2_PROCESS[getVariantIndex(`${h2Seed}:process`, TL_H2_PROCESS.length)];
+  const h2Signs = TL_H2_SIGNS[getVariantIndex(`${h2Seed}:signs`, TL_H2_SIGNS.length)];
+  const h2Cost = TL_H2_COST[getVariantIndex(`${h2Seed}:cost`, TL_H2_COST.length)];
+  const h2UseCases = TL_H2_USE_CASES[getVariantIndex(`${h2Seed}:use`, TL_H2_USE_CASES.length)];
+
+  const firstServiceLink = serviceLinks[0];
+
   const whenNeededSection = (
     <section className="mb-8">
-      <h2 className="mb-3 font-display text-xl font-semibold">When you might need this</h2>
+      <h2 className="mb-3 font-display text-xl font-semibold">{h2When}</h2>
       <p className="max-w-3xl text-muted-foreground">{whenNeeded}</p>
     </section>
   );
 
   const workInvolvesSection = (
     <section className="mb-8">
-      <h2 className="mb-3 font-display text-xl font-semibold">What the work typically involves</h2>
-      <p className="max-w-3xl text-muted-foreground">{workInvolves}</p>
+      <h2 className="mb-3 font-display text-xl font-semibold">{h2Work}</h2>
+      <p className="max-w-3xl text-muted-foreground">{workInvolvesEnriched}</p>
     </section>
   );
 
-  const processSection = (
-    <section className="mb-8">
-      <h2 className="mb-3 font-display text-xl font-semibold">How we work through the job</h2>
-      <p className="mb-3 max-w-3xl text-muted-foreground">
-        We keep delivery structured so decisions, dependencies, and handover remain clear from start to finish.
-      </p>
-      <ol className="space-y-3">
-        {processItems.map((step, idx) => (
-          <li key={`${step.title}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
-            <p className="font-medium">
-              Step {idx + 1}: {step.title}
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">What this step delivers: {step.outcome}</p>
-          </li>
-        ))}
-      </ol>
-    </section>
-  );
+  const processSection =
+    processItems.length > 0 ? (
+      <section className="mb-8">
+        <h2 className="mb-3 font-display text-xl font-semibold">{h2ProcessTitle}</h2>
+        <p className="mb-3 max-w-3xl text-muted-foreground">
+          We keep delivery structured so decisions, dependencies, and handover remain clear from start to finish.
+        </p>
+        <ol className="space-y-3">
+          {processItems.map((step, idx) => (
+            <li key={`${step.title}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
+              <p className="font-medium">
+                Step {idx + 1}: {step.title}
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">What this step delivers: {step.outcome}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ) : null;
 
   if (process.env.NODE_ENV !== "production") {
     const estimatedOpeningWords = `${contextualOpening} ${openingStructure}`.trim().split(/\s+/).length;
@@ -145,7 +202,25 @@ export function TopicLocationPage({
 
       <section className="mb-8 max-w-3xl space-y-3">
         <p className="text-muted-foreground">{contextualOpening}</p>
-        <p className="text-muted-foreground">{openingStructure}</p>
+        <p className="text-muted-foreground">
+          {openingStructure}{" "}
+          For wider planning context, see the{" "}
+          <Link href={topicHubPath} className="text-primary hover:underline">
+            full {topicTitle.toLowerCase()} guide
+          </Link>
+          {firstServiceLink ? (
+            <>
+              , or explore{" "}
+              <Link
+                href={`/${firstServiceLink.slug}/${locationSlug}`}
+                className="text-primary hover:underline"
+              >
+                {firstServiceLink.title} in {location.name}
+              </Link>
+            </>
+          ) : null}
+          .
+        </p>
       </section>
 
       {layoutVariant === "B" ? (
@@ -161,40 +236,40 @@ export function TopicLocationPage({
       )}
       {layoutVariant === "C" && processSection}
 
-      <section className="mb-8">
-        <h2 className="mb-3 font-display text-xl font-semibold">Signs and common situations</h2>
-        <p className="mb-3 max-w-3xl text-muted-foreground">
-          These are typical triggers we see across {location.name} and {location.area} before teams move to
-          implementation.
-        </p>
-        {scenarioItems.length > 0 && (
+      {scenarioItemsForList.length >= 2 ? (
+        <section className="mb-8">
+          <h2 className="mb-3 font-display text-xl font-semibold">{h2Signs}</h2>
+          <p className="mb-3 max-w-3xl text-muted-foreground">
+            These are typical triggers we see across {location.name} and {location.area} before teams move to
+            implementation.
+          </p>
           <ul className="list-disc space-y-2 pl-6 text-muted-foreground">
-            {scenarioItems.map((item) => (
+            {scenarioItemsForList.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
-        )}
-      </section>
+        </section>
+      ) : null}
 
       <section className="mb-8">
-        <h2 className="mb-3 font-display text-xl font-semibold">What affects cost and complexity</h2>
-        <p className="max-w-3xl text-muted-foreground">{costComplexity}</p>
+        <h2 className="mb-3 font-display text-xl font-semibold">{h2Cost}</h2>
+        <p className="max-w-3xl text-muted-foreground">{costComplexityEnriched}</p>
       </section>
 
-      <section className="mb-8">
-        <h2 className="mb-3 font-display text-xl font-semibold">Typical projects and use cases</h2>
-        <p className="mb-3 max-w-3xl text-muted-foreground">
-          Scope varies by building type, programme pressure, and operational constraints, so early planning usually
-          improves delivery quality and speed.
-        </p>
-        {useCaseItems.length > 0 && (
+      {useCaseItemsForList.length >= 2 ? (
+        <section className="mb-8">
+          <h2 className="mb-3 font-display text-xl font-semibold">{h2UseCases}</h2>
+          <p className="mb-3 max-w-3xl text-muted-foreground">
+            Scope varies by building type, programme pressure, and operational constraints, so early planning usually
+            improves delivery quality and speed.
+          </p>
           <ul className="list-disc space-y-2 pl-6 text-muted-foreground">
-            {useCaseItems.map((item) => (
+            {useCaseItemsForList.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
-        )}
-      </section>
+        </section>
+      ) : null}
 
       {layoutVariant !== "C" && processSection}
 

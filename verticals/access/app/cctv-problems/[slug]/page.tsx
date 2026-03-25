@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { services, locations } from "@/lib/data";
 import { cctvProblemPages } from "@/data/problemPages";
-import { ProblemPage } from "engine";
+import { ProblemPage, buildProblemMetadata } from "engine";
 import { verticalConfig } from "@/config";
 import type { Metadata } from "next";
 
@@ -20,11 +20,8 @@ type Props = { params: { slug: string } };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const problem = cctvProblemPages.find((p) => p.slug === params.slug);
   if (!problem) return { title: "Not Found" };
-  return {
-    title: `${problem.title} – Causes and Fix | ${verticalConfig.siteName}`,
-    description: `${problem.causes.slice(0, 155)}...`,
-    alternates: { canonical: `${verticalConfig.baseUrl}/cctv-problems/${problem.slug}` },
-  };
+  const base = verticalConfig.baseUrl.replace(/\/$/, "");
+  return buildProblemMetadata(problem, verticalConfig, `${base}/cctv-problems/${problem.slug}`);
 }
 
 export default function CctvProblemSlugPage({ params }: Props) {

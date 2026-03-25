@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Hero from "@/components/sections/Hero";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import ProjectsPreview from "@/components/sections/ProjectsPreview";
@@ -7,7 +8,7 @@ import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { TrustPoints, HomepageArticles, pickHomepageArticleCards, ProblemPreviewSection } from "engine";
 import { verticalConfig } from "@/config";
-import { blogPosts, getCategoryPages, getHubData } from "@/lib/data";
+import { blogPosts, getCategoryPages, getHubData, services } from "@/lib/data";
 import { accessProblemPages } from "@/data/problemPages";
 
 export const metadata: Metadata = {
@@ -40,6 +41,22 @@ export default function HomePage() {
     <>
       <SchemaMarkup type="LocalBusiness" data={{ areaServed: "London and surrounding areas" }} />
       <Hero />
+      <section className="border-b border-border bg-background py-6" aria-labelledby="core-services-heading">
+        <div className="container">
+          <h2 id="core-services-heading" className="mb-3 font-display text-lg font-semibold text-foreground">
+            Core services
+          </h2>
+          <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            {services.slice(0, Math.min(5, services.length)).map((s) => (
+              <li key={s.slug}>
+                <Link href={`/${s.slug}`} className="text-primary hover:underline">
+                  {s.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
       <ProblemPreviewSection
         title="Common security issues"
         intro="If access control is failing, CCTV coverage has gaps, or breach risk is increasing, these pages outline the most common triggers and the next practical step."

@@ -49,6 +49,24 @@ const RELATED_PROBLEMS_MAX = 5;
 const DEFAULT_CAUSES_TITLE = "What causes this problem";
 const DEFAULT_WHEN_TO_CALL_TITLE = "When to call a professional";
 
+const PROBLEM_H2_WHEN_NEEDED = [
+  "When this issue usually matters",
+  "Situations where this applies",
+  "When to take this seriously",
+] as const;
+
+const PROBLEM_H2_APPROACH_FIX = [
+  "How we approach the fix",
+  "How this gets resolved",
+  "Practical path to a reliable repair",
+] as const;
+
+const PROBLEM_H2_PROCESS = [
+  "How we work through the job",
+  "How this is typically delivered",
+  "What the delivery path looks like",
+] as const;
+
 export function ProblemPage({
   problem,
   services,
@@ -72,11 +90,11 @@ export function ProblemPage({
 }: ProblemPageProps) {
   const openingVariant = getVariantIndex(`problem-opening:${problem.slug}`, 3);
   const openingLead = [
-    `Most projects facing ${problem.title.toLowerCase()} need a rapid diagnosis so remediation can be planned before disruption escalates.`,
-    `${problem.title} is typically addressed when teams need to move from symptoms to a scoped, commercially realistic repair plan.`,
-    `The earlier this issue is assessed, the easier it is to protect programme certainty and avoid repeat intervention costs.`,
+    `A clear diagnosis early usually limits disruption and cost, so you can choose a repair route that fits your programme and budget.`,
+    `${problem.title} is typically addressed when teams need to move from symptoms to a scoped, commercially realistic plan before site works commit.`,
+    `The earlier this is assessed, the easier it is to protect programme certainty and avoid repeat callouts or rework.`,
   ][openingVariant];
-  const defaultContextualOpening = `${problem.title} is usually investigated when visible symptoms begin affecting reliability, safety, or project delivery. Early diagnosis helps confirm whether this is an isolated issue or part of a wider condition.`;
+  const defaultContextualOpening = `${problem.title} is usually investigated when visible signs begin affecting reliability, safety, or day-to-day operations. Understanding causes and risks early helps you decide whether a targeted fix or a wider scope is the right move.`;
   const primaryOpening =
     problem.contextualOpening !== undefined && problem.contextualOpening !== null
       ? problem.contextualOpening.trim() || null
@@ -84,6 +102,13 @@ export function ProblemPage({
   const relatedServices = problem.relatedServiceSlugs
     .map((slug) => services.find((s) => s.slug === slug))
     .filter((s): s is Service => s != null);
+  const firstRelatedService = relatedServices[0];
+  const h2WhenNeeded =
+    PROBLEM_H2_WHEN_NEEDED[getVariantIndex(`problem-when-h2:${problem.slug}`, PROBLEM_H2_WHEN_NEEDED.length)];
+  const h2ApproachFix =
+    PROBLEM_H2_APPROACH_FIX[getVariantIndex(`problem-fix-h2:${problem.slug}`, PROBLEM_H2_APPROACH_FIX.length)];
+  const h2Process =
+    PROBLEM_H2_PROCESS[getVariantIndex(`problem-process-h2:${problem.slug}`, PROBLEM_H2_PROCESS.length)];
   const shouldUseDiagnosisList = allProblems.length >= 4;
   const diagnosisNarrative = allProblems.slice(0, 3).map((p) => p.title);
   const shouldUseRelatedServicesList = relatedServices.length >= 3;
@@ -108,8 +133,8 @@ export function ProblemPage({
         companyInfo={companyInfo}
         baseUrl={baseUrl}
         data={{
-          title: `${problem.title} – Causes and Repair`,
-          description: `${problem.causes.slice(0, 155)}...`,
+          title: problem.title,
+          description: `${problem.title}? Understand causes, risks, and next steps. Get expert help if needed.`,
           url: `${baseUrl}${problemsBasePath}/${problem.slug}`,
         }}
       />
@@ -126,12 +151,22 @@ export function ProblemPage({
       >
         <div className="container max-w-3xl">
           <BreadcrumbNav items={breadcrumbs} />
-          <h1 className="mb-6 font-display text-3xl font-bold md:text-4xl">
-            {problem.title} – Causes and Repair
-          </h1>
+          <h1 className="mb-6 font-display text-3xl font-bold md:text-4xl">{problem.title}</h1>
 
-          {primaryOpening ? <p className="mb-8 text-muted-foreground">{primaryOpening}</p> : null}
-          <p className="mb-8 text-muted-foreground">{openingLead}</p>
+          {primaryOpening ? <p className="mb-6 text-muted-foreground">{primaryOpening}</p> : null}
+          <p className="mb-8 text-muted-foreground">
+            {openingLead}
+            {firstRelatedService && (
+              <>
+                {" "}
+                When you are ready to discuss delivery, start with the{" "}
+                <Link href={`${basePath}/${firstRelatedService.slug}`} className="text-primary hover:underline">
+                  {firstRelatedService.title} service overview
+                </Link>
+                .
+              </>
+            )}
+          </p>
 
           {allProblems.length > 0 && diagnosisSectionTitle && (
             <>
@@ -158,7 +193,7 @@ export function ProblemPage({
           <h2 className="mb-2 font-display text-xl font-bold">{causesSectionTitle}</h2>
           <p className="mb-8 text-muted-foreground">{problem.causes}</p>
 
-          <h2 className="mb-2 font-display text-xl font-bold">When you might need this</h2>
+          <h2 className="mb-2 font-display text-xl font-bold">{h2WhenNeeded}</h2>
           <p className="mb-8 text-muted-foreground">
             {problem.whenNeeded ??
               "This is typically needed when recurring symptoms, project risk, or compliance concerns mean a patch repair is no longer a reliable option."}
@@ -178,8 +213,17 @@ export function ProblemPage({
             </>
           )}
 
-          <h2 className="mb-2 font-display text-xl font-bold">How we approach the fix</h2>
-          <p className="mb-8 text-muted-foreground">{problem.workInvolves ?? problem.howFixed}</p>
+          <h2 className="mb-2 font-display text-xl font-bold">{h2ApproachFix}</h2>
+          <p className="mb-8 text-muted-foreground">
+            {(() => {
+              const base = problem.workInvolves ?? problem.howFixed;
+              const scenarios = problem.typicalUseCases?.slice(0, 5) ?? [];
+              if (scenarios.length === 1) {
+                return `${base} One common project context: ${scenarios[0]}`;
+              }
+              return base;
+            })()}
+          </p>
 
           <h2 className="mb-2 font-display text-xl font-bold">What affects cost and complexity</h2>
           <p className="mb-8 text-muted-foreground">
@@ -187,7 +231,7 @@ export function ProblemPage({
               "Cost and complexity usually depend on access, scale of remedial work, existing condition, and whether supporting works are needed to complete the fix safely."}
           </p>
 
-          {problem.typicalUseCases && problem.typicalUseCases.length > 0 && (
+          {problem.typicalUseCases && problem.typicalUseCases.length >= 2 && (
             <>
               <h2 className="mb-2 font-display text-xl font-bold">Typical scenarios</h2>
               <p className="mb-3 text-muted-foreground">
@@ -203,7 +247,7 @@ export function ProblemPage({
 
           {(problem.processStepsDetailed?.length ?? 0) > 0 && (
             <>
-              <h2 className="mb-2 font-display text-xl font-bold">How we work through the job</h2>
+              <h2 className="mb-2 font-display text-xl font-bold">{h2Process}</h2>
               <p className="mb-3 text-muted-foreground">
                 Work is delivered in stages so decisions, safety, and outcomes stay clear.
               </p>

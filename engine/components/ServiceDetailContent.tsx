@@ -71,6 +71,42 @@ const SERVICE_EXTRA_HEADINGS = [
   "Things that can impact the work",
 ] as const;
 
+const TYPICAL_SITUATIONS_SECTIONS = [
+  {
+    title: "Typical situations for this service",
+    description:
+      "These are the situations where this service typically adds the most value and helps prevent avoidable rework.",
+  },
+  {
+    title: "When this service is most useful",
+    description:
+      "Common triggers where structured scope and clear delivery keep projects on track and reduce repeat disruption.",
+  },
+  {
+    title: "Situations where teams bring us in",
+    description:
+      "These scenarios are where commissioning work early tends to save time, cost, and disruption across the programme.",
+  },
+] as const;
+
+const SERVICE_PROCESS_SECTION_INTROS = [
+  {
+    title: "How we work through the job",
+    description:
+      "Each stage is structured to keep decisions clear and delivery predictable from first assessment to sign-off.",
+  },
+  {
+    title: "How this service is carried out",
+    description:
+      "Delivery follows a defined path so scope, dependencies, and handover expectations stay aligned throughout.",
+  },
+  {
+    title: "What to expect",
+    description:
+      "You should see practical options explained early, then structured delivery through to completion and verification.",
+  },
+] as const;
+
 function getServiceFamily(service: Service): "drains" | "surveys" | "access" | "groundworks" | "generic" {
   const slug = service.slug.toLowerCase();
   const title = service.title.toLowerCase();
@@ -300,9 +336,16 @@ export function ServiceDetailContent({
     sidebar: ["Request a quote"],
     actionHeading: [`Discuss your ${displayTitle.toLowerCase()} requirements`],
   };
+  const overviewDescriptionsExtended = [
+    `${displayTitle} is typically needed when site conditions, programme pressure, or repeat issues make a clear technical route essential before work starts. The aim is a durable outcome with fewer surprises during delivery and after handover.`,
+    `Teams commission ${displayTitle.toLowerCase()} when they need dependable performance, evidence-led decisions, and a delivery plan that fits real access and sequencing constraints.`,
+    `Whether you are planning ahead or responding to an active issue, ${displayTitle.toLowerCase()} helps turn uncertainty into scoped work with predictable timing and clear next steps.`,
+    `Before committing to ${displayTitle.toLowerCase()}, teams often need alignment on access, dependencies, and what a complete outcome looks like. This service is structured to make those decisions explicit early.`,
+    `The scope of ${displayTitle.toLowerCase()} varies by site, but the objective is consistent: reduce ambiguity, choose a practical method, and deliver a result that holds up under real operating conditions.`,
+  ];
   const overviewVariant = getVariantIndex(
     `overview:${verticalConfig.verticalId}:${service.slug}`,
-    3
+    overviewDescriptionsExtended.length
   );
   const whenUsedVariant = getVariantIndex(
     `when-used:${verticalConfig.verticalId}:${service.slug}`,
@@ -316,10 +359,15 @@ export function ServiceDetailContent({
   const faqVariant = getVariantIndex(`${service.slug}:${verticalConfig.verticalId}-faq`, 3);
   const extraVariant = getVariantIndex(`${service.slug}:${verticalConfig.verticalId}-extra`, 3);
   const aboutLinkVariant = getVariantIndex(`about:svc:${service.slug}`, SERVICE_DETAIL_ABOUT_LABELS.length);
+  const typicalSituationsSectionIndex = getVariantIndex(
+    `svc-typical-intro:${service.slug}`,
+    TYPICAL_SITUATIONS_SECTIONS.length
+  );
+  const processIntroIndex = getVariantIndex(`svc-process-intro:${service.slug}`, SERVICE_PROCESS_SECTION_INTROS.length);
   const layoutVariantIndex = getVariantIndex(`layout:service:${service.slug}`, LAYOUT_VARIANTS.length);
   const layoutVariant = LAYOUT_VARIANTS[layoutVariantIndex];
   const isProcessEarly = layoutVariant === "C";
-  const processSteps = service.process.slice(0, 5);
+  const processSteps = service.process.filter(Boolean).slice(0, 5);
   const generatedFaqs = buildFaqItems(service, verticalConfig.verticalId, faqVariant);
   const shouldAppendOneFaq = faqs.length >= 3;
   const mergedFaqs = [...faqs, ...(shouldAppendOneFaq ? generatedFaqs.slice(0, 1) : generatedFaqs.slice(0, 2))].slice(0, 5);
@@ -339,11 +387,7 @@ export function ServiceDetailContent({
       "It is frequently part of broader project scopes involving planning, remedial work, or staged improvements where decisions need to be practical and evidence-led.",
     ],
   ][whenUsedVariant];
-  const overviewDescriptions = [
-    "This service is designed to deliver a practical outcome: resolve the root issue, protect long-term performance, and keep delivery predictable from first assessment to handover.",
-    "The focus of this service is straightforward: define the right scope, deliver it safely, and achieve a reliable result that avoids unnecessary repeat work.",
-    "This service helps turn uncertainty into a clear delivery plan so projects can progress with dependable outcomes and fewer avoidable delays.",
-  ];
+  const overviewDescriptions = overviewDescriptionsExtended;
   const reassuranceCopy = [
     "Our approach focuses on selecting the right method based on site conditions and project requirements, then documenting each stage so decisions stay clear throughout delivery.",
     "We prioritise method selection around real site constraints and project goals, with clear documentation to keep delivery aligned from start to finish.",
@@ -353,33 +397,39 @@ export function ServiceDetailContent({
   const requestCta = ctaCopy.request[ctaVariant % ctaCopy.request.length];
   const sidebarCta = ctaCopy.sidebar[ctaVariant % ctaCopy.sidebar.length];
   const actionHeading = ctaCopy.actionHeading[ctaVariant % ctaCopy.actionHeading.length];
-  const openingLead = [
-    `Most enquiries for ${displayTitle.toLowerCase()} involve balancing programme, cost certainty, and practical delivery constraints before site works begin.`,
-    `Most projects involving ${displayTitle.toLowerCase()} are typically scoped when teams need a clear route from issue to implementation.`,
-    `Typically required when operational pressure or project sequencing makes a generic fix too risky.`,
-  ][layoutVariantIndex];
+  const openingLeadCandidates = [
+    `In practice, that means balancing programme, cost certainty, and delivery constraints before site works begin, so decisions stay practical through to completion.`,
+    `Enquiries usually arrive when stakeholders need a clear route from symptoms or requirements through to implementation, without avoidable rework.`,
+    `Operational pressure or tight sequencing often makes a generic fix too risky; structured scope and delivery reduce that exposure.`,
+    `From first conversation to handover, the focus stays on what the site needs, what can be delivered safely, and how to avoid repeat issues after the main works finish.`,
+    `That usually translates into clearer procurement decisions: fewer assumptions, better-aligned trades, and a documented path if priorities change mid-programme.`,
+  ];
+  const openingLeadIndex = getVariantIndex(`svc-opening-lead:${service.slug}`, openingLeadCandidates.length);
+  const openingLead = openingLeadCandidates[openingLeadIndex];
 
-  const processSection = (
-    <>
-      <SectionIntro
-        title="How we work through the job"
-        description={
-          sectionIntros.process ??
-          "Each stage is structured to keep decisions clear and delivery predictable from first assessment to sign-off."
-        }
-      />
-      <ol className="mb-8 space-y-3">
-        {processSteps.map((step, idx) => (
-          <li key={`${step}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
-            <p className="font-medium">
-              Step {idx + 1}: {step}
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">What this step delivers: {buildProcessOutcome(step)}</p>
-          </li>
-        ))}
-      </ol>
-    </>
-  );
+  const typicalSituationsSection = TYPICAL_SITUATIONS_SECTIONS[typicalSituationsSectionIndex];
+  const processIntroPick = SERVICE_PROCESS_SECTION_INTROS[processIntroIndex];
+
+  const processSection =
+    processSteps.length > 0 ? (
+      <>
+        <SectionIntro
+          title={processIntroPick.title}
+          description={sectionIntros.process ?? processIntroPick.description}
+          headingLevel="h2"
+        />
+        <ol className="mb-8 space-y-3">
+          {processSteps.map((step, idx) => (
+            <li key={`${step}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
+              <p className="font-medium">
+                Step {idx + 1}: {step}
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">What this step delivers: {buildProcessOutcome(step)}</p>
+            </li>
+          ))}
+        </ol>
+      </>
+    ) : null;
 
   if (process.env.NODE_ENV !== "production") {
     const estimatedOpeningWords = `${overviewDescriptions[overviewVariant]} ${service.description} ${openingLead}`
@@ -445,7 +495,7 @@ export function ServiceDetailContent({
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <p className="mb-4 text-muted-foreground">{overviewDescriptions[overviewVariant]}</p>
-              <p className="mb-8 text-muted-foreground">{service.description}</p>
+              <p className="mb-4 text-muted-foreground">{service.description}</p>
               <p className="mb-8 text-muted-foreground">{openingLead}</p>
               <p className="mb-8 text-sm text-muted-foreground">
                 <Link href="/about" className="text-primary hover:underline">
@@ -464,8 +514,9 @@ export function ServiceDetailContent({
               )}
               <TrustReassuranceStrip points={trustPoints} />
               <SectionIntro
-                title="Typical situations for this service"
-                description="These are the situations where this service typically adds the most value and helps prevent avoidable rework."
+                title={typicalSituationsSection.title}
+                description={typicalSituationsSection.description}
+                headingLevel="h2"
               />
               <div className="mb-8 space-y-4 text-muted-foreground">
                 <p>{whenUsedParagraphs[0]}</p>
@@ -487,6 +538,34 @@ export function ServiceDetailContent({
                     )
                   );
                 })()}
+                {(() => {
+                  const si = getVariantIndex(`svc-early-guide:${service.slug}`, 3);
+                  if (symptomLinks.length > 0) {
+                    const sym = symptomLinks[si % symptomLinks.length]!;
+                    return (
+                      <p>
+                        For a deeper read on related issues, see{" "}
+                        <Link href={sym.path} className="text-primary hover:underline">
+                          {sym.title}
+                        </Link>
+                        .
+                      </p>
+                    );
+                  }
+                  if (problemLinks.length > 0) {
+                    const prob = problemLinks[si % problemLinks.length]!;
+                    return (
+                      <p>
+                        For a deeper read on related issues, see{" "}
+                        <Link href={prob.path} className="text-primary hover:underline">
+                          {prob.label}
+                        </Link>
+                        .
+                      </p>
+                    );
+                  }
+                  return null;
+                })()}
               </div>
 
               {serviceTypes.length > 0 && (
@@ -497,6 +576,7 @@ export function ServiceDetailContent({
                       sectionIntros.types ??
                       "These grouped scenarios explain where this work is typically commissioned and why scope can differ by site and objective."
                     }
+                    headingLevel="h2"
                   />
                   <ul className="mb-8 list-disc space-y-2 pl-6 text-muted-foreground">
                     {serviceTypes.map((type, i) => (
@@ -518,6 +598,7 @@ export function ServiceDetailContent({
                   <SectionIntro
                     title={symptomLinksSectionTitle ?? `Common Signs You Need ${service.title}`}
                     description="If you notice these signs, acting early usually keeps costs down and reduces operational disruption."
+                    headingLevel="h2"
                   />
                   <ul className="mb-8 space-y-2">
                     {symptomLinks.map((s) => (
@@ -537,6 +618,7 @@ export function ServiceDetailContent({
                   <SectionIntro
                     title={problemLinksSectionTitle}
                     description="These related issues often lead to this service being commissioned as part of a complete fix."
+                    headingLevel="h2"
                   />
                   <ul className="mb-8 space-y-2">
                     {problemLinks.map((link) => (
@@ -554,9 +636,9 @@ export function ServiceDetailContent({
                 {reassuranceCopy[reassuranceVariant]}
               </div>
               <div className="mb-8">
-                <h3 className="mb-3 font-display text-xl font-bold">
+                <h2 className="mb-3 font-display text-xl font-bold">
                   {SERVICE_EXTRA_HEADINGS[extraVariant]}
-                </h3>
+                </h2>
                 <p className="text-muted-foreground">{extraParagraph}</p>
               </div>
               {!isProcessEarly && processSection}
@@ -567,6 +649,7 @@ export function ServiceDetailContent({
                   sectionIntros.industries ??
                   "Our teams adapt this service to the compliance, access, and operational constraints of each environment."
                 }
+                headingLevel="h2"
               />
               <ul className="mb-8 list-disc space-y-2 pl-6 text-muted-foreground">
                 {industries.map((ind, i) => (
@@ -579,6 +662,7 @@ export function ServiceDetailContent({
                   <SectionIntro
                     title="Trusted Systems and Equipment"
                     description="We use proven systems and tools selected for reliability, maintainability, and suitability to each job."
+                    headingLevel="h2"
                   />
                   <ul className="mb-8 list-disc space-y-2 pl-6 text-muted-foreground">
                     {trustedEquipment.map((item, i) => (
@@ -606,6 +690,7 @@ export function ServiceDetailContent({
                   sectionIntros.benefits ??
                   "The outcomes below reflect what clients typically gain when this service is scoped and delivered correctly."
                 }
+                headingLevel="h2"
               />
               <ul className="mb-8 space-y-2">
                 {service.benefits.map((b) => (
@@ -637,6 +722,7 @@ export function ServiceDetailContent({
                             verticalConfig.relatedServicesIntro ??
                             "Explore related services that are commonly scoped together for better overall outcomes."
                           }
+                          headingLevel="h2"
                         />
                         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                           {otherServices.slice(0, 8).map((s) => (
@@ -670,6 +756,7 @@ export function ServiceDetailContent({
                             verticalConfig.relatedLocationsIntro ??
                             "Browse local coverage to find the nearest team for this service."
                           }
+                          headingLevel="h2"
                         />
                         <div className="grid grid-cols-2 gap-2 sm:gap-3">
                           {featuredLocations.map((loc) => (

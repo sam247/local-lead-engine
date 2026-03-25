@@ -6,7 +6,7 @@ import {
 } from "@/data/commercialGuides";
 import { accessControlProblemPages } from "@/data/problemPages";
 import { locations, services } from "@/lib/data";
-import { ProblemPage, GuidePage } from "engine";
+import { ProblemPage, GuidePage, buildProblemMetadata } from "engine";
 import { verticalConfig } from "@/config";
 import type { Metadata } from "next";
 
@@ -31,11 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   const problem = accessControlProblemPages.find((p) => p.slug === params.slug);
   if (!problem) return { title: "Not Found" };
-  return {
-    title: `${problem.title} – Causes and Repair | ${verticalConfig.siteName}`,
-    description: `${problem.causes.slice(0, 155)}...`,
-    alternates: { canonical: `${verticalConfig.baseUrl}/access-problems/${problem.slug}` },
-  };
+  const base = verticalConfig.baseUrl.replace(/\/$/, "");
+  return buildProblemMetadata(problem, verticalConfig, `${base}/access-problems/${problem.slug}`);
 }
 
 export default function AccessProblemSlugPage({ params }: Props) {

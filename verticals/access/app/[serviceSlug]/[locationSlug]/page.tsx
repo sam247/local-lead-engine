@@ -4,7 +4,7 @@ import { projects } from "@/data/projects";
 import { getHeroImage, getProjectImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
 import { LocationPage, getNeighbourLocationIds, buildLocationContextParagraph } from "engine";
-import { buildLocationMetadata } from "engine";
+import { buildLocationMetadata, buildTopicLocationMetadata } from "engine";
 import type { Location } from "engine";
 import type { Metadata } from "next";
 import {
@@ -46,16 +46,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
     const topic = getTopicForRouteSlug(serviceSlug);
     if (!topic) return { title: "Not Found" };
-    const title = `${topic.title} in ${location.name} | Business Security Systems`;
-    const metaDescription =
-      topic.metaDescription.slice(0, 140) +
-      ` We provide ${topic.title.toLowerCase()} across ${location.name} and ${location.area}.`;
-    const canonical = `${verticalConfig.baseUrl}/${serviceSlug}/${locationSlug}`;
-    return {
-      title,
-      description: metaDescription,
-      alternates: { canonical },
-    };
+    return buildTopicLocationMetadata(
+      {
+        topicTitle: topic.title,
+        topicSlug: serviceSlug,
+        location,
+        baseMetaDescription: topic.metaDescription,
+      },
+      verticalConfig
+    );
   }
 
   const service = services.find((s) => s.slug === serviceSlug);

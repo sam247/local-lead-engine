@@ -97,6 +97,83 @@ const COST_COMPLEXITY_HEADINGS = [
   "Factors that influence cost and programme",
 ] as const;
 
+const WHEN_NEEDED_SECTION_HEADINGS = [
+  "When this service is needed",
+  "Situations where this applies",
+  "When to consider this service",
+] as const;
+
+const PROCESS_SECTION_INTROS = [
+  {
+    title: "How we work through the job",
+    description:
+      "Our process is designed to keep things straightforward: define the issue, explain your options clearly, carry out the right work, and confirm everything before handover.",
+  },
+  {
+    title: "How this service is carried out",
+    description:
+      "Delivery is structured so scope, dependencies, and sign-off stay clear from the first assessment through to handover.",
+  },
+  {
+    title: "What to expect",
+    description:
+      "You should expect a defined path from assessment to completion, with practical options explained before work begins.",
+  },
+] as const;
+
+const TYPICAL_PROJECTS_HEADINGS = [
+  "Typical projects we support",
+  "Common scopes we deliver",
+  "Where this work usually applies",
+] as const;
+
+/** Stronger default opening when vertical does not pass introParagraph (area reduces near-duplicate openings). */
+const OPENING_PRIMARY_VARIANTS = [
+  (serviceTitle: string, locationName: string, area: string) =>
+    `${serviceTitle} in ${locationName} is typically needed when a site faces access limits, programme pressure, or repeat issues that need a durable fix. Whether you are planning ahead or responding to an active problem, understanding your options helps you move forward with confidence.`,
+  (serviceTitle: string, locationName: string, area: string) =>
+    `${serviceTitle} in ${locationName} usually matters when decisions on method, timing, and scope affect cost, safety, or long-term performance. From early feasibility to urgent response, a clear plan helps you avoid rework and unnecessary disruption.`,
+  (serviceTitle: string, locationName: string, area: string) =>
+    `${serviceTitle} in ${locationName} is often commissioned when stakeholders need dependable outcomes and a delivery route that fits local constraints. Whatever stage you are at, the right next step starts with a practical assessment of what the site needs.`,
+  (serviceTitle: string, locationName: string, area: string) =>
+    `Across ${locationName} and the wider ${area} area, ${serviceTitle.toLowerCase()} is commonly scoped when programme pressure, access limits, or recurring faults make a clear technical route essential. Getting aligned on scope early usually saves time and avoids repeat disruption.`,
+  (serviceTitle: string, locationName: string, area: string) =>
+    `When you need ${serviceTitle.toLowerCase()} in ${locationName}, the decision point is often practical: site constraints in ${area}, sequencing with other works, and how much certainty you need before committing budget. A structured assessment helps you choose a delivery path that fits the property and timeline.`,
+  (serviceTitle: string, locationName: string, area: string) =>
+    `Understanding your options for ${serviceTitle.toLowerCase()} in ${locationName} matters before work starts. Properties and sites around ${area} frequently need this when reliability, compliance, or handover requirements mean a generic fix is unlikely to hold up long term.`,
+] as const;
+
+const TONE_LEAD_VARIANTS: Record<
+  "drains" | "surveys" | "access" | "groundworks" | "generic",
+  readonly [string, string, string]
+> = {
+  drains: [
+    "Most enquiries for this involve recurring disruption or urgent reliability issues that need a durable fix.",
+    "Local teams usually get involved when flow problems, repeat callouts, or planned upgrades need a scoped method rather than a short-term patch.",
+    "The common thread is reducing repeat disruption: clear diagnosis, practical sequencing, and work sized to the real fault condition.",
+  ],
+  access: [
+    "Most enquiries for this involve risk reduction, compliance confidence, and dependable day-to-day security performance.",
+    "Projects often start when coverage gaps, access failures, or integration limits create operational exposure that needs a defined upgrade path.",
+    "Typical drivers are user safety, audit expectations, and keeping day-to-day operations running while improvements are delivered.",
+  ],
+  surveys: [
+    "Most enquiries for this involve decision-grade reporting that can be relied on for planning and delivery.",
+    "Teams usually need outputs that align to programme gates, design coordination, or purchase decisions where assumptions are costly.",
+    "The focus is turning site conditions into evidence stakeholders can act on without rework later in the programme.",
+  ],
+  groundworks: [
+    "Most enquiries for this involve early programme planning, site constraints, and buildability before major spend.",
+    "Common triggers are ground risk, logistics limits, or dependencies with structural packages that need sequencing agreed up front.",
+    "Getting scope and method aligned early usually protects programme certainty when conditions on site are variable.",
+  ],
+  generic: [
+    "Most enquiries for this involve reducing uncertainty before committing to project delivery.",
+    "Teams typically want a clear scope, realistic sequencing, and a delivery route that fits site constraints.",
+    "The aim is to avoid assumptions that turn into avoidable delays once work is underway.",
+  ],
+};
+
 const LAYOUT_VARIANTS = ["A", "B", "C"] as const;
 
 function getServiceFamily(service: Service): "drains" | "surveys" | "access" | "groundworks" | "generic" {
@@ -450,13 +527,43 @@ export function LocationPage({
   const isWhenNeededEarly = layoutVariant === "B";
   const isProcessEarly = layoutVariant === "C";
 
+  const whenNeededHeadingIndex = getVariantIndex(
+    `when-needed-h2:${service.slug}:${location.id}`,
+    WHEN_NEEDED_SECTION_HEADINGS.length
+  );
+  const processIntroVariantIndex = getVariantIndex(
+    `process-intro:${service.slug}:${location.id}`,
+    PROCESS_SECTION_INTROS.length
+  );
+  const typicalProjectsHeadingIndex = getVariantIndex(
+    `typical-projects-h2:${service.slug}:${location.id}`,
+    TYPICAL_PROJECTS_HEADINGS.length
+  );
+  const relatedTopicInlineIndex =
+    relatedTopicLinks && relatedTopicLinks.length > 0
+      ? getVariantIndex(`related-topic-inline:${service.slug}:${location.id}`, relatedTopicLinks.length)
+      : 0;
+
   const introLines = INTRO_VARIANTS[introVariantIndex](displayTitle, location.name);
+  const openingPrimaryVariantIndex = getVariantIndex(
+    `opening-primary:${service.slug}:${location.id}`,
+    OPENING_PRIMARY_VARIANTS.length
+  );
+  const openingPrimary = OPENING_PRIMARY_VARIANTS[openingPrimaryVariantIndex](
+    displayTitle,
+    location.name,
+    location.area
+  );
+  const processIntroConfig = PROCESS_SECTION_INTROS[processIntroVariantIndex];
   const whenNeeded = WHEN_NEEDED_VARIANTS[whenNeededVariantIndex];
   const generatedFaqs = buildFaqItems(service, location, faqVariantIndex);
   const shouldAppendSingleFaq = localFaqs.length >= 3;
   const appendedFaqs = shouldAppendSingleFaq ? generatedFaqs.slice(0, 1) : generatedFaqs;
   const combinedLocalFaqs = [...localFaqs, ...appendedFaqs].slice(0, 5);
   const serviceFamily = getServiceFamily(service);
+  const toneLeadVariantIndex = getVariantIndex(`tone-lead:${service.slug}:${location.id}`, 3);
+  const toneLeadPool = TONE_LEAD_VARIANTS[serviceFamily];
+  const toneLead = toneLeadPool[toneLeadVariantIndex % toneLeadPool.length];
   const extraParagraph = buildExtraSectionParagraph(service, serviceFamily)[extraVariantIndex];
   const projectTypes = inferProjectTypes(service);
   const fallbackLocationContext =
@@ -481,17 +588,12 @@ export function LocationPage({
   ];
   const activeTrustPoints =
     trustPoints && trustPoints.length > 0 ? trustPoints : defaultTrustPoints;
-  const toneLead = {
-    drains: "Most enquiries for this involve recurring disruption or urgent reliability issues that need a durable fix.",
-    access: "Most enquiries for this involve risk reduction, compliance confidence, and dependable day-to-day security performance.",
-    surveys: "Most enquiries for this involve decision-grade reporting that can be relied on for planning and delivery.",
-    groundworks: "Most enquiries for this involve early programme planning, site constraints, and buildability before major spend.",
-    generic: "Most enquiries for this involve reducing uncertainty before committing to project delivery.",
-  }[serviceFamily];
 
   const whenNeededSection = (
     <div className="mb-8">
-      <h3 className="mb-3 font-display text-xl font-bold">When you might need this service</h3>
+      <h2 className="mb-3 font-display text-xl font-bold">
+        {WHEN_NEEDED_SECTION_HEADINGS[whenNeededHeadingIndex]}
+      </h2>
       <div className="space-y-4 text-muted-foreground">
         <p>{whenNeeded.first}</p>
         <p>
@@ -503,27 +605,30 @@ export function LocationPage({
     </div>
   );
 
-  const processSection = (
-    <>
-      <SectionIntro
-        title="How we work through the job"
-        description="Our process is designed to keep things straightforward: define the issue, explain your options clearly, carry out the right work, and confirm everything before handover."
-      />
-      <ol className="mb-8 space-y-3">
-        {service.process.slice(0, 5).map((step, idx) => (
-          <li key={`${step}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
-            <p className="font-medium">
-              Step {idx + 1}: {step}
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">What this step delivers: {buildProcessOutcome(step, service, location)}</p>
-          </li>
-        ))}
-      </ol>
-    </>
-  );
+  const processStepsForPage = service.process.filter(Boolean).slice(0, 5);
+  const processSection =
+    processStepsForPage.length > 0 ? (
+      <>
+        <SectionIntro title={processIntroConfig.title} description={processIntroConfig.description} headingLevel="h2" />
+        <ol className="mb-8 space-y-3">
+          {processStepsForPage.map((step, idx) => (
+            <li key={`${step}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
+              <p className="font-medium">
+                Step {idx + 1}: {step}
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                What this step delivers: {buildProcessOutcome(step, service, location)}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </>
+    ) : null;
 
   if (process.env.NODE_ENV !== "production") {
-    const estimatedOpeningWords = `${introParagraph ?? ""} ${introLines.join(" ")} ${toneLead}`.trim().split(/\s+/).length;
+    const estimatedOpeningWords = `${introParagraph ?? openingPrimary} ${introLines[1] ?? ""} ${introLines[2] ?? ""} ${toneLead}`
+      .trim()
+      .split(/\s+/).length;
     const estimatedPrimarySections = 7;
     if (estimatedOpeningWords < 45 || estimatedPrimarySections > 7) {
       console.warn("[page-quality-warning]", {
@@ -641,10 +746,7 @@ export function LocationPage({
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <div className="mb-6 space-y-4 text-muted-foreground">
-                <p>
-                  {introParagraph ??
-                    `${displayTitle} in ${location.name} is usually commissioned when project teams need dependable outcomes, clear technical scope, and delivery that aligns with site constraints.`}
-                </p>
+                <p>{introParagraph?.trim() ? introParagraph.trim() : openingPrimary}</p>
                 <p>{toneLead}</p>
                 {extraServiceLocationLinks && extraServiceLocationLinks.length > 0 && (
                   <p className="text-muted-foreground">
@@ -659,7 +761,39 @@ export function LocationPage({
                     .
                   </p>
                 )}
-                <p>{introLines[0]}</p>
+                {relatedTopicLinks && relatedTopicLinks.length > 0 && (
+                  <p>
+                    For related guidance, see{" "}
+                    <Link
+                      href={relatedTopicLinks[relatedTopicInlineIndex]!.href}
+                      className="text-primary hover:underline"
+                    >
+                      {relatedTopicLinks[relatedTopicInlineIndex]!.title}
+                    </Link>
+                    .
+                  </p>
+                )}
+                {(nearbyLocation || relatedService) && (
+                  <p>
+                    {nearbyLocation && (
+                      <>
+                        You can also review{" "}
+                        <Link href={`/${service.slug}/${nearbyLocation.id}`} className="text-primary hover:underline">
+                          {nearbyAnchorText}
+                        </Link>
+                        {relatedService ? ", or explore " : "."}
+                      </>
+                    )}
+                    {relatedService && (
+                      <>
+                        <Link href={`/${relatedService.slug}/${location.id}`} className="text-primary hover:underline">
+                          {serviceAnchorText}
+                        </Link>
+                        .
+                      </>
+                    )}
+                  </p>
+                )}
                 <p>{introLines[1]}</p>
                 <p>{introLines[2]}</p>
                 {ukGroup && (
@@ -675,7 +809,7 @@ export function LocationPage({
               </div>
               {countyPeerLocations.length > 0 && (
                 <div className="mb-8">
-                  <h3 className="mb-3 font-display text-xl font-bold">Nearby areas we cover</h3>
+                  <h2 className="mb-3 font-display text-xl font-bold">Nearby areas we cover</h2>
                   <p className="mb-3 text-sm text-muted-foreground">
                     Other locations in {ukGroup?.countyName ?? location.area} where we deliver the same service:
                   </p>
@@ -708,7 +842,9 @@ export function LocationPage({
               )}
               {isWhenNeededEarly && whenNeededSection}
               <div className="mb-8">
-                <h3 className="mb-3 font-display text-xl font-bold">Typical projects we support</h3>
+                <h2 className="mb-3 font-display text-xl font-bold">
+                  {TYPICAL_PROJECTS_HEADINGS[typicalProjectsHeadingIndex]}
+                </h2>
                 <p className="mb-4 text-muted-foreground">
                   {
                     [
@@ -725,9 +861,9 @@ export function LocationPage({
                 </ul>
               </div>
               <div className="mb-8">
-                <h3 className="mb-3 font-display text-xl font-bold">
+                <h2 className="mb-3 font-display text-xl font-bold">
                   {COST_COMPLEXITY_HEADINGS[extraVariantIndex]}
-                </h3>
+                </h2>
                 <p className="text-muted-foreground">
                   Cost and complexity are shaped by site access, work scale, and technical constraints in{" "}
                   {location.name}. Programme certainty also depends on local logistics, sequencing with other trades,
@@ -735,29 +871,11 @@ export function LocationPage({
                 </p>
               </div>
               <div className="mb-8">
-                <h3 className="mb-3 font-display text-xl font-bold">Project context in {location.name}</h3>
+                <h2 className="mb-3 font-display text-xl font-bold">Project context in {location.name}</h2>
                 <p className="text-muted-foreground">{activeLocationContext}</p>
               </div>
               {!isWhenNeededEarly && whenNeededSection}
               {isProcessEarly && processSection}
-              {(nearbyLocation || relatedService) && (
-                <p className="mb-8 text-muted-foreground">
-                  {nearbyLocation && (
-                    <>
-                      <Link href={`/${service.slug}/${nearbyLocation.id}`} className="text-primary hover:underline">
-                        {nearbyAnchorText}
-                      </Link>
-                      {relatedService ? ", or " : "."}
-                    </>
-                  )}
-                  {relatedService && (
-                    <Link href={`/${relatedService.slug}/${location.id}`} className="text-primary hover:underline">
-                      {serviceAnchorText}
-                    </Link>
-                  )}
-                  {relatedService ? "." : ""}
-                </p>
-              )}
               <p className="mb-8 text-muted-foreground">{service.description}</p>
               <p className="mb-8 text-sm text-muted-foreground">
                 <Link href="/about" className="text-primary hover:underline">
@@ -767,7 +885,7 @@ export function LocationPage({
 
               {location.nearbyTowns && location.nearbyTowns.length > 0 && (
                 <div className="mb-8 rounded-lg bg-secondary p-4">
-                  <h3 className="mb-2 font-display text-lg font-bold">We Also Cover</h3>
+                  <h2 className="mb-2 font-display text-lg font-bold">We Also Cover</h2>
                   <p className="text-sm text-muted-foreground">
                     {location.nearbyTowns.join(", ")} and surrounding areas in {location.area}.
                   </p>
@@ -776,9 +894,9 @@ export function LocationPage({
 
               {location.propertyTypes && (
                 <div className="mb-8">
-                  <h3 className="mb-2 font-display text-lg font-bold">
+                  <h2 className="mb-2 font-display text-lg font-bold">
                     Common Property Types in {location.name}
-                  </h3>
+                  </h2>
                   <p className="text-sm text-muted-foreground">{location.propertyTypes}</p>
                 </div>
               )}
@@ -786,6 +904,7 @@ export function LocationPage({
               <SectionIntro
                 title={`Why choose us for ${displayTitle.toLowerCase()} in ${location.name}?`}
                 description={`When you need ${displayTitle.toLowerCase()} locally, you need clear advice, dependable delivery, and a team that understands the practical constraints in ${location.name} and ${location.area}.`}
+                headingLevel="h2"
               />
               <TrustReassuranceStrip
                 points={activeTrustPoints}
@@ -796,9 +915,9 @@ export function LocationPage({
 
               {nearbyProjects && nearbyProjects.length > 0 && (
                 <>
-                  <h3 className="mb-4 font-display text-xl font-bold">
+                  <h2 className="mb-4 font-display text-xl font-bold">
                     Recent Projects Near {location.name}
-                  </h3>
+                  </h2>
                   <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {nearbyProjects.slice(0, 3).map((project) => (
                       <Link
@@ -827,9 +946,9 @@ export function LocationPage({
                 </>
               )}
               <div className="mb-8">
-                <h3 className="mb-3 font-display text-xl font-bold">
+                <h2 className="mb-3 font-display text-xl font-bold">
                   {LOCATION_EXTRA_HEADINGS[extraVariantIndex]}
-                </h3>
+                </h2>
                 <p className="text-muted-foreground">{extraParagraph}</p>
               </div>
 
@@ -875,7 +994,7 @@ export function LocationPage({
                 </div>
               )}
               <div className="rounded-lg bg-secondary p-6">
-                <h3 className="mb-4 font-display text-lg font-bold">Contact Us</h3>
+                <h2 className="mb-4 font-display text-lg font-bold">Contact Us</h2>
                 <div className="space-y-3">
                   <TrackablePhoneLink
                     phone={companyInfo.phone}
@@ -899,7 +1018,7 @@ export function LocationPage({
               </div>
 
               <div className="rounded-lg bg-secondary p-6">
-                <h3 className="mb-4 font-display text-lg font-bold">Nearby Areas We Cover</h3>
+                <h2 className="mb-4 font-display text-lg font-bold">Nearby Areas We Cover</h2>
                 <p className="mb-3 text-xs text-muted-foreground">
                   We also provide {service.title.toLowerCase()} in these areas:
                 </p>
@@ -930,7 +1049,7 @@ export function LocationPage({
               </div>
 
               <div className="rounded-lg bg-secondary p-6">
-                <h3 className="mb-4 font-display text-lg font-bold">Other Services</h3>
+                <h2 className="mb-4 font-display text-lg font-bold">Other Services</h2>
                 <p className="mb-3 text-xs text-muted-foreground">
                   If your project needs more than one service, compare relevant options available in {location.name}.
                 </p>

@@ -102,6 +102,15 @@ export function HubPage({
               Start with the featured guides below to understand when each route is appropriate, what affects scope and
               cost, and which service path is likely to fit your site or project stage.
             </p>
+            {keyServices[0] && (
+              <p>
+                When you need delivery rather than reading alone, start from the{" "}
+                <Link href={getServiceUrl(keyServices[0].slug)} className="text-primary hover:underline">
+                  {keyServices[0].title} service overview
+                </Link>{" "}
+                and then return here for planning detail.
+              </p>
+            )}
           </div>
           {keyServices.length > 0 && (
             <ActionPanel

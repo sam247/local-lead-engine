@@ -10,12 +10,49 @@ import { BreadcrumbNav } from "./BreadcrumbNav";
 import { CTABanner } from "./CTABanner";
 import { TrackablePhoneLink } from "./TrackablePhoneLink";
 import { getVariantIndex } from "../lib/contentVariants";
+import { getServiceUrl } from "../utils/serviceUrls";
 import type { HubData, InfoPageData, Service, Location, CompanyInfo } from "../types";
 
 export interface RelatedPageLink {
   title: string;
   href: string;
 }
+
+const INFO_H2_WHEN_NEEDED = [
+  "When you might need this",
+  "Situations where this applies",
+  "When to consider this guidance",
+] as const;
+
+const INFO_H2_SIGNS = [
+  "Signs and common situations",
+  "Common warning signs",
+  "What often triggers action",
+] as const;
+
+const INFO_H2_WORK_INVOLVES = [
+  "What the work typically involves",
+  "How this is usually carried out",
+  "What to expect from the work",
+] as const;
+
+const INFO_H2_FIX = [
+  "How we approach the fix",
+  "How this gets resolved",
+  "Practical steps to a reliable outcome",
+] as const;
+
+const INFO_H2_COST = [
+  "What affects cost and complexity",
+  "Cost and complexity factors",
+  "What drives programme and budget",
+] as const;
+
+const INFO_H2_PROCESS = [
+  "How we work through the job",
+  "How delivery is structured",
+  "What the process looks like",
+] as const;
 
 export interface InfoPageProps {
   hub: HubData;
@@ -57,7 +94,7 @@ export function InfoPage({
 }: InfoPageProps) {
   const relatedGuides = otherPages.slice(0, 5);
   const signs = page.signs.slice(0, 5);
-  const shouldUseSignsList = signs.length >= 3;
+  const shouldUseSignsList = signs.length >= 4;
   const signsNarrative =
     signs.length > 0
       ? signs.join(signs.length > 2 ? ", " : " and ")
@@ -69,6 +106,22 @@ export function InfoPage({
     `The commercial value of resolving ${page.title.toLowerCase()} early is fewer delays, clearer budgeting, and reduced repeat disruption.`,
   ][openingVariant];
   const primaryOpening = (page.contextualOpening ?? page.intro)?.trim() ?? "";
+  const firstRelatedServiceSlug = page.relatedServices?.[0];
+  const firstRelatedService = firstRelatedServiceSlug
+    ? services.find((s) => s.slug === firstRelatedServiceSlug)
+    : undefined;
+  const earlyServiceHubLink =
+    page.topicLocationLink || page.serviceLocationLink
+      ? null
+      : (firstRelatedService ?? services[0] ?? null);
+  const h2Seed = `info-h2:${hub.category}:${page.slug}`;
+  const h2When = INFO_H2_WHEN_NEEDED[getVariantIndex(`${h2Seed}:when`, INFO_H2_WHEN_NEEDED.length)];
+  const h2Signs = INFO_H2_SIGNS[getVariantIndex(`${h2Seed}:signs`, INFO_H2_SIGNS.length)];
+  const h2Work = INFO_H2_WORK_INVOLVES[getVariantIndex(`${h2Seed}:work`, INFO_H2_WORK_INVOLVES.length)];
+  const h2Fix = INFO_H2_FIX[getVariantIndex(`${h2Seed}:fix`, INFO_H2_FIX.length)];
+  const h2Cost = INFO_H2_COST[getVariantIndex(`${h2Seed}:cost`, INFO_H2_COST.length)];
+  const h2Process = INFO_H2_PROCESS[getVariantIndex(`${h2Seed}:process`, INFO_H2_PROCESS.length)];
+
   if (process.env.NODE_ENV !== "production") {
     const estimatedOpeningWords = `${primaryOpening} ${openingLead}`.trim().split(/\s+/).length;
     if (estimatedOpeningWords < 45) {
@@ -132,13 +185,44 @@ export function InfoPage({
               {primaryOpening ? (
                 <p className="mb-6 text-lg text-muted-foreground">{primaryOpening}</p>
               ) : null}
-              <p className="mb-8 text-muted-foreground">{openingLead}</p>
-              <h2 className="mb-4 font-display text-2xl font-bold">When you might need this</h2>
+              <p className="mb-6 text-muted-foreground">{openingLead}</p>
+              {(page.topicLocationLink || page.serviceLocationLink) && (
+                <p className="mb-8 text-muted-foreground">
+                  {page.topicLocationLink && (
+                    <>
+                      For local or on-site context, see{" "}
+                      <Link href={page.topicLocationLink.href} className="text-primary hover:underline">
+                        {page.topicLocationLink.linkText}
+                      </Link>
+                      {page.serviceLocationLink ? ", or " : "."}
+                    </>
+                  )}
+                  {page.serviceLocationLink && (
+                    <>
+                      review{" "}
+                      <Link href={page.serviceLocationLink.href} className="text-primary hover:underline">
+                        {page.serviceLocationLink.linkText}
+                      </Link>
+                      .
+                    </>
+                  )}
+                </p>
+              )}
+              {earlyServiceHubLink && (
+                <p className="mb-8 text-muted-foreground">
+                  For how we deliver this work commercially, see the{" "}
+                  <Link href={getServiceUrl(earlyServiceHubLink.slug)} className="text-primary hover:underline">
+                    {earlyServiceHubLink.title} service overview
+                  </Link>
+                  .
+                </p>
+              )}
+              <h2 className="mb-4 font-display text-2xl font-bold">{h2When}</h2>
               <p className="mb-8 text-muted-foreground">
                 {page.whenNeeded ??
                   `Teams usually investigate ${page.title.toLowerCase()} when early warning signs start affecting reliability, compliance, or project timelines. This is often the point where decision makers move from observation into scoped technical action.`}
               </p>
-              <h2 className="mb-4 font-display text-2xl font-bold">Signs and common situations</h2>
+              <h2 className="mb-4 font-display text-2xl font-bold">{h2Signs}</h2>
               <p className="mb-3 text-muted-foreground">
                 The symptoms below are the most common triggers we see before diagnosis and repair planning.
               </p>
@@ -157,7 +241,7 @@ export function InfoPage({
                   monitoring into scoped delivery planning.
                 </p>
               )}
-              <h2 className="mb-4 font-display text-2xl font-bold">What the work typically involves</h2>
+              <h2 className="mb-4 font-display text-2xl font-bold">{h2Work}</h2>
               <p className="mb-4 text-muted-foreground">{page.workInvolves ?? page.diagnosis}</p>
               <MidContentCTA
                 companyInfo={companyInfo}
@@ -167,14 +251,14 @@ export function InfoPage({
                 callTrackServiceSlug={page.relatedServices?.[0] ?? services[0]?.slug ?? null}
                 callTrackLocationSlug={null}
               />
-              <h2 className="mb-4 font-display text-2xl font-bold">How we approach the fix</h2>
+              <h2 className="mb-4 font-display text-2xl font-bold">{h2Fix}</h2>
               <p className="mb-8 text-muted-foreground">{page.resolution}</p>
-              <h2 className="mb-4 font-display text-2xl font-bold">What affects cost and complexity</h2>
+              <h2 className="mb-4 font-display text-2xl font-bold">{h2Cost}</h2>
               <p className="mb-8 text-muted-foreground">
                 {page.costComplexity ??
                   "Cost and complexity usually depend on access constraints, total scope, existing condition, and whether related works need to be coordinated in the same programme window."}
               </p>
-              <h2 className="mb-4 font-display text-2xl font-bold">How we work through the job</h2>
+              <h2 className="mb-4 font-display text-2xl font-bold">{h2Process}</h2>
               <p className="mb-3 text-muted-foreground">
                 We keep delivery structured so scope, sequencing, and sign-off remain clear.
               </p>
@@ -192,28 +276,6 @@ export function InfoPage({
                   </li>
                 ))}
               </ol>
-              {(page.topicLocationLink || page.serviceLocationLink) && (
-                <p className="mb-8 text-muted-foreground">
-                  {page.topicLocationLink && (
-                    <>
-                      For local context, see{" "}
-                      <Link href={page.topicLocationLink.href} className="text-primary hover:underline">
-                        {page.topicLocationLink.linkText}
-                      </Link>
-                      {page.serviceLocationLink ? " or " : "."}
-                    </>
-                  )}
-                  {page.serviceLocationLink && (
-                    <>
-                      review{" "}
-                      <Link href={page.serviceLocationLink.href} className="text-primary hover:underline">
-                        {page.serviceLocationLink.linkText}
-                      </Link>
-                      .
-                    </>
-                  )}
-                </p>
-              )}
               {relatedPageLinks.length > 0 && (
                 <div className="mb-8 rounded-lg border border-border bg-secondary/50 p-6">
                   <h3 className="mb-4 font-display text-lg font-bold">
