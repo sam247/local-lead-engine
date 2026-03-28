@@ -135,7 +135,7 @@ const Hero = () => {
       setStep(1);
       toast({
         title: "Thanks for your enquiry.",
-        description: "A member of our team will contact you shortly.",
+        description: "A groundworks specialist will contact you shortly.",
       });
     } catch {
       toast({
