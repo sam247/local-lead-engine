@@ -10,6 +10,7 @@ import { LocationContext } from "./LocationContext";
 import { NearbyAreas } from "./NearbyAreas";
 import { SectionIntro } from "./SectionIntro";
 import { TrustReassuranceStrip } from "./TrustReassuranceStrip";
+import { TrustStrip } from "./TrustStrip";
 import { ActionPanel } from "./ActionPanel";
 import { TrackablePhoneLink } from "./TrackablePhoneLink";
 import { getVariantIndex } from "../lib/contentVariants";
@@ -721,13 +722,9 @@ export function LocationPage({
         </div>
       </section>
 
-      <section className="border-b border-border bg-secondary/30 py-6">
+      <section className="border-b border-border bg-secondary/30 py-4 md:py-5" aria-label="Trust signals">
         <div className="container">
-          <TrustReassuranceStrip
-            title={`Trusted support for ${displayTitle.toLowerCase()} in ${location.name}`}
-            points={activeTrustPoints.slice(0, 4)}
-            className="mx-auto mb-0 max-w-4xl rounded-lg border border-border bg-background p-5"
-          />
+          <TrustStrip className="mx-auto max-w-4xl" />
         </div>
       </section>
 

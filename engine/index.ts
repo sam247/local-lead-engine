@@ -32,6 +32,7 @@ export { NearbyAreas, type NearbyAreasProps } from "./components/NearbyAreas";
 export { SectionIntro } from "./components/SectionIntro";
 export { ProcessTimeline } from "./components/ProcessTimeline";
 export { TrustReassuranceStrip } from "./components/TrustReassuranceStrip";
+export { TrustStrip, type TrustStripProps, type TrustStripItem, type TrustStripIcon } from "./components/TrustStrip";
 export { ActionPanel, type ActionPanelProps } from "./components/ActionPanel";
 export { HubPage, type HubPageProps, type CrossSection, type PillarGuideLink } from "./components/HubPage";
 export { InfoPage, type InfoPageProps, type RelatedPageLink } from "./components/InfoPage";

@@ -133,7 +133,7 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="border-t border-primary-foreground/10">
         <div className="container border-b border-primary-foreground/10 py-6">
-          <GroupFooter items={groupLinks} variant="onPrimary" />
+          <GroupFooter items={groupLinks} variant="onPrimary" dbsLogoSrc="/dbs.png" />
         </div>
         <div className="container flex flex-col items-center justify-between gap-4 py-6 md:flex-row">
           <p className="text-sm text-primary-foreground/60">

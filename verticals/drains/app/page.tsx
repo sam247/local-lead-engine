@@ -6,7 +6,7 @@ import ProjectsPreview from "@/components/sections/ProjectsPreview";
 import Testimonials from "@/components/sections/Testimonials";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import { TrustPoints, HomepageArticles, pickHomepageArticleCards, ProblemPreviewSection } from "engine";
+import { TrustPoints, TrustStrip, HomepageArticles, pickHomepageArticleCards, ProblemPreviewSection } from "engine";
 import { verticalConfig } from "@/config";
 import { blogPosts, getCategoryPages, getHubData, services } from "@/lib/data";
 import { drainProblemPages } from "@/data/problemPages";
@@ -41,6 +41,11 @@ export default function HomePage() {
     <>
       <SchemaMarkup type="LocalBusiness" data={{ areaServed: "London and surrounding areas" }} />
       <Hero />
+      <section className="border-b border-border bg-secondary/30 py-4" aria-label="Trust signals">
+        <div className="container">
+          <TrustStrip className="mx-auto max-w-4xl" />
+        </div>
+      </section>
       <section className="border-b border-border bg-background py-6" aria-labelledby="core-services-heading">
         <div className="container">
           <h2 id="core-services-heading" className="mb-3 font-display text-lg font-semibold text-foreground">

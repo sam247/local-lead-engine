@@ -10,7 +10,7 @@ import { ServiceImageGallery } from "./ServiceImageGallery";
 import { Button } from "./ui/button";
 import { SectionIntro } from "./SectionIntro";
 import { ProcessTimeline } from "./ProcessTimeline";
-import { TrustReassuranceStrip } from "./TrustReassuranceStrip";
+import { TrustStrip } from "./TrustStrip";
 import { ActionPanel } from "./ActionPanel";
 import { getImageAlt } from "../utils/imageAlt";
 import { KEY_SERVICE_DETAIL_LOCATION_IDS } from "../data/key-location-ids";
@@ -331,12 +331,6 @@ export function ServiceDetailContent({
   const relatedSidebarLabel = verticalConfig.relatedServicesLabel
     ? `Related ${verticalConfig.relatedServicesLabel} Services`
     : `Related ${verticalConfig.siteName} Services`;
-  const trustPoints = [
-    "Clear scope and practical recommendations",
-    "Transparent pricing and documented next steps",
-    "Reliable scheduling with minimal disruption",
-    "Experienced teams aligned to site requirements",
-  ];
   const ctaCopy = CTA_BY_VERTICAL[verticalConfig.verticalId] ?? {
     discuss: ["Discuss your requirements"],
     request: ["Request a quote"],
@@ -497,6 +491,12 @@ export function ServiceDetailContent({
         </div>
       </section>
 
+      <section className="border-b border-border bg-secondary/30 py-4 md:py-5" aria-label="Trust signals">
+        <div className="container">
+          <TrustStrip className="mx-auto max-w-4xl" />
+        </div>
+      </section>
+
       <section className="section-padding">
         <div className="container">
           <div className="grid gap-12 lg:grid-cols-3">
@@ -519,7 +519,6 @@ export function ServiceDetailContent({
                   />
                 </figure>
               )}
-              <TrustReassuranceStrip points={trustPoints} />
               <SectionIntro
                 title={typicalSituationsSection.title}
                 description={typicalSituationsSection.description}

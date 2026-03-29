@@ -6,6 +6,7 @@ export { NearbyAreas, type NearbyAreasProps } from "./NearbyAreas";
 export { SectionIntro } from "./SectionIntro";
 export { ProcessTimeline } from "./ProcessTimeline";
 export { TrustReassuranceStrip } from "./TrustReassuranceStrip";
+export { TrustStrip, type TrustStripProps, type TrustStripItem, type TrustStripIcon } from "./TrustStrip";
 export { ActionPanel } from "./ActionPanel";
 export { HubPage, type HubPageProps, type CrossSection, type PillarGuideLink } from "./HubPage";
 export { InfoPage, type InfoPageProps, type RelatedPageLink } from "./InfoPage";
