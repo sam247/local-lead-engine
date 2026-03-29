@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyEmergencyBar from "@/components/sections/StickyEmergencyBar";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { companyInfo } from "@/lib/data";
 import { verticalConfig } from "@/config";
 import { mainlineGroupLinksForSite } from "engine/data/mainline-group";
@@ -35,6 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen flex flex-col antialiased">
+        <GoogleAnalytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
