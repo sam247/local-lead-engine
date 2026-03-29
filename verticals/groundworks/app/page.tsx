@@ -41,13 +41,9 @@ export default function HomePage() {
     <>
       <SchemaMarkup type="LocalBusiness" data={{ areaServed: "UK" }} />
       <Hero />
-      <section className="border-b border-border bg-secondary/30 py-4" aria-label="Trust signals">
-        <div className="container">
-          <TrustStrip className="mx-auto max-w-4xl" />
-        </div>
-      </section>
       <section className="border-b border-border bg-background py-6" aria-labelledby="core-services-heading">
         <div className="container">
+          <TrustStrip className="mb-5" />
           <h2 id="core-services-heading" className="mb-3 font-display text-lg font-semibold text-foreground">
             Core services
           </h2>
