@@ -10,7 +10,7 @@ const iconByKey = { BookOpen, HelpCircle } as const;
 export default function GuidesIndexContent() {
   return (
     <>
-      <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Survey Guides", url: "/drainage-guides" }] }} />
+      <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Survey Guides", url: "/survey-guides" }] }} />
       <section className="bg-primary py-16 md:py-24">
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">

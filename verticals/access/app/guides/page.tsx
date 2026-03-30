@@ -13,7 +13,7 @@ const cards = [
   { title: "How it works", description: "Typical sequence from enquiry to completion.", href: "/how-it-works" },
   { title: "Process", description: "Steps we follow on security projects.", href: "/process" },
   { title: "Common problems", description: "Constraints we plan for on commercial sites.", href: "/common-problems" },
-  { title: "Cost guide", description: "What drives pricing—without speculative figures.", href: "/cost" },
+  { title: "Cost guide", description: "What drives pricing—without speculative figures.", href: "/companies-cost" },
   { title: "FAQ", description: "Answers to common questions.", href: "/faq" },
   guidesHubTopicCard,
 ];

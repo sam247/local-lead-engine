@@ -43,7 +43,7 @@ export function getCollapsedDrainsGuideProps() {
         "Planning applications, extensions, development and design work usually need accurate site information. Our guides explain when to commission a topographical, measured building, utility or drone survey.",
       links: guidesPages.slice(0, 4).map((p) => ({
         label: p.title,
-        href: `/drainage-guides/${p.slug}`,
+        href: `/survey-guides/${p.slug}`,
       })),
     },
     {
@@ -53,7 +53,7 @@ export function getCollapsedDrainsGuideProps() {
         "Survey requirements for planning permission, extensions and property development. Get the right scope from the start to avoid delays and refusals.",
       links: guidesPages.filter((p) => p.slug.includes("planning") || p.slug.includes("extension") || p.slug.includes("development")).slice(0, 4).map((p) => ({
         label: p.title,
-        href: `/drainage-guides/${p.slug}`,
+        href: `/survey-guides/${p.slug}`,
       })),
     },
     {
@@ -63,7 +63,7 @@ export function getCollapsedDrainsGuideProps() {
         "How total stations, GNSS, laser scanning, GPR and drone mapping work. Understand the equipment and methods used by surveyors.",
       links: guidesPages.filter((p) => p.slug.includes("total-station") || p.slug.includes("gnss") || p.slug.includes("lidar") || p.slug.includes("gpr") || p.slug.includes("drone-mapping")).slice(0, 4).map((p) => ({
         label: p.title,
-        href: `/drainage-guides/${p.slug}`,
+        href: `/survey-guides/${p.slug}`,
       })),
     },
     {
@@ -73,7 +73,7 @@ export function getCollapsedDrainsGuideProps() {
         "When to use drone surveys, how they work, accuracy and timescales. Drone surveys are ideal for large sites, roof inspections and progress monitoring.",
       links: guidesPages.filter((p) => p.slug.includes("drone")).slice(0, 4).map((p) => ({
         label: p.title,
-        href: `/drainage-guides/${p.slug}`,
+        href: `/survey-guides/${p.slug}`,
       })),
     },
     {

@@ -11,7 +11,7 @@ const standardGuidePaths = [
   "/how-it-works",
   "/process",
   "/common-problems",
-  "/cost",
+  "/companies-cost",
   "/faq",
   "/insurance",
   "/legal",

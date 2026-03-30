@@ -11,7 +11,7 @@ const cards = [
   { title: "How it works", description: "Typical sequence from enquiry to completion.", href: "/how-it-works" },
   { title: "Process", description: "Steps we follow on drainage jobs.", href: "/process" },
   { title: "Common problems", description: "Issues we see often on UK properties.", href: "/common-problems" },
-  { title: "Cost guide", description: "What drives pricing—without speculative figures.", href: "/cost" },
+  { title: "Cost guide", description: "What drives pricing—without speculative figures.", href: "/companies-cost" },
   { title: "FAQ", description: "Answers to common questions.", href: "/faq" },
   guidesHubTopicCard,
 ];

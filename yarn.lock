@@ -1751,8 +1751,11 @@ emoji-regex@^9.2.2:
     "@radix-ui/react-slot" "^1.2.4"
     class-variance-authority "^0.7.1"
     clsx "^2.1.1"
+    libphonenumber-js "^1.11.15"
     lucide-react "^0.577.0"
     tailwind-merge "^3.5.0"
+    validator "^13.12.0"
+    zod "^4.3.6"
 
 es-abstract@^1.17.5, es-abstract@^1.23.2, es-abstract@^1.23.3, es-abstract@^1.23.5, es-abstract@^1.23.6, es-abstract@^1.23.9, es-abstract@^1.24.0, es-abstract@^1.24.1:
   version "1.24.1"
@@ -4350,6 +4353,7 @@ vaul@^1.1.2:
     engine "file:../../engine"
     googleapis "^155.0.0"
     input-otp "^1.4.2"
+    libphonenumber-js "^1.11.15"
     lucide-react "^0.577.0"
     next "14.2.35"
     next-themes "^0.4.6"
@@ -4363,6 +4367,7 @@ vaul@^1.1.2:
     sonner "^2.0.7"
     tailwind-merge "^3.5.0"
     tailwindcss-animate "^1.0.7"
+    validator "^13.12.0"
     vaul "^1.1.2"
     zod "^4.3.6"
 

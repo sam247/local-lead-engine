@@ -5,6 +5,7 @@ import { getHeroImage, getProjectImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
 import { LocationPage, getNeighbourLocationIds, buildLocationContextParagraph } from "engine";
 import { buildLocationMetadata } from "engine";
+import { pickDrainsL4MetaTitle } from "@/lib/drainsL4TitleTemplates";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -23,7 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const service = services.find((s) => s.slug === serviceSlug);
   const location = locations.find((l) => l.id === locationSlug);
   if (!service || !location) return { title: "Not Found" };
-  return buildLocationMetadata(service, location, verticalConfig);
+  const base = buildLocationMetadata(service, location, verticalConfig);
+  return { ...base, title: pickDrainsL4MetaTitle(service, location) };
 }
 
 export default async function LocationRoute({ params }: Props) {

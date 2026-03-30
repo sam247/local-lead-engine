@@ -16,9 +16,9 @@ const faqSections = [
   {
     title: "Planning & Development",
     items: [
-      { question: "What survey do I need for planning permission?", answer: "Most planning applications need an up-to-date topographical survey of the site and often a measured building survey of any existing structures you plan to alter. Boundary surveys may be required where works are close to the property line.", link: "/drainage-guides/survey-for-planning-permission" },
-      { question: "Do I need a survey before an extension?", answer: "Yes, in most cases. A measured building survey gives your architect accurate floor plans, elevations and sections; a topographical survey captures levels and features in the garden. Together they reduce design risk.", link: "/drainage-guides/survey-before-building-extension" },
-      { question: "When do I need a topographical survey?", answer: "You typically need one for planning applications, feasibility studies, and before detailed design. They show existing levels, boundaries, buildings and features so designs are accurate.", link: "/drainage-guides/survey-for-planning-permission" },
+      { question: "What survey do I need for planning permission?", answer: "Most planning applications need an up-to-date topographical survey of the site and often a measured building survey of any existing structures you plan to alter. Boundary surveys may be required where works are close to the property line.", link: "/survey-guides/survey-for-planning-permission" },
+      { question: "Do I need a survey before an extension?", answer: "Yes, in most cases. A measured building survey gives your architect accurate floor plans, elevations and sections; a topographical survey captures levels and features in the garden. Together they reduce design risk.", link: "/survey-guides/survey-before-building-extension" },
+      { question: "When do I need a topographical survey?", answer: "You typically need one for planning applications, feasibility studies, and before detailed design. They show existing levels, boundaries, buildings and features so designs are accurate.", link: "/survey-guides/survey-for-planning-permission" },
     ],
   },
   {
@@ -26,14 +26,14 @@ const faqSections = [
     items: [
       { question: "How much does a topographical survey cost?", answer: "Costs depend on site size and complexity. Small residential plots typically range from around £600–£1,200 + VAT; larger sites can be £1,500–£4,000+. Survey partners provide fixed quotes once scope is clear.", link: "/drain-costs/topographical-survey-cost" },
       { question: "How much does a drone survey cost?", answer: "Drone survey pricing depends on site size, deliverables and airspace. Small sites or roof inspections often start from around £750–£1,500 + VAT; larger sites may be £2,000–£7,000+. Request a quote for your project.", link: "/drain-costs/drone-survey-cost" },
-      { question: "How long does a survey take?", answer: "A typical topographical or measured building survey for a single dwelling can be completed on site in one day, with drawings delivered within a few days to a week. Larger or drone surveys may need more processing time.", link: "/drainage-guides/how-long-does-a-drone-survey-take" },
+      { question: "How long does a survey take?", answer: "A typical topographical or measured building survey for a single dwelling can be completed on site in one day, with drawings delivered within a few days to a week. Larger or drone surveys may need more processing time.", link: "/survey-guides/how-long-does-a-drone-survey-take" },
     ],
   },
   {
     title: "Survey Types",
     items: [
-      { question: "When should I use a drone survey?", answer: "Drone surveys are ideal for large or inaccessible sites, roof inspections, progress monitoring and volume calculations. They often cost less than traditional surveys for big areas and deliver orthophotos, contours and 3D models.", link: "/drainage-guides/when-to-use-drone-surveys" },
-      { question: "What is a utility survey?", answer: "Utility surveys locate and map buried services (electric, gas, water, telecoms, drainage) before excavation. They reduce the risk of service strikes and support CDM and design. Often combined with topographical surveys.", link: "/drainage-guides/what-is-gpr-utility-mapping" },
+      { question: "When should I use a drone survey?", answer: "Drone surveys are ideal for large or inaccessible sites, roof inspections, progress monitoring and volume calculations. They often cost less than traditional surveys for big areas and deliver orthophotos, contours and 3D models.", link: "/survey-guides/when-to-use-drone-surveys" },
+      { question: "What is a utility survey?", answer: "Utility surveys locate and map buried services (electric, gas, water, telecoms, drainage) before excavation. They reduce the risk of service strikes and support CDM and design. Often combined with topographical surveys.", link: "/survey-guides/what-is-gpr-utility-mapping" },
       { question: "What is a measured building survey?", answer: "A measured building survey captures the as-built layout of a property — floor plans, elevations and sections — for extensions, refurbishments and change-of-use. Outputs are typically 2D CAD or 3D/BIM.", link: getServiceUrl("measured-building-survey") },
     ],
   },
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 export default function DrainageFaqPage() {
   return (
     <>
-      <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Guides", url: "/drainage-guides" }, { name: "Survey FAQ", url: "/drainage-faq" }] }} />
+      <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Guides", url: "/survey-guides" }, { name: "Survey FAQ", url: "/drainage-faq" }] }} />
       <section className="bg-primary py-16 md:py-24">
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">

@@ -5,6 +5,7 @@ import { getHeroImage, getProjectImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
 import { LocationPage, getNeighbourLocationIds, buildLocationContextParagraph } from "engine";
 import { buildLocationMetadata } from "engine";
+import { pickGroundworksL4MetaTitle } from "@/lib/groundworksL4TitleTemplates";
 import type { Metadata } from "next";
 import {
   isTopicLocationSlug,
@@ -54,7 +55,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const service = services.find((s) => s.slug === serviceSlug);
   if (!service) return { title: "Not Found" };
-  return buildLocationMetadata(service, location, verticalConfig);
+  const base = buildLocationMetadata(service, location, verticalConfig);
+  return { ...base, title: pickGroundworksL4MetaTitle(service, location) };
 }
 
 export default async function LocationRoute({ params }: Props) {

@@ -77,9 +77,9 @@ export default function SurveyCostPage() {
               <div className="mt-8 rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">Related Guides</h3>
                 <div className="grid gap-2 sm:grid-cols-2">
-                  <Link href="/drainage-guides/survey-for-planning-permission" className="text-sm text-primary hover:underline">Survey for Planning Permission →</Link>
-                  <Link href="/drainage-guides/survey-before-building-extension" className="text-sm text-primary hover:underline">Survey Before Extension →</Link>
-                  <Link href="/drainage-guides/when-to-use-drone-surveys" className="text-sm text-primary hover:underline">When to Use Drone Surveys →</Link>
+                  <Link href="/survey-guides/survey-for-planning-permission" className="text-sm text-primary hover:underline">Survey for Planning Permission →</Link>
+                  <Link href="/survey-guides/survey-before-building-extension" className="text-sm text-primary hover:underline">Survey Before Extension →</Link>
+                  <Link href="/survey-guides/when-to-use-drone-surveys" className="text-sm text-primary hover:underline">When to Use Drone Surveys →</Link>
                   <Link href="/drain-costs" className="text-sm text-primary hover:underline">All Cost Guides →</Link>
                   <Link href={getServiceUrl("topographical-survey")} className="text-sm text-primary hover:underline">Topographical Survey →</Link>
                   <Link href={getServiceUrl("drone-survey")} className="text-sm text-primary hover:underline">Drone Survey →</Link>

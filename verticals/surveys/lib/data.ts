@@ -622,7 +622,7 @@ export const hubPages: HubData[] = [
   },
   {
     category: "guides",
-    basePath: "/drainage-guides",
+    basePath: "/survey-guides",
     title: "Survey & Drone Survey Guides",
     subtitle: "Guides for architects, developers and property owners on land surveys, drone surveys and planning.",
     metaDescription: "Guides on topographical surveys, measured building surveys, drone surveys, utility mapping and survey costs. Expert advice for UK construction and development."
@@ -2169,7 +2169,7 @@ export const relatedGuideLinksByService: Record<string, { slug: string; path: st
   for (const g of guidesPages) {
     for (const s of g.relatedServices) {
       if (!map[s]) map[s] = [];
-      map[s].push({ slug: g.slug, path: `/drainage-guides/${g.slug}`, title: g.title });
+      map[s].push({ slug: g.slug, path: `/survey-guides/${g.slug}`, title: g.title });
     }
   }
   return map;

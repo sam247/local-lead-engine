@@ -12,11 +12,24 @@ const nextConfig = {
       "/drain-unblocking-near-me",
       "/collapsed-drain-repair-near-me",
     ];
-    return legacyDrainNearMe.map((source) => ({
+    const nearMeRedirects = legacyDrainNearMe.map((source) => ({
       source,
       destination: canonicalNearMe,
       permanent: true,
     }));
+    return [
+      ...nearMeRedirects,
+      {
+        source: "/drainage-guides/:path*",
+        destination: "/survey-guides/:path*",
+        permanent: true,
+      },
+      {
+        source: "/cost",
+        destination: "/companies-cost",
+        permanent: true,
+      },
+    ];
   },
 };
 

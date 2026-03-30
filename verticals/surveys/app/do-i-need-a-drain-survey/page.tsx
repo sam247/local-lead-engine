@@ -25,10 +25,10 @@ const whenYouMightNeed = [
 ];
 
 const scenarios = [
-  { title: "Planning Permission", description: "Most planning applications need an up-to-date topographical survey and often a measured building survey of existing structures. Get the right scope from the start.", link: "/drainage-guides/survey-for-planning-permission" },
-  { title: "Extension or Refurbishment", description: "Accurate existing drawings reduce design risk. A measured building survey gives your architect floor plans, elevations and sections they can rely on.", link: "/drainage-guides/survey-before-building-extension" },
-  { title: "Development or Feasibility", description: "Before committing to design and planning, developers need site levels, utilities and existing structures mapped. We help scope the right survey package.", link: "/drainage-guides/survey-before-property-development" },
-  { title: "Drone Survey", description: "Ideal for large sites, roof inspections and progress monitoring. Drone surveys deliver orthophotos, contours and 3D data quickly and often at lower cost for big areas.", link: "/drainage-guides/when-to-use-drone-surveys" },
+  { title: "Planning Permission", description: "Most planning applications need an up-to-date topographical survey and often a measured building survey of existing structures. Get the right scope from the start.", link: "/survey-guides/survey-for-planning-permission" },
+  { title: "Extension or Refurbishment", description: "Accurate existing drawings reduce design risk. A measured building survey gives your architect floor plans, elevations and sections they can rely on.", link: "/survey-guides/survey-before-building-extension" },
+  { title: "Development or Feasibility", description: "Before committing to design and planning, developers need site levels, utilities and existing structures mapped. We help scope the right survey package.", link: "/survey-guides/survey-before-property-development" },
+  { title: "Drone Survey", description: "Ideal for large sites, roof inspections and progress monitoring. Drone surveys deliver orthophotos, contours and 3D data quickly and often at lower cost for big areas.", link: "/survey-guides/when-to-use-drone-surveys" },
 ];
 
 const faqs = [
@@ -48,7 +48,7 @@ export default function DoINeedADrainSurveyPage() {
   return (
     <>
       <SchemaMarkup type="Article" data={{ title: "Do I Need a Land Survey?", description: "Decision guide for when you need a topographical, measured building, utility or drone survey.", url: "/do-i-need-a-drain-survey" }} />
-      <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Guides", url: "/drainage-guides" }, { name: "Do I Need a Land Survey?", url: "/do-i-need-a-drain-survey" }] }} />
+      <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Guides", url: "/survey-guides" }, { name: "Do I Need a Land Survey?", url: "/do-i-need-a-drain-survey" }] }} />
       <section className="bg-primary py-16 md:py-24">
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">

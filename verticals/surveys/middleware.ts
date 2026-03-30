@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { guidesPages } from "@/data/guides";
 
-const CANONICAL_GUIDES_PREFIX = "/drainage-guides";
+/** Canonical surveys guides hub; legacy /drainage-guides URLs redirect via next.config.mjs */
+const CANONICAL_GUIDES_PREFIX = "/survey-guides";
 const COST_PREFIX = "/drain-costs";
 
 const LEGACY_GUIDE_PREFIXES = [

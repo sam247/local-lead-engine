@@ -6,25 +6,25 @@ const scenarios = [
     icon: FileCheck,
     title: "Planning Permission",
     description: "Most planning applications need an up-to-date topographical survey and often a measured building survey of existing structures.",
-    link: "/drainage-guides/survey-for-planning-permission",
+    link: "/survey-guides/survey-for-planning-permission",
   },
   {
     icon: Home,
     title: "Extension or Refurbishment",
     description: "Accurate existing drawings reduce design risk and avoid costly surprises on site. Measured building and topographical surveys give your architect a reliable base.",
-    link: "/drainage-guides/survey-before-building-extension",
+    link: "/survey-guides/survey-before-building-extension",
   },
   {
     icon: Map,
     title: "Development or Feasibility",
     description: "Before committing to design and planning, developers need site levels, utilities and existing structures mapped. We help scope the right survey package.",
-    link: "/drainage-guides/survey-before-property-development",
+    link: "/survey-guides/survey-before-property-development",
   },
   {
     icon: Camera,
     title: "Drone Survey",
     description: "Ideal for large sites, roof inspections and progress monitoring. Drone surveys deliver orthophotos, contours and 3D data quickly.",
-    link: "/drainage-guides/when-to-use-drone-surveys",
+    link: "/survey-guides/when-to-use-drone-surveys",
   },
 ];
 

@@ -7,7 +7,7 @@ import CTABanner from "@/components/sections/CTABanner";
 
 const specialPages = [
   { title: "Security FAQ", description: "Answers to common questions about access control, CCTV installation, system integration, and ongoing maintenance.", href: "/faq", icon: HelpCircle },
-  { title: "Security System Costs", description: "Typical pricing for commercial CCTV, access control, IP camera systems, and perimeter security installations.", href: "/cost", icon: BookOpen },
+  { title: "Security System Costs", description: "Typical pricing for commercial CCTV, access control, IP camera systems, and perimeter security installations.", href: "/companies-cost", icon: BookOpen },
   { title: "Industries We Serve", description: "How we support warehouses, offices, retail, education, healthcare, and public-sector sites with tailored security solutions.", href: "/industries", icon: BookOpen },
 ];
 

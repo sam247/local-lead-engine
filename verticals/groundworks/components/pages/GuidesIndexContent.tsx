@@ -7,7 +7,7 @@ import CTABanner from "@/components/sections/CTABanner";
 
 const specialPages = [
   { title: "Groundworks FAQ", description: "Answers to the most common questions about foundations, piling, excavation, site clearance and project costs.", href: "/faq", icon: HelpCircle },
-  { title: "Groundworks Cost Guide", description: "Understand typical costs for foundations, piling, excavation and other groundworks services across the UK.", href: "/cost", icon: PoundSterling },
+  { title: "Groundworks Cost Guide", description: "Understand typical costs for foundations, piling, excavation and other groundworks services across the UK.", href: "/companies-cost", icon: PoundSterling },
   { title: "Homeowner Groundworks Guide", description: "Everything homeowners need to know about groundworks for extensions, new builds and renovation projects.", href: "/homeowners", icon: BookOpen },
 ];
 
