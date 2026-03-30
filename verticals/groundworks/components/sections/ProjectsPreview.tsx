@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { homepageProjects } from "@/data/projects";
 import { getProjectImage } from "@/lib/images";
 import { getServiceUrl } from "engine";
@@ -37,15 +36,10 @@ const ProjectsPreview = () => {
                 />
               </div>
               <div className="p-4">
-                <div className="mb-2">
-                  <Link href={getServiceUrl(project.serviceSlug)}>
-                    <Badge variant="secondary" className="transition-colors hover:bg-primary hover:text-primary-foreground">
-                      {project.service}
-                    </Badge>
-                  </Link>
-                </div>
                 <h3 className="font-display font-semibold text-foreground">{project.title}</h3>
-                <p className="text-sm text-muted-foreground">{project.location}</p>
+                <p className="mt-1 text-xs text-muted-foreground line-clamp-1">
+                  {project.service} · {project.location}
+                </p>
                 <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{project.description}</p>
                 <Link
                   href={getServiceUrl(project.serviceSlug)}

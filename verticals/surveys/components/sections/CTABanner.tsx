@@ -11,7 +11,7 @@ const CTABanner = () => {
             Request a Survey Quote
           </h2>
           <p className="mb-8 text-lg text-primary">
-            Share your location and project brief to receive a no-obligation quote for the right survey scope.
+            Share your location and project brief for a no-obligation quote from qualified surveyors—the right scope, deliverables you can rely on, and no hard sell.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">

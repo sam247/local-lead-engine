@@ -99,7 +99,7 @@ export function GroupFooter({
                   width={120}
                   height={40}
                   className={cn(
-                    "h-8 w-auto max-w-[140px] object-contain object-center",
+                    "h-7 max-h-7 w-auto max-w-[120px] object-contain object-center",
                     onPrimary ? "opacity-90" : ""
                   )}
                 />

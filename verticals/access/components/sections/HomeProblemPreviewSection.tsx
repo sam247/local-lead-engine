@@ -23,18 +23,18 @@ export function HomeProblemPreviewSection({ title, intro, items }: ProblemPrevie
       <div className="container">
         <div className="mx-auto max-w-4xl">
           <h2 className="mb-3 font-display text-2xl font-bold">{title}</h2>
-          <p className="mb-6 text-muted-foreground">{intro}</p>
+          <p className="mb-8 text-muted-foreground">{intro}</p>
           <ul className="grid gap-3 md:grid-cols-2">
             {visibleItems.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="group block cursor-pointer rounded-md border border-border/70 bg-background/80 p-4 transition-shadow hover:border-primary/40 hover:shadow-md"
+                  className="group block cursor-pointer rounded-md border border-border/70 bg-background/80 p-4 transition-colors transition-shadow duration-150 hover:border-primary/50 hover:bg-muted/50 hover:shadow-md"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <span className="font-medium text-primary group-hover:underline">{item.title}</span>
                     <span
-                      className="shrink-0 text-muted-foreground opacity-70 transition-opacity group-hover:opacity-100"
+                      className="shrink-0 text-muted-foreground opacity-70 transition-transform duration-150 group-hover:translate-x-1 group-hover:opacity-100"
                       aria-hidden
                     >
                       →

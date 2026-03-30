@@ -333,6 +333,37 @@ const Hero = () => {
               <p className="mt-3 text-center text-xs text-muted-foreground">
                 No obligation · Free groundworks quote
               </p>
+              <div className="mt-4 border-t border-border/60 pt-4">
+                <p className="mb-3 text-center text-xs text-muted-foreground">
+                  <span className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+                    <span>Vetted contractors</span>
+                    <span className="text-muted-foreground/50" aria-hidden>
+                      ·
+                    </span>
+                    <span>Fully insured</span>
+                    <span className="text-muted-foreground/50" aria-hidden>
+                      ·
+                    </span>
+                    <span>UK-wide</span>
+                  </span>
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <img
+                    src="/citb.png"
+                    alt="CITB"
+                    width={100}
+                    height={32}
+                    className="h-6 w-auto max-w-[100px] object-contain opacity-90"
+                  />
+                  <img
+                    src="/dbs.png"
+                    alt="DBS disclosure check"
+                    width={100}
+                    height={32}
+                    className="h-6 w-auto max-w-[100px] object-contain opacity-90"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
