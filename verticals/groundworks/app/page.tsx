@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
-import { HomeTrustCoreBar } from "@/components/sections/HomeTrustCoreBar";
+import { HomePostHeroTrust } from "@/components/sections/HomePostHeroTrust";
+import { HomeCoreServicesSection } from "@/components/sections/HomeCoreServicesSection";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import ProjectsPreview from "@/components/sections/ProjectsPreview";
 import Testimonials from "@/components/sections/Testimonials";
@@ -41,12 +42,13 @@ export default function HomePage() {
     <>
       <SchemaMarkup type="LocalBusiness" data={{ areaServed: "UK" }} />
       <Hero />
-      <HomeTrustCoreBar coreServices={services.slice(0, Math.min(5, services.length))} />
+      <HomePostHeroTrust />
       <ProblemPreviewSection
         title="Common ground and foundation issues"
         intro="When subsidence, unstable ground, waterlogged formations, or foundation cracking start to affect programme certainty, these issue pages help teams move from concern to action."
         items={problemItems}
       />
+      <HomeCoreServicesSection services={services.slice(0, Math.min(5, services.length))} />
       <ServicesGrid />
       <TrustPoints items={verticalConfig.homepageTrustPoints} />
       <ProjectsPreview />
