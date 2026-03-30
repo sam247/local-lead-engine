@@ -6,8 +6,12 @@ export interface GroupFooterProps {
   className?: string;
   /** `onPrimary`: light text on dark footer. `default`: muted text on light section (e.g. About page). */
   variant?: "onPrimary" | "default";
+  /** Optional short trust copy shown above badge row (footer, right column). */
+  trustLine?: string;
   /** Optional trust mark image URL (e.g. `/dbs.png` from each vertical `public/`). */
   dbsLogoSrc?: string;
+  /** Optional second trust mark (e.g. `/citb.png`), same height as DBS. */
+  citbLogoSrc?: string;
 }
 
 const LINK_TITLES: Record<string, string> = {
@@ -20,10 +24,19 @@ const LINK_TITLES: Record<string, string> = {
 /**
  * Mainline Group division links: separate anchors, no pipe-concatenated text.
  */
-export function GroupFooter({ items, className, variant = "onPrimary", dbsLogoSrc }: GroupFooterProps) {
+export function GroupFooter({
+  items,
+  className,
+  variant = "onPrimary",
+  trustLine,
+  dbsLogoSrc,
+  citbLogoSrc,
+}: GroupFooterProps) {
   if (!items.length) return null;
 
   const onPrimary = variant === "onPrimary";
+  const showBadges = Boolean(dbsLogoSrc || citbLogoSrc);
+  const showRightColumn = Boolean(trustLine || showBadges);
 
   return (
     <div
@@ -65,15 +78,46 @@ export function GroupFooter({ items, className, variant = "onPrimary", dbsLogoSr
           ))}
         </ul>
       </div>
-      {dbsLogoSrc ? (
-        <div className="shrink-0 sm:ml-4">
-          <img
-            src={dbsLogoSrc}
-            alt="DBS disclosure check"
-            width={120}
-            height={40}
-            className={cn("h-8 w-auto max-w-[140px] object-contain object-right", onPrimary ? "opacity-90" : "")}
-          />
+      {showRightColumn ? (
+        <div className="flex shrink-0 flex-col items-end gap-2 sm:ml-4">
+          {trustLine ? (
+            <p
+              className={cn(
+                "max-w-[min(100%,22rem)] text-right text-[10px] leading-snug sm:text-xs",
+                onPrimary ? "text-primary-foreground/75" : "text-muted-foreground"
+              )}
+            >
+              {trustLine}
+            </p>
+          ) : null}
+          {showBadges ? (
+            <div className="flex items-center justify-end gap-3">
+              {citbLogoSrc ? (
+                <img
+                  src={citbLogoSrc}
+                  alt="CITB"
+                  width={120}
+                  height={40}
+                  className={cn(
+                    "h-8 w-auto max-w-[140px] object-contain object-center",
+                    onPrimary ? "opacity-90" : ""
+                  )}
+                />
+              ) : null}
+              {dbsLogoSrc ? (
+                <img
+                  src={dbsLogoSrc}
+                  alt="DBS disclosure check"
+                  width={120}
+                  height={40}
+                  className={cn(
+                    "h-8 w-auto max-w-[140px] object-contain object-right",
+                    onPrimary ? "opacity-90" : ""
+                  )}
+                />
+              ) : null}
+            </div>
+          ) : null}
         </div>
       ) : null}
     </div>

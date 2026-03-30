@@ -10,7 +10,10 @@ const TRUST_ITEMS = [
 /** Lightweight trust row directly under the homepage hero (four items). */
 export function HomeTrustCoreBar() {
   return (
-    <section className="border-b border-border bg-background py-4 sm:py-5" aria-label="Trust signals">
+    <section
+      className="border-y border-border/60 bg-muted/40 py-4 sm:py-5"
+      aria-label="Trust signals"
+    >
       <div className="container">
         <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2.5 text-xs text-muted-foreground/90 sm:justify-between">
           {TRUST_ITEMS.map(({ label, icon: Icon }, i) => (

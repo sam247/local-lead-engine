@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import { HomeTrustCoreBar } from "@/components/sections/HomeTrustCoreBar";
+import { HomeProblemPreviewSection } from "@/components/sections/HomeProblemPreviewSection";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import ProjectsPreview from "@/components/sections/ProjectsPreview";
 import Testimonials from "@/components/sections/Testimonials";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import { TrustPoints, HomepageArticles, pickHomepageArticleCards, ProblemPreviewSection } from "engine";
+import { TrustPoints, HomepageArticles, pickHomepageArticleCards } from "engine";
 import { verticalConfig } from "@/config";
 import { blogPosts, getCategoryPages, getHubData } from "@/lib/data";
 import { surveyProblemPages } from "@/data/problemPages";
@@ -42,16 +43,16 @@ export default function HomePage() {
       <SchemaMarkup type="LocalBusiness" data={{ areaServed: "London and surrounding areas" }} />
       <Hero />
       <HomeTrustCoreBar />
-      <section className="py-4 sm:py-6">
+      <section className="py-4">
         <div className="container">
-          <p className="mx-auto max-w-2xl text-center text-sm text-muted-foreground sm:text-base">
+          <p className="mx-auto max-w-2xl text-center text-base text-muted-foreground">
             Tell us what&apos;s going on — we&apos;ll connect you with the right specialist near you.
           </p>
         </div>
       </section>
-      <ProblemPreviewSection
+      <HomeProblemPreviewSection
         title="What do you need help with?"
-        intro="When planning decisions, boundary uncertainty, utility risk, or pre-purchase concerns appear, a targeted survey usually gives the evidence needed to move forward with confidence."
+        intro="Select the issue below to get matched with a specialist near you."
         items={problemItems}
       />
       <ServicesGrid />
