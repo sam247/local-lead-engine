@@ -28,20 +28,6 @@ export function HomeTrustCoreBar() {
           aria-label="Accreditation marks"
         >
           <img
-            src="/citb.png"
-            alt="CITB"
-            width={88}
-            height={28}
-            className="h-6 w-auto max-w-[88px] object-contain"
-          />
-          <img
-            src="/dbs.png"
-            alt="DBS disclosure check"
-            width={88}
-            height={28}
-            className="h-6 w-auto max-w-[88px] object-contain"
-          />
-          <img
             src="/trustmark.png"
             alt="TrustMark"
             width={88}

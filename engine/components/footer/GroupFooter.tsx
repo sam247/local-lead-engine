@@ -58,7 +58,7 @@ export function GroupFooter({
         <p
           className={cn(
             "mb-3 text-xs font-semibold uppercase tracking-wide",
-            onPrimary ? "text-primary-foreground/60" : "text-muted-foreground"
+            onPrimary ? "text-white/60" : "text-muted-foreground"
           )}
         >
           Part of the Mainline Group
@@ -74,8 +74,8 @@ export function GroupFooter({
                   "inline-block text-sm font-medium underline-offset-2 transition-colors hover:underline",
                   onPrimary
                     ? item.isCurrent
-                      ? "text-primary-foreground"
-                      : "text-primary-foreground/80 hover:text-primary-foreground"
+                      ? "text-white"
+                      : "text-white/80 hover:text-white"
                     : item.isCurrent
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-primary"
@@ -93,7 +93,7 @@ export function GroupFooter({
             <p
               className={cn(
                 "max-w-[min(100%,22rem)] text-right text-[10px] leading-snug sm:text-xs",
-                onPrimary ? "text-primary-foreground/75" : "text-muted-foreground"
+                onPrimary ? "text-white/75" : "text-muted-foreground"
               )}
             >
               {trustLine}

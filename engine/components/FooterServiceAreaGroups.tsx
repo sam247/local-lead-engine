@@ -34,7 +34,7 @@ export function FooterServiceAreaGroups({
       <h4
         className={cn(
           "mb-3 text-sm font-semibold",
-          onPrimary ? "text-primary-foreground/60" : "text-muted-foreground"
+          onPrimary ? "text-white/60" : "text-muted-foreground"
         )}
       >
         Areas We Cover
@@ -61,7 +61,7 @@ export function FooterServiceAreaGroups({
             className={cn(
               "inline-block text-sm font-medium transition-colors",
               onPrimary
-                ? "text-primary-foreground/80 hover:text-primary-foreground"
+                ? "text-white/80 hover:text-white"
                 : "text-primary hover:underline"
             )}
           >
