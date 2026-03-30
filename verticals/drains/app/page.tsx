@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
-import { HomePostHeroTrust } from "@/components/sections/HomePostHeroTrust";
-import { HomeCoreServicesSection } from "@/components/sections/HomeCoreServicesSection";
+import { HomeTrustCoreBar } from "@/components/sections/HomeTrustCoreBar";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import ProjectsPreview from "@/components/sections/ProjectsPreview";
 import Testimonials from "@/components/sections/Testimonials";
@@ -9,7 +8,7 @@ import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { TrustPoints, HomepageArticles, pickHomepageArticleCards, ProblemPreviewSection } from "engine";
 import { verticalConfig } from "@/config";
-import { blogPosts, getCategoryPages, getHubData, services } from "@/lib/data";
+import { blogPosts, getCategoryPages, getHubData } from "@/lib/data";
 import { drainProblemPages } from "@/data/problemPages";
 
 export const metadata: Metadata = {
@@ -42,13 +41,19 @@ export default function HomePage() {
     <>
       <SchemaMarkup type="LocalBusiness" data={{ areaServed: "London and surrounding areas" }} />
       <Hero />
-      <HomePostHeroTrust />
+      <HomeTrustCoreBar />
+      <section className="py-4 sm:py-6">
+        <div className="container">
+          <p className="mx-auto max-w-2xl text-center text-sm text-muted-foreground sm:text-base">
+            Tell us what&apos;s going on — we&apos;ll connect you with the right specialist near you.
+          </p>
+        </div>
+      </section>
       <ProblemPreviewSection
-        title="Common drainage issues"
+        title="What's the drainage issue?"
         intro="If drains are backing up, flooding, smelling, or repeatedly slowing down, these are usually signs of an issue that needs proper diagnosis before disruption gets worse."
         items={problemItems}
       />
-      <HomeCoreServicesSection services={services.slice(0, Math.min(5, services.length))} />
       <ServicesGrid />
       <TrustPoints items={verticalConfig.homepageTrustPoints} />
       <ProjectsPreview />
