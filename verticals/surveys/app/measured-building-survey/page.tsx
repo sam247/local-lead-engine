@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { companyInfo, locations, services } from "@/lib/data";
 import { verticalConfig } from "@/config";
 import { TrackablePhoneLink } from "engine";
+import CTABanner from "@/components/sections/CTABanner";
 
 export const dynamic = "force-static";
 export const revalidate = false;
@@ -81,6 +82,9 @@ const linkCandidates = uniqueServicePriority
 
 const internalLinks = linkCandidates.slice(0, 5);
 
+const phoneLinkClass =
+  "inline-flex items-center justify-center gap-2 rounded-md border border-primary bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90";
+
 export const metadata: Metadata = {
   title: `${serviceFallback.title} | ${verticalConfig.siteName}`,
   description:
@@ -91,93 +95,131 @@ export const metadata: Metadata = {
 };
 
 export default function MeasuredBuildingSurveyPage() {
+  const sidebarBullets = serviceFallback.includedPoints.slice(0, 5);
+
   return (
     <main className="bg-background">
-      <section className="section-padding">
-        <div className="container max-w-4xl">
+      <section className="border-b border-border/60 bg-muted/40 py-10">
+        <div className="container">
           <h1 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">{`${pageTitle} | ${verticalConfig.siteName}`}</h1>
           <p className="mb-4 text-muted-foreground md:text-lg">{serviceFallback.heroSubtitle}</p>
-          <div className="mb-6 flex flex-col gap-3 sm:flex-row">
-            <Button asChild>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <TrackablePhoneLink
+              phone={companyInfo.phone}
+              vertical={verticalConfig.verticalId}
+              serviceSlug={trackedServiceSlug}
+              locationSlug={null}
+              pagePath={`/${pageSlug}`}
+              source="cta"
+              className={phoneLinkClass}
+            >
+              <Phone className="h-4 w-4" />
+              Call now
+            </TrackablePhoneLink>
+            <Button asChild size="lg" variant="outline">
               <Link href="/contact">Get a quote</Link>
             </Button>
-            <TrackablePhoneLink
-              phone={companyInfo.phone}
-              vertical={verticalConfig.verticalId}
-              serviceSlug={trackedServiceSlug}
-              locationSlug={null}
-              pagePath={`/${pageSlug}`}
-              source="cta"
-              className="inline-flex items-center justify-center gap-2 rounded-md border border-primary px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-            >
-              <Phone className="h-4 w-4" />
-              Call now
-            </TrackablePhoneLink>
           </div>
         </div>
       </section>
-      <section className="section-padding">
-        <div className="container max-w-4xl">
-          <p className="text-muted-foreground">{serviceFallback.intro}</p>
-          <h2 className="mt-8 mb-4 font-display text-2xl font-bold">What this service includes</h2>
-          <ul className="space-y-2">
-            {serviceFallback.includedPoints.map((point) => (
-              <li key={point} className="flex items-start gap-2 text-muted-foreground">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                {point}
-              </li>
-            ))}
-          </ul>
-          <h2 className="mt-8 mb-4 font-display text-2xl font-bold">Typical costs</h2>
-          <div className="grid gap-3 md:grid-cols-3">
-            {serviceFallback.costBands.map((band) => (
-              <div key={band.label} className="rounded-lg border border-border bg-secondary p-4">
-                <p className="text-sm font-semibold text-foreground">{band.label}</p>
-                <p className="mt-1 text-lg font-bold text-primary">{band.range}</p>
-                <p className="mt-2 text-sm text-muted-foreground">{band.note}</p>
+
+      <section className="py-8 md:py-10">
+        <div className="container">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <div className="lg:col-span-2">
+              <p className="text-muted-foreground">{serviceFallback.intro}</p>
+              <h2 className="mt-8 mb-4 font-display text-2xl font-bold">What this service includes</h2>
+              <ul className="space-y-2">
+                {serviceFallback.includedPoints.map((point) => (
+                  <li key={point} className="flex items-start gap-2 text-muted-foreground">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+              <h2 className="mt-8 mb-4 font-display text-2xl font-bold">Typical costs</h2>
+              <div className="grid gap-3 md:grid-cols-3">
+                {serviceFallback.costBands.map((band) => (
+                  <div key={band.label} className="rounded-lg border border-border bg-secondary p-4">
+                    <p className="text-sm font-semibold text-foreground">{band.label}</p>
+                    <p className="mt-1 text-lg font-bold text-primary">{band.range}</p>
+                    <p className="mt-2 text-sm text-muted-foreground">{band.note}</p>
+                  </div>
+                ))}
               </div>
-            ))}
+              <h2 className="mt-8 mb-4 font-display text-2xl font-bold">When you need this</h2>
+              <ul className="mb-8 space-y-2">
+                {serviceFallback.casePoints.map((point) => (
+                  <li key={point} className="flex items-start gap-2 text-muted-foreground">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+              <h2 className="mb-4 font-display text-2xl font-bold">{pageCtaHeading}</h2>
+              <p className="mb-4 text-muted-foreground">Use our local survey team to move design and build plans forward with dependable measured data and clear timelines.</p>
+              <div className="mb-8 flex flex-col gap-3 sm:flex-row">
+                <TrackablePhoneLink
+                  phone={companyInfo.phone}
+                  vertical={verticalConfig.verticalId}
+                  serviceSlug={trackedServiceSlug}
+                  locationSlug={null}
+                  pagePath={`/${pageSlug}`}
+                  source="cta"
+                  className={phoneLinkClass}
+                >
+                  <Phone className="h-4 w-4" />
+                  Call now
+                </TrackablePhoneLink>
+                <Button asChild variant="default">
+                  <Link href="/contact">{pageCtaLabel}</Link>
+                </Button>
+              </div>
+              <h2 className="mb-4 font-display text-2xl font-bold">Related local services</h2>
+              <ul className="grid gap-3">
+                {internalLinks.map((link) => (
+                  <li key={link.key}>
+                    <Link href={link.href} className="inline-flex text-muted-foreground transition-colors hover:text-primary">
+                      {link.label} →
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <aside className="lg:col-span-1 lg:sticky lg:top-24 h-fit rounded-xl border border-border bg-card p-5">
+              <h2 className="mb-4 font-display text-lg font-semibold text-foreground">Get a quote</h2>
+              <div className="flex flex-col gap-3">
+                <TrackablePhoneLink
+                  phone={companyInfo.phone}
+                  vertical={verticalConfig.verticalId}
+                  serviceSlug={trackedServiceSlug}
+                  locationSlug={null}
+                  pagePath={`/${pageSlug}`}
+                  source="cta"
+                  className={phoneLinkClass}
+                >
+                  <Phone className="h-4 w-4" />
+                  Call now
+                </TrackablePhoneLink>
+                <Button asChild>
+                  <Link href="/contact">Get a quote</Link>
+                </Button>
+              </div>
+              <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                {sidebarBullets.map((point) => (
+                  <li key={point} className="flex items-start gap-2">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </aside>
           </div>
-          <h2 className="mt-8 mb-4 font-display text-2xl font-bold">When you need this</h2>
-          <ul className="mb-8 space-y-2">
-            {serviceFallback.casePoints.map((point) => (
-              <li key={point} className="flex items-start gap-2 text-muted-foreground">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                {point}
-              </li>
-            ))}
-          </ul>
-          <h2 className="mb-4 font-display text-2xl font-bold">{pageCtaHeading}</h2>
-          <p className="mb-4 text-muted-foreground">Use our local survey team to move design and build plans forward with dependable measured data and clear timelines.</p>
-          <div className="mb-8 flex flex-col gap-3 sm:flex-row">
-            <Button asChild variant="default">
-              <Link href="/contact">{pageCtaLabel}</Link>
-            </Button>
-            <TrackablePhoneLink
-              phone={companyInfo.phone}
-              vertical={verticalConfig.verticalId}
-              serviceSlug={trackedServiceSlug}
-              locationSlug={null}
-              pagePath={`/${pageSlug}`}
-              source="cta"
-              className="inline-flex items-center justify-center gap-2 rounded-md border border-primary px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-            >
-              <Phone className="h-4 w-4" />
-              Call now
-            </TrackablePhoneLink>
-          </div>
-          <h2 className="mb-4 font-display text-2xl font-bold">Related local services</h2>
-          <ul className="grid gap-3">
-            {internalLinks.map((link) => (
-              <li key={link.key}>
-                <Link href={link.href} className="inline-flex text-muted-foreground transition-colors hover:text-primary">
-                  {link.label} →
-                </Link>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
+
+      <CTABanner />
     </main>
   );
 }

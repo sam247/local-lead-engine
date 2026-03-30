@@ -6,60 +6,66 @@ import { companyInfo, locations, services } from "@/lib/data";
 import { verticalConfig } from "@/config";
 import { TrackablePhoneLink } from "engine";
 import CTABanner from "@/components/sections/CTABanner";
+import { getTopicForRouteSlug } from "@/lib/topicLocationConfig";
 
 export const dynamic = "force-static";
 export const revalidate = false;
 
-const pageSlug = "cctv-drain-survey";
+const pageSlug = "soakaway-installation";
 
 const serviceConfigBySlug = new Map(services.map((service) => [service.slug, service]));
 const locationNameById = new Map(locations.map((location) => [location.id, location.name]));
 const locationIds = locations.map((location) => location.id);
+
 const servicePriorityFallback = [
-  "cctv-drain-surveys",
-  "drain-collapse-repair",
-  "drain-excavation",
-  "drain-relining",
-  "drain-root-removal",
+  "groundworks-contractors",
+  "excavation-contractors",
+  "foundation-contractors",
+  "site-clearance-contractors",
+  "enabling-works-contractors",
 ];
 
 const preferredLocations = ["london", "manchester", "birmingham"];
-const serviceFallback = {
-  title: "CCTV Drain Survey Services",
-  heroSubtitle: "Get a fast, practical assessment of your drainage system, with no unnecessary excavation and clear next-step recommendations.",
-  intro:
-    "Mainline Drains provides local CCTV drain survey support to identify blockages, collapses and damage quickly. We then guide you to the right remedy so you can move from diagnosis to repair with confidence.",
-  includedPoints: [
-    "Camera inspection of access points, inspection chambers and pipe runs",
-    "Condition reporting with fault location and likely cause",
-    "Clear options for relining, jetting or excavation",
-    "Prioritised recommendations based on risk and disruption",
-    "Advice for insurance claims and onward contractors",
-  ],
-  costBands: [
-    { label: "Residential priority survey", range: "£150–£300 + VAT", note: "Typical single-property scope." },
-    { label: "Complex property survey", range: "£300–£550 + VAT", note: "Additional chambers or deep access points." },
-    { label: "Multiple area survey", range: "£550–£900 + VAT", note: "Commercial blocks and larger run lengths." },
-  ],
-  casePoints: [
-    "Recurring foul smells or backup symptoms",
-    "Repeated blockages after previous clearance",
-    "Property sale or refinance with drain condition risks",
-    "Planning new work that may intersect existing drainage",
-  ],
-  ctaLabel: "Get a Drain Survey Quote",
-  ctaHeading: "Need to book a drain survey quickly?",
-};
 
-const serviceForPage = serviceConfigBySlug.get(pageSlug);
-const pageTitle = serviceForPage?.title ?? serviceFallback.title;
-const trackedServiceSlug = serviceForPage?.slug ?? pageSlug;
+function buildPageData() {
+  const topic = getTopicForRouteSlug(pageSlug);
+  if (!topic) return null;
+
+  const includedPoints = [
+    ...topic.typicalScenarios,
+    ...topic.commonProblems.slice(0, Math.max(0, 5 - topic.typicalScenarios.length)),
+  ].slice(0, 5);
+
+  const costBands = [
+    { label: "Small domestic soakaway", range: "£1,500–£4,000 + VAT", note: "Typical crate or rubble install to design." },
+    { label: "Larger residential / light commercial", range: "£4,000–£12,000 + VAT", note: "Bigger drained area, deeper dig, more connections." },
+    { label: "Attenuation / SuDS-linked scope", range: "£12,000+ + VAT", note: "Storage, flow control and adoption requirements." },
+  ];
+
+  const serviceFallback = {
+    heroSubtitle: `${topic.intro.split(".")[0]}.`,
+    intro: topic.intro,
+    includedPoints,
+    costBands,
+    casePoints: topic.commonProblems,
+    ctaLabel: topic.ctaText,
+    ctaHeading: "Ready to install surface water disposal?",
+  };
+
+  return { topic, serviceFallback, pageTitle: topic.title, trackedServiceSlug: topic.primaryServiceSlug };
+}
+
+const pageData = buildPageData();
+if (!pageData) {
+  throw new Error("soakaway-installation: topic data missing");
+}
+const { pageTitle, serviceFallback, trackedServiceSlug } = pageData;
+const serviceForPage = serviceConfigBySlug.get(trackedServiceSlug);
 
 const servicePriority = serviceForPage
   ? [serviceForPage.slug, ...servicePriorityFallback.filter((slug) => slug !== serviceForPage.slug)]
   : servicePriorityFallback;
 const uniqueServicePriority = servicePriority.filter((slug, index, arr) => arr.indexOf(slug) === index);
-
 const orderedLocationIds = preferredLocations.filter((locationId) => locationNameById.has(locationId));
 locationIds.forEach((locationId) => {
   if (locationNameById.has(locationId) && !orderedLocationIds.includes(locationId)) {
@@ -72,10 +78,8 @@ const linkCandidates = uniqueServicePriority
   .flatMap((slug) => {
     const service = serviceConfigBySlug.get(slug);
     if (!service) return [];
-
-    const validLocationIds = orderedLocationIds.slice(0, 3);
-
-    return validLocationIds.map((locationId) => ({
+    const preferredLocationOrder = orderedLocationIds.slice(0, 3);
+    return preferredLocationOrder.map((locationId) => ({
       href: `/${slug}/${locationId}`,
       label: `${service.title} in ${locationNameById.get(locationId)}`,
       key: `${slug}-${locationId}`,
@@ -89,15 +93,14 @@ const phoneLinkClass =
 
 export const metadata: Metadata = {
   title: `${pageTitle} | ${verticalConfig.siteName}`,
-  description:
-    "Need CCTV drain survey support in London, Manchester or Birmingham? Request a local quote for practical inspection and next-step pricing from Mainline Drains.",
+  description: `${serviceFallback.intro.slice(0, 155)}`,
   alternates: {
     canonical: `${verticalConfig.baseUrl}/${pageSlug}`,
   },
 };
 
-export default function CctvDrainSurveyPage() {
-  const sidebarBullets = serviceFallback.includedPoints.slice(0, 5);
+export default function SoakawayInstallationPage() {
+  const sidebarBullets = serviceFallback.includedPoints;
 
   return (
     <main className="bg-background">
@@ -159,7 +162,9 @@ export default function CctvDrainSurveyPage() {
                 ))}
               </ul>
               <h2 className="mb-4 font-display text-2xl font-bold">{serviceFallback.ctaHeading}</h2>
-              <p className="mb-4 text-muted-foreground">Get this job started today with a direct quote and clear repair direction from a local service team.</p>
+              <p className="mb-4 text-muted-foreground">
+                Get a clear quote for soakaway installation with commissioning and documentation for building control or adoption.
+              </p>
               <div className="mb-8 flex flex-col gap-3 sm:flex-row">
                 <TrackablePhoneLink
                   phone={companyInfo.phone}

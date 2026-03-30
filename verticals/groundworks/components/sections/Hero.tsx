@@ -203,30 +203,30 @@ const Hero = () => {
                 <img
                   src="/citb.png"
                   alt="CITB"
-                  width={88}
-                  height={28}
-                  className="h-5 w-auto max-w-[88px] object-contain opacity-90"
+                  width={110}
+                  height={35}
+                  className="h-7 w-auto max-w-[110px] object-contain opacity-90"
                 />
                 <img
                   src="/dbs.png"
                   alt="DBS disclosure check"
-                  width={88}
-                  height={28}
-                  className="h-5 w-auto max-w-[88px] object-contain opacity-90"
+                  width={110}
+                  height={35}
+                  className="h-7 w-auto max-w-[110px] object-contain opacity-90"
                 />
                 <img
                   src="/trustmark.png"
                   alt="TrustMark"
-                  width={88}
-                  height={28}
-                  className="h-5 w-auto max-w-[88px] object-contain opacity-90"
+                  width={110}
+                  height={35}
+                  className="h-7 w-auto max-w-[110px] object-contain opacity-90"
                 />
                 <img
                   src="/fmb.png"
                   alt="Federation of Master Builders"
-                  width={88}
-                  height={28}
-                  className="h-5 w-auto max-w-[88px] object-contain opacity-90"
+                  width={110}
+                  height={35}
+                  className="h-7 w-auto max-w-[110px] object-contain opacity-90"
                 />
               </div>
             </div>

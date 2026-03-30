@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { verticalConfig } from "@/config";
 import CostPageTemplate from "@/components/CostPageTemplate";
+import CTABanner from "@/components/sections/CTABanner";
 import { companiesCostPage, getCompaniesCostLinks } from "@/lib/companiesCostPage";
 
 export const dynamic = "force-static";
@@ -28,23 +29,26 @@ export default function CompaniesCostPage() {
   ];
 
   return (
-    <CostPageTemplate
-      h1={companiesCostPage.h1}
-      intro={companiesCostPage.intro}
-      typicalCostsTitle={companiesCostPage.typicalCostsTitle}
-      typicalCosts={companiesCostPage.typicalCosts}
-      costFactorsTitle={companiesCostPage.costFactorsTitle}
-      costFactors={companiesCostPage.costFactors}
-      exampleJobsTitle={companiesCostPage.exampleJobsTitle}
-      exampleJobs={companiesCostPage.exampleJobs}
-      quotesTitle={companiesCostPage.quotesTitle}
-      quotesBody={companiesCostPage.quotesBody}
-      ctaTitle={companiesCostPage.ctaTitle}
-      ctaBullets={companiesCostPage.ctaBullets}
-      ctaLinks={ctaLinks}
-      relatedLinksTitle="Popular groundwork services by location"
-      relatedLinks={relatedLinks}
-      faqs={companiesCostPage.faqs}
-    />
+    <>
+      <CostPageTemplate
+        h1={companiesCostPage.h1}
+        intro={companiesCostPage.intro}
+        typicalCostsTitle={companiesCostPage.typicalCostsTitle}
+        typicalCosts={companiesCostPage.typicalCosts}
+        costFactorsTitle={companiesCostPage.costFactorsTitle}
+        costFactors={companiesCostPage.costFactors}
+        exampleJobsTitle={companiesCostPage.exampleJobsTitle}
+        exampleJobs={companiesCostPage.exampleJobs}
+        quotesTitle={companiesCostPage.quotesTitle}
+        quotesBody={companiesCostPage.quotesBody}
+        ctaTitle={companiesCostPage.ctaTitle}
+        ctaBullets={companiesCostPage.ctaBullets}
+        ctaLinks={ctaLinks}
+        relatedLinksTitle="Popular groundwork services by location"
+        relatedLinks={relatedLinks}
+        faqs={companiesCostPage.faqs}
+      />
+      <CTABanner />
+    </>
   );
 }

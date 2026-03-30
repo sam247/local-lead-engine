@@ -1,4 +1,9 @@
 import Link from "next/link";
+import { Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { companyInfo } from "@/lib/data";
+import { verticalConfig } from "@/config";
+import { TrackablePhoneLink } from "engine";
 
 type CostBand = {
   label: string;
@@ -65,17 +70,34 @@ export default function CostPageTemplate({
 }: CostPageTemplateProps) {
   return (
     <>
-      <section className="bg-primary py-16 md:py-24">
+      <section className="border-b border-border/60 bg-muted/40 py-10">
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-4 font-display text-3xl font-bold text-primary-foreground md:text-4xl lg:text-5xl">{h1}</h1>
-            <p className="text-base text-primary-foreground/85 md:text-lg">{intro}</p>
+            <h1 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">{h1}</h1>
+            <p className="text-base text-muted-foreground md:text-lg">{intro}</p>
+            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <TrackablePhoneLink
+                phone={companyInfo.phone}
+                vertical={verticalConfig.verticalId}
+                serviceSlug={null}
+                locationSlug={null}
+                pagePath="/companies-cost"
+                source="cta"
+                className="inline-flex items-center justify-center gap-2 rounded-md border border-primary bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                <Phone className="h-4 w-4" />
+                Call now
+              </TrackablePhoneLink>
+              <Button asChild size="lg" variant="outline">
+                <Link href="/contact">Get a quote</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section-padding">
-        <div className="container max-w-4xl">
+      <section className="py-8 md:py-10">
+        <div className="container">
           <h2 className="mb-6 font-display text-2xl font-bold md:text-3xl">{typicalCostsTitle}</h2>
           <div className="grid gap-4 md:grid-cols-3">
             {typicalCosts.map((band) => (
@@ -89,8 +111,8 @@ export default function CostPageTemplate({
         </div>
       </section>
 
-      <section className="section-padding bg-secondary">
-        <div className="container max-w-4xl">
+      <section className="py-8 md:py-10 bg-secondary">
+        <div className="container">
           <h2 className="mb-5 font-display text-2xl font-bold md:text-3xl">{costFactorsTitle}</h2>
           <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
             {costFactors.map((factor) => (
@@ -100,12 +122,12 @@ export default function CostPageTemplate({
         </div>
       </section>
 
-      <section className="section-padding">
-        <div className="container max-w-4xl">
+      <section className="py-8 md:py-10">
+        <div className="container">
           <h2 className="mb-5 font-display text-2xl font-bold md:text-3xl">{exampleJobsTitle}</h2>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {exampleJobs.map((job) => (
-              <div key={job.title} className="rounded-lg border border-border bg-background p-4">
+              <div key={job.title} className="border-b border-border/60 pb-4 last:border-0 last:pb-0">
                 <p className="font-medium text-foreground">{job.title}</p>
                 <p className="text-sm text-muted-foreground">{job.range}</p>
               </div>
@@ -114,43 +136,41 @@ export default function CostPageTemplate({
         </div>
       </section>
 
-      <section className="section-padding bg-secondary">
-        <div className="container max-w-4xl">
+      <section className="py-8 md:py-10 bg-secondary">
+        <div className="container">
           <h2 className="mb-4 font-display text-2xl font-bold md:text-3xl">{quotesTitle}</h2>
           <p className="text-muted-foreground">{quotesBody}</p>
         </div>
       </section>
 
-      <section className="section-padding">
-        <div className="container max-w-4xl">
-          <div className="rounded-xl border border-border bg-primary/5 p-6 md:p-8">
-            <h2 className="mb-4 font-display text-2xl font-bold md:text-3xl">{ctaTitle}</h2>
-            <ul className="mb-6 list-disc space-y-2 pl-5 text-muted-foreground">
-              {ctaBullets.map((bullet) => (
-                <li key={bullet}>{bullet}</li>
-              ))}
-            </ul>
-            <div className="flex flex-wrap gap-3">
-              {ctaLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+      <section className="py-8 md:py-10">
+        <div className="container">
+          <h2 className="mb-4 font-display text-2xl font-bold md:text-3xl">{ctaTitle}</h2>
+          <ul className="mb-6 list-disc space-y-2 pl-5 text-muted-foreground">
+            {ctaBullets.map((bullet) => (
+              <li key={bullet}>{bullet}</li>
+            ))}
+          </ul>
+          <div className="flex flex-wrap gap-3">
+            {ctaLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="section-padding bg-secondary">
-        <div className="container max-w-4xl">
+      <section className="py-8 md:py-10 bg-secondary">
+        <div className="container">
           <h2 className="mb-5 font-display text-2xl font-bold md:text-3xl">{relatedLinksTitle}</h2>
           <div className="grid gap-3 md:grid-cols-2">
             {relatedLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="rounded-lg border border-border bg-background p-4 text-sm font-medium text-primary transition-colors hover:text-primary/80">
+              <Link key={link.href} href={link.href} className="text-sm font-medium text-primary transition-colors hover:text-primary/80">
                 {link.title}
               </Link>
             ))}
@@ -159,8 +179,8 @@ export default function CostPageTemplate({
       </section>
 
       {faqs.length > 0 ? (
-        <section className="section-padding">
-          <div className="container max-w-4xl">
+        <section className="py-8 md:py-10">
+          <div className="container">
             <h2 className="mb-5 font-display text-2xl font-bold md:text-3xl">Frequently asked pricing questions</h2>
             <div className="space-y-4">
               {faqs.map((faq) => (
