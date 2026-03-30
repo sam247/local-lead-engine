@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import { HomeTrustCoreBar } from "@/components/sections/HomeTrustCoreBar";
@@ -7,10 +8,11 @@ import ProjectsPreview from "@/components/sections/ProjectsPreview";
 import Testimonials from "@/components/sections/Testimonials";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import { TrustPoints, HomepageArticles, pickHomepageArticleCards } from "engine";
+import { TrustPoints, pickHomepageArticleCards } from "engine";
 import { verticalConfig } from "@/config";
 import { blogPosts, getCategoryPages, getHubData } from "@/lib/data";
 import { groundworksProblemPages } from "@/data/problemPages";
+import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Mainline Groundworks | Piling, Excavation & Foundation Contractors UK",
@@ -44,13 +46,6 @@ export default function HomePage() {
       <SchemaMarkup type="LocalBusiness" data={{ areaServed: "UK" }} />
       <Hero />
       <HomeTrustCoreBar />
-      <section className="pt-8 pb-4 md:pt-10">
-        <div className="container">
-          <p className="mx-auto max-w-2xl text-center text-base text-muted-foreground">
-            Tell us what&apos;s going on — we&apos;ll connect you with the right specialist near you.
-          </p>
-        </div>
-      </section>
       <HomeProblemPreviewSection
         title="What's the issue on site?"
         intro="Select the issue below to get matched with a specialist near you."
@@ -62,7 +57,34 @@ export default function HomePage() {
         className="[&_li>span:first-child]:h-[3.75rem] [&_li>span:first-child]:w-[3.75rem] [&_li_svg]:h-8 [&_li_svg]:w-8 [&_li_svg]:text-muted-foreground/90"
       />
       <ProjectsPreview />
-      <HomepageArticles cards={articleCards} />
+      <section className="section-padding bg-background">
+        <div className="container">
+          <div className="mx-auto mb-10 max-w-2xl text-center">
+            <h2 className="font-display text-3xl font-bold text-foreground md:text-4xl">
+              Planning groundworks? Start here
+            </h2>
+            <p className="mt-2 text-muted-foreground">Practical guides and articles from our team.</p>
+          </div>
+          <ul className="grid gap-6 md:grid-cols-3">
+            {articleCards.map((card) => (
+              <li key={card.href}>
+                <article className="flex h-full flex-col rounded-lg border border-border bg-card p-6 transition-shadow hover:shadow-md">
+                  <h3 className="font-display text-lg font-semibold text-foreground">
+                    <Link href={card.href} className="hover:text-primary">
+                      {card.title}
+                    </Link>
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm text-muted-foreground">{card.excerpt}</p>
+                  <Link href={card.href} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                    Read more
+                    <ArrowRight className="h-4 w-4" aria-hidden />
+                  </Link>
+                </article>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
       <Testimonials />
       <CTABanner />
     </>

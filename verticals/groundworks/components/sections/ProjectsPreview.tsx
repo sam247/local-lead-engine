@@ -16,6 +16,7 @@ const ProjectsPreview = () => {
           <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
             Recent Projects
           </h2>
+          <p className="mt-2 text-muted-foreground">Recent groundworks work across the UK</p>
           <p className="text-muted-foreground">
             These project snapshots show real foundations, piling and excavation packages delivered across mixed groundworks programmes.
           </p>
@@ -51,6 +52,12 @@ const ProjectsPreview = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-6 text-center">
+          <Button asChild>
+            <Link href="/contact">Get a similar groundworks quote</Link>
+          </Button>
         </div>
 
         <div className="mt-12 text-center">

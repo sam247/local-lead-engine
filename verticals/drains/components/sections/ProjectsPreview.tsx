@@ -16,6 +16,7 @@ const ProjectsPreview = () => {
           <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
             Recent Projects
           </h2>
+          <p className="mt-2 text-muted-foreground">Recent drainage work across the UK</p>
           <p className="text-muted-foreground">
             These are real drainage jobs showing a mix of emergency repairs, investigative surveys and planned remedial works.
           </p>
@@ -51,6 +52,12 @@ const ProjectsPreview = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-6 text-center">
+          <Button asChild>
+            <Link href="/contact">Get a similar drainage quote</Link>
+          </Button>
         </div>
 
         <div className="mt-12 text-center">

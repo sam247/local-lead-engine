@@ -13,7 +13,7 @@ The repository is a **multi-vertical local lead generation platform**. Each vert
 - Targets location-based and service-based search intent.
 - Generates programmatic **service × location** pages (e.g. `/commercial-cctv-installation/richmond`).
 - Supports **topic hubs** (L3) and **topic pages** that link to services and locations.
-- Optionally supports **topic × location** pages (Access only, L5) for informational and commercial-intent searches.
+- Optionally supports **topic × location** pages (Access and Groundworks, L5) for informational and commercial-intent searches.
 
 The platform is built for **SEO**, **internal linking**, and **scalable programmatic page generation** without duplicating logic across verticals.
 
@@ -29,7 +29,7 @@ The platform is built for **SEO**, **internal linking**, and **scalable programm
 ### 1.3 How programmatic pages are generated
 
 - **Service × location (L4):** For each `(service, location)` pair, `generateStaticParams` in `app/[serviceSlug]/[locationSlug]/page.tsx` returns all combinations. Each vertical defines `services` and imports `locations` from the engine (or re-exports from engine). Pages are statically generated at build time.
-- **Topic × location (L5, Access only):** The same dynamic route `[serviceSlug]/[locationSlug]` is used. The first segment is resolved as either a **service slug** or a **topic slug**. A fixed list of topic slugs (`TOPIC_LOCATION_SLUGS`) is used; if the first segment is in that list, the page renders `TopicLocationPage` with programmatic topic content; otherwise it renders the standard `LocationPage` for service × location. No new route segments are added; route conflicts are avoided by **reserving** topic slugs that do not overlap with service slugs.
+- **Topic × location (L5, Access and Groundworks):** The same dynamic route `[serviceSlug]/[locationSlug]` is used. The first segment is resolved as either a **service slug** or a **topic slug**. A fixed list of topic slugs (`TOPIC_LOCATION_SLUGS`) is used; if the first segment is in that list, the page renders topic-location content (or redirects to topic-hub canonical pages for global-topic route slugs); otherwise it renders the standard `LocationPage` for service × location. No new route segments are added; route conflicts are avoided by **reserving** topic slugs that do not overlap with service slugs.
 
 ### 1.4 Role of the engine folder
 
@@ -61,9 +61,9 @@ The engine is **agnostic** to vertical-specific URLs, topic sets, or content. Ve
 | **L3** | Topic hubs | `/cctv-guides`, `/drain-problems`, `/foundation-problems` | All verticals (hub structure varies) |
 | **L3** | Topic category pages | `/cctv-guides/cctv-planning-and-placement`, `/drain-problems/signs-of-collapsed-drain` | All verticals |
 | **L4** | Service × location | `/commercial-cctv-installation/richmond`, `/drain-collapse-repair/london` | All verticals |
-| **L5** | Topic × location | `/cctv-installation/richmond`, `/data-cabling-installation/richmond` | **Access only** (Phase 4 rollout) |
+| **L5** | Topic × location | `/cctv-installation/richmond`, `/data-cabling-installation/richmond` | **Access and Groundworks** |
 
-L1–L4 exist in all verticals. L5 (topic × location) exists only in the Access vertical, using a fixed set of 10 topic slugs and the shared location dataset.
+L1–L4 exist in all verticals. L5 (topic × location) currently exists in Access and Groundworks, using fixed topic slug sets and the shared location dataset.
 
 ### 1.7 Service areas and primary near-me hubs
 
@@ -110,7 +110,7 @@ Vertical-specific **content datasets**: problem pages, guide pages, industry pag
 
 ### 2.5 verticals/{vertical}/lib/
 
-Vertical-specific **logic and data wiring**: `data.ts` (services, hubPages, getCategoryPages, getHubData, getRelevantTopicsForService), `topicLocationConfig.ts` (Access only), `sitemapXml.ts` (Access only), `hubPageProps.ts`, `infoPageProps.ts`, `pillarGuideProps.ts`, etc. This is where **service slug → topic category** mappings and **topic link generation** live.
+Vertical-specific **logic and data wiring**: `data.ts` (services, hubPages, getCategoryPages, getHubData, getRelevantTopicsForService), `topicLocationConfig.ts` (Access and Groundworks), `sitemapXml.ts` (Access and Groundworks), `hubPageProps.ts`, `infoPageProps.ts`, `pillarGuideProps.ts`, etc. This is where **service slug → topic category** mappings and **topic link generation** live.
 
 - **data.ts:** Must export (at least) `services`, `locations` (from engine), and for topic-capable verticals: `hubPages`, `getCategoryPages`, `getRelevantTopicsForService`.
 
@@ -118,11 +118,11 @@ Vertical-specific **logic and data wiring**: `data.ts` (services, hubPages, getC
 
 Next.js App Router: routes, layouts, page components. Structure varies by vertical.
 
-- **app/[serviceSlug]/[locationSlug]/page.tsx** – Dynamic route for **service × location** (all verticals) and, in Access, **topic × location** (same route, first segment resolved to service or topic).
+- **app/[serviceSlug]/[locationSlug]/page.tsx** – Dynamic route for **service × location** (all verticals) and, in Access/Groundworks, **topic × location** (same route, first segment resolved to service or topic).
 - **app/services/[serviceSlug]/page.tsx** – Service hub (L2).
 - **app/{hubBasePath}/page.tsx** and **app/{hubBasePath}/[slug]/page.tsx** – Topic hub index and topic category pages (L3).
-- **app/sitemap.ts** – Single sitemap (Drains, Surveys, Groundworks).
-- **Access only:** `app/sitemap.xml/route.ts` (sitemap index), `app/sitemap-services.xml/route.ts`, `app/sitemap-service-locations.xml/route.ts`, `app/sitemap-topics.xml/route.ts`, `app/sitemap-topic-locations.xml/route.ts`; `app/components/TopicLocationPage.tsx`.
+- **app/sitemap.ts** – Single sitemap (Drains, Surveys only).
+- **Access/Groundworks:** `app/sitemap.xml/route.ts` (sitemap index), `app/sitemap-services.xml/route.ts`, `app/sitemap-service-locations.xml/route.ts`, `app/sitemap-topics.xml/route.ts`, `app/sitemap-topic-locations.xml/route.ts` (where topic×location is implemented); `app/components/TopicLocationPage.tsx`.
 
 ### 2.7 verticals/{vertical}/config.ts
 
@@ -174,7 +174,7 @@ Exports `verticalConfig` (VerticalConfig): baseUrl, siteName, companyInfo, locat
 - **Service slugs (8):** groundworks-contractors, piling-contractors, mini-piling-contractors, excavation-contractors, site-clearance-contractors, foundation-contractors, concrete-foundations, enabling-works-contractors.
 - **Topic hubs:** basePaths `/guides`, `/foundation-problems`, `/ground-conditions`, `/groundworks-costs`, `/site-preparation`, `/driveway-groundworks`, `/construction-drainage`; each has index and `[slug]` pages.
 - **Topic datasets:** guidesPages, foundationProblems, groundConditionsPages, groundworksCostsPages, sitePreparationPages, drivewayGroundworksPages, constructionDrainagePages.
-- **Routes:** L2, L3, L4; no L5. Single sitemap via `buildSitemapEntries`.
+- **Routes:** L2, L3, L4; topic×location is implemented via the shared dynamic route (`[serviceSlug]/[locationSlug]`) using Groundworks topic slugs; no separate topic×location route file.
 - **Approximate page counts:** 8 × 100 = 800 service×location; fewer topic pages than drains.
 - **getRelevantTopicsForService:** Maps groundworks service slugs to foundation-problems, ground-conditions, groundworks-costs, site-preparation, etc.; 4–6 links per service.
 
@@ -217,7 +217,7 @@ Locations are **towns, cities, or distinct areas** (e.g. London, Richmond, Guild
 
 ### 4.5 How location pages are generated
 
-For each `(service, location)` (and in Access, each `(topicSlug, location)`), the corresponding page is statically generated. The route receives `serviceSlug` and `locationSlug` (params); the vertical looks up `service` and `location` from `services` and `locations`; if not found, `notFound()`. Location pages render engine `LocationPage` with props built from that service and location (and related topics from `getRelevantTopicsForService`).
+For each `(service, location)` (and in Access/Groundworks, each `(topicSlug, location)`), the corresponding page is statically generated. The route receives `serviceSlug` and `locationSlug` (params); the vertical looks up `service` and `location` from `services` and `locations`; if not found, `notFound()`. Location pages render engine `LocationPage` with props built from that service and location (and related topics from `getRelevantTopicsForService`).
 
 ---
 
@@ -227,7 +227,7 @@ For each `(service, location)` (and in Access, each `(topicSlug, location)`), th
 
 - **Service × location (all verticals):**  
   `return services.flatMap(s => locations.map(l => ({ serviceSlug: s.slug, locationSlug: l.id }))).`
-- **Topic × location (Access only):**  
+- **Topic × location (Access/Groundworks):**  
   Additional params from `getTopicLocationStaticParams(locations)`: for each slug in `TOPIC_LOCATION_SLUGS` and each location, `{ serviceSlug: topicSlug, locationSlug: loc.id }`. Combined with service×location params so the same route handles both.
 
 ### 5.2 Topic × location (Access): how it works
@@ -235,14 +235,30 @@ For each `(service, location)` (and in Access, each `(topicSlug, location)`), th
 - **Route:** Same dynamic segment: `app/[serviceSlug]/[locationSlug]/page.tsx`. No separate route for topic×location.
 - **Resolution:** On request, the handler checks `isTopicLocationSlug(serviceSlug)`. If true, it loads the programmatic topic via `getTopicForRouteSlug(serviceSlug)` and the location by `locationSlug`; then renders `TopicLocationPage` (vertical-specific component). If false, it treats the first segment as a service slug and renders engine `LocationPage` (service×location).
 - **Conflict avoidance:** Topic slugs used for L5 **must not** overlap with service slugs. Access uses 10 dedicated topic route slugs (e.g. `cctv-installation`, `data-cabling-installation`) that are not service slugs; service slugs (e.g. `commercial-cctv-installation`) continue to resolve to service×location.
+- **Service-hub route guard:** In `/[serviceSlug]/page.tsx`, topic slugs are also accepted in `generateStaticParams`, but if requested as a hub URL they `permanentRedirect` to the related service hub (from topic `relatedServiceSlugs`) to avoid rendering topic routes as hub pages.
 
-### 5.3 TopicLocationPage (Access)
+### 5.5 Topic × location (Groundworks): how it works
+
+- **Route:** Same dynamic segment: `app/[serviceSlug]/[locationSlug]/page.tsx`, without a dedicated topic×location route.
+- **Resolution:** Groundworks checks `isTopicLocationSlug(serviceSlug)` and resolves to local topic content via `getTopicForRouteSlug` for scalable topic slugs.
+- **Global topic redirect:** Groundworks marks some route slugs as global-content; those route slugs redirect to canonical non-location topic pages via `getGlobalTopicCanonicalPath`.
+- **Service-hub route guard:** Groundworks `/[serviceSlug]/page.tsx` includes topic slugs in static params and permanent-redirects topic-only URLs to the topic’s `primaryServiceSlug` when accessed without location.
+- **Sitemap routing:** `sitemap-topic-locations.xml` is implemented and iterates `getLocationScalableTopicSlugs()`. Verify these entries are included in discovery via `sitemap.xml` where required.
+
+### 5.6 Topic × location slug mapping (Groundworks)
+
+- Route slugs are defined in `TOPIC_LOCATION_SLUGS` and each map to a local `TopicLocationTopic` object in `TOPIC_DATA` (`title`, `intro`, `commonProblems`, `howSolved`, `typicalScenarios`, `primaryServiceSlug`, `ctaText`).
+- `getTopicForRouteSlug(routeSlug)` returns the inline topic payload used by `TopicLocationPage`.
+- `getGlobalTopicCanonicalPath(routeSlug)` uses an explicit map (`GLOBAL_TOPIC_CANONICAL_PATH_BY_ROUTE_SLUG`) for global pages such as `foundation-cost-per-metre` and `groundworks-cost-new-build` to avoid topic×location duplicates.
+- `getTopicScaleClassByRouteSlug` classifies route slugs as `GLOBAL_CONTENT`, `LOCATION_VALID`, or `GREY` from title/slug heuristic, which controls inclusion in `getLocationScalableTopicSlugs` for topic×location generation.
+
+### 5.7 TopicLocationPage (Access)
 
 - **Component:** `verticals/access/app/components/TopicLocationPage.tsx`.
 - **Content:** Heading "{Topic Title} in {Location}"; intro; explanation; common problems; sector use cases; location-specific paragraph; link to topic hub; CTA to primary service×location; "Security services in {location}" with links to four services (commercial-cctv-installation, access-control-systems, perimeter-security-systems, ip-camera-systems) each linking to `/{serviceSlug}/{locationSlug}`.
 - **Data:** Topic from `getTopicForRouteSlug` (programmatic topic); location from shared list; topic hub path from `TOPIC_HUB_PATH[topic.slug]`.
 
-### 5.4 Topic slug mapping (Access)
+### 5.8 Topic slug mapping (Access)
 
 - **Route slug → programmatic topic slug:** `ROUTE_SLUG_TO_TOPIC_SLUG` in `verticals/access/lib/topicLocationConfig.ts` (e.g. `cctv-installation` → `commercial-cctv-installation`, `cat6-network-cabling` → `cat6-cabling`). Programmatic topic content lives in `verticals/access/data/programmaticTopics/`.
 
@@ -317,31 +333,43 @@ For each `(service, location)` (and in Access, each `(topicSlug, location)`), th
 
 ## 8. Sitemap architecture
 
-### 8.1 Verticals with a single sitemap (Drains, Surveys, Groundworks)
+### 8.1 Verticals with a single sitemap (Drains, Surveys)
 
 - **File:** `app/sitemap.ts` exporting a default function that returns `MetadataRoute.Sitemap`.
 - **Source:** Engine `buildSitemapEntries` with vertical-specific `staticPaths`, `nearMePaths`, `services`, `locations`, `hubPages`, `getCategoryPages`, `serviceDetailPath`. No topic×location in these verticals.
 
 ### 8.2 Access: segmented sitemap
 
-- **Root:** `/sitemap.xml` is a **sitemap index** (not a single urlset). Served by `app/sitemap.xml/route.ts` (Route Handler) returning XML that references four child sitemaps.
+- **Root:** `/sitemap.xml` is a **sitemap index** (not a single urlset). Served by `app/sitemap.xml/route.ts` (Route Handler) returning XML that references five child sitemaps.
 - **Child sitemaps (Route Handlers):**
   - **sitemap-services.xml** – Service hub URLs only: `{baseUrl}/services/{service.slug}`.
   - **sitemap-service-locations.xml** – All service×location: `{baseUrl}/{service.slug}/{location.id}`.
   - **sitemap-topics.xml** – Topic hub index URLs and all topic category pages: `{baseUrl}{hub.basePath}` and `{baseUrl}{hub.basePath}/{page.slug}`.
   - **sitemap-topic-locations.xml** – All topic×location: `{baseUrl}/{topicSlug}/{location.id}` for each `TOPIC_LOCATION_SLUGS` × location.
+  - **sitemap-static.xml** – Static and high-value non-catalog pages like `/about`, `/projects`, `/contact`, near-me pages, and guide clusters.
 - **Helpers:** `verticals/access/lib/sitemapXml.ts` provides `buildSitemapIndex` and `buildUrlset` for consistent XML with lastmod, changefreq, priority.
-- **Why segmentation:** Improves crawl prioritisation and indexation speed; keeps each sitemap focused (services, service-locations, topics, topic-locations).
+- **Why segmentation:** Improves crawl prioritisation and indexation speed; keeps each sitemap focused (services, service-locations, topics, topic-locations, static).
 
-### 8.3 Metadata in sitemaps
+### 8.3 Groundworks: segmented sitemap
+
+- **Root:** `/sitemap.xml` is currently a **sitemap index** served by `app/sitemap.xml/route.ts`, referencing child sitemaps for services, service-locations, topics, topic-locations and static pages. `sitemap-topic-locations.xml` exists and currently includes scalable topic×location URLs.
+- **Child sitemaps (Route Handlers):**
+  - `sitemap-services.xml`
+  - `sitemap-service-locations.xml`
+  - `sitemap-topics.xml`
+  - `sitemap-topic-locations.xml`
+  - `sitemap-static.xml`
+- **Note:** Verify `sitemap.xml` references `sitemap-topic-locations.xml` so topic×location URLs are discoverable by indexers.
+
+### 8.4 Metadata in sitemaps
 
 - **lastmod:** ISO 8601 (e.g. build time or `new Date()`).
-- **changefreq:** weekly for hub indexes; monthly for most service/topic/location pages; **weekly** for topic×location in Access (to encourage recrawl of new pages).
+- **changefreq:** weekly for hub indexes; monthly for most service/topic/location pages; **weekly** for topic×location in Access/Groundworks (to encourage recrawl of large URL sets).
 - **priority:** Optional but used (e.g. 0.8 hubs, 0.7 service hubs, 0.6 location/topic pages).
 
-### 8.4 Robots
+### 8.5 Robots
 
-- Each vertical’s `robots.ts` (or equivalent) should reference the correct sitemap URL (e.g. `{baseUrl}/sitemap.xml`). For Access, the root sitemap is the index; crawlers follow it to the four segment sitemaps.
+- Each vertical’s `robots.ts` (or equivalent) should reference the correct sitemap URL (e.g. `{baseUrl}/sitemap.xml`). For Access/Groundworks, the root sitemap is the index; crawlers follow it to the five segment sitemaps.
 
 ---
 
@@ -355,12 +383,12 @@ Agents **must** follow these rules to avoid architecture drift:
 4. **Location dataset must remain centralised.** All verticals MUST use `engine/data/locations.ts`. Do not create vertical-specific location lists or duplicate location data.
 5. **Internal linking must maintain the intended flow:** topic → service hub → location page → topic (and topic×location → service×location where applicable). Do not remove the "Helpful guidance" block or break `getRelevantTopicsForService` contract.
 6. **Topic links must point to existing pages only.** `getRelevantTopicsForService` and any similar helpers must only return hrefs that correspond to real routes (hub basePath + page slug from getCategoryPages). No placeholder or future URLs.
-7. **Service slugs are reserved.** In verticals that have topic×location (Access), topic route slugs MUST NOT overlap with service slugs. Check `topicLocationConfig` and service list before adding new topic slugs.
-8. **Sitemap coverage:** All public URLs that should be indexed must appear in the vertical’s sitemap(s). For Access, use the segmented sitemaps; do not drop segments or reintroduce a single monolithic sitemap without updating the index.
+7. **Service slugs are reserved.** In verticals that have topic×location (Access, Groundworks), topic route slugs MUST NOT overlap with service slugs. Check `topicLocationConfig` and service list before adding new topic slugs.
+8. **Sitemap coverage:** All public URLs that should be indexed must appear in the vertical’s sitemap(s). For Access/Groundworks, use the segmented sitemaps; do not drop segments or reintroduce a single monolithic sitemap without updating the index.
 9. **Engine is vertical-agnostic.** Do not put vertical-specific URLs, topic lists, or content in the engine. Vertical-specific logic belongs in the vertical’s `lib/` or `data/`.
 10. **Config and company info:** Use `verticalConfig` and vertical `companyInfo` for site name, base URL, and contact; do not hardcode these in the engine.
 
-All verticals must use the segmented sitemap architecture consisting of sitemap.xml (index) plus sitemap-services.xml, sitemap-service-locations.xml, sitemap-topics.xml and sitemap-static.xml. Additional sitemaps such as sitemap-topic-locations.xml may only be added when a vertical introduces topic × location pages.
+For Access and Groundworks, use the segmented sitemap architecture (sitemap index plus topic-aware child sitemaps). Drains and Surveys currently use single `app/sitemap.ts`. Additional sitemaps such as `sitemap-topic-locations.xml` may be added when a vertical introduces topic × location pages.
 
 ---
 
@@ -421,7 +449,7 @@ All verticals must use the segmented sitemap architecture consisting of sitemap.
 
 ### 11.4 Routing conflicts
 
-- **Single dynamic route for two concepts (Access):** The same `[serviceSlug]/[locationSlug]` route serves both service×location and topic×location. Resolution is by **first segment**: if it’s in the topic slug list, render topic×location; else treat as service slug. **Topic slugs must not overlap service slugs.**
+- **Single dynamic route for two concepts (Access/Groundworks):** The same `[serviceSlug]/[locationSlug]` route serves both service×location and topic×location. Resolution is by **first segment**: if it’s in the topic slug list, render topic×location; else treat as service slug. **Topic slugs must not overlap service slugs.**
 
 ### 11.5 Service slug protection
 
@@ -437,12 +465,12 @@ All verticals must use the segmented sitemap architecture consisting of sitemap.
 
 The following are **planned or possible** evolutions; do not implement without explicit requirement and alignment with the rules above.
 
-- **Topic×location expansion:** Roll out topic×location (L5) to more verticals (Surveys, Groundworks, Drains) only after topic hubs and getRelevantTopicsForService are in place; use the same pattern (reserved topic slugs, same route, TopicLocationPage-style template).
+- **Topic×location expansion:** Roll out topic×location (L5) to additional verticals (Surveys, Drains) only after topic hubs and getRelevantTopicsForService are in place; use the same pattern (reserved topic slugs, same route, TopicLocationPage-style template).
 - **Location mesh linking:** Enrich `locationNeighbours` or add more sophisticated “nearby” logic (e.g. by distance or region) for better cross-linking between location pages.
 - **Additional verticals:** New verticals following the same L1–L4 (and optionally L5) structure and engine integration.
 - **Lead routing:** Per-vertical or per-location lead capture and routing (not covered in this doc; would be separate services or APIs).
 - **Content enrichment:** Deeper programmatic content (e.g. more ProgrammaticTopic fields, localised intros) or integration with CMS for non-programmatic pages.
-- **Sitemap segmentation for other verticals:** If Drains, Surveys, or Groundworks grow URL count significantly, consider introducing a sitemap index and segment sitemaps similar to Access.
+- **Sitemap segmentation for other verticals:** If Drains or Surveys grow URL count significantly, consider introducing a sitemap index and segment sitemaps similar to Access/Groundworks.
 
 ---
 

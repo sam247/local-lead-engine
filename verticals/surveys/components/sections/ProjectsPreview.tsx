@@ -16,6 +16,7 @@ const ProjectsPreview = () => {
           <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
             Recent Projects
           </h2>
+          <p className="mt-2 text-muted-foreground">Recent survey work across the UK</p>
           <p className="text-muted-foreground">
             These examples show recent survey projects across different property types, from planning-led reports to construction support surveys.
           </p>
@@ -51,6 +52,12 @@ const ProjectsPreview = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-6 text-center">
+          <Button asChild>
+            <Link href="/contact">Get a similar survey quote</Link>
+          </Button>
         </div>
 
         <div className="mt-12 text-center">

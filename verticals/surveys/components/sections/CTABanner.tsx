@@ -6,12 +6,12 @@ const CTABanner = () => {
   return (
     <section className="py-16 md:py-20 bg-secondary text-primary">
       <div className="container">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="mb-4 font-display text-3xl font-bold md:text-4xl text-primary">
-            Request a Survey Quote
+        <div className="mx-auto max-w-3xl space-y-3 text-center">
+          <h2 className="font-display text-3xl font-bold md:text-4xl text-primary">
+            Get a survey quote today
           </h2>
-          <p className="mb-8 text-lg text-primary">
-            Share your location and project brief for a no-obligation quote from vetted, qualified local surveyors—the right scope, deliverables you can rely on, and no hard sell.
+          <p className="text-lg text-primary/90">
+            Fast response from local specialists. No obligation.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">

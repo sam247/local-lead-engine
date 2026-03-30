@@ -11,11 +11,11 @@ const TRUST_ITEMS = [
 export function HomeTrustCoreBar() {
   return (
     <section
-      className="border-y border-border/60 bg-muted/40 py-2.5 sm:py-3"
+      className="border-b border-border/60 bg-muted/40 py-5 sm:py-6"
       aria-label="Trust signals"
     >
       <div className="container flex flex-col items-center gap-3">
-        <ul className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-muted-foreground sm:gap-x-7">
+        <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-muted-foreground sm:gap-x-7">
           {TRUST_ITEMS.map(({ label, icon: Icon }, i) => (
             <li key={`${label}-${i}`} className="flex items-center gap-1.5">
               <Icon className="h-4 w-4 shrink-0 text-muted-foreground/90" aria-hidden />
@@ -24,7 +24,7 @@ export function HomeTrustCoreBar() {
           ))}
         </ul>
         <div
-          className="flex flex-wrap items-center justify-center gap-2.5"
+          className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2"
           aria-label="Accreditation marks"
         >
           <img
@@ -32,28 +32,28 @@ export function HomeTrustCoreBar() {
             alt="CITB"
             width={88}
             height={28}
-            className="h-5 w-auto max-w-[88px] object-contain"
+            className="h-6 w-auto max-w-[88px] object-contain"
           />
           <img
             src="/dbs.png"
             alt="DBS disclosure check"
             width={88}
             height={28}
-            className="h-5 w-auto max-w-[88px] object-contain"
+            className="h-6 w-auto max-w-[88px] object-contain"
           />
           <img
             src="/trustmark.png"
             alt="TrustMark"
             width={88}
             height={28}
-            className="h-5 w-auto max-w-[88px] object-contain"
+            className="h-6 w-auto max-w-[88px] object-contain"
           />
           <img
             src="/fmb.png"
             alt="Federation of Master Builders"
             width={88}
             height={28}
-            className="h-5 w-auto max-w-[88px] object-contain"
+            className="h-6 w-auto max-w-[88px] object-contain"
           />
         </div>
       </div>

@@ -16,6 +16,7 @@ const ProjectsPreview = () => {
           <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
             Recent Projects
           </h2>
+          <p className="mt-2 text-muted-foreground">Recent security work across the UK</p>
           <p className="text-muted-foreground">
             These live project examples cover access control, CCTV and integrated upgrades across a range of operational site types.
           </p>
@@ -51,6 +52,12 @@ const ProjectsPreview = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-6 text-center">
+          <Button asChild>
+            <Link href="/contact">Get a similar security quote</Link>
+          </Button>
         </div>
 
         <div className="mt-12 text-center">
