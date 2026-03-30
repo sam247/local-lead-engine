@@ -53,22 +53,21 @@ export function StickyCTA({ defaultText, issueMap, ctaPrimary, ctaSecondary }: S
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="container flex min-h-[52px] items-center justify-between gap-2 py-2.5 sm:gap-3">
+      <div className="container flex flex-col items-center gap-3 py-3 md:min-h-[52px] md:flex-row md:items-center md:justify-between md:gap-3 md:py-2.5">
         <span
           key={displayText}
-          className="min-w-0 flex-1 text-sm font-semibold leading-snug text-foreground transition-opacity duration-200 md:line-clamp-2"
+          className="max-w-md text-center text-sm font-semibold leading-snug text-foreground transition-opacity duration-200 md:min-w-0 md:flex-1 md:text-left md:line-clamp-2"
         >
           {displayText}
         </span>
-        <div className="flex shrink-0 items-center gap-2 md:w-auto">
-          <Button variant="highlight" asChild className="flex-1 md:flex-none">
+        <div className="flex w-full max-w-md shrink-0 justify-center gap-2 sm:max-w-none md:w-auto md:justify-end">
+          <Button variant="highlight" asChild className="min-w-0 flex-1 sm:flex-none">
             <a href={`tel:${digits}`} className="gap-2" onClick={onCallClick}>
               <Phone className="h-4 w-4 shrink-0" />
-              <span className="md:hidden">{ctaPrimary}</span>
-              <span className="hidden md:inline">{ctaPrimary}</span>
+              {ctaPrimary}
             </a>
           </Button>
-          <Button asChild className="flex-1 md:flex-none">
+          <Button asChild className="min-w-0 flex-1 sm:flex-none">
             <Link href="/contact" className="gap-2" onClick={onFormClick}>
               {ctaSecondary}
               <ArrowRight className="h-4 w-4 shrink-0" />
