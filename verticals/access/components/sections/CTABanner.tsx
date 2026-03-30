@@ -11,7 +11,7 @@ const CTABanner = () => {
             Request a Security System Quote
           </h2>
           <p className="mb-8 text-lg text-primary">
-            Tell us about your site and risk profile for a no-obligation quote from insured, accredited security specialists—clear scope and outcomes before you commit.
+            Tell us about your site and risk profile for a no-obligation quote from vetted, qualified local security specialists—insured, accredited teams, clear scope and outcomes before you commit.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">

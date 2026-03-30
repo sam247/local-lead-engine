@@ -11,14 +11,14 @@ const TRUST_ITEMS = [
 export function HomeTrustCoreBar() {
   return (
     <section
-      className="border-y border-border/60 bg-muted/40 py-4 sm:py-5"
+      className="border-y border-border/60 bg-muted/40 py-2.5 sm:py-3"
       aria-label="Trust signals"
     >
       <div className="container">
-        <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2.5 text-xs text-muted-foreground/90 sm:justify-between">
+        <ul className="flex flex-wrap items-center justify-start gap-x-5 gap-y-2 text-xs text-muted-foreground sm:gap-x-7">
           {TRUST_ITEMS.map(({ label, icon: Icon }, i) => (
             <li key={`${label}-${i}`} className="flex items-center gap-1.5">
-              <Icon className="h-3.5 w-3.5 shrink-0 opacity-80" aria-hidden />
+              <Icon className="h-4 w-4 shrink-0 text-muted-foreground/90" aria-hidden />
               <span>{label}</span>
             </li>
           ))}

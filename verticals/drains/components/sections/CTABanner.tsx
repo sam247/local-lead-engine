@@ -11,7 +11,7 @@ const CTABanner = () => {
             Request Your Drainage Quote
           </h2>
           <p className="mb-8 text-lg text-primary">
-            Send your issue details for a clear, no-obligation quote from vetted drainage specialists—honest next steps, no pressure to book on the spot.
+            Send your issue details for a clear, no-obligation quote from vetted, qualified local drainage specialists—honest next steps, no pressure to book on the spot.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">

@@ -11,7 +11,7 @@ const CTABanner = () => {
             Request a Groundworks Quote
           </h2>
           <p className="mb-8 text-lg text-primary">
-            Submit your drawings and site details for a no-obligation quote from vetted groundworks contractors—programme-led pricing and a clear path to mobilisation.
+            Submit your drawings and site details for a no-obligation quote from vetted, qualified local groundworks contractors—programme-led pricing and a clear path to mobilisation.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">

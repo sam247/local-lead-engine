@@ -58,7 +58,7 @@ export default function HomePage() {
       <ServicesGrid />
       <TrustPoints
         items={verticalConfig.homepageTrustPoints}
-        className="[&_li>span:first-child]:h-14 [&_li>span:first-child]:w-14 [&_li_svg]:h-7 [&_li_svg]:w-7"
+        className="[&_li>span:first-child]:h-[3.75rem] [&_li>span:first-child]:w-[3.75rem] [&_li_svg]:h-8 [&_li_svg]:w-8 [&_li_svg]:text-muted-foreground/90"
       />
       <ProjectsPreview />
       <HomepageArticles cards={articleCards} />
