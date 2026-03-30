@@ -33,6 +33,7 @@ export default function HomePage() {
     fallbacks
   );
   const problemItems = drainProblemPages.slice(0, 6).map((problem) => ({
+    slug: problem.slug,
     title: problem.title,
     href: `/drain-problems/${problem.slug}`,
     context: problem.whenToCall,
@@ -43,7 +44,7 @@ export default function HomePage() {
       <SchemaMarkup type="LocalBusiness" data={{ areaServed: "London and surrounding areas" }} />
       <Hero />
       <HomeTrustCoreBar />
-      <section className="py-4">
+      <section className="pt-8 pb-4 md:pt-10">
         <div className="container">
           <p className="mx-auto max-w-2xl text-center text-base text-muted-foreground">
             Tell us what&apos;s going on — we&apos;ll connect you with the right specialist near you.

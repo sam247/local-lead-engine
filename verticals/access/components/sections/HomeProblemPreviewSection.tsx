@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import type { ProblemPreviewSectionProps } from "engine";
+import type { ProblemPreviewItem, ProblemPreviewSectionProps } from "engine";
+import { verticalConfig } from "@/config";
+import { useSelectedIssue } from "@/components/context/SelectedIssueContext";
 
 function compactPreviewContext(text: string, maxLength = 118): string {
   const trimmed = text.trim().replace(/\s+/g, " ");
@@ -15,7 +19,14 @@ function compactPreviewContext(text: string, maxLength = 118): string {
   return `${base.trimEnd()}…`;
 }
 
-export function HomeProblemPreviewSection({ title, intro, items }: ProblemPreviewSectionProps) {
+export type HomeProblemPreviewItem = ProblemPreviewItem & { slug: string };
+
+export type HomeProblemPreviewSectionProps = Omit<ProblemPreviewSectionProps, "items"> & {
+  items: HomeProblemPreviewItem[];
+};
+
+export function HomeProblemPreviewSection({ title, intro, items }: HomeProblemPreviewSectionProps) {
+  const { setSelectedIssue } = useSelectedIssue();
   const visibleItems = items.slice(0, 6);
   if (!visibleItems.length) return null;
 
@@ -32,6 +43,13 @@ export function HomeProblemPreviewSection({ title, intro, items }: ProblemPrevie
               <Link
                 href={item.href}
                 className="group block cursor-pointer rounded-md border border-border/70 bg-background/80 p-4 transition-all duration-150 hover:translate-x-0.5 hover:border-primary/60 hover:bg-muted/55 hover:shadow-md"
+                onClick={() => {
+                  window.gtag?.("event", "issue_selected", {
+                    issue_slug: item.slug,
+                    vertical: verticalConfig.verticalId,
+                  });
+                  setSelectedIssue(item.slug);
+                }}
               >
                 <div className="flex items-start justify-between gap-2">
                   <span className="font-medium text-primary group-hover:underline">{item.title}</span>

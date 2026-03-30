@@ -139,6 +139,8 @@ const Footer = () => {
             trustLine="Our contractors are fully vetted, insured and accredited to UK industry standards"
             dbsLogoSrc="/dbs.png"
             citbLogoSrc="/citb.png"
+            trustmarkLogoSrc="/trustmark.png"
+            fmbLogoSrc="/fmb.png"
           />
         </div>
         <div className="container flex flex-col items-center justify-between gap-4 py-6 md:flex-row">

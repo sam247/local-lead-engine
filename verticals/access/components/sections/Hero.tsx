@@ -204,6 +204,20 @@ const Hero = () => {
                   height={28}
                   className="h-5 w-auto max-w-[88px] object-contain opacity-90"
                 />
+                <img
+                  src="/trustmark.png"
+                  alt="TrustMark"
+                  width={88}
+                  height={28}
+                  className="h-5 w-auto max-w-[88px] object-contain opacity-90"
+                />
+                <img
+                  src="/fmb.png"
+                  alt="Federation of Master Builders"
+                  width={88}
+                  height={28}
+                  className="h-5 w-auto max-w-[88px] object-contain opacity-90"
+                />
               </div>
             </div>
           </div>

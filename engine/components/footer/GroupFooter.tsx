@@ -10,8 +10,12 @@ export interface GroupFooterProps {
   trustLine?: string;
   /** Optional trust mark image URL (e.g. `/dbs.png` from each vertical `public/`). */
   dbsLogoSrc?: string;
-  /** Optional second trust mark (e.g. `/citb.png`), same height as DBS. */
+  /** Optional second trust mark (e.g. `/citb.png`). */
   citbLogoSrc?: string;
+  /** TrustMark logo (e.g. `/trustmark.png`). */
+  trustmarkLogoSrc?: string;
+  /** FMB logo (e.g. `/fmb.png`). */
+  fmbLogoSrc?: string;
 }
 
 const LINK_TITLES: Record<string, string> = {
@@ -20,6 +24,9 @@ const LINK_TITLES: Record<string, string> = {
   "Mainline Access": "Commercial security and access control services across the UK",
   "Mainline Groundworks": "Commercial groundworks services across the UK",
 };
+
+/** Same visual height as homepage hero / HomeTrustCoreBar badge row (h-5, max-w 88px). */
+const BADGE_IMG_CLASS = "h-5 w-auto max-w-[88px] object-contain object-center";
 
 /**
  * Mainline Group division links: separate anchors, no pipe-concatenated text.
@@ -31,11 +38,13 @@ export function GroupFooter({
   trustLine,
   dbsLogoSrc,
   citbLogoSrc,
+  trustmarkLogoSrc,
+  fmbLogoSrc,
 }: GroupFooterProps) {
   if (!items.length) return null;
 
   const onPrimary = variant === "onPrimary";
-  const showBadges = Boolean(dbsLogoSrc || citbLogoSrc);
+  const showBadges = Boolean(dbsLogoSrc || citbLogoSrc || trustmarkLogoSrc || fmbLogoSrc);
   const showRightColumn = Boolean(trustLine || showBadges);
 
   return (
@@ -91,29 +100,41 @@ export function GroupFooter({
             </p>
           ) : null}
           {showBadges ? (
-            <div className="flex items-center justify-end gap-3">
+            <div className="flex flex-wrap items-center justify-end gap-2.5">
               {citbLogoSrc ? (
                 <img
                   src={citbLogoSrc}
                   alt="CITB"
-                  width={120}
-                  height={40}
-                  className={cn(
-                    "h-7 max-h-7 w-auto max-w-[120px] object-contain object-center",
-                    onPrimary ? "opacity-90" : ""
-                  )}
+                  width={100}
+                  height={32}
+                  className={cn(BADGE_IMG_CLASS, onPrimary ? "opacity-90" : "")}
                 />
               ) : null}
               {dbsLogoSrc ? (
                 <img
                   src={dbsLogoSrc}
                   alt="DBS disclosure check"
-                  width={120}
-                  height={40}
-                  className={cn(
-                    "h-8 w-auto max-w-[140px] object-contain object-right",
-                    onPrimary ? "opacity-90" : ""
-                  )}
+                  width={100}
+                  height={32}
+                  className={cn(BADGE_IMG_CLASS, onPrimary ? "opacity-90" : "")}
+                />
+              ) : null}
+              {trustmarkLogoSrc ? (
+                <img
+                  src={trustmarkLogoSrc}
+                  alt="TrustMark"
+                  width={100}
+                  height={32}
+                  className={cn(BADGE_IMG_CLASS, onPrimary ? "opacity-90" : "")}
+                />
+              ) : null}
+              {fmbLogoSrc ? (
+                <img
+                  src={fmbLogoSrc}
+                  alt="Federation of Master Builders"
+                  width={100}
+                  height={32}
+                  className={cn(BADGE_IMG_CLASS, onPrimary ? "opacity-90" : "")}
                 />
               ) : null}
             </div>

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import StickyEmergencyBar from "@/components/sections/StickyEmergencyBar";
+import { SelectedIssueProvider } from "@/components/context/SelectedIssueContext";
+import { StickyCTA } from "@/components/ui/StickyCTA";
+import { stickyCtaConfig } from "@/lib/stickyCtaConfig";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { companyInfo } from "@/lib/data";
 import { verticalConfig } from "@/config";
@@ -42,10 +44,12 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
         <Providers>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <StickyEmergencyBar />
+          <SelectedIssueProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <StickyCTA {...stickyCtaConfig} />
+          </SelectedIssueProvider>
         </Providers>
       </body>
     </html>
