@@ -46,6 +46,11 @@ export default function ContactPage() {
                       vertical={verticalConfig.verticalId}
                       serviceSlug={null}
                       locationSlug={null}
+                      context={{
+                        page: "/contact",
+                        voiceWebhookPath: "/api/twilio/voice",
+                        vertical: verticalConfig.verticalId,
+                      }}
                       className="text-sm text-muted-foreground hover:text-primary"
                     >
                       {companyInfo.phone}

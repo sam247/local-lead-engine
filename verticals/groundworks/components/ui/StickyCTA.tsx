@@ -28,6 +28,14 @@ export function StickyCTA({ defaultText, issueMap, ctaPrimary, ctaSecondary }: S
     location_slug: null as string | null,
     vertical: verticalId,
     source: "inline" as const,
+    twilioContext: {
+      service: "unknown",
+      location: "unknown",
+      page: page_path,
+      issue: selectedIssue || "none",
+      vertical: verticalId,
+      voiceWebhookPath: "/api/twilio/voice",
+    },
   };
 
   const onCallClick = (e: MouseEvent<HTMLAnchorElement>) => {

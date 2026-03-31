@@ -83,6 +83,11 @@ export default function CostPageTemplate({
                 locationSlug={null}
                 pagePath="/companies-cost"
                 source="cta"
+                context={{
+                  page: "/companies-cost",
+                  voiceWebhookPath: "/api/twilio/voice",
+                  vertical: verticalConfig.verticalId,
+                }}
                 className="inline-flex items-center justify-center gap-2 rounded-md border border-primary bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 <Phone className="h-4 w-4" />

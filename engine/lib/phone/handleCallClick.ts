@@ -4,6 +4,14 @@ export type TrackCallClickContext = {
   location_slug?: string | null;
   vertical?: string;
   source?: "cta" | "header" | "footer" | "inline";
+  twilioContext?: {
+    service?: string | null;
+    location?: string | null;
+    page?: string | null;
+    issue?: string | null;
+    vertical?: string | null;
+    voiceWebhookPath?: string | null;
+  };
 };
 
 export function digitsFromPhone(phone: string): string {
@@ -67,6 +75,34 @@ export function handleCallClick(
   }).catch(() => {
     // Swallow tracking errors; dial should proceed regardless.
   });
+
+  const twilioContext = context.twilioContext;
+  const voiceWebhookPath = String(twilioContext?.voiceWebhookPath ?? "").trim();
+  if (voiceWebhookPath && typeof window !== "undefined") {
+    try {
+      const url = new URL(voiceWebhookPath, window.location.origin);
+      const service = String(twilioContext?.service ?? service_slug).trim() || "unknown";
+      const location = String(twilioContext?.location ?? location_slug).trim() || "unknown";
+      const page = String(twilioContext?.page ?? page_path).trim() || "unknown";
+      const issue = String(twilioContext?.issue ?? "none").trim() || "none";
+      const verticalValue = String(twilioContext?.vertical ?? vertical).trim() || "unknown";
+
+      url.searchParams.set("service", service);
+      url.searchParams.set("location", location);
+      url.searchParams.set("page", page);
+      url.searchParams.set("issue", issue);
+      url.searchParams.set("vertical", verticalValue);
+
+      void fetch(url.toString(), {
+        method: "POST",
+        keepalive: true,
+      }).catch(() => {
+        // Non-blocking pre-call context capture endpoint.
+      });
+    } catch {
+      // Invalid endpoint should never block dialing.
+    }
+  }
 
   if (typeof window !== "undefined") {
     window.location.href = telHref;

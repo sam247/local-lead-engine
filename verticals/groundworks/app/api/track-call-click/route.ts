@@ -13,7 +13,7 @@ const EXPECTED_CALL_HEADERS = [
   "source",
   "user_agent",
 ] as const;
-const OPTIONAL_CALL_HEADERS = ["contractor", "call_status"] as const;
+const OPTIONAL_CALL_HEADERS = ["contractor", "call_status", "event_type"] as const;
 type CallRecord = Record<string, string>;
 
 function requireEnv(name: string): string {
@@ -165,6 +165,7 @@ function normalizeInput(body: Record<string, unknown>, req: Request): CallRecord
     user_agent: trimToString(req.headers.get("user-agent")),
     contractor: "",
     call_status: "",
+    event_type: "click",
   };
 }
 

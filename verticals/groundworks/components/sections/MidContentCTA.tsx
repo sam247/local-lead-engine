@@ -33,6 +33,10 @@ const MidContentCTA = ({
               vertical={verticalConfig.verticalId}
               serviceSlug={null}
               locationSlug={null}
+              context={{
+                voiceWebhookPath: "/api/twilio/voice",
+                vertical: verticalConfig.verticalId,
+              }}
               className="flex items-center gap-2 text-sm font-medium text-primary hover:underline"
             >
               <Phone className="h-4 w-4" /> Call Now

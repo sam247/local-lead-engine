@@ -147,6 +147,11 @@ const Header = () => {
             vertical={verticalConfig.verticalId}
             serviceSlug={null}
             locationSlug={null}
+            context={{
+              page: pathname ?? "",
+              voiceWebhookPath: "/api/twilio/voice",
+              vertical: verticalConfig.verticalId,
+            }}
             className="flex items-center gap-2 text-sm font-medium text-primary"
           >
             <Phone className="h-4 w-4" />
@@ -233,6 +238,11 @@ const Header = () => {
                 vertical={verticalConfig.verticalId}
                 serviceSlug={null}
                 locationSlug={null}
+                context={{
+                  page: pathname ?? "",
+                  voiceWebhookPath: "/api/twilio/voice",
+                  vertical: verticalConfig.verticalId,
+                }}
                 className="flex items-center gap-2 text-sm font-medium text-primary"
               >
                 <Phone className="h-4 w-4" />

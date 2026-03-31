@@ -181,6 +181,10 @@ const Hero = () => {
                   vertical={verticalConfig.verticalId}
                   serviceSlug={null}
                   locationSlug={null}
+                  context={{
+                    voiceWebhookPath: "/api/twilio/voice",
+                    vertical: verticalConfig.verticalId,
+                  }}
                   className="gap-2"
                 >
                   <Phone className="h-5 w-5" />

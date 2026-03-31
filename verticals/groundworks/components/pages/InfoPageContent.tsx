@@ -31,6 +31,7 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
     { question: `How do you diagnose ${page.title.toLowerCase()}?`, answer: page.diagnosis.slice(0, 200) + "..." },
     { question: `How do you fix ${page.title.toLowerCase()}?`, answer: page.resolution.slice(0, 200) + "..." },
   ];
+  const pagePath = `${hub.basePath}/${page.slug}`;
 
   return (
     <>
@@ -118,6 +119,12 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
                     vertical={verticalConfig.verticalId}
                     serviceSlug={page.relatedServices?.[0] ?? null}
                     locationSlug={null}
+                    context={{
+                      service: page.relatedServices?.[0] ?? null,
+                      page: pagePath,
+                      voiceWebhookPath: "/api/twilio/voice",
+                      vertical: verticalConfig.verticalId,
+                    }}
                     className="flex items-center gap-2 text-primary-foreground"
                   >
                     <Phone className="h-5 w-5" /> Call Now
@@ -146,6 +153,12 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
                   vertical={verticalConfig.verticalId}
                   serviceSlug={page.relatedServices?.[0] ?? null}
                   locationSlug={null}
+                  context={{
+                    service: page.relatedServices?.[0] ?? null,
+                    page: pagePath,
+                    voiceWebhookPath: "/api/twilio/voice",
+                    vertical: verticalConfig.verticalId,
+                  }}
                   className="flex items-center gap-2 text-primary hover:underline"
                 >
                   <Phone className="h-4 w-4" /> Call Now

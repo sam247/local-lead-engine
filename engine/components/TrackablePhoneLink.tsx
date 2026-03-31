@@ -12,6 +12,14 @@ export type TrackablePhoneLinkProps = Omit<ComponentPropsWithoutRef<"a">, "href"
   /** When set (e.g. static near-me path), used instead of `usePathname()` */
   pagePath?: string;
   source?: "cta" | "header" | "footer" | "inline";
+  context?: {
+    service?: string | null;
+    location?: string | null;
+    page?: string | null;
+    issue?: string | null;
+    vertical?: string | null;
+    voiceWebhookPath?: string | null;
+  };
 };
 
 export function TrackablePhoneLink({
@@ -21,6 +29,7 @@ export function TrackablePhoneLink({
   locationSlug = null,
   pagePath: pagePathProp,
   source = "inline",
+  context: optionalContext,
   children,
   ...rest
 }: TrackablePhoneLinkProps) {
@@ -35,6 +44,16 @@ export function TrackablePhoneLink({
     location_slug: locationSlug,
     vertical: vertical ?? "",
     source,
+    twilioContext: optionalContext
+      ? {
+          service: optionalContext.service ?? serviceSlug,
+          location: optionalContext.location ?? locationSlug,
+          page: optionalContext.page ?? page_path,
+          issue: optionalContext.issue ?? "none",
+          vertical: optionalContext.vertical ?? vertical,
+          voiceWebhookPath: optionalContext.voiceWebhookPath,
+        }
+      : undefined,
   };
 
   return (

@@ -51,6 +51,10 @@ const PostcodeCheck = () => {
             vertical={verticalConfig.verticalId}
             serviceSlug={null}
             locationSlug={null}
+            context={{
+              voiceWebhookPath: "/api/twilio/voice",
+              vertical: verticalConfig.verticalId,
+            }}
             className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
           >
             <Phone className="h-3 w-3" /> Call Now

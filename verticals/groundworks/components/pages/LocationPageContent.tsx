@@ -98,6 +98,13 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
                 vertical={verticalConfig.verticalId}
                 serviceSlug={service.slug}
                 locationSlug={location.id}
+                context={{
+                  service: service.slug,
+                  location: location.id,
+                  page: `/${serviceSlug}/${locationSlug}`,
+                  voiceWebhookPath: "/api/twilio/voice",
+                  vertical: verticalConfig.verticalId,
+                }}
                 className="flex items-center gap-2 text-primary-foreground"
               >
                 <Phone className="h-5 w-5" /> Call Now
@@ -178,6 +185,13 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
                     vertical={verticalConfig.verticalId}
                     serviceSlug={service.slug}
                     locationSlug={location.id}
+                    context={{
+                      service: service.slug,
+                      location: location.id,
+                      page: `/${serviceSlug}/${locationSlug}`,
+                      voiceWebhookPath: "/api/twilio/voice",
+                      vertical: verticalConfig.verticalId,
+                    }}
                     className="flex items-center gap-2 text-primary hover:underline"
                   >
                     <Phone className="h-4 w-4" /> Call Now

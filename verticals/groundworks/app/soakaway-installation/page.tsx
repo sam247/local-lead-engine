@@ -116,6 +116,12 @@ export default function SoakawayInstallationPage() {
               locationSlug={null}
               pagePath={`/${pageSlug}`}
               source="cta"
+              context={{
+                service: trackedServiceSlug,
+                page: `/${pageSlug}`,
+                voiceWebhookPath: "/api/twilio/voice",
+                vertical: verticalConfig.verticalId,
+              }}
               className={phoneLinkClass}
             >
               <Phone className="h-4 w-4" />
@@ -173,6 +179,12 @@ export default function SoakawayInstallationPage() {
                   locationSlug={null}
                   pagePath={`/${pageSlug}`}
                   source="cta"
+                  context={{
+                    service: trackedServiceSlug,
+                    page: `/${pageSlug}`,
+                    voiceWebhookPath: "/api/twilio/voice",
+                    vertical: verticalConfig.verticalId,
+                  }}
                   className={phoneLinkClass}
                 >
                   <Phone className="h-4 w-4" />
@@ -204,6 +216,12 @@ export default function SoakawayInstallationPage() {
                   locationSlug={null}
                   pagePath={`/${pageSlug}`}
                   source="cta"
+                  context={{
+                    service: trackedServiceSlug,
+                    page: `/${pageSlug}`,
+                    voiceWebhookPath: "/api/twilio/voice",
+                    vertical: verticalConfig.verticalId,
+                  }}
                   className={phoneLinkClass}
                 >
                   <Phone className="h-4 w-4" />
