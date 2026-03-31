@@ -18,6 +18,12 @@ function buildMeasurementProtocolUrl(): string | null {
 
 export async function POST(req: Request) {
   const formData = await req.formData();
+  const requestUrl = new URL(req.url);
+  const twilioSignature = req.headers.get("x-twilio-signature");
+  const twilioSignaturePresent = twilioSignature != null && twilioSignature.trim().length > 0;
+  const requestHost = requestUrl.host;
+  const requestPath = requestUrl.pathname;
+  const requestUserAgent = req.headers.get("user-agent") ?? "";
 
   const callSid = toStringValue(formData.get("CallSid"), "unknown");
   const status = toStringValue(formData.get("CallStatus"), "unknown");
@@ -54,6 +60,7 @@ export async function POST(req: Request) {
                 location,
                 page,
                 issue,
+                twilio_signature_present: twilioSignaturePresent,
               },
             },
           ],
@@ -84,6 +91,10 @@ export async function POST(req: Request) {
           location,
           page,
           issue,
+          twilio_signature_present: twilioSignaturePresent,
+          request_host: requestHost,
+          request_path: requestPath,
+          request_user_agent: requestUserAgent,
           timestamp: new Date().toISOString(),
         }),
       });

@@ -10,7 +10,7 @@ import { constructionDrainagePages } from "@/data/constructionDrainagePages";
 // Company info – used by config and layout
 export const companyInfo = {
   name: "Mainline Groundworks",
-  phone: "+44 7455 493536",
+  phone: "+44 1865 537995",
   email: "info@mainlinegroundworks.co.uk",
   address: "128 City Road, London, EC1V 2NX",
   hours: "Mon–Fri 8am–6pm, Sat 9am–1pm",

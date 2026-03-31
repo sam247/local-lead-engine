@@ -21,6 +21,9 @@ Optional existing click-log vars (already used by `/api/track-call-click`):
 
 In Twilio Console for the groundworks number:
 
+- **Groundworks Twilio number**
+  - `+441865537995`
+
 - **A call comes in**
   - Type: `Webhook`
   - URL: `https://mainlinegroundworks.co.uk/api/twilio/voice`
@@ -51,7 +54,13 @@ Save the configuration.
   - Existing click-intent logging
   - Includes `event_type: "click"`
 
-## 4) Validation checklist
+## 4) Reporting rules (important)
+
+- Treat `event_type: "call"` as the source of truth for real call outcomes/leads.
+- Treat `event_type: "click"` as pre-call intent only (not guaranteed connected calls).
+- Use click-to-call conversion rates by joining both event types in reporting, not click rows alone.
+
+## 5) Validation checklist
 
 - Click any call CTA on groundworks pages.
 - Confirm Twilio number dials and forwards to `FORWARD_PHONE_NUMBER`.
@@ -61,7 +70,7 @@ Save the configuration.
   - `event_type: "click"` (intent)
   - `event_type: "call"` (actual call outcome)
 
-## 5) Troubleshooting
+## 6) Troubleshooting
 
 - 500 on `/api/twilio/voice`:
   - Missing `FORWARD_PHONE_NUMBER`.
