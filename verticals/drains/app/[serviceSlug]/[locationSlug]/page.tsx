@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { services, locations, getRelevantTopicsForService } from "@/lib/data";
 import { projects } from "@/data/projects";
 import { getHeroImage, getProjectImage } from "@/lib/images";
@@ -21,8 +21,12 @@ type Props = { params: { serviceSlug: string; locationSlug: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { serviceSlug, locationSlug } = params;
+  const hasNumericSuffix = /-(\d+)$/.test(locationSlug);
+  const canonicalLocationSlug = hasNumericSuffix
+    ? locationSlug.replace(/(-\d+)+$/, "")
+    : locationSlug;
   const service = services.find((s) => s.slug === serviceSlug);
-  const location = locations.find((l) => l.id === locationSlug);
+  const location = locations.find((l) => l.id === canonicalLocationSlug);
   if (!service || !location) return { title: "Not Found" };
   const base = buildLocationMetadata(service, location, verticalConfig);
   return { ...base, title: pickDrainsL4MetaTitle(service, location) };
@@ -30,8 +34,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LocationRoute({ params }: Props) {
   const { serviceSlug, locationSlug } = params;
+  const hasNumericSuffix = /-(\d+)$/.test(locationSlug);
+  const canonicalLocationSlug = hasNumericSuffix
+    ? locationSlug.replace(/(-\d+)+$/, "")
+    : locationSlug;
+  if (hasNumericSuffix) {
+    const canonicalLocationExists = locations.some((l) => l.id === canonicalLocationSlug);
+    if (canonicalLocationExists) {
+      if (process.env.NODE_ENV === "development") {
+        console.log(
+          "[Redirect] Duplicate location slug:",
+          locationSlug,
+          "->",
+          canonicalLocationSlug
+        );
+      }
+      permanentRedirect(`/${serviceSlug}/${canonicalLocationSlug}`);
+    }
+  }
   const service = services.find((s) => s.slug === serviceSlug);
-  const location = locations.find((l) => l.id === locationSlug);
+  const location = locations.find((l) => l.id === canonicalLocationSlug);
   if (!service || !location) notFound();
 
   const sameAreaLocations = locations.filter(

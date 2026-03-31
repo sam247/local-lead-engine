@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { services, locations, getRelevantTopicsForService } from "@/lib/data";
 import { projects } from "@/data/projects";
 import { getHeroImage, getProjectImage } from "@/lib/images";
@@ -31,7 +31,11 @@ type Props = { params: { serviceSlug: string; locationSlug: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { serviceSlug, locationSlug } = params;
-  const location = locations.find((l) => l.id === locationSlug);
+  const hasNumericSuffix = /-(\d+)$/.test(locationSlug);
+  const canonicalLocationSlug = hasNumericSuffix
+    ? locationSlug.replace(/(-\d+)+$/, "")
+    : locationSlug;
+  const location = locations.find((l) => l.id === canonicalLocationSlug);
   if (!location) return { title: "Not Found" };
 
   if (isTopicLocationSlug(serviceSlug)) {
@@ -49,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const description =
       topic.intro.slice(0, 120) +
       ` We provide ${topic.title.toLowerCase()} across ${location.name} and ${location.area}.`;
-    const canonical = `${verticalConfig.baseUrl}/${serviceSlug}/${locationSlug}`;
+    const canonical = `${verticalConfig.baseUrl}/${serviceSlug}/${canonicalLocationSlug}`;
     return { title, description, alternates: { canonical } };
   }
 
@@ -61,7 +65,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LocationRoute({ params }: Props) {
   const { serviceSlug, locationSlug } = params;
-  const location = locations.find((l) => l.id === locationSlug);
+  const hasNumericSuffix = /-(\d+)$/.test(locationSlug);
+  const canonicalLocationSlug = hasNumericSuffix
+    ? locationSlug.replace(/(-\d+)+$/, "")
+    : locationSlug;
+  if (hasNumericSuffix) {
+    const canonicalLocationExists = locations.some((l) => l.id === canonicalLocationSlug);
+    if (canonicalLocationExists) {
+      if (process.env.NODE_ENV === "development") {
+        console.log(
+          "[Redirect] Duplicate location slug:",
+          locationSlug,
+          "->",
+          canonicalLocationSlug
+        );
+      }
+      permanentRedirect(`/${serviceSlug}/${canonicalLocationSlug}`);
+    }
+  }
+  const location = locations.find((l) => l.id === canonicalLocationSlug);
   if (!location) notFound();
 
   if (isTopicLocationSlug(serviceSlug)) {
@@ -77,7 +99,7 @@ export default async function LocationRoute({ params }: Props) {
         topic={topic}
         location={location}
         topicSlug={serviceSlug}
-        locationSlug={locationSlug}
+        locationSlug={canonicalLocationSlug}
       />
     );
   }
@@ -183,7 +205,7 @@ export default async function LocationRoute({ params }: Props) {
       service={service}
       location={location}
       serviceSlug={serviceSlug}
-      locationSlug={locationSlug}
+      locationSlug={canonicalLocationSlug}
       sameAreaLocations={sameAreaLocations}
       nearbyLocations={nearbyLocations}
       localFaqs={localFaqs}
