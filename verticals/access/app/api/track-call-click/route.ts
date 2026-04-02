@@ -13,7 +13,24 @@ const EXPECTED_CALL_HEADERS = [
   "source",
   "user_agent",
 ] as const;
-const OPTIONAL_CALL_HEADERS = ["contractor", "call_status"] as const;
+const OPTIONAL_CALL_HEADERS = [
+  "contractor",
+  "call_status",
+  "intent_id",
+  "to_number",
+  "twilio_call_sid",
+  "call_duration",
+  "orphan",
+] as const;
+
+const TRAILING_COLUMN_NAMES = [
+  "intent_id",
+  "to_number",
+  "twilio_call_sid",
+  "call_duration",
+  "orphan",
+] as const;
+
 type CallRecord = Record<string, string>;
 
 function requireEnv(name: string): string {
@@ -108,14 +125,32 @@ async function getSheetHeaders(
   return seedHeaders;
 }
 
+async function ensureTrailingColumns(
+  sheets: ReturnType<typeof google.sheets>,
+  spreadsheetId: string,
+  headers: string[]
+): Promise<string[]> {
+  const toAdd = TRAILING_COLUMN_NAMES.filter((name) => !headers.includes(name));
+  if (toAdd.length === 0) return headers;
+  const newRow = [...headers, ...toAdd];
+  const endLetter = columnIndexToLetter(newRow.length - 1);
+  await sheets.spreadsheets.values.update({
+    spreadsheetId,
+    range: `${SHEET_TAB_NAME}!A1:${endLetter}1`,
+    valueInputOption: "RAW",
+    requestBody: { values: [newRow] },
+  });
+  return newRow;
+}
+
 function validateSchema(headers: string[]) {
   const expectedSet = new Set(EXPECTED_CALL_HEADERS);
   const headerSet = new Set(headers);
+  const optionalSet = new Set<string>([...OPTIONAL_CALL_HEADERS]);
   const missing = EXPECTED_CALL_HEADERS.filter((header) => !headerSet.has(header));
   const extra = headers.filter(
     (header) =>
-      !expectedSet.has(header as (typeof EXPECTED_CALL_HEADERS)[number]) &&
-      !OPTIONAL_CALL_HEADERS.includes(header as (typeof OPTIONAL_CALL_HEADERS)[number])
+      !expectedSet.has(header as (typeof EXPECTED_CALL_HEADERS)[number]) && !optionalSet.has(header)
   );
   const requiredOrderSlice = headers.filter((header) =>
     expectedSet.has(header as (typeof EXPECTED_CALL_HEADERS)[number])
@@ -154,6 +189,7 @@ async function getNextCallId(
 
 function normalizeInput(body: Record<string, unknown>, req: Request): CallRecord {
   const pagePath = trimToString(body.page_path) || parsePathFromReferer(req);
+  const forwardTo = trimToString(process.env.FORWARD_PHONE_NUMBER);
   return {
     vertical: trimToString(body.vertical),
     source_site: getRequestDomain(req),
@@ -165,6 +201,11 @@ function normalizeInput(body: Record<string, unknown>, req: Request): CallRecord
     user_agent: trimToString(req.headers.get("user-agent")),
     contractor: "",
     call_status: "",
+    intent_id: trimToString(body.intent_id),
+    to_number: forwardTo,
+    twilio_call_sid: "",
+    call_duration: "",
+    orphan: "",
   };
 }
 
@@ -195,13 +236,15 @@ export async function POST(req: Request) {
     const body = (await req.json()) as Record<string, unknown>;
     const spreadsheetId = requireEnv("GOOGLE_SHEETS_SHEET_ID");
     const sheets = await getSheetsClient();
-    const headers = await getSheetHeaders(sheets, spreadsheetId);
+    let headers = await getSheetHeaders(sheets, spreadsheetId);
+    headers = await ensureTrailingColumns(sheets, spreadsheetId, headers);
     validateSchema(headers);
     const callId = await getNextCallId(sheets, spreadsheetId, headers);
     const normalized = normalizeInput(body, req);
+    const clickTs = trimToString(body.click_timestamp);
     const call: CallRecord = {
       ...normalized,
-      timestamp: new Date().toISOString(),
+      timestamp: clickTs.length > 0 ? clickTs : new Date().toISOString(),
       call_id: callId,
     };
     await appendCallRow(sheets, spreadsheetId, headers, call);

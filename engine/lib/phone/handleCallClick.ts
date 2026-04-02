@@ -59,6 +59,20 @@ export function handleCallClick(
     // Do not block call behavior when GA4 is unavailable.
   }
 
+  const clickTimestamp = new Date().toISOString();
+  const intentId =
+    typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+
+  try {
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem("last_call_intent_id", intentId);
+    }
+  } catch {
+    // sessionStorage may be unavailable; tracking still proceeds.
+  }
+
   // Internal tracking is fire-and-forget and must not block dial action.
   void fetch("/api/track-call-click", {
     method: "POST",
@@ -70,11 +84,34 @@ export function handleCallClick(
       location_slug,
       utm_source,
       source,
+      intent_id: intentId,
+      click_timestamp: clickTimestamp,
     }),
     keepalive: true,
   }).catch(() => {
     // Swallow tracking errors; dial should proceed regardless.
   });
+
+  if (typeof window !== "undefined" && vertical === "groundworks") {
+    void fetch("/api/twilio/register-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ intent_id: intentId }),
+      keepalive: true,
+    }).catch(() => {
+      // Non-blocking; must not delay tel:
+    });
+  }
+
+  // Bridge intent_id to the Groundworks Twilio voice route so statusCallback can carry it (same-origin only).
+  if (typeof window !== "undefined" && vertical === "groundworks") {
+    void fetch(`/api/twilio/voice?intent_id=${encodeURIComponent(intentId)}`, {
+      method: "POST",
+      keepalive: true,
+    }).catch(() => {
+      // Non-blocking; must not delay tel:
+    });
+  }
 
   const twilioContext = context.twilioContext;
   const voiceWebhookPath = String(twilioContext?.voiceWebhookPath ?? "").trim();
@@ -92,6 +129,7 @@ export function handleCallClick(
       url.searchParams.set("page", page);
       url.searchParams.set("issue", issue);
       url.searchParams.set("vertical", verticalValue);
+      url.searchParams.set("intent_id", intentId);
 
       void fetch(url.toString(), {
         method: "POST",
