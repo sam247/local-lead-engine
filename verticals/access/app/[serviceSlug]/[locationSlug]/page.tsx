@@ -125,7 +125,9 @@ function buildExtraServiceLocationLinks(service: ServiceItem, locationId: string
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { serviceSlug, locationSlug } = params;
-  if (serviceSlug === "perimeter-security-guide") notFound();
+  if (serviceSlug === "perimeter-security-guide") {
+    return permanentRedirect("/perimeter-security-guides");
+  }
   const hasNumericSuffix = /-(\d+)$/.test(locationSlug);
   const canonicalLocationSlug = hasNumericSuffix
     ? locationSlug.replace(/(-\d+)+$/, "")
@@ -163,7 +165,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LocationRoute({ params }: Props) {
   const { serviceSlug, locationSlug } = params;
-  if (serviceSlug === "perimeter-security-guide") notFound();
+  if (serviceSlug === "perimeter-security-guide") {
+    return permanentRedirect("/perimeter-security-guides");
+  }
   const hasNumericSuffix = /-(\d+)$/.test(locationSlug);
   const canonicalLocationSlug = hasNumericSuffix
     ? locationSlug.replace(/(-\d+)+$/, "")
