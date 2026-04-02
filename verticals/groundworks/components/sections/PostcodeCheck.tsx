@@ -57,7 +57,7 @@ const PostcodeCheck = () => {
             }}
             className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
           >
-            <Phone className="h-3 w-3" /> Call Now
+            <Phone className="h-3 w-3" /> {companyInfo.phone}
           </TrackablePhoneLink>{" "}
           to check.
         </p>

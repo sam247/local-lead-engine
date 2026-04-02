@@ -35,7 +35,7 @@ const MidContentCTA = ({
               locationSlug={null}
               className="flex items-center gap-2 text-sm font-medium text-primary hover:underline"
             >
-              <Phone className="h-4 w-4" /> Call Now
+              <Phone className="h-4 w-4" /> {companyInfo.phone}
             </TrackablePhoneLink>
           </div>
         </div>

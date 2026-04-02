@@ -76,6 +76,9 @@ export default function CostPageTemplate({
             <h1 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">{h1}</h1>
             <p className="text-base text-muted-foreground md:text-lg">{intro}</p>
             <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button asChild size="lg">
+                <Link href="/contact">Get a quote</Link>
+              </Button>
               <TrackablePhoneLink
                 phone={companyInfo.phone}
                 vertical={verticalConfig.verticalId}
@@ -83,14 +86,11 @@ export default function CostPageTemplate({
                 locationSlug={null}
                 pagePath="/companies-cost"
                 source="cta"
-                className="inline-flex items-center justify-center gap-2 rounded-md border border-primary bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
               >
                 <Phone className="h-4 w-4" />
-                Call now
+                {companyInfo.phone}
               </TrackablePhoneLink>
-              <Button asChild size="lg" variant="outline">
-                <Link href="/contact">Get a quote</Link>
-              </Button>
             </div>
           </div>
         </div>

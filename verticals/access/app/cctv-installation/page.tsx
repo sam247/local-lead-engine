@@ -81,7 +81,7 @@ const linkCandidates = uniqueServicePriority
 const internalLinks = linkCandidates.slice(0, 5);
 
 const phoneLinkClass =
-  "inline-flex items-center justify-center gap-2 rounded-md border border-primary bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90";
+  "inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline";
 
 export const metadata: Metadata = {
   title: `${serviceFallback.title} | ${verticalConfig.siteName}`,
@@ -102,6 +102,9 @@ export default function CctvInstallationPage() {
           <h1 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">{`${pageTitle} | ${verticalConfig.siteName}`}</h1>
           <p className="mb-4 text-muted-foreground md:text-lg">{serviceFallback.heroSubtitle}</p>
           <div className="flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg">
+              <Link href="/contact">Get a quote</Link>
+            </Button>
             <TrackablePhoneLink
               phone={companyInfo.phone}
               vertical={verticalConfig.verticalId}
@@ -112,11 +115,8 @@ export default function CctvInstallationPage() {
               className={phoneLinkClass}
             >
               <Phone className="h-4 w-4" />
-              Call now
+              {companyInfo.phone}
             </TrackablePhoneLink>
-            <Button asChild size="lg" variant="outline">
-              <Link href="/contact">Get a quote</Link>
-            </Button>
           </div>
         </div>
       </section>
@@ -157,6 +157,9 @@ export default function CctvInstallationPage() {
               <h2 className="mb-4 font-display text-2xl font-bold">{serviceFallback.ctaHeading}</h2>
               <p className="mb-4 text-muted-foreground">Get local commercial CCTV support from survey to commissioning, with a clear quote and launch date.</p>
               <div className="mb-8 flex flex-col gap-3 sm:flex-row">
+                <Button asChild variant="default">
+                  <Link href="/contact">{serviceFallback.ctaLabel}</Link>
+                </Button>
                 <TrackablePhoneLink
                   phone={companyInfo.phone}
                   vertical={verticalConfig.verticalId}
@@ -167,11 +170,8 @@ export default function CctvInstallationPage() {
                   className={phoneLinkClass}
                 >
                   <Phone className="h-4 w-4" />
-                  Call now
+                  {companyInfo.phone}
                 </TrackablePhoneLink>
-                <Button asChild variant="default">
-                  <Link href="/contact">{serviceFallback.ctaLabel}</Link>
-                </Button>
               </div>
               <h2 className="mb-4 font-display text-2xl font-bold">Related local services</h2>
               <ul className="grid gap-3">
@@ -188,6 +188,9 @@ export default function CctvInstallationPage() {
             <aside className="lg:col-span-1 lg:sticky lg:top-24 h-fit rounded-xl border border-border bg-card p-5">
               <h2 className="mb-4 font-display text-lg font-semibold text-foreground">Get a quote</h2>
               <div className="flex flex-col gap-3">
+                <Button asChild>
+                  <Link href="/contact">Get a quote</Link>
+                </Button>
                 <TrackablePhoneLink
                   phone={companyInfo.phone}
                   vertical={verticalConfig.verticalId}
@@ -198,11 +201,8 @@ export default function CctvInstallationPage() {
                   className={phoneLinkClass}
                 >
                   <Phone className="h-4 w-4" />
-                  Call now
+                  {companyInfo.phone}
                 </TrackablePhoneLink>
-                <Button asChild>
-                  <Link href="/contact">Get a quote</Link>
-                </Button>
               </div>
               <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
                 {sidebarBullets.map((point) => (

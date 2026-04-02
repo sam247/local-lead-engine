@@ -62,9 +62,9 @@ export default function PillarGuideContent() {
                 serviceSlug={null}
                 locationSlug={null}
                 pagePath="/collapsed-drains-complete-guide"
-                className="flex items-center gap-2 text-primary-foreground"
+                className="flex items-center gap-2 text-primary-foreground hover:underline"
               >
-                <Phone className="h-5 w-5" /> Call Now
+                <Phone className="h-5 w-5" /> {companyInfo.phone}
               </TrackablePhoneLink>
             </div>
           </div>

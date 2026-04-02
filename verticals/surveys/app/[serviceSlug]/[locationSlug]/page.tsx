@@ -344,9 +344,9 @@ export default async function LocationRoute({ params }: Props) {
                 serviceSlug={service.slug}
                 locationSlug={location.id}
                 source="cta"
-                className="flex items-center gap-2 text-primary"
+                className="flex items-center gap-2 text-primary hover:underline"
               >
-                <Phone className="h-4 w-4" /> Call now
+                <Phone className="h-4 w-4" /> {verticalConfig.companyInfo.phone}
               </TrackablePhoneLink>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 {sidebarBullets.slice(0, 5).map((point) => (

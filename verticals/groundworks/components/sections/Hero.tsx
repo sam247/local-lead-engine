@@ -176,27 +176,25 @@ const Hero = () => {
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button variant="highlight" size="lg" asChild>
-                <TrackablePhoneLink
-                  phone={companyInfo.phone}
-                  vertical={verticalConfig.verticalId}
-                  serviceSlug={null}
-                  locationSlug={null}
-                  context={{
-                    voiceWebhookPath: "/api/twilio/voice",
-                    vertical: verticalConfig.verticalId,
-                  }}
-                  className="gap-2"
-                >
-                  <Phone className="h-5 w-5" />
-                  Call Now
-                </TrackablePhoneLink>
-              </Button>
-              <Button variant="outline" size="lg" asChild className="border-primary-foreground/30 text-primary hover:bg-primary-foreground/10">
                 <Link href="/contact">
                   {verticalConfig.heroSecondaryCtaText ?? "Request Inspection"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
+              <TrackablePhoneLink
+                phone={companyInfo.phone}
+                vertical={verticalConfig.verticalId}
+                serviceSlug={null}
+                locationSlug={null}
+                context={{
+                  voiceWebhookPath: "/api/twilio/voice",
+                  vertical: verticalConfig.verticalId,
+                }}
+                className="inline-flex items-center gap-2 text-primary-foreground hover:underline"
+              >
+                <Phone className="h-5 w-5" />
+                {companyInfo.phone}
+              </TrackablePhoneLink>
             </div>
 
             

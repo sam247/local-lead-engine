@@ -146,19 +146,6 @@ export function NearMePage({
               {conversionHeading}
             </h2>
             <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-              <Button size="lg" variant="highlight" className="min-h-12 flex-1 sm:flex-initial" asChild>
-                <TrackablePhoneLink
-                  phone={companyInfo.phone}
-                  vertical={callTrackVertical}
-                  serviceSlug={service.slug}
-                  locationSlug={null}
-                  pagePath={pagePath}
-                  className="inline-flex items-center justify-center"
-                >
-                  <Phone className="mr-2 h-5 w-5" />
-                  Call Now
-                </TrackablePhoneLink>
-              </Button>
               {secondaryCtaLabel && (
                 <Button size="lg" variant="outline" className="min-h-12 flex-1 border-2 sm:flex-initial" asChild>
                   <Link href={secondaryPath}>
@@ -167,6 +154,17 @@ export function NearMePage({
                   </Link>
                 </Button>
               )}
+              <TrackablePhoneLink
+                phone={companyInfo.phone}
+                vertical={callTrackVertical}
+                serviceSlug={service.slug}
+                locationSlug={null}
+                pagePath={pagePath}
+                className="inline-flex min-h-12 items-center gap-2 text-sm font-medium text-primary hover:underline"
+              >
+                <Phone className="h-5 w-5" />
+                {companyInfo.phone}
+              </TrackablePhoneLink>
             </div>
           </div>
         </section>

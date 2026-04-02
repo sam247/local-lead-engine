@@ -125,9 +125,9 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
                       voiceWebhookPath: "/api/twilio/voice",
                       vertical: verticalConfig.verticalId,
                     }}
-                    className="flex items-center gap-2 text-primary-foreground"
+                    className="flex items-center gap-2 text-primary-foreground hover:underline"
                   >
-                    <Phone className="h-5 w-5" /> Call Now
+                    <Phone className="h-5 w-5" /> {companyInfo.phone}
                   </TrackablePhoneLink>
                 </div>
               </div>
@@ -161,7 +161,7 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
                   }}
                   className="flex items-center gap-2 text-primary hover:underline"
                 >
-                  <Phone className="h-4 w-4" /> Call Now
+                  <Phone className="h-4 w-4" /> {companyInfo.phone}
                 </TrackablePhoneLink>
                 <Button asChild className="mt-4 w-full">
                   <Link href="/contact">Get a Free Quote</Link>

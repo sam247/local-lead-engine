@@ -713,9 +713,9 @@ export function LocationPage({
                 vertical={callTrackVertical}
                 serviceSlug={service.slug}
                 locationSlug={location.id}
-                className="flex items-center gap-2 text-primary-foreground"
+                className="flex items-center gap-2 text-primary-foreground hover:underline"
               >
-                <Phone className="h-5 w-5" /> Call Now
+                <Phone className="h-5 w-5" /> {companyInfo.phone}
               </TrackablePhoneLink>
             </div>
           </div>
@@ -1002,15 +1002,15 @@ export function LocationPage({
               <div className="rounded-lg bg-secondary p-6">
                 <h2 className="mb-4 font-display text-lg font-bold">Contact Us</h2>
                 <div className="space-y-3">
-                  <TrackablePhoneLink
-                    phone={companyInfo.phone}
-                    vertical={callTrackVertical}
-                    serviceSlug={service.slug}
-                    locationSlug={location.id}
-                    className="flex items-center gap-2 text-primary hover:underline"
-                  >
-                    <Phone className="h-4 w-4" /> Call Now
-                  </TrackablePhoneLink>
+                <TrackablePhoneLink
+                  phone={companyInfo.phone}
+                  vertical={callTrackVertical}
+                  serviceSlug={service.slug}
+                  locationSlug={location.id}
+                  className="flex items-center gap-2 text-primary hover:underline"
+                >
+                  <Phone className="h-4 w-4" /> {companyInfo.phone}
+                </TrackablePhoneLink>
                   <a
                     href={`mailto:${companyInfo.email}`}
                     className="flex items-center gap-2 text-primary hover:underline"

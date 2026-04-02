@@ -225,16 +225,16 @@ export default async function LocationRoute({ params }: Props) {
                 <Button asChild>
                   <Link href="/contact">Get a quote</Link>
                 </Button>
-                <TrackablePhoneLink
-                  phone={verticalConfig.companyInfo.phone}
-                  vertical={verticalConfig.verticalId}
-                  serviceSlug={primaryServiceSlug}
-                  locationSlug={location.id}
-                  source="cta"
-                  className="flex items-center gap-2 text-primary"
-                >
-                  <Phone className="h-4 w-4" /> Call now
-                </TrackablePhoneLink>
+              <TrackablePhoneLink
+                phone={verticalConfig.companyInfo.phone}
+                vertical={verticalConfig.verticalId}
+                serviceSlug={primaryServiceSlug}
+                locationSlug={location.id}
+                source="cta"
+                className="flex items-center gap-2 text-primary hover:underline"
+              >
+                <Phone className="h-4 w-4" /> {verticalConfig.companyInfo.phone}
+              </TrackablePhoneLink>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   {sidebarBullets.slice(0, 5).map((point) => (
                     <li key={point} className="flex items-start gap-2">
@@ -388,9 +388,9 @@ export default async function LocationRoute({ params }: Props) {
                 serviceSlug={service.slug}
                 locationSlug={location.id}
                 source="cta"
-                className="flex items-center gap-2 text-primary"
+                className="flex items-center gap-2 text-primary hover:underline"
               >
-                <Phone className="h-4 w-4" /> Call now
+                <Phone className="h-4 w-4" /> {verticalConfig.companyInfo.phone}
               </TrackablePhoneLink>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 {sidebarBullets.slice(0, 5).map((point) => (
