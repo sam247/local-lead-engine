@@ -45,6 +45,17 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
   ];
 
   const locationWithExtras = location;
+  const productPageLink =
+    service.slug === "groundworks-contractors" ||
+    service.slug === "excavation-contractors" ||
+    service.slug === "foundation-contractors"
+      ? {
+          href: "/soakaway-installation",
+          label: "Soakaway installation service",
+          description:
+            "If surface water disposal is part of the wider package, our soakaway installation service explains typical scope, costs, and delivery considerations.",
+        }
+      : null;
 
   return (
     <>
@@ -125,6 +136,16 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
                 {companyInfo.name} provides expert {service.title.toLowerCase()} in {location.name}, {location.area}. Our experienced groundworks teams deliver reliable project support tailored to your site and programme.
               </p>
               <p className="mb-8 text-muted-foreground">{service.description}</p>
+
+              {productPageLink && (
+                <div className="mb-8 rounded-lg border border-border bg-secondary/50 p-4">
+                  <h3 className="mb-2 font-display text-lg font-bold">Need surface water drainage support?</h3>
+                  <p className="mb-3 text-sm text-muted-foreground">{productPageLink.description}</p>
+                  <Link href={productPageLink.href} className="inline-flex text-sm text-primary hover:underline">
+                    {productPageLink.label} <ArrowRight className="ml-1 inline h-3 w-3" />
+                  </Link>
+                </div>
+              )}
 
               {locationWithExtras.nearbyTowns && (
                 <div className="mb-8 rounded-lg bg-secondary p-4">

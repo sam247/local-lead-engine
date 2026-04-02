@@ -23,6 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function CompaniesCostPage() {
   const relatedLinks = getCompaniesCostLinks(5);
   const ctaLinks = [
+    { label: "CCTV installation services", href: "/cctv-installation" },
     ...(relatedLinks[0] ? [{ label: relatedLinks[0].title, href: relatedLinks[0].href }] : []),
     ...(relatedLinks[1] ? [{ label: relatedLinks[1].title, href: relatedLinks[1].href }] : []),
     { label: "Request a local quote", href: "/contact" },

@@ -57,6 +57,9 @@ export function getHubPageProps(category: string) {
   const pillarGuides = [
     { title: "Collapsed Drains Complete Guide", href: "/collapsed-drains-complete-guide" },
     { title: "CCTV Drain Survey Guide", href: "/drain-survey" },
+    ...(category === "inspection"
+      ? [{ title: "CCTV drain survey service", href: "/cctv-drain-survey" }]
+      : []),
   ];
   return {
     hub,

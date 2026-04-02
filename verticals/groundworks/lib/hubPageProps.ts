@@ -41,6 +41,9 @@ export function getHubPageProps(category: string) {
     { title: "Groundworks process", href: "/guides/groundworks-process" },
     { title: "Foundation cost guide", href: "/guides/foundation-cost" },
     { title: "Piling cost guide", href: "/guides/piling-cost" },
+    ...(category === "guides"
+      ? [{ title: "Soakaway installation service", href: "/soakaway-installation" }]
+      : []),
   ];
   return {
     hub,

@@ -45,6 +45,17 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
   ];
 
   const locationWithExtras = location;
+  const productPageLink =
+    service.slug === "commercial-cctv-installation" ||
+    service.slug === "ip-camera-systems" ||
+    service.slug === "security-system-integration"
+      ? {
+          href: "/cctv-installation",
+          label: "CCTV installation services",
+          description:
+            "If you need a broader overview of commercial CCTV planning, scope, and delivery, see our CCTV installation services page.",
+        }
+      : null;
 
   return (
     <>
@@ -118,6 +129,16 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
                 {companyInfo.name} designs and installs {service.title.toLowerCase()} for businesses, public-sector buildings, and multi-site organisations across {location.name} and {location.area}. Every solution is tailored to your site&apos;s security requirements and compliance obligations.
               </p>
               <p className="mb-8 text-muted-foreground">{service.description}</p>
+
+              {productPageLink && (
+                <div className="mb-8 rounded-lg border border-border bg-secondary/50 p-4">
+                  <h3 className="mb-2 font-display text-lg font-bold">Planning related CCTV work?</h3>
+                  <p className="mb-3 text-sm text-muted-foreground">{productPageLink.description}</p>
+                  <Link href={productPageLink.href} className="inline-flex text-sm text-primary hover:underline">
+                    {productPageLink.label} <ArrowRight className="ml-1 inline h-3 w-3" />
+                  </Link>
+                </div>
+              )}
 
               {locationWithExtras.nearbyTowns && (
                 <div className="mb-8 rounded-lg bg-secondary p-4">

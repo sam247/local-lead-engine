@@ -77,10 +77,11 @@ export default function DrainSurveyCostPage() {
                 <div className="grid gap-2 sm:grid-cols-2">
                   <Link href="/drain-survey" className="text-sm text-primary hover:underline">Drain Survey Hub →</Link>
                   <Link href="/do-i-need-a-drain-survey" className="text-sm text-primary hover:underline">Do I Need a Drain Survey? →</Link>
+                  <Link href="/cctv-drain-survey" className="text-sm text-primary hover:underline">CCTV Drain Survey Service →</Link>
                   <Link href="/drain-costs/drain-repair-cost" className="text-sm text-primary hover:underline">Drain Repair Cost Guide →</Link>
                   <Link href="/drain-costs/collapsed-drain-repair-cost" className="text-sm text-primary hover:underline">Collapsed Drain Repair Cost →</Link>
                   <Link href="/drain-insurance/collapsed-drain-insurance-claims" className="text-sm text-primary hover:underline">Insurance Claims Guide →</Link>
-                  <Link href={getServiceUrl("cctv-drain-surveys")} className="text-sm text-primary hover:underline">CCTV Drain Surveys Service →</Link>
+                  <Link href={getServiceUrl("cctv-drain-surveys")} className="text-sm text-primary hover:underline">CCTV Drain Surveys Overview →</Link>
                 </div>
               </div>
             </div>

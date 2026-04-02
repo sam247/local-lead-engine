@@ -49,6 +49,17 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
   ];
 
   const locationWithExtras = location;
+  const productPageLink =
+    service.slug === "measured-building-survey" ||
+    service.slug === "topographical-survey" ||
+    service.slug === "laser-scanning-survey"
+      ? {
+          href: "/measured-building-survey",
+          label: "Measured building survey service",
+          description:
+            "If you need as-built plans, elevations, or sections alongside this scope, our measured building survey service covers the wider deliverables.",
+        }
+      : null;
 
   return (
     <>
@@ -122,6 +133,16 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
                 Mainline Surveys connects you with qualified survey partners for {service.title.toLowerCase()} in {location.name}, {location.area}. Professional land and drone surveying for architects, developers and property owners.
               </p>
               <p className="mb-8 text-muted-foreground">{service.description}</p>
+
+              {productPageLink && (
+                <div className="mb-8 rounded-lg border border-border bg-secondary/50 p-4">
+                  <h3 className="mb-2 font-display text-lg font-bold">Need building measurement drawings?</h3>
+                  <p className="mb-3 text-sm text-muted-foreground">{productPageLink.description}</p>
+                  <Link href={productPageLink.href} className="inline-flex text-sm text-primary hover:underline">
+                    {productPageLink.label} <ArrowRight className="ml-1 inline h-3 w-3" />
+                  </Link>
+                </div>
+              )}
 
               {locationWithExtras.nearbyTowns && (
                 <div className="mb-8 rounded-lg bg-secondary p-4">

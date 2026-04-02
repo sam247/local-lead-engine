@@ -21,6 +21,10 @@ export function getHubPageProps(category: string) {
   const heroAlt =
     categoryAltText[category] || `${hub.title} - ${verticalConfig.siteName}`;
   const keyServices = services.slice(0, 3);
+  const pillarGuides =
+    category === "cctv-guides"
+      ? [{ title: "CCTV installation services", href: "/cctv-installation" }]
+      : undefined;
 
   return {
     hub,
@@ -31,6 +35,7 @@ export function getHubPageProps(category: string) {
     keyServices,
     companyInfo: verticalConfig.companyInfo,
     baseUrl: verticalConfig.baseUrl,
+    pillarGuides,
     callTrackVertical: verticalConfig.verticalId,
   };
 }

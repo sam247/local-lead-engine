@@ -2109,6 +2109,9 @@ export function getRelevantTopicsForService(serviceSlug: string): { title: strin
   const categories = DRAINS_SERVICE_TO_TOPIC_CATEGORIES[serviceSlug];
   if (!categories?.length) return [];
   const out: { title: string; href: string }[] = [];
+  if (serviceSlug === "cctv-drain-surveys" || serviceSlug === "drain-collapse-repair") {
+    out.push({ title: "CCTV drain survey service", href: "/cctv-drain-survey" });
+  }
   for (const category of categories) {
     const hub = getHubData(category);
     const pages = getCategoryPages(category);
