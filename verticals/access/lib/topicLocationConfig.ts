@@ -1,6 +1,7 @@
 /**
  * Phase 4 – Controlled rollout of topic × location pages.
- * Exactly 10 topics; route slug may differ from programmatic topic slug where needed to avoid conflict with service slugs.
+ * Nine topic route slugs; route slug may differ from programmatic topic slug where needed to avoid conflict with service slugs.
+ * (Singular `perimeter-security-guide` is not used — it collides with guide hub naming and was never valid for L5.)
  */
 
 import { getProgrammaticTopicBySlug } from "@/data/programmaticTopics";
@@ -14,7 +15,6 @@ export const TOPIC_LOCATION_SLUGS = [
   "warehouse-cctv-systems",
   "door-access-control",
   "gate-access-control",
-  "perimeter-security-guide",
   "yard-security-systems",
   "data-cabling-installation",
   "cat6-network-cabling",
@@ -28,7 +28,6 @@ export const ROUTE_SLUG_TO_TOPIC_SLUG: Record<string, string> = {
   "warehouse-cctv-systems": "warehouse-cctv-installation",
   "door-access-control": "door-access-control-installation",
   "gate-access-control": "gate-access-control",
-  "perimeter-security-guide": "construction-perimeter-security",
   "yard-security-systems": "logistics-security-systems",
   "data-cabling-installation": "data-cabling-installation",
   "cat6-network-cabling": "cat6-cabling",
