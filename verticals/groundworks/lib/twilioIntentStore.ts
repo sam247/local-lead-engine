@@ -11,9 +11,13 @@ const callSidToIntent = new Map<string, { intentId: string; expiresAt: number }>
 
 function pruneExpired(): void {
   const now = Date.now();
-  for (const [sid, entry] of callSidToIntent) {
-    if (entry.expiresAt <= now) callSidToIntent.delete(sid);
-  }
+  const stale: string[] = [];
+  callSidToIntent.forEach((entry, sid) => {
+    if (entry.expiresAt <= now) stale.push(sid);
+  });
+  stale.forEach((sid) => {
+    callSidToIntent.delete(sid);
+  });
 }
 
 export function setLatestIntentId(id: string): void {
