@@ -25,8 +25,9 @@ const LINK_TITLES: Record<string, string> = {
   "Mainline Groundworks": "Commercial groundworks services across the UK",
 };
 
-/** Same visual height as homepage hero / HomeTrustCoreBar badge row (h-5, max-w 88px). */
-const BADGE_IMG_CLASS = "h-5 w-auto max-w-[88px] object-contain object-center";
+/** Footer badge row: match hero trust strip scale; shrink-0 keeps all marks visible in flex layouts. */
+const BADGE_IMG_CLASS =
+  "h-5 w-auto max-w-[88px] shrink-0 object-contain object-center sm:h-[23px] sm:max-w-[101px]";
 
 /**
  * Mainline Group division links: separate anchors, no pipe-concatenated text.
@@ -100,7 +101,7 @@ export function GroupFooter({
             </p>
           ) : null}
           {showBadges ? (
-            <div className="flex flex-wrap items-center justify-end gap-2.5">
+            <div className="flex max-w-full flex-nowrap items-center justify-end gap-2.5 overflow-x-auto">
               {citbLogoSrc ? (
                 <img
                   src={citbLogoSrc}

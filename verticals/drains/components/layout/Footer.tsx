@@ -136,7 +136,6 @@ const Footer = () => {
           <GroupFooter
             items={groupLinks}
             variant="onPrimary"
-            className="[&_img]:h-[23px] [&_img]:max-w-[101px]"
             trustLine="Our contractors are fully vetted, insured and accredited to UK industry standards"
             dbsLogoSrc="/dbs.png"
             citbLogoSrc="/citb.png"
