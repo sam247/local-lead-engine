@@ -4,7 +4,12 @@ import { services, locations, getRelevantTopicsForService } from "@/lib/data";
 import { projects } from "@/data/projects";
 import { getHeroImage, getProjectImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
-import { LocationPage, getNeighbourLocationIds, buildLocationContextParagraph } from "engine";
+import {
+  LocationPage,
+  getNeighbourLocationIds,
+  buildLocationContextParagraph,
+  getVariantIndex,
+} from "engine";
 import { buildLocationMetadata } from "engine";
 import { pickGroundworksL4MetaTitle } from "@/lib/groundworksL4TitleTemplates";
 import type { Metadata } from "next";
@@ -33,6 +38,7 @@ export async function generateStaticParams() {
 }
 
 type Props = { params: { serviceSlug: string; locationSlug: string } };
+type ServiceItem = (typeof services)[number];
 
 function trimSidebarBullet(input: string, maxWords = 8) {
   const cleaned = input.trim().replace(/\s+/g, " ");
@@ -45,6 +51,126 @@ function trimSidebarBullet(input: string, maxWords = 8) {
   if (commaWords.length <= maxWords) return commaPart;
 
   return words.slice(0, maxWords).join(" ");
+}
+
+const RELATED_SERVICE_SLUGS_BY_SERVICE: Record<string, string[]> = {
+  "groundworks-contractors": [
+    "excavation-contractors",
+    "site-clearance-contractors",
+    "foundation-contractors",
+    "enabling-works-contractors",
+    "concrete-foundations",
+  ],
+  underpinning: [
+    "foundation-repair",
+    "foundation-contractors",
+    "mini-piling-contractors",
+    "piling-contractors",
+    "concrete-foundations",
+  ],
+  "piling-contractors": [
+    "mini-piling-contractors",
+    "cfa-piling",
+    "foundation-contractors",
+    "underpinning",
+    "concrete-foundations",
+  ],
+  "cfa-piling": [
+    "piling-contractors",
+    "mini-piling-contractors",
+    "foundation-contractors",
+    "underpinning",
+    "concrete-foundations",
+  ],
+  "mini-piling-contractors": [
+    "piling-contractors",
+    "cfa-piling",
+    "underpinning",
+    "foundation-contractors",
+    "concrete-foundations",
+  ],
+  "foundation-contractors": [
+    "concrete-foundations",
+    "piling-contractors",
+    "mini-piling-contractors",
+    "underpinning",
+    "foundation-repair",
+  ],
+  "foundation-repair": [
+    "underpinning",
+    "foundation-contractors",
+    "concrete-repair",
+    "mini-piling-contractors",
+    "piling-contractors",
+  ],
+  "concrete-repair": [
+    "foundation-repair",
+    "concrete-foundations",
+    "foundation-contractors",
+    "underpinning",
+    "groundworks-contractors",
+  ],
+  "excavation-contractors": [
+    "site-clearance-contractors",
+    "groundworks-contractors",
+    "foundation-contractors",
+    "enabling-works-contractors",
+    "concrete-foundations",
+  ],
+  "site-clearance-contractors": [
+    "groundworks-contractors",
+    "excavation-contractors",
+    "enabling-works-contractors",
+    "foundation-contractors",
+    "concrete-foundations",
+  ],
+  "concrete-foundations": [
+    "foundation-contractors",
+    "piling-contractors",
+    "mini-piling-contractors",
+    "underpinning",
+    "foundation-repair",
+  ],
+  "enabling-works-contractors": [
+    "site-clearance-contractors",
+    "groundworks-contractors",
+    "excavation-contractors",
+    "foundation-contractors",
+    "concrete-foundations",
+  ],
+};
+
+function buildServiceLocationLinkLabel(serviceTitle: string, locationName: string) {
+  const dedupedTitle = serviceTitle.replace(/\b(services?)\s+\1\b/gi, "$1").trim();
+  if (new RegExp(`\\b${locationName}\\b`, "i").test(dedupedTitle)) return dedupedTitle;
+  const withLocation = `${dedupedTitle} in ${locationName}`;
+  return withLocation.length <= 60 ? withLocation : dedupedTitle;
+}
+
+function buildExtraServiceLocationLinks(service: ServiceItem, locationId: string, locationName: string) {
+  const otherServices = services.filter((candidate) => candidate.slug !== service.slug);
+  const inlineRelatedIndex = getVariantIndex(`inline-links:${service.slug}:${locationId}`, 3);
+  const inlineRelatedService = otherServices[inlineRelatedIndex % otherServices.length];
+  const excludedSlugs = new Set([service.slug, inlineRelatedService?.slug]);
+  const selected = new Set<string>();
+  const orderedCandidates = RELATED_SERVICE_SLUGS_BY_SERVICE[service.slug] ?? [];
+  const candidateServices = [
+    ...orderedCandidates
+      .map((slug) => services.find((candidate) => candidate.slug === slug))
+      .filter((candidate): candidate is ServiceItem => candidate != null),
+    ...services,
+  ];
+
+  return candidateServices.reduce<{ href: string; children: string }[]>((links, candidate) => {
+    if (links.length >= 3) return links;
+    if (excludedSlugs.has(candidate.slug) || selected.has(candidate.slug)) return links;
+    selected.add(candidate.slug);
+    links.push({
+      href: `/${candidate.slug}/${locationId}`,
+      children: buildServiceLocationLinkLabel(candidate.title, locationName),
+    });
+    return links;
+  }, []);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -246,16 +372,11 @@ export default async function LocationRoute({ params }: Props) {
   const introParagraph = `We provide ${service.title} across ${location.name} and ${location.area}. Our team delivers piling, underpinning, foundation repair, concrete works and wider site preparation for commercial and residential projects, with free no-obligation quotes.`;
 
   const relatedTopicLinks = getRelevantTopicsForService(service.slug);
-
-  const extraServiceLocationLinks =
-    service.slug === "piling-contractors" || service.slug === "foundation-contractors"
-      ? [
-          { href: `/underpinning/${location.id}`, children: `Underpinning in ${location.name}` },
-          { href: `/foundation-repair/${location.id}`, children: `Foundation repair in ${location.name}` },
-        ]
-      : service.slug === "foundation-repair"
-        ? [{ href: `/underpinning/${location.id}`, children: `Underpinning in ${location.name}` }]
-        : undefined;
+  const extraServiceLocationLinks = buildExtraServiceLocationLinks(
+    service,
+    location.id,
+    location.name
+  );
 
   const sidebarBullets = trustPoints.map((point) => trimSidebarBullet(point, 8)).slice(0, 5);
 

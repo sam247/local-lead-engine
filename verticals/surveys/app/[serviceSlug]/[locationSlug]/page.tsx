@@ -4,7 +4,12 @@ import { services, locations, getRelevantTopicsForService } from "@/lib/data";
 import { projects } from "@/data/projects";
 import { getHeroImage, getProjectImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
-import { LocationPage, getNeighbourLocationIds, buildLocationContextParagraph } from "engine";
+import {
+  LocationPage,
+  getNeighbourLocationIds,
+  buildLocationContextParagraph,
+  getVariantIndex,
+} from "engine";
 import { buildLocationMetadata } from "engine";
 import { pickSurveysL4MetaTitle } from "@/lib/surveysL4TitleTemplates";
 import type { Metadata } from "next";
@@ -23,6 +28,7 @@ export async function generateStaticParams() {
 }
 
 type Props = { params: { serviceSlug: string; locationSlug: string } };
+type ServiceItem = (typeof services)[number];
 
 function trimSidebarBullet(input: string, maxWords = 8) {
   const cleaned = input.trim().replace(/\s+/g, " ");
@@ -35,6 +41,133 @@ function trimSidebarBullet(input: string, maxWords = 8) {
   if (commaWords.length <= maxWords) return commaPart;
 
   return words.slice(0, maxWords).join(" ");
+}
+
+const RELATED_SERVICE_SLUGS_BY_SERVICE: Record<string, string[]> = {
+  "topographical-survey": [
+    "drone-topographical-survey",
+    "drone-survey",
+    "utility-survey",
+    "utility-mapping-survey",
+    "laser-scanning-survey",
+  ],
+  "measured-building-survey": [
+    "laser-scanning-survey",
+    "building-surveys",
+    "drone-building-inspection",
+    "topographical-survey",
+    "party-wall-surveyors",
+  ],
+  "utility-survey": [
+    "utility-mapping-survey",
+    "topographical-survey",
+    "drone-survey",
+    "drone-construction-survey",
+    "laser-scanning-survey",
+  ],
+  "utility-mapping-survey": [
+    "utility-survey",
+    "topographical-survey",
+    "drone-survey",
+    "drone-construction-survey",
+    "laser-scanning-survey",
+  ],
+  "boundary-survey": [
+    "topographical-survey",
+    "measured-building-survey",
+    "building-surveys",
+    "party-wall-surveyors",
+    "laser-scanning-survey",
+  ],
+  "laser-scanning-survey": [
+    "measured-building-survey",
+    "topographical-survey",
+    "drone-survey",
+    "drone-building-inspection",
+    "building-surveys",
+  ],
+  "drone-survey": [
+    "drone-topographical-survey",
+    "drone-construction-survey",
+    "topographical-survey",
+    "utility-survey",
+    "drone-building-inspection",
+  ],
+  "drone-roof-inspection": [
+    "drone-building-inspection",
+    "building-surveys",
+    "measured-building-survey",
+    "drone-survey",
+    "laser-scanning-survey",
+  ],
+  "drone-building-inspection": [
+    "drone-roof-inspection",
+    "building-surveys",
+    "measured-building-survey",
+    "laser-scanning-survey",
+    "drone-survey",
+  ],
+  "drone-topographical-survey": [
+    "topographical-survey",
+    "drone-survey",
+    "utility-survey",
+    "drone-construction-survey",
+    "laser-scanning-survey",
+  ],
+  "drone-construction-survey": [
+    "drone-survey",
+    "topographical-survey",
+    "utility-mapping-survey",
+    "utility-survey",
+    "drone-topographical-survey",
+  ],
+  "building-surveys": [
+    "measured-building-survey",
+    "drone-building-inspection",
+    "drone-roof-inspection",
+    "party-wall-surveyors",
+    "laser-scanning-survey",
+  ],
+  "party-wall-surveyors": [
+    "building-surveys",
+    "measured-building-survey",
+    "boundary-survey",
+    "topographical-survey",
+    "laser-scanning-survey",
+  ],
+};
+
+function buildServiceLocationLinkLabel(serviceTitle: string, locationName: string) {
+  const dedupedTitle = serviceTitle.replace(/\b(services?)\s+\1\b/gi, "$1").trim();
+  if (new RegExp(`\\b${locationName}\\b`, "i").test(dedupedTitle)) return dedupedTitle;
+  const withLocation = `${dedupedTitle} in ${locationName}`;
+  return withLocation.length <= 60 ? withLocation : dedupedTitle;
+}
+
+function buildExtraServiceLocationLinks(service: ServiceItem, locationId: string, locationName: string) {
+  const otherServices = services.filter((candidate) => candidate.slug !== service.slug);
+  const inlineRelatedIndex = getVariantIndex(`inline-links:${service.slug}:${locationId}`, 3);
+  const inlineRelatedService = otherServices[inlineRelatedIndex % otherServices.length];
+  const excludedSlugs = new Set([service.slug, inlineRelatedService?.slug]);
+  const selected = new Set<string>();
+  const orderedCandidates = RELATED_SERVICE_SLUGS_BY_SERVICE[service.slug] ?? [];
+  const candidateServices = [
+    ...orderedCandidates
+      .map((slug) => services.find((candidate) => candidate.slug === slug))
+      .filter((candidate): candidate is ServiceItem => candidate != null),
+    ...services,
+  ];
+
+  return candidateServices.reduce<{ href: string; children: string }[]>((links, candidate) => {
+    if (links.length >= 3) return links;
+    if (excludedSlugs.has(candidate.slug) || selected.has(candidate.slug)) return links;
+    selected.add(candidate.slug);
+    links.push({
+      href: `/${candidate.slug}/${locationId}`,
+      children: buildServiceLocationLinkLabel(candidate.title, locationName),
+    });
+    return links;
+  }, []);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -160,6 +293,11 @@ export default async function LocationRoute({ params }: Props) {
   const introParagraph = `We provide ${service.title} across ${location.name} and ${location.area}. Our survey partners deliver accurate, planning-ready data for residential and commercial projects, with free no-obligation quotes.`;
 
   const relatedTopicLinks = getRelevantTopicsForService(service.slug);
+  const extraServiceLocationLinks = buildExtraServiceLocationLinks(
+    service,
+    location.id,
+    location.name
+  );
 
   const sidebarBullets = trustPoints.map((point) => trimSidebarBullet(point, 8)).slice(0, 5);
 
@@ -185,6 +323,7 @@ export default async function LocationRoute({ params }: Props) {
               trustPoints={trustPoints}
               diagnosisGuidePath="/do-i-need-a-drain-survey"
               introParagraph={introParagraph}
+              extraServiceLocationLinks={extraServiceLocationLinks}
               nearbyAreasDescription={`Compare our ${service.title} in nearby areas.`}
               neighbourLocationsForContext={neighbourLocationsForContext}
               locationContextParagraph={locationContextParagraph}

@@ -4,7 +4,12 @@ import { services, locations, getRelevantTopicsForService } from "@/lib/data";
 import { projects } from "@/data/projects";
 import { getHeroImage, getProjectImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
-import { LocationPage, getNeighbourLocationIds, buildLocationContextParagraph } from "engine";
+import {
+  LocationPage,
+  getNeighbourLocationIds,
+  buildLocationContextParagraph,
+  getVariantIndex,
+} from "engine";
 import { buildLocationMetadata } from "engine";
 import { pickDrainsL4MetaTitle } from "@/lib/drainsL4TitleTemplates";
 import type { Metadata } from "next";
@@ -23,6 +28,7 @@ export async function generateStaticParams() {
 }
 
 type Props = { params: { serviceSlug: string; locationSlug: string } };
+type ServiceItem = (typeof services)[number];
 
 function trimSidebarBullet(input: string, maxWords = 8) {
   const cleaned = input.trim().replace(/\s+/g, " ");
@@ -35,6 +41,119 @@ function trimSidebarBullet(input: string, maxWords = 8) {
   if (commaWords.length <= maxWords) return commaPart;
 
   return words.slice(0, maxWords).join(" ");
+}
+
+const RELATED_SERVICE_SLUGS_BY_SERVICE: Record<string, string[]> = {
+  "drain-collapse-repair": [
+    "cctv-drain-surveys",
+    "drain-excavation",
+    "drain-pipe-replacement",
+    "drain-relining",
+    "emergency-drainage",
+  ],
+  "drain-relining": [
+    "cctv-drain-surveys",
+    "drain-root-removal",
+    "drain-collapse-repair",
+    "drain-pipe-replacement",
+    "drain-excavation",
+  ],
+  "cctv-drain-surveys": [
+    "drain-collapse-repair",
+    "drain-relining",
+    "blocked-drains",
+    "drain-unblocking",
+    "drain-excavation",
+  ],
+  "drain-excavation": [
+    "drain-collapse-repair",
+    "drain-pipe-replacement",
+    "cctv-drain-surveys",
+    "drain-relining",
+    "emergency-drainage",
+  ],
+  "emergency-drainage": [
+    "blocked-drains",
+    "drain-unblocking",
+    "cctv-drain-surveys",
+    "drain-collapse-repair",
+    "drain-jetting",
+  ],
+  "blocked-drains": [
+    "drain-unblocking",
+    "drain-jetting",
+    "cctv-drain-surveys",
+    "drain-root-removal",
+    "emergency-drainage",
+  ],
+  "drain-jetting": [
+    "blocked-drains",
+    "drain-unblocking",
+    "drain-root-removal",
+    "cctv-drain-surveys",
+    "commercial-drainage",
+  ],
+  "drain-root-removal": [
+    "drain-jetting",
+    "drain-relining",
+    "blocked-drains",
+    "cctv-drain-surveys",
+    "drain-unblocking",
+  ],
+  "drain-unblocking": [
+    "blocked-drains",
+    "drain-jetting",
+    "cctv-drain-surveys",
+    "emergency-drainage",
+    "drain-root-removal",
+  ],
+  "drain-pipe-replacement": [
+    "drain-excavation",
+    "drain-collapse-repair",
+    "cctv-drain-surveys",
+    "drain-relining",
+    "emergency-drainage",
+  ],
+  "commercial-drainage": [
+    "drain-jetting",
+    "blocked-drains",
+    "emergency-drainage",
+    "cctv-drain-surveys",
+    "drain-unblocking",
+  ],
+};
+
+function buildServiceLocationLinkLabel(serviceTitle: string, locationName: string) {
+  const dedupedTitle = serviceTitle.replace(/\b(services?)\s+\1\b/gi, "$1").trim();
+  if (new RegExp(`\\b${locationName}\\b`, "i").test(dedupedTitle)) return dedupedTitle;
+  const withLocation = `${dedupedTitle} in ${locationName}`;
+  return withLocation.length <= 60 ? withLocation : dedupedTitle;
+}
+
+function buildExtraServiceLocationLinks(service: ServiceItem, locationId: string, locationName: string) {
+  const otherServices = services.filter((candidate) => candidate.slug !== service.slug);
+  const inlineRelatedIndex = getVariantIndex(`inline-links:${service.slug}:${locationId}`, 3);
+  const inlineRelatedService = otherServices[inlineRelatedIndex % otherServices.length];
+  const excludedSlugs = new Set([service.slug, inlineRelatedService?.slug]);
+  const selected = new Set<string>();
+  const orderedCandidates = RELATED_SERVICE_SLUGS_BY_SERVICE[service.slug] ?? [];
+  const candidateServices = [
+    ...orderedCandidates
+      .map((slug) => services.find((candidate) => candidate.slug === slug))
+      .filter((candidate): candidate is ServiceItem => candidate != null),
+    ...services,
+  ];
+
+  return candidateServices.reduce<{ href: string; children: string }[]>((links, candidate) => {
+    if (links.length >= 3) return links;
+    if (excludedSlugs.has(candidate.slug) || selected.has(candidate.slug)) return links;
+    selected.add(candidate.slug);
+    links.push({
+      href: `/${candidate.slug}/${locationId}`,
+      children: buildServiceLocationLinkLabel(candidate.title, locationName),
+    });
+    return links;
+  }, []);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -160,6 +279,11 @@ export default async function LocationRoute({ params }: Props) {
   const introParagraph = `We provide ${service.title} across ${location.name} and ${location.area}. Our team offers expert diagnosis, repair, and maintenance for residential and commercial properties, with 24/7 emergency cover and free no-obligation quotes.`;
 
   const relatedTopicLinks = getRelevantTopicsForService(service.slug);
+  const extraServiceLocationLinks = buildExtraServiceLocationLinks(
+    service,
+    location.id,
+    location.name
+  );
 
   const sidebarBullets = trustPoints.map((point) => trimSidebarBullet(point, 8)).slice(0, 5);
 
@@ -185,6 +309,7 @@ export default async function LocationRoute({ params }: Props) {
               trustPoints={trustPoints}
               diagnosisGuidePath="/collapsed-drains-complete-guide"
               introParagraph={introParagraph}
+              extraServiceLocationLinks={extraServiceLocationLinks}
               nearbyAreasDescription={`Compare our ${service.title} in nearby areas.`}
               neighbourLocationsForContext={neighbourLocationsForContext}
               locationContextParagraph={locationContextParagraph}
