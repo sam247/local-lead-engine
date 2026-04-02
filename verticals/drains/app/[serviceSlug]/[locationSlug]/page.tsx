@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { services, locations, getRelevantTopicsForService } from "@/lib/data";
 import { projects } from "@/data/projects";
@@ -7,6 +8,10 @@ import { LocationPage, getNeighbourLocationIds, buildLocationContextParagraph } 
 import { buildLocationMetadata } from "engine";
 import { pickDrainsL4MetaTitle } from "@/lib/drainsL4TitleTemplates";
 import type { Metadata } from "next";
+import { Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import CTABanner from "@/components/sections/CTABanner";
+import { TrackablePhoneLink } from "engine";
 
 export const dynamic = "force-static";
 export const revalidate = false;
@@ -18,6 +23,19 @@ export async function generateStaticParams() {
 }
 
 type Props = { params: { serviceSlug: string; locationSlug: string } };
+
+function trimSidebarBullet(input: string, maxWords = 8) {
+  const cleaned = input.trim().replace(/\s+/g, " ");
+  const words = cleaned.split(/\s+/);
+  if (words.length <= maxWords) return cleaned;
+
+  const afterColon = cleaned.includes(":") ? cleaned.split(":").slice(1).join(":").trim() : cleaned;
+  const commaPart = afterColon.split(",")[0]?.trim() ?? afterColon;
+  const commaWords = commaPart.split(/\s+/).filter(Boolean);
+  if (commaWords.length <= maxWords) return commaPart;
+
+  return words.slice(0, maxWords).join(" ");
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { serviceSlug, locationSlug } = params;
@@ -143,30 +161,67 @@ export default async function LocationRoute({ params }: Props) {
 
   const relatedTopicLinks = getRelevantTopicsForService(service.slug);
 
+  const sidebarBullets = trustPoints.map((point) => trimSidebarBullet(point, 8)).slice(0, 5);
+
   return (
-    <LocationPage
-      service={service}
-      location={location}
-      serviceSlug={serviceSlug}
-      locationSlug={locationSlug}
-      sameAreaLocations={sameAreaLocations}
-      nearbyLocations={nearbyLocations}
-      localFaqs={localFaqs}
-      companyInfo={verticalConfig.companyInfo}
-      otherServices={otherServices}
-      baseUrl={verticalConfig.baseUrl}
-      serviceImage={serviceImage}
-      contactPath="/contact"
-      trustSectionTitle={`Trusted Drain Engineers in ${location.name}`}
-      trustPoints={trustPoints}
-      diagnosisGuidePath="/collapsed-drains-complete-guide"
-      introParagraph={introParagraph}
-      nearbyAreasDescription={`Compare our ${service.title} in nearby areas.`}
-      neighbourLocationsForContext={neighbourLocationsForContext}
-      locationContextParagraph={locationContextParagraph}
-      nearbyProjects={nearbyProjectsList.length > 0 ? nearbyProjectsList : undefined}
-      relatedTopicLinks={relatedTopicLinks.length > 0 ? relatedTopicLinks : undefined}
-      callTrackVertical={verticalConfig.verticalId}
-    />
+    <>
+      <div className="container">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <LocationPage
+              service={service}
+              location={location}
+              serviceSlug={serviceSlug}
+              locationSlug={locationSlug}
+              sameAreaLocations={sameAreaLocations}
+              nearbyLocations={nearbyLocations}
+              localFaqs={localFaqs}
+              companyInfo={verticalConfig.companyInfo}
+              otherServices={otherServices}
+              baseUrl={verticalConfig.baseUrl}
+              serviceImage={serviceImage}
+              contactPath="/contact"
+              trustSectionTitle={`Trusted Drain Engineers in ${location.name}`}
+              trustPoints={trustPoints}
+              diagnosisGuidePath="/collapsed-drains-complete-guide"
+              introParagraph={introParagraph}
+              nearbyAreasDescription={`Compare our ${service.title} in nearby areas.`}
+              neighbourLocationsForContext={neighbourLocationsForContext}
+              locationContextParagraph={locationContextParagraph}
+              nearbyProjects={nearbyProjectsList.length > 0 ? nearbyProjectsList : undefined}
+              relatedTopicLinks={relatedTopicLinks.length > 0 ? relatedTopicLinks : undefined}
+              callTrackVertical={verticalConfig.verticalId}
+            />
+          </div>
+          <aside className="lg:col-span-1 lg:sticky lg:top-24">
+            <div className="space-y-4 rounded-xl border border-border bg-card p-5">
+              <h2 className="font-display text-lg font-semibold text-foreground">Get a quote</h2>
+              <Button asChild>
+                <Link href="/contact">Get a quote</Link>
+              </Button>
+              <TrackablePhoneLink
+                phone={verticalConfig.companyInfo.phone}
+                vertical={verticalConfig.verticalId}
+                serviceSlug={service.slug}
+                locationSlug={location.id}
+                source="cta"
+                className="flex items-center gap-2 text-primary"
+              >
+                <Phone className="h-4 w-4" /> Call now
+              </TrackablePhoneLink>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                {sidebarBullets.slice(0, 5).map((point) => (
+                  <li key={point} className="flex items-start gap-2">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+      <CTABanner />
+    </>
   );
 }

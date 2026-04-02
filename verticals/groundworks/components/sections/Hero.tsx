@@ -199,41 +199,7 @@ const Hero = () => {
               </Button>
             </div>
 
-            <div className="mt-6 space-y-2 pt-1">
-              <p className="text-left text-xs leading-snug text-primary-foreground/75">
-                Vetted contractors · Fully insured · UK-wide
-              </p>
-              <div className="flex flex-wrap items-center gap-2.5">
-                <img
-                  src="/citb.png"
-                  alt="CITB"
-                  width={149}
-                  height={47}
-                  className="h-3 w-auto max-w-[50px] object-contain opacity-90 md:h-10 md:max-w-[148px]"
-                />
-                <img
-                  src="/dbs.png"
-                  alt="DBS disclosure check"
-                  width={149}
-                  height={47}
-                  className="h-3 w-auto max-w-[50px] object-contain opacity-90 md:h-10 md:max-w-[148px]"
-                />
-                <img
-                  src="/trustmark.png"
-                  alt="TrustMark"
-                  width={149}
-                  height={47}
-                  className="h-3 w-auto max-w-[50px] object-contain opacity-90 md:h-10 md:max-w-[148px]"
-                />
-                <img
-                  src="/fmb.png"
-                  alt="Federation of Master Builders"
-                  width={149}
-                  height={47}
-                  className="h-3 w-auto max-w-[50px] object-contain opacity-90 md:h-10 md:max-w-[148px]"
-                />
-              </div>
-            </div>
+            
           </div>
 
           {/* Right — Two-Step Enquiry Form */}
