@@ -155,7 +155,7 @@ const Hero = () => {
           {/* Left — Copy & CTAs */}
           <div className="animate-fade-in">
             <h1 className="mb-5 font-display text-3xl font-bold tracking-tight text-primary-foreground md:text-4xl lg:text-5xl">
-              NASC-Accredited Scaffolding Contractors Across the UK
+              NASC Accredited Scaffolding Contractors Across the UK
             </h1>
             <p className="mb-4 text-base text-primary-foreground/80 md:text-lg">
               Domestic and commercial scaffolding — designed, erected, inspected and certified to TG20. Rapid mobilisation for planned works and 24/7 emergency callout.

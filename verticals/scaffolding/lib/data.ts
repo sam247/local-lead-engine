@@ -28,7 +28,7 @@ export const services = [
     description:
       "We deliver complete scaffolding packages for new builds, refurbishments, maintenance works and emergency access. From domestic house scaffolding to multi-storey commercial facade access, our teams erect, inspect and strike safe, compliant structures to programme.",
     benefits: [
-      "NASC-accredited and fully insured",
+      "NASC accredited and fully insured",
       "Design and erect capability",
       "TG20 compliance on every structure",
       "Scaffold tags and inspection records as standard",

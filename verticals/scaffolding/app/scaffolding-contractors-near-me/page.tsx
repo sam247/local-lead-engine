@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   if (!service) return { title: "Not Found" };
   return {
     title: `${service.title} Near Me | ${verticalConfig.siteName}`,
-    description: `Find scaffolding contractors near you. ${verticalConfig.siteName} provides NASC-accredited domestic and commercial scaffolding across the UK. Free quotes — rapid mobilisation.`,
+    description: `Find scaffolding contractors near you. ${verticalConfig.siteName} provides NASC accredited domestic and commercial scaffolding across the UK. Free quotes — rapid mobilisation.`,
     alternates: { canonical: `${verticalConfig.baseUrl}${pagePath}` },
   };
 }
@@ -41,7 +41,7 @@ export default function NearMeRoute() {
       sectionTitle={`${service.title} areas we cover`}
       trustBlockTitle={`Why choose ${verticalConfig.siteName}`}
       trustBlockPoints={[
-        "NASC-accredited scaffolding contractors",
+        "NASC accredited scaffolding contractors",
         "TG20-compliant structures with full inspection records",
         "Handover certificates issued on every project",
       ]}

@@ -2,7 +2,7 @@ import { companyInfo } from "@/lib/data";
 import type { VerticalConfig, HomepageTrustPointsSix } from "engine";
 
 const homepageTrustPoints: HomepageTrustPointsSix = [
-  { icon: "BadgeCheck", title: "NASC-accredited contractors", description: "We work to NASC guidance and TG20 throughout every project." },
+  { icon: "BadgeCheck", title: "NASC accredited contractors", description: "We work to NASC guidance and TG20 throughout every project." },
   { icon: "Shield", title: "Fully insured", description: "Public liability and employer's liability in place on all scaffolding works." },
   { icon: "Clock", title: "Rapid mobilisation", description: "Typical response within 48 hours for standard access and emergency works." },
   { icon: "Wrench", title: "Design and erect capability", description: "We design and build bespoke scaffolding structures from first enquiry." },

@@ -20,7 +20,7 @@ export default function ServicesIndexPage() {
         <div className="mx-auto max-w-3xl">
           <h1 className="mb-4 font-display text-4xl font-bold">Our Scaffolding Services</h1>
           <p className="mb-10 text-lg text-muted-foreground">
-            NASC-accredited scaffolding for domestic, commercial and specialist projects across the UK. Select a service for more information.
+            NASC accredited scaffolding for domestic, commercial and specialist projects across the UK. Select a service for more information.
           </p>
           <ul className="grid gap-4 sm:grid-cols-2">
             {services.map((service) => (

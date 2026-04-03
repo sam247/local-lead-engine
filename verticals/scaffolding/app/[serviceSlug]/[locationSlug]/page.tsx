@@ -94,7 +94,7 @@ export default async function LocationRoute({ params }: Props) {
       answer: `We typically mobilise within 48 hours for standard scaffolding work in ${location.name}. For emergency scaffolding we operate 24/7 and can respond within hours.`,
     },
     {
-      question: `Are you NASC-accredited in ${location.name}?`,
+      question: `Are you NASC accredited in ${location.name}?`,
       answer: `Yes. We work to NASC guidance and TG20 on all scaffolding across ${location.name} and ${location.area}. All structures are tagged, inspected and documented.`,
     },
   ];

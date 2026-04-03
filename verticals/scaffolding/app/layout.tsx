@@ -14,9 +14,9 @@ import { Providers } from "./providers";
 export const viewport = { width: "device-width", initialScale: 1 };
 
 export const metadata: Metadata = {
-  title: "Mainline Scaffold | NASC-Accredited Scaffolding Contractors UK",
+  title: "Mainline Scaffold | NASC Accredited Scaffolding Contractors UK",
   description:
-    "NASC-accredited scaffolding contractors providing domestic, commercial, roof, chimney and emergency scaffolding across the UK. Free quotes — rapid mobilisation.",
+    "NASC accredited scaffolding contractors providing domestic, commercial, roof, chimney and emergency scaffolding across the UK. Free quotes — rapid mobilisation.",
   icons: {
     icon: "/favicon.ico",
     apple: "/favicon.ico",

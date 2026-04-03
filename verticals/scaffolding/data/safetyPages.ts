@@ -60,7 +60,7 @@ export const safetyPages: InfoPageData[] = [
     signs: [
       "Storm damage to the roof, chimney or facade often requires emergency scaffolding within hours",
       "Loss adjusters typically require a scaffold inspection record and certificate before approving access",
-      "Insurers may specify NASC-accredited contractors for insurance-backed works",
+      "Insurers may specify NASC accredited contractors for insurance-backed works",
       "The scaffold cost is usually a separate line item in the insurance settlement",
       "Temporary protection (boards, sheeting) may also be required alongside the scaffold",
     ],

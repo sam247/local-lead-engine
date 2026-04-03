@@ -13,7 +13,7 @@ const Footer = () => {
   return (
     <footer className="bg-charcoal pb-14 text-neutral-50">
       <div className="container py-12 md:py-16">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 md:gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Company Info */}
           <div>
             <div className="mb-4 flex items-center gap-2">
@@ -142,19 +142,19 @@ const Footer = () => {
             trustmarkLogoSrc="/trustmark.png"
           />
         </div>
-        <div className="container flex flex-col items-center justify-between gap-4 py-6 md:flex-row">
-          <p className="text-sm text-neutral-400">
+        <div className="container flex flex-col gap-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-center text-sm text-neutral-400 sm:min-w-0 sm:text-left">
             © {currentYear} {companyInfo.name}. All rights reserved.
           </p>
-          <div className="flex flex-wrap items-center gap-2 gap-y-2">
-            <Link href="/about" className="inline-flex min-h-[44px] items-center text-sm text-neutral-400 transition-colors hover:text-white">About</Link>
-            <Link href="/service-areas" className="inline-flex min-h-[44px] items-center text-sm text-neutral-400 transition-colors hover:text-white">Service Areas</Link>
-            <Link href="/projects" className="inline-flex min-h-[44px] items-center text-sm text-neutral-400 transition-colors hover:text-white">Projects</Link>
-            <Link href="/blog" className="inline-flex min-h-[44px] items-center text-sm text-neutral-400 transition-colors hover:text-white">Blog</Link>
-            <Link href="/privacy" className="inline-flex min-h-[44px] items-center text-sm text-neutral-400 transition-colors hover:text-white">Privacy</Link>
-            <Link href="/terms" className="inline-flex min-h-[44px] items-center text-sm text-neutral-400 transition-colors hover:text-white">Terms</Link>
-            <Link href="/contact" className="inline-flex min-h-[44px] items-center text-sm text-neutral-400 transition-colors hover:text-white">Contact</Link>
-          </div>
+          <nav className="flex flex-wrap items-center justify-center gap-x-1 gap-y-1 sm:justify-end" aria-label="Footer">
+            <Link href="/about" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">About</Link>
+            <Link href="/service-areas" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">Service Areas</Link>
+            <Link href="/projects" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">Projects</Link>
+            <Link href="/blog" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">Blog</Link>
+            <Link href="/privacy" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">Privacy</Link>
+            <Link href="/terms" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">Terms</Link>
+            <Link href="/contact" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">Contact</Link>
+          </nav>
         </div>
       </div>
     </footer>

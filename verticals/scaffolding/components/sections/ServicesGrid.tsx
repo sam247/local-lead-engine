@@ -38,7 +38,7 @@ const prioritySlugs = [
 ];
 
 const serviceBenefits: Record<string, string[]> = {
-  "scaffolding-contractors": ["NASC-accredited and fully insured", "Design and erect capability", "TG20 compliance on every structure"],
+  "scaffolding-contractors": ["NASC accredited and fully insured", "Design and erect capability", "TG20 compliance on every structure"],
   "domestic-scaffolding": ["Quick erection — typically 1–2 days", "All house types covered", "Full inspection certification"],
   "commercial-scaffolding": ["Bespoke designs for complex facades", "Documented inspection regime", "Programme-led delivery"],
   "roof-scaffolding": ["Full edge protection to current standards", "Pitched, flat and complex profiles", "Temporary roofing available"],
@@ -61,7 +61,7 @@ const ServicesGrid = () => {
             Our Scaffolding Services
           </h2>
           <p className="text-muted-foreground">
-            NASC-accredited scaffolding for domestic, commercial and specialist projects. All structures designed, erected and certified to TG20.
+            NASC accredited scaffolding for domestic, commercial and specialist projects. All structures designed, erected and certified to TG20.
           </p>
         </div>
 

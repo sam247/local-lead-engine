@@ -79,7 +79,7 @@ export const guidesPages: InfoPageData[] = [
     title: "Choosing a scaffolding contractor — what to look for",
     metaDescription: "How to choose a scaffolding contractor. NASC accreditation, insurance, CISRS qualifications and handover documentation explained.",
     intro:
-      "Choosing the right scaffolding contractor is not just about price. Scaffold failures cause deaths and serious injuries every year in the UK. The right contractor will be NASC-accredited, employ CISRS-trained scaffolders, carry adequate insurance and provide full documentation on every job.",
+      "Choosing the right scaffolding contractor is not just about price. Scaffold failures cause deaths and serious injuries every year in the UK. The right contractor will be NASC accredited, employ CISRS-trained scaffolders, carry adequate insurance and provide full documentation on every job.",
     signs: [
       "NASC accreditation — contractors should be able to show their NASC membership",
       "CISRS-trained operatives — all scaffolders should hold current CISRS cards",
@@ -91,7 +91,7 @@ export const guidesPages: InfoPageData[] = [
     diagnosis:
       "Ask any scaffolding contractor for their NASC membership number, CISRS card holders on the team, and copies of their public liability insurance. A reputable contractor will provide all of this without hesitation.",
     resolution:
-      "We are NASC-accredited, employ CISRS-trained operatives and provide full documentation as standard. Contact us for a free quote with no obligation.",
+      "We are NASC accredited, employ CISRS-trained operatives and provide full documentation as standard. Contact us for a free quote with no obligation.",
     ctaText: "Looking for a compliant, accredited scaffolding contractor? Contact us.",
     relatedServices: ["scaffolding-contractors", "domestic-scaffolding"],
     relatedPages: [

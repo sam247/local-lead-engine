@@ -15,7 +15,7 @@ export const revalidate = false;
 export const metadata: Metadata = {
   title: `About Us | ${verticalConfig.siteName}`,
   description:
-    "Mainline Scaffold is part of Mainline Group. NASC-accredited scaffolding contractors for domestic and commercial projects across the UK.",
+    "Mainline Scaffold is part of Mainline Group. NASC accredited scaffolding contractors for domestic and commercial projects across the UK.",
   alternates: { canonical: `${verticalConfig.baseUrl}/about` },
 };
 
@@ -36,7 +36,7 @@ export default function AboutPage() {
               About Mainline Scaffold
             </h1>
             <p className="text-lg text-primary-foreground/80">
-              NASC-accredited scaffolding contractors for domestic, commercial and specialist projects. We design, erect, inspect and certify scaffolding structures to TG20 standards.
+              NASC accredited scaffolding contractors for domestic, commercial and specialist projects. We design, erect, inspect and certify scaffolding structures to TG20 standards.
             </p>
             <p className="mt-3 text-sm text-primary-foreground/70">Part of Mainline Group.</p>
           </div>
@@ -105,7 +105,7 @@ export default function AboutPage() {
         <div className="container max-w-3xl">
           <h2 className="mb-4 font-display text-3xl font-bold">Accreditation and compliance</h2>
           <p className="text-muted-foreground">
-            We are NASC-accredited and work to TG20 on all scaffolding structures. All our operatives hold current CISRS cards. We carry public liability and employer's liability insurance and provide full documentation — scaffold tags, inspection records and handover certificates — on every project.
+            We are NASC accredited and work to TG20 on all scaffolding structures. All our operatives hold current CISRS cards. We carry public liability and employer's liability insurance and provide full documentation — scaffold tags, inspection records and handover certificates — on every project.
           </p>
         </div>
       </section>
@@ -129,7 +129,7 @@ export default function AboutPage() {
               { icon: CheckCircle, title: "Safety first", desc: "TG20 compliance on every structure" },
               { icon: Shield, title: "Accountability", desc: "Full documentation as standard" },
               { icon: Users, title: "Reliability", desc: "Programme-led delivery" },
-              { icon: CircleCheck, title: "Quality", desc: "NASC-accredited workmanship" },
+              { icon: CircleCheck, title: "Quality", desc: "NASC accredited workmanship" },
             ].map((item) => (
               <div key={item.title} className="text-center">
                 <item.icon className="mx-auto mb-4 h-12 w-12 text-primary" />

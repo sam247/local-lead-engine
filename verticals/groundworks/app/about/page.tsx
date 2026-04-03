@@ -111,7 +111,7 @@ export default function AboutPage() {
         <div className="container max-w-3xl">
           <h2 className="mb-4 font-display text-3xl font-bold">Mainline Group</h2>
           <p className="mb-6 text-muted-foreground">
-            Mainline Groundworks is one of four specialist divisions under Mainline Group. Other divisions cover drainage, surveying, and commercial security. You are on the{" "}
+            Mainline Groundworks is one of five specialist divisions under Mainline Group. Other divisions cover drainage, surveying, commercial security and access control, and scaffolding. You are on the{" "}
             <strong className="text-foreground">Mainline Groundworks</strong> site; sister divisions are linked below.
           </p>
           <GroupFooter items={groupLinks} variant="default" />

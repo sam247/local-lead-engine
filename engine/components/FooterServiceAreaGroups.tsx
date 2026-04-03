@@ -39,13 +39,13 @@ export function FooterServiceAreaGroups({
       >
         Areas We Cover
       </h4>
-      <ul className="m-0 flex list-none flex-wrap items-center gap-x-6 gap-y-2 p-0">
+      <ul className="m-0 flex list-none flex-wrap items-center gap-x-3 gap-y-1 p-0 sm:gap-x-6 sm:gap-y-2">
         {picked.map((link) => (
           <li key={link.id}>
             <Link
               href={`/${primaryServiceSlug}/${link.id}`}
               className={cn(
-                "inline-block text-sm transition-colors",
+                "-mx-1 inline-flex min-h-[44px] items-center px-1 text-sm transition-colors sm:min-h-0 sm:py-0",
                 onPrimary
                   ? "text-primary-foreground/80 hover:text-primary-foreground"
                   : "text-muted-foreground hover:text-primary"
@@ -59,7 +59,7 @@ export function FooterServiceAreaGroups({
           <Link
             href={viewAllAreasHref}
             className={cn(
-              "inline-block text-sm font-medium transition-colors",
+              "-mx-1 inline-flex min-h-[44px] items-center px-1 text-sm font-medium transition-colors sm:min-h-0 sm:py-0",
               onPrimary
                 ? "text-white/80 hover:text-white"
                 : "text-primary hover:underline"

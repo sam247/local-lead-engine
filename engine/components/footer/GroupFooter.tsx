@@ -23,6 +23,7 @@ const LINK_TITLES: Record<string, string> = {
   "Mainline Surveys": "Land and drone surveying services across the UK",
   "Mainline Access": "Commercial security and access control services across the UK",
   "Mainline Groundworks": "Commercial groundworks services across the UK",
+  "Mainline Scaffold": "NASC accredited scaffolding contractors across the UK",
 };
 
 /** Footer badge row: match hero trust strip scale; shrink-0 keeps all marks visible in flex layouts. */
@@ -51,11 +52,11 @@ export function GroupFooter({
   return (
     <div
       className={cn(
-        "flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between",
+        "flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between sm:gap-4",
         className
       )}
     >
-      <div className="min-w-0">
+      <div className="min-w-0 w-full sm:w-auto">
         <p
           className={cn(
             "mb-3 text-xs font-semibold uppercase tracking-wide",
@@ -64,15 +65,15 @@ export function GroupFooter({
         >
           Part of the Mainline Group
         </p>
-        <ul className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:gap-y-2">
+        <ul className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:gap-x-5 sm:gap-y-1 md:gap-x-6">
           {items.map((item) => (
-            <li key={item.href}>
+            <li key={item.href} className="min-w-0">
               <a
                 href={item.href}
                 title={LINK_TITLES[item.name] ?? `${item.name} website`}
                 aria-current={item.isCurrent ? "page" : undefined}
                 className={cn(
-                  "inline-block text-sm font-medium underline-offset-2 transition-colors hover:underline",
+                  "-mx-1 inline-flex min-h-[44px] items-center px-1 text-sm font-medium underline-offset-2 transition-colors hover:underline sm:min-h-0 sm:py-0",
                   onPrimary
                     ? item.isCurrent
                       ? "text-white"
@@ -89,11 +90,16 @@ export function GroupFooter({
         </ul>
       </div>
       {showRightColumn ? (
-        <div className="flex shrink-0 flex-col items-end gap-2 sm:ml-4">
+        <div
+          className={cn(
+            "flex w-full shrink-0 flex-col items-stretch gap-3 border-t pt-4 sm:ml-4 sm:w-auto sm:items-end sm:border-t-0 sm:pt-0",
+            onPrimary ? "border-white/10" : "border-border"
+          )}
+        >
           {trustLine ? (
             <p
               className={cn(
-                "max-w-[min(100%,22rem)] text-right text-[10px] leading-snug sm:text-xs",
+                "max-w-none text-left text-[11px] leading-snug sm:max-w-[min(100%,22rem)] sm:text-right sm:text-xs",
                 onPrimary ? "text-white/75" : "text-muted-foreground"
               )}
             >
@@ -101,7 +107,7 @@ export function GroupFooter({
             </p>
           ) : null}
           {showBadges ? (
-            <div className="flex max-w-full flex-nowrap items-center justify-end gap-2.5 overflow-x-auto">
+            <div className="flex max-w-full flex-wrap items-center justify-start gap-2.5 sm:flex-nowrap sm:justify-end sm:overflow-x-auto">
               {citbLogoSrc ? (
                 <img
                   src={citbLogoSrc}

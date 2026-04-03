@@ -111,7 +111,7 @@ export default function AboutPage() {
         <div className="container max-w-3xl">
           <h2 className="mb-4 font-display text-3xl font-bold">Mainline Group</h2>
           <p className="mb-6 text-muted-foreground">
-            Mainline Surveys is one of four specialist divisions under Mainline Group. Other divisions cover drainage, commercial security and access control, and groundworks. You are on the{" "}
+            Mainline Surveys is one of five specialist divisions under Mainline Group. Other divisions cover drainage, commercial security and access control, groundworks, and scaffolding. You are on the{" "}
             <strong className="text-foreground">Mainline Surveys</strong> site; other divisions are linked below if your project needs combined expertise.
           </p>
           <GroupFooter items={groupLinks} variant="default" />
