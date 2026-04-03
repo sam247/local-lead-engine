@@ -9,7 +9,7 @@ export const companyInfo = {
   phone: "+44 1865 537996",
   email: "info@mainlinescaffold.co.uk",
   address: "128 City Road, London, EC1V 2NX",
-  hours: "Mon–Fri 7am–6pm, Sat 8am–1pm",
+  hours: "Mon–Fri 8am–6pm, 24/7 emergency callout support",
   social: {
     linkedin: "#",
     twitter: "#",

@@ -459,7 +459,7 @@ export const companyInfo = {
   phone: "+44 7455 493536",
   email: "info@mainlinesurveys.co.uk",
   address: "128 City Road, London, EC1V 2NX",
-  hours: "Office hours and planned survey appointments",
+  hours: "Mon–Fri 8am–6pm, 24/7 emergency callout support",
   social: {
     linkedin: "#",
     twitter: "#",
