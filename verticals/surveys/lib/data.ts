@@ -1,6 +1,9 @@
+import type { InfoPageData } from "engine";
 import { legalPages } from "@/data/legal";
 import { buyerPages } from "@/data/buyer";
 import { guidesPages } from "@/data/guides";
+
+export type { InfoPageData };
 
 // Services data
 export const services = [
@@ -499,19 +502,6 @@ export const whyChooseUs = [
 ];
 
 // ==================== INFORMATIONAL PAGE DATA ====================
-
-export interface InfoPageData {
-  slug: string;
-  title: string;
-  metaDescription: string;
-  intro: string;
-  signs: string[];
-  diagnosis: string;
-  resolution: string;
-  ctaText: string;
-  relatedServices: string[];
-  relatedPages?: { slug: string; category: string; title: string }[];
-}
 
 export interface HubData {
   category: string;
