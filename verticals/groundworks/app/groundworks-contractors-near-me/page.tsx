@@ -38,7 +38,7 @@ export default function NearMeRoute() {
       baseUrl={verticalConfig.baseUrl}
       pagePath={pagePath}
       introParagraph={nearMeIntro}
-      sectionTitle={`${service.title} by Location`}
+      sectionTitle={`${service.title} areas we cover`}
       trustBlockTitle={`Why choose ${verticalConfig.siteName}`}
       trustBlockPoints={[
         "Fully insured teams for structural groundworks, piling and repairs",

@@ -8,7 +8,7 @@ import type { Location, Service } from "../types";
 export interface NearMeLocationListProps {
   service: Service;
   locations: Location[];
-  /** Section heading above the list (e.g. "{service.title} by Location"). */
+  /** Section heading above the list (e.g. "{service.title} areas we cover"). */
   sectionTitle?: string;
   /** Intro paragraph above search (e.g. "We provide drainage services across the UK. Select an area below..."). */
   introParagraph?: string;
@@ -54,7 +54,7 @@ export function NearMeLocationList({
   searchPlaceholder = "Enter postcode or town",
 }: NearMeLocationListProps) {
   const [query, setQuery] = useState("");
-  const title = sectionTitle ?? `${service.title} by Location`;
+  const title = sectionTitle ?? `${service.title} areas we cover`;
   const label = searchLabel ?? `Find ${service.title.toLowerCase()} near you`;
 
   const regions = useMemo(() => groupByArea(locations), [locations]);

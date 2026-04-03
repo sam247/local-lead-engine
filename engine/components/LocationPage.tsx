@@ -94,39 +94,39 @@ const LOCATION_EXTRA_HEADINGS = [
 ] as const;
 
 const COST_COMPLEXITY_HEADINGS = [
-  "What affects cost and complexity",
-  "Cost and complexity factors",
-  "Factors that influence cost and programme",
+  "What affects cost and scope",
+  "What affects cost and scope",
+  "What affects cost and scope",
 ] as const;
 
 const WHEN_NEEDED_SECTION_HEADINGS = [
-  "When this service is needed",
-  "Situations where this applies",
-  "When to consider this service",
+  "When you might need this service",
+  "When you might need this service",
+  "When you might need this service",
 ] as const;
 
 const PROCESS_SECTION_INTROS = [
   {
-    title: "How we work through the job",
+    title: "How the service works",
     description:
       "Our process is designed to keep things straightforward: define the issue, explain your options clearly, carry out the right work, and confirm everything before handover.",
   },
   {
-    title: "How this service is carried out",
+    title: "How the service works",
     description:
       "Delivery is structured so scope, dependencies, and sign-off stay clear from the first assessment through to handover.",
   },
   {
-    title: "What to expect",
+    title: "How the service works",
     description:
       "You should expect a defined path from assessment to completion, with practical options explained before work begins.",
   },
 ] as const;
 
 const TYPICAL_PROJECTS_HEADINGS = [
-  "Typical projects we support",
-  "Common scopes we deliver",
-  "Where this work usually applies",
+  "Where this service is used",
+  "Where this service is used",
+  "Where this service is used",
 ] as const;
 
 /** Stronger default opening when vertical does not pass introParagraph (area reduces near-duplicate openings). */
@@ -600,7 +600,7 @@ export function LocationPage({
   const whenNeededSection = (
     <div className="mb-8">
       <h2 className="mb-3 font-display text-xl font-bold">
-        {WHEN_NEEDED_SECTION_HEADINGS[whenNeededHeadingIndex]}
+        {`When you might need ${displayTitle}`}
       </h2>
       <div className="space-y-4 text-muted-foreground">
         <p>{whenNeeded.first}</p>
@@ -852,7 +852,7 @@ export function LocationPage({
               {isWhenNeededEarly && whenNeededSection}
               <div className="mb-8">
                 <h2 className="mb-3 font-display text-xl font-bold">
-                  {TYPICAL_PROJECTS_HEADINGS[typicalProjectsHeadingIndex]}
+                  {`Where ${displayTitle} is used`}
                 </h2>
                 <p className="mb-4 text-muted-foreground">
                   {

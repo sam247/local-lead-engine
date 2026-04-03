@@ -36,7 +36,7 @@ export default function NearMeRoute() {
       baseUrl={verticalConfig.baseUrl}
       pagePath={pagePath}
       introParagraph={verticalConfig.relatedLocationsIntro}
-      sectionTitle={`${service.title} by Location`}
+      sectionTitle={`${service.title} areas we cover`}
       trustBlockTitle="Why choose MainLine Drains"
       trustBlockPoints={[
         "Emergency response available",

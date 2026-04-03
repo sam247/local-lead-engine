@@ -45,38 +45,38 @@ const LAYOUT_VARIANTS = ["A", "B", "C"] as const;
 
 const TL_H2_WHEN = [
   "When you might need this",
-  "When this usually applies",
-  "Situations that call for action",
+  "When you might need this",
+  "When you might need this",
 ] as const;
 
 const TL_H2_WORK = [
-  "What the work typically involves",
-  "How this service is carried out",
-  "What to expect from the work",
+  "How the service works",
+  "How the service works",
+  "How the service works",
 ] as const;
 
 const TL_H2_PROCESS = [
-  "How we work through the job",
-  "How delivery is structured",
-  "What the process looks like",
+  "How the service works",
+  "How the service works",
+  "How the service works",
 ] as const;
 
 const TL_H2_SIGNS = [
-  "Signs and common situations",
-  "Typical triggers before work starts",
-  "Common situations we see locally",
+  "Signs you may need this",
+  "Signs you may need this",
+  "Signs you may need this",
 ] as const;
 
 const TL_H2_COST = [
-  "What affects cost and complexity",
-  "Cost and complexity factors",
-  "What drives budget and programme",
+  "What affects cost and scope",
+  "What affects cost and scope",
+  "What affects cost and scope",
 ] as const;
 
 const TL_H2_USE_CASES = [
-  "Typical projects and use cases",
-  "Where this often applies",
-  "Common project contexts",
+  "Where this is used",
+  "Where this is used",
+  "Where this is used",
 ] as const;
 
 export function TopicLocationPage({

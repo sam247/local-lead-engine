@@ -67,24 +67,24 @@ const CTA_BY_VERTICAL: Record<
 };
 
 const SERVICE_EXTRA_HEADINGS = [
-  "What affects cost and timelines",
-  "Factors that can influence your project",
-  "Things that can impact the work",
+  "What affects cost and scope",
+  "What affects cost and scope",
+  "What affects cost and scope",
 ] as const;
 
 const TYPICAL_SITUATIONS_SECTIONS = [
   {
-    title: "Typical situations for this service",
+    title: "When you might need this service",
     description:
       "These are the situations where this service typically adds the most value and helps prevent avoidable rework.",
   },
   {
-    title: "When this service is most useful",
+    title: "When you might need this service",
     description:
       "Common triggers where structured scope and clear delivery keep projects on track and reduce repeat disruption.",
   },
   {
-    title: "Situations where teams bring us in",
+    title: "When you might need this service",
     description:
       "These scenarios are where commissioning work early tends to save time, cost, and disruption across the programme.",
   },
@@ -92,17 +92,17 @@ const TYPICAL_SITUATIONS_SECTIONS = [
 
 const SERVICE_PROCESS_SECTION_INTROS = [
   {
-    title: "How we work through the job",
+    title: "How the service works",
     description:
       "Each stage is structured to keep decisions clear and delivery predictable from first assessment to sign-off.",
   },
   {
-    title: "How this service is carried out",
+    title: "How the service works",
     description:
       "Delivery follows a defined path so scope, dependencies, and handover expectations stay aligned throughout.",
   },
   {
-    title: "What to expect",
+    title: "How the service works",
     description:
       "You should see practical options explained early, then structured delivery through to completion and verification.",
   },
@@ -520,7 +520,7 @@ export function ServiceDetailContent({
                 </figure>
               )}
               <SectionIntro
-                title={typicalSituationsSection.title}
+                title={`When you might need ${displayTitle}`}
                 description={typicalSituationsSection.description}
                 headingLevel="h2"
               />
@@ -577,7 +577,7 @@ export function ServiceDetailContent({
               {serviceTypes.length > 0 && (
                 <>
                   <SectionIntro
-                    title={`Where ${displayTitle.toLowerCase()} applies`}
+                    title={`Where ${displayTitle} is used`}
                     description={
                       sectionIntros.types ??
                       "These grouped scenarios explain where this work is typically commissioned and why scope can differ by site and objective."
@@ -607,7 +607,7 @@ export function ServiceDetailContent({
               {symptomLinks.length > 0 && (
                 <>
                   <SectionIntro
-                    title={symptomLinksSectionTitle ?? `Common Signs You Need ${service.title}`}
+                    title={symptomLinksSectionTitle ?? `Signs you may need ${service.title}`}
                     description="If you notice these signs, acting early usually keeps costs down and reduces operational disruption."
                     headingLevel="h2"
                   />
@@ -696,7 +696,7 @@ export function ServiceDetailContent({
               )}
 
               <SectionIntro
-                title="What you can expect from this service"
+                title="What to expect"
                 description={
                   sectionIntros.benefits ??
                   "The outcomes below reflect what clients typically gain when this service is scoped and delivered correctly."
@@ -762,7 +762,7 @@ export function ServiceDetailContent({
                         }
                       >
                         <SectionIntro
-                          title={`${service.title} by Location`}
+                          title={`${service.title} areas we cover`}
                           description={
                             verticalConfig.relatedLocationsIntro ??
                             "Browse local coverage to find the nearest team for this service."
