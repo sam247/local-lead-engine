@@ -264,7 +264,7 @@ export default async function LocationRoute({ params }: Props) {
                   source="cta"
                   className="flex items-center gap-2 text-primary hover:underline"
                 >
-                  <Phone className="h-4 w-4" /> {verticalConfig.companyInfo.phone}
+                  <Phone className="h-4 w-4" /> Call Now
                 </TrackablePhoneLink>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   {topic.typicalScenarios
@@ -425,7 +425,7 @@ export default async function LocationRoute({ params }: Props) {
                 source="cta"
                 className="flex items-center gap-2 text-primary hover:underline"
               >
-                <Phone className="h-4 w-4" /> {verticalConfig.companyInfo.phone}
+                <Phone className="h-4 w-4" /> Call Now
               </TrackablePhoneLink>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 {sidebarBullets.slice(0, 5).map((point) => (

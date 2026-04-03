@@ -53,7 +53,7 @@ const PostcodeCheck = () => {
             locationSlug={null}
             className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
           >
-            <Phone className="h-3 w-3" /> {companyInfo.phone}
+            <Phone className="h-3 w-3" /> Call Now
           </TrackablePhoneLink>{" "}
           to check.
         </p>

@@ -290,7 +290,7 @@ export default async function LocationRoute({ params }: Props) {
   return (
     <>
       <div className="container">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <LocationPage
               service={service}
@@ -332,7 +332,7 @@ export default async function LocationRoute({ params }: Props) {
                 source="cta"
                 className="flex items-center gap-2 text-primary hover:underline"
               >
-                <Phone className="h-4 w-4" /> {verticalConfig.companyInfo.phone}
+                <Phone className="h-4 w-4" /> Call Now
               </TrackablePhoneLink>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 {sidebarBullets.slice(0, 5).map((point) => (

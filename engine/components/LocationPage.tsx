@@ -682,30 +682,34 @@ export function LocationPage({
         }}
       />
 
-      <section className="relative bg-primary py-16 md:py-24" data-layout-variant={layoutVariant}>
+      <section
+        className="relative overflow-hidden bg-primary pt-10 pb-14 md:pt-16 md:pb-24"
+        data-layout-variant={layoutVariant}
+      >
         <div className="absolute inset-0">
           <img
             src={serviceImage}
             alt={`${displayTitle} engineer working in ${location.name}, ${location.area}`}
             className="h-full w-full object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-primary/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-primary/65 to-primary/80" />
         </div>
         <div className="container relative">
           <div className="mx-auto max-w-3xl text-center">
-            <BreadcrumbNav
-              items={locationBreadcrumbs(displayTitle, service.slug, location.name, serviceSlug, locationSlug)}
-              variant="inverse"
-            />
-            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">
-              {displayTitle} in {location.name}
-            </h1>
-            <p className="text-lg text-primary-foreground/80">
-              Trusted {service.title.toLowerCase()} experts serving {location.name} and {location.area}.
-              {ukGroup ? ` We cover the wider ${ukGroup.regionName} area, including ${ukGroup.countyName}.` : ""}
-            </p>
+            <div className="flex flex-col items-center gap-4">
+              <BreadcrumbNav
+                items={locationBreadcrumbs(displayTitle, service.slug, location.name, serviceSlug, locationSlug)}
+                variant="inverse"
+              />
+              <h1 className="font-display text-4xl font-bold text-primary-foreground md:text-5xl">
+                {displayTitle} in {location.name}
+              </h1>
+              <p className="text-lg text-primary-foreground/80">
+                Trusted {service.title.toLowerCase()} experts serving {location.name} and {location.area}.
+              </p>
+            </div>
             <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button size="lg" variant="highlight" asChild>
+              <Button size="lg" variant="highlight" className="shadow-md ring-2 ring-primary-foreground/20" asChild>
                 <Link href={contactPath}>Get a Free Quote</Link>
               </Button>
               <TrackablePhoneLink
@@ -713,9 +717,9 @@ export function LocationPage({
                 vertical={callTrackVertical}
                 serviceSlug={service.slug}
                 locationSlug={location.id}
-                className="flex items-center gap-2 text-primary-foreground hover:underline"
+                className="hidden sm:inline-flex items-center gap-2 text-primary-foreground hover:underline"
               >
-                <Phone className="h-5 w-5" /> {companyInfo.phone}
+                <Phone className="h-5 w-5" /> Call Now
               </TrackablePhoneLink>
             </div>
           </div>
@@ -745,7 +749,12 @@ export function LocationPage({
         <div className="container">
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <div className="mb-6 space-y-4 text-muted-foreground">
+              <div className="mb-6 max-w-prose space-y-5 text-muted-foreground">
+                {ukGroup && (
+                  <p>
+                    We cover the wider {ukGroup.regionName} area, including {ukGroup.countyName}.
+                  </p>
+                )}
                 <p>{introParagraph?.trim() ? introParagraph.trim() : openingPrimary}</p>
                 <p>{toneLead}</p>
                 {extraServiceLocationLinks && extraServiceLocationLinks.length > 0 && (
@@ -1009,7 +1018,7 @@ export function LocationPage({
                   locationSlug={location.id}
                   className="flex items-center gap-2 text-primary hover:underline"
                 >
-                  <Phone className="h-4 w-4" /> {companyInfo.phone}
+                  <Phone className="h-4 w-4" /> Call Now
                 </TrackablePhoneLink>
                   <a
                     href={`mailto:${companyInfo.email}`}

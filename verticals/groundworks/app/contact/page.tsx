@@ -53,7 +53,7 @@ export default function ContactPage() {
                       }}
                       className="text-sm text-muted-foreground hover:text-primary"
                     >
-                      {companyInfo.phone}
+                      Call Now
                     </TrackablePhoneLink>
                   </div>
                 </div>

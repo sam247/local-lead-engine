@@ -12,6 +12,7 @@ import {
 } from "engine";
 import { buildLocationMetadata } from "engine";
 import { pickSurveysL4MetaTitle } from "@/lib/surveysL4TitleTemplates";
+import { hasNumericDuplicateSuffix, stripNumericDuplicateSuffix } from "@/lib/numericSlugSuffix";
 import type { Metadata } from "next";
 import { Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -172,9 +173,9 @@ function buildExtraServiceLocationLinks(service: ServiceItem, locationId: string
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { serviceSlug, locationSlug } = params;
-  const hasNumericSuffix = /-(\d+)$/.test(locationSlug);
+  const hasNumericSuffix = hasNumericDuplicateSuffix(locationSlug);
   const canonicalLocationSlug = hasNumericSuffix
-    ? locationSlug.replace(/(-\d+)+$/, "")
+    ? stripNumericDuplicateSuffix(locationSlug)
     : locationSlug;
   const service = services.find((s) => s.slug === serviceSlug);
   const location = locations.find((l) => l.id === canonicalLocationSlug);
@@ -185,13 +186,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LocationRoute({ params }: Props) {
   const { serviceSlug, locationSlug } = params;
-  const hasNumericSuffix = /-(\d+)$/.test(locationSlug);
+  const hasNumericSuffix = hasNumericDuplicateSuffix(locationSlug);
   const canonicalLocationSlug = hasNumericSuffix
-    ? locationSlug.replace(/(-\d+)+$/, "")
+    ? stripNumericDuplicateSuffix(locationSlug)
     : locationSlug;
+  const service = services.find((s) => s.slug === serviceSlug);
   if (hasNumericSuffix) {
     const canonicalLocationExists = locations.some((l) => l.id === canonicalLocationSlug);
-    if (canonicalLocationExists) {
+    if (service && canonicalLocationExists) {
       if (process.env.NODE_ENV === "development") {
         console.log(
           "[Redirect] Duplicate location slug:",
@@ -203,7 +205,6 @@ export default async function LocationRoute({ params }: Props) {
       permanentRedirect(`/${serviceSlug}/${canonicalLocationSlug}`);
     }
   }
-  const service = services.find((s) => s.slug === serviceSlug);
   const location = locations.find((l) => l.id === canonicalLocationSlug);
   if (!service || !location) notFound();
 
@@ -346,7 +347,7 @@ export default async function LocationRoute({ params }: Props) {
                 source="cta"
                 className="flex items-center gap-2 text-primary hover:underline"
               >
-                <Phone className="h-4 w-4" /> {verticalConfig.companyInfo.phone}
+                <Phone className="h-4 w-4" /> Call Now
               </TrackablePhoneLink>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 {sidebarBullets.slice(0, 5).map((point) => (

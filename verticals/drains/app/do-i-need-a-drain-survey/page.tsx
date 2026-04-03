@@ -86,7 +86,7 @@ export default function DoINeedADrainSurveyPage() {
                   pagePath="/do-i-need-a-drain-survey"
                   className="flex items-center gap-2 font-medium text-primary hover:underline"
                 >
-                  <Phone className="h-5 w-5" /> {companyInfo.phone}
+                  <Phone className="h-5 w-5" /> Call Now
                 </TrackablePhoneLink>
               </div>
             </div>

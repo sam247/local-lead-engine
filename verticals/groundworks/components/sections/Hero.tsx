@@ -193,7 +193,7 @@ const Hero = () => {
                 className="inline-flex items-center gap-2 text-primary-foreground hover:underline"
               >
                 <Phone className="h-5 w-5" />
-                {companyInfo.phone}
+                Call Now
               </TrackablePhoneLink>
             </div>
 

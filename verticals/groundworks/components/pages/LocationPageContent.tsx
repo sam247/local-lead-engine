@@ -72,25 +72,27 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
         }}
       />
 
-      <section className="relative bg-primary py-16 md:py-24">
+      <section className="relative overflow-hidden bg-primary pt-10 pb-14 md:pt-16 md:pb-24">
         <div className="absolute inset-0">
           <img
             src={getHeroImage({ serviceSlug: service.slug })}
             alt={`${service.title} team working in ${location.name}, ${location.area}`}
             className="h-full w-full object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-primary/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-primary/65 to-primary/80" />
         </div>
         <div className="container relative">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">
-              {service.title} in {location.name}
-            </h1>
-            <p className="text-lg text-primary-foreground/80">
-              Trusted {service.title.toLowerCase()} serving {location.name} and {location.area}.
-            </p>
+            <div className="flex flex-col items-center gap-4">
+              <h1 className="font-display text-4xl font-bold text-primary-foreground md:text-5xl">
+                {service.title} in {location.name}
+              </h1>
+              <p className="text-lg text-primary-foreground/80">
+                Trusted {service.title.toLowerCase()} serving {location.name} and {location.area}.
+              </p>
+            </div>
             <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button size="lg" variant="highlight" asChild>
+              <Button size="lg" variant="highlight" className="shadow-md ring-2 ring-primary-foreground/20" asChild>
                 <Link href="/contact">Get a Free Quote</Link>
               </Button>
               <TrackablePhoneLink
@@ -105,9 +107,9 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
                   voiceWebhookPath: "/api/twilio/voice",
                   vertical: verticalConfig.verticalId,
                 }}
-                className="flex items-center gap-2 text-primary-foreground hover:underline"
+                className="hidden sm:inline-flex items-center gap-2 text-primary-foreground hover:underline"
               >
-                <Phone className="h-5 w-5" /> {companyInfo.phone}
+                <Phone className="h-5 w-5" /> Call Now
               </TrackablePhoneLink>
             </div>
           </div>
@@ -121,7 +123,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
               <h2 className="mb-4 font-display text-2xl font-bold">
                 {service.title} in {location.name}
               </h2>
-              <p className="mb-6 text-muted-foreground">
+              <p className="mb-6 max-w-prose text-muted-foreground">
                 {companyInfo.name} provides expert {service.title.toLowerCase()} in {location.name}, {location.area}. Our experienced groundworks teams deliver reliable project support tailored to your site and programme.
               </p>
               <p className="mb-8 text-muted-foreground">{service.description}</p>
@@ -194,7 +196,7 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
                   }}
                   className="flex items-center gap-2 text-primary hover:underline"
                 >
-                  <Phone className="h-4 w-4" /> {companyInfo.phone}
+                  <Phone className="h-4 w-4" /> Call Now
                 </TrackablePhoneLink>
                   <a href={`mailto:${companyInfo.email}`} className="flex items-center gap-2 text-primary hover:underline">
                     <Mail className="h-4 w-4" /> {companyInfo.email}

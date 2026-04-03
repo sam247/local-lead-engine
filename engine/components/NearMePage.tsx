@@ -112,7 +112,7 @@ export function NearMePage({
                 pagePath={pagePath}
                 className="flex items-center gap-2 text-primary-foreground"
               >
-                <Phone className="h-5 w-5" /> {companyInfo.phone}
+                <Phone className="h-5 w-5" /> Call Now
               </TrackablePhoneLink>
             </div>
           </div>
@@ -163,7 +163,7 @@ export function NearMePage({
                 className="inline-flex min-h-12 items-center gap-2 text-sm font-medium text-primary hover:underline"
               >
                 <Phone className="h-5 w-5" />
-                {companyInfo.phone}
+                Call Now
               </TrackablePhoneLink>
             </div>
           </div>

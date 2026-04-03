@@ -102,7 +102,7 @@ export function PillarGuide({
                 pagePath={guidePath}
                 className="flex items-center gap-2 text-primary-foreground"
               >
-                <Phone className="h-5 w-5" /> {companyInfo.phone}
+                <Phone className="h-5 w-5" /> Call Now
               </TrackablePhoneLink>
             </div>
           </div>

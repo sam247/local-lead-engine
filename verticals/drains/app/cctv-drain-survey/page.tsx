@@ -119,7 +119,7 @@ export default function CctvDrainSurveyPage() {
               className={phoneLinkClass}
             >
               <Phone className="h-4 w-4" />
-              {companyInfo.phone}
+              Call Now
             </TrackablePhoneLink>
           </div>
         </div>
@@ -174,7 +174,7 @@ export default function CctvDrainSurveyPage() {
                   className={phoneLinkClass}
                 >
                   <Phone className="h-4 w-4" />
-                  {companyInfo.phone}
+                  Call Now
                 </TrackablePhoneLink>
               </div>
               <h2 className="mb-4 font-display text-2xl font-bold">Related local services</h2>
@@ -205,7 +205,7 @@ export default function CctvDrainSurveyPage() {
                   className={phoneLinkClass}
                 >
                   <Phone className="h-4 w-4" />
-                  {companyInfo.phone}
+                  Call Now
                 </TrackablePhoneLink>
               </div>
               <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
