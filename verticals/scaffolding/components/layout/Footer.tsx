@@ -127,6 +127,9 @@ const Footer = () => {
             items={groupLinks}
             variant="onPrimary"
             trustLine="Our scaffolding contractors are NASC-accredited, fully insured and CISRS-trained"
+            citbLogoSrc="/citb.png"
+            dbsLogoSrc="/dbs.png"
+            trustmarkLogoSrc="/trustmark.png"
           />
         </div>
         <div className="container flex flex-col items-center justify-between gap-4 py-6 md:flex-row">

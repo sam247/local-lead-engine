@@ -507,4 +507,111 @@ This section describes **implemented infrastructure** so agents can extend it wi
 
 ---
 
+## 14. New vertical deployment — lessons learned (scaffolding, April 2026)
+
+These issues arose when deploying the scaffolding vertical to Vercel and are documented so future new-vertical builds can avoid them.
+
+### 14.1 `pickRelatedServiceLocationLinks` signature mismatch
+
+**Symptom:** TypeScript build error: `Object literal may only specify known properties, and 'relatedServiceSlugs' does not exist in type`.
+
+**Cause:** The engine's `pickRelatedServiceLocationLinks` accepts `{ currentServiceSlug, services, location, priorityByService, maxLinks }` — it takes the **full `location` object** and the **full priority map**, not individual `relatedServiceSlugs` and `locationId`. The generated vertical used a stale API shape.
+
+**Fix:** Remove `pickRelatedServiceLocationLinks` from the L4 page entirely. Build `otherServices: Service[]` directly by mapping `RELATED_SERVICE_SLUGS_BY_SERVICE[service.slug]` to `Service` objects then slicing to 5. Pass those to `LocationPage` as `otherServices`. The `pickRelatedServiceLocationLinks` utility returns `InternalLinkTarget[]`, not `Service[]`, so it cannot be passed directly to `LocationPage.otherServices`.
+
+### 14.2 `buildLocationContextParagraph` wrong argument order
+
+**Symptom:** TypeScript build error: `Expected 2 arguments, but got 3`.
+
+**Cause:** The engine function signature is `buildLocationContextParagraph(template: string, params: BuildLocationContextParams)` — template first, params object second. The generated vertical called it as `(location, service, template)`.
+
+**Fix:**
+```typescript
+const locationContextParagraph = verticalConfig.locationContextTemplate
+  ? buildLocationContextParagraph(verticalConfig.locationContextTemplate, {
+      serviceTitle: service.title,
+      locationName: location.name,
+      area: location.area,
+      nearbyTowns: location.nearbyTowns ?? [],
+    })
+  : undefined;
+```
+
+### 14.3 `LocationPage` prop name mismatches
+
+**Symptom:** Multiple TypeScript errors on the `<LocationPage>` JSX element — props not found in `LocationPageProps`.
+
+**Cause:** Several props were named incorrectly. Correct names from `engine/components/LocationPage.tsx`:
+
+| Wrong prop name used | Correct prop name |
+|---|---|
+| `heroImage` | `serviceImage` |
+| `heroAlt` | *(no such prop — remove)* |
+| `faqs` | `localFaqs` |
+| `locationContext` | `locationContextParagraph` |
+| `sectionIntros` | *(no such prop on LocationPage — remove)* |
+| `relatedServicesIntro` | *(no such prop on LocationPage — remove)* |
+| `relatedLocationsIntro` | *(no such prop on LocationPage — remove)* |
+
+Also: `serviceSlug` and `locationSlug` are **required** on `LocationPage` and must be passed explicitly (the route params). `neighbourLocationsForContext` should also be passed.
+
+**Rule:** Always read `engine/components/LocationPage.tsx` `LocationPageProps` interface before writing the JSX for a new vertical's L4 page. Do not assume props from another vertical or from memory.
+
+### 14.4 `HubPage` missing required props
+
+**Symptom:** TypeScript build error: `Type '{ hub: HubData; pages: InfoPageData[]; ... }' is missing the following properties from type 'HubPageProps': heroImage, heroAlt, crossSections, keyServices, callTrackVertical`.
+
+**Cause:** `HubPage` requires `heroImage`, `heroAlt`, `crossSections` (links to other hubs), `keyServices` (service list), and `callTrackVertical`. The hub index pages were calling `<HubPage>` directly with only 4 props.
+
+**Fix:** Create `lib/hubPageProps.ts` (mirroring `verticals/groundworks/lib/hubPageProps.ts`) and use `getHubPageProps(category)` in all hub index pages:
+```typescript
+export default function HubIndexPage() {
+  const props = getHubPageProps(category);
+  if (!props) notFound();
+  return <HubPage {...props} />;
+}
+```
+
+### 14.5 Per-vertical brand colour (`--highlight` CSS variable)
+
+**Rule:** Each vertical defines its brand/CTA colour via the `--highlight` CSS variable in `app/globals.css`. Copy-pasting `globals.css` from another vertical copies that vertical's colour. **Always set `--highlight` explicitly per new vertical:**
+
+| Vertical | `--highlight` | Hex |
+|---|---|---|
+| Drains | `32 95% 44%` | amber |
+| Groundworks | `32 95% 44%` | amber |
+| Access | `245 61% 40%` | indigo |
+| Surveys | *(check surveys/app/globals.css)* | — |
+| Scaffolding | `199 97% 48%` | `#03A7F0` sky blue |
+
+The `--highlight` variable drives `bg-highlight` (used by `Button variant="highlight"`) and any utility that references `hsl(var(--highlight))`. Also add `--highlight-hover` for hover states.
+
+### 14.6 Trust logos in footer missing
+
+**Symptom:** The `GroupFooter` component renders with no trust badge images, unlike other verticals.
+
+**Cause:** `GroupFooter` accepts optional `dbsLogoSrc`, `citbLogoSrc`, `trustmarkLogoSrc`, `fmbLogoSrc` props. These image files must exist in the vertical's `public/` folder **and** be passed as props. A new vertical created by copying the footer component will not pass these props.
+
+**Fix:** Copy trust logo PNGs to `verticals/{new}/public/` and pass them to `GroupFooter`:
+```typescript
+<GroupFooter
+  items={groupLinks}
+  variant="onPrimary"
+  trustLine="…"
+  citbLogoSrc="/citb.png"
+  dbsLogoSrc="/dbs.png"
+  trustmarkLogoSrc="/trustmark.png"
+/>
+```
+
+### 14.7 Logos not in `public/` folder
+
+**Symptom:** Logo images referenced in Header (`/logo_black.svg`) and Footer (`/logo_white.svg`) return 404.
+
+**Cause:** Logo SVGs were placed in the vertical root directory, not in `public/`. Next.js only serves static assets from `public/`.
+
+**Fix:** Move all static assets to `verticals/{new}/public/` before first deploy. Also copy `placeholder.svg` from an existing vertical for `next/image` fallbacks.
+
+---
+
 *End of AGENTS.md. When in doubt, preserve existing URLs and data flow; extend via new data and optional new routes (e.g. L5) without breaking L1–L4 or the shared location system.*

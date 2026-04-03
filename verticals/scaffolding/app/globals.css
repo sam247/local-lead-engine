@@ -40,7 +40,8 @@
     --slate: 220 9% 46%;
     --steel: 220 14% 96%;
     --concrete: 220 13% 91%;
-    --highlight: 32 95% 44%;
+    --highlight: 199 97% 48%;
+    --highlight-hover: 199 90% 42%;
   }
 
   .dark {
