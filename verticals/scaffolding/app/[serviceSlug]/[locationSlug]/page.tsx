@@ -41,8 +41,9 @@ export default async function LocationRoute({ params }: Props) {
   const { serviceSlug, locationSlug } = params;
 
   const hasNumericSuffix = /-(\d+)$/.test(locationSlug);
+  const canonicalLocationSlug = hasNumericSuffix ? locationSlug.replace(/(-\d+)+$/, "") : locationSlug;
+
   if (hasNumericSuffix) {
-    const canonicalLocationSlug = locationSlug.replace(/(-\d+)+$/, "");
     const canonicalLocation = locations.find((l) => l.id === canonicalLocationSlug);
     if (canonicalLocation) {
       permanentRedirect(`/${serviceSlug}/${canonicalLocationSlug}`);
@@ -50,7 +51,7 @@ export default async function LocationRoute({ params }: Props) {
   }
 
   const service = services.find((s) => s.slug === serviceSlug);
-  const location = locations.find((l) => l.id === locationSlug);
+  const location = locations.find((l) => l.id === canonicalLocationSlug);
   if (!service || !location) notFound();
 
   const sameAreaLocations = locations.filter((l) => l.area === location.area && l.id !== location.id);
@@ -58,6 +59,7 @@ export default async function LocationRoute({ params }: Props) {
   const nearbyLocations = neighbourIds
     .map((id) => locations.find((l) => l.id === id))
     .filter((l): l is NonNullable<typeof l> => l !== undefined);
+  const neighbourLocationsForContext = nearbyLocations.slice(0, 5);
 
   const serviceImage = getHeroImage({ serviceSlug: service.slug });
 
@@ -66,13 +68,23 @@ export default async function LocationRoute({ params }: Props) {
   // Build otherServices as Service[] ordered by the priority map, capped at 5
   const prioritySlugs = RELATED_SERVICE_SLUGS_BY_SERVICE[service.slug] ?? [];
   const otherServices = [
-    ...prioritySlugs.map((slug) => services.find((s) => s.slug === slug)).filter((s): s is NonNullable<typeof s> => s !== undefined),
+    ...prioritySlugs
+      .map((slug) => services.find((s) => s.slug === slug))
+      .filter((s): s is NonNullable<typeof s> => s !== undefined),
     ...services.filter((s) => s.slug !== service.slug && !prioritySlugs.includes(s.slug)),
   ].slice(0, 5);
 
-  const locationContext = buildLocationContextParagraph(location, service, verticalConfig.locationContextTemplate ?? "");
+  const nearbyTowns = location.nearbyTowns ?? [];
+  const locationContextParagraph = verticalConfig.locationContextTemplate
+    ? buildLocationContextParagraph(verticalConfig.locationContextTemplate, {
+        serviceTitle: service.title,
+        locationName: location.name,
+        area: location.area,
+        nearbyTowns,
+      })
+    : undefined;
 
-  const pageFaqs = [
+  const localFaqs = [
     {
       question: `Do you provide ${service.title.toLowerCase()} in ${location.name}?`,
       answer: `Yes — we provide ${service.title.toLowerCase()} across ${location.name} and the wider ${location.area} area. Contact us for a free, no-obligation quote.`,
@@ -92,21 +104,22 @@ export default async function LocationRoute({ params }: Props) {
       <LocationPage
         service={service}
         location={location}
+        serviceSlug={serviceSlug}
+        locationSlug={canonicalLocationSlug}
         sameAreaLocations={sameAreaLocations}
         nearbyLocations={nearbyLocations}
-        faqs={pageFaqs}
-        heroImage={serviceImage}
-        heroAlt={`${service.title} in ${location.name}`}
+        localFaqs={localFaqs}
         companyInfo={verticalConfig.companyInfo}
+        otherServices={otherServices}
         baseUrl={verticalConfig.baseUrl}
-        locationContext={locationContext}
+        serviceImage={serviceImage}
+        contactPath="/contact"
+        neighbourLocationsForContext={neighbourLocationsForContext}
+        locationContextParagraph={locationContextParagraph}
         relatedTopicLinks={relatedTopicLinks.length > 0 ? relatedTopicLinks : undefined}
         relatedTopicsSectionTitle={`Scaffolding guidance for ${location.name}`}
-        otherServices={otherServices}
+        nearbyAreasDescription={`Compare our ${service.title} in nearby areas.`}
         callTrackVertical={verticalConfig.verticalId}
-        sectionIntros={verticalConfig.sectionIntros}
-        relatedServicesIntro={verticalConfig.relatedServicesIntro}
-        relatedLocationsIntro={verticalConfig.relatedLocationsIntro}
       />
       <CTABanner />
     </>
