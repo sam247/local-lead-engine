@@ -1,5 +1,5 @@
 import type { Location, Service } from "engine";
-import { clampMetaTitle, getVariantIndex } from "engine";
+import { clampMetaTitle, getVariantIndex, maybeAddNearMeMetaTitle } from "engine";
 import { services } from "@/lib/data";
 
 /** Fixed label for fallback titles only (plan: drains). */
@@ -59,9 +59,9 @@ export function pickDrainsL4MetaTitle(service: Service, location: Location): str
   const pair = DRAIN_L4_TITLE_TEMPLATES[service.slug as DrainServiceSlug];
   if (!pair) {
     const base = `${service.titleSingular ?? service.title} ${locName} - Fast Response & ${VERTICAL_LABEL}`;
-    return clampMetaTitle(base);
+    return clampMetaTitle(maybeAddNearMeMetaTitle(base));
   }
   const idx = getVariantIndex(`l4-meta-title:${service.slug}:${location.id}`, 2);
   const raw = pair[idx].replace(/\{location\}/g, locName);
-  return clampMetaTitle(raw);
+  return clampMetaTitle(maybeAddNearMeMetaTitle(raw));
 }

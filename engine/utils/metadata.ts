@@ -204,6 +204,24 @@ export function clampMetaTitle(text: string, max = TITLE_MAX): string {
   return `${cut.trimEnd()}…`;
 }
 
+export function maybeAddNearMeMetaTitle(baseTitle: string, max = TITLE_MAX): string {
+  const normalized = baseTitle.trim().replace(/\s+/g, " ");
+  if (/near me/i.test(normalized)) return normalized;
+
+  const separatorMatch = normalized.match(/\s([–-])\s/);
+  if (!separatorMatch?.index) return normalized;
+
+  const separatorStart = separatorMatch.index;
+  const separator = separatorMatch[1];
+  const before = normalized.slice(0, separatorStart).trimEnd();
+  const after = normalized.slice(separatorStart + separatorMatch[0].length).trimStart();
+  const candidate = `${before} Near Me ${separator} ${after}`;
+
+  return candidate.length <= max && clampMetaTitle(candidate, max) === candidate
+    ? candidate
+    : normalized;
+}
+
 /**
  * Deterministic title pick: primary variant from seed, then rotate if the clamped
  * string matches the primary (truncation collision within the candidate set).

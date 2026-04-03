@@ -4,6 +4,7 @@ export { getImageAlt, type GetImageAltParams } from "./imageAlt";
 export { buildLocationContextParagraph, type BuildLocationContextParams } from "./locationContext";
 export {
   clampMetaTitle,
+  maybeAddNearMeMetaTitle,
   clampMetaDescription,
   buildLocationMetadata,
   buildServiceHubMetadata,

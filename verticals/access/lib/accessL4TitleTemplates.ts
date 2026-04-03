@@ -1,5 +1,5 @@
 import type { Location, Service } from "engine";
-import { clampMetaTitle, getVariantIndex } from "engine";
+import { clampMetaTitle, getVariantIndex, maybeAddNearMeMetaTitle } from "engine";
 import { services } from "@/lib/data";
 
 const VERTICAL_LABEL = "Access Control Specialists";
@@ -38,9 +38,9 @@ export function pickAccessL4MetaTitle(service: Service, location: Location): str
   const pair = ACCESS_L4_TITLE_TEMPLATES[service.slug as AccessServiceSlug];
   if (!pair) {
     const base = `${service.titleSingular ?? service.title} ${locName} - Reliable Security & ${VERTICAL_LABEL}`;
-    return clampMetaTitle(base);
+    return clampMetaTitle(maybeAddNearMeMetaTitle(base));
   }
   const idx = getVariantIndex(`l4-meta-title:${service.slug}:${location.id}`, 2);
   const raw = applyLocation(pair[idx], locName);
-  return clampMetaTitle(raw);
+  return clampMetaTitle(maybeAddNearMeMetaTitle(raw));
 }
