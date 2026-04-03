@@ -6,7 +6,6 @@ import {
   LocationPage,
   getNeighbourLocationIds,
   buildLocationContextParagraph,
-  pickRelatedServiceLocationLinks,
   buildLocationMetadata,
 } from "engine";
 import type { Metadata } from "next";
@@ -64,14 +63,12 @@ export default async function LocationRoute({ params }: Props) {
 
   const relatedTopicLinks = getRelevantTopicsForService(service.slug);
 
-  const relatedServiceSlugs = RELATED_SERVICE_SLUGS_BY_SERVICE[service.slug] ?? [];
-  const otherServices = pickRelatedServiceLocationLinks({
-    currentServiceSlug: service.slug,
-    relatedServiceSlugs,
-    services,
-    locationId: location.id,
-    maxLinks: 5,
-  });
+  // Build otherServices as Service[] ordered by the priority map, capped at 5
+  const prioritySlugs = RELATED_SERVICE_SLUGS_BY_SERVICE[service.slug] ?? [];
+  const otherServices = [
+    ...prioritySlugs.map((slug) => services.find((s) => s.slug === slug)).filter((s): s is NonNullable<typeof s> => s !== undefined),
+    ...services.filter((s) => s.slug !== service.slug && !prioritySlugs.includes(s.slug)),
+  ].slice(0, 5);
 
   const locationContext = buildLocationContextParagraph(location, service, verticalConfig.locationContextTemplate ?? "");
 
