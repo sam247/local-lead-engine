@@ -114,7 +114,11 @@ export default function AboutPage() {
             Mainline Surveys is one of five specialist divisions under Mainline Group. Other divisions cover drainage, commercial security and access control, groundworks, and scaffolding. You are on the{" "}
             <strong className="text-foreground">Mainline Surveys</strong> site; other divisions are linked below if your project needs combined expertise.
           </p>
-          <GroupFooter items={groupLinks} variant="default" />
+          <GroupFooter
+            items={groupLinks}
+            variant="default"
+            groupLinkUtmSource={verticalConfig.verticalId}
+          />
         </div>
       </section>
 

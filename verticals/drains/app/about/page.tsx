@@ -114,7 +114,11 @@ export default function AboutPage() {
             Mainline Drains is one of five specialist divisions under Mainline Group. Other divisions cover land and measured building surveys, commercial security and access control, groundworks, and scaffolding. You are on the{" "}
             <strong className="text-foreground">Mainline Drains</strong> site; explore sister divisions below if your project spans drainage, surveys, site security, scaffolding or civils.
           </p>
-          <GroupFooter items={groupLinks} variant="default" />
+          <GroupFooter
+            items={groupLinks}
+            variant="default"
+            groupLinkUtmSource={verticalConfig.verticalId}
+          />
         </div>
       </section>
 

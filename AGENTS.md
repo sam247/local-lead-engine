@@ -90,7 +90,7 @@ L1–L4 exist in all verticals. L5 (topic × location) currently exists in Acces
 Shared infrastructure. **Do not** put vertical-specific routes, URLs, or content here.
 
 - **engine/components/** – React components used by verticals (LocationPage, HubPage, InfoPage, ProblemPage, ServiceDetailContent, BreadcrumbNav, NearbyAreas, MapEmbed, UI components).
-- **engine/data/** – `locations.ts` (shared location list), `location-neighbours.ts` (getNeighbourLocationIds), `projects` if shared. **`mainline-group.ts`** — sole exception for **corporate entity URLs** (the five Mainline division homepages — drains, surveys, access, groundworks, scaffold — used for cross-site footers, About, and JSON-LD `sameAs`). Do not add other vertical marketing URLs here; service/topic URLs stay in verticals.
+- **engine/data/** – `locations.ts` (shared location list), `location-neighbours.ts` (getNeighbourLocationIds), `projects` if shared. **`mainline-group.ts`** — sole exception for **corporate entity URLs** (the five Mainline division homepages — drains, surveys, access, groundworks, scaffolding — used for cross-site footers, About, and JSON-LD `sameAs`). Do not add other vertical marketing URLs here; service/topic URLs stay in verticals.
 - **engine/types/** – TypeScript interfaces (Service, Location, HubData, InfoPageData, ProblemData, VerticalConfig, etc.).
 - **engine/utils/** – Helpers (buildLocationMetadata, buildLocationContextParagraph, sitemap builder).
 - **engine/schema/** – Structured data (FAQ, LocalBusiness, etc.).

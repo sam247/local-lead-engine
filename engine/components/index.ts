@@ -18,7 +18,11 @@ export { MidContentCTA, type MidContentCTAProps } from "./MidContentCTA";
 export { ContentRelatedLinks, type ContentRelatedLinksProps } from "./ContentRelatedLinks";
 export { CTABanner, type CTABannerProps } from "./CTABanner";
 export { MainlineGroupLinks, type MainlineGroupLinksProps } from "./MainlineGroupLinks";
-export { GroupFooter, type GroupFooterProps } from "./footer/GroupFooter";
+export {
+  GroupFooter,
+  appendMainlineGroupFooterUtm,
+  type GroupFooterProps,
+} from "./footer/GroupFooter";
 export { TrustPoints, type TrustPointsProps } from "./home/TrustPoints";
 export { HomepageArticles, type HomepageArticlesProps, type HomepageArticleCard } from "./home/HomepageArticles";
 export {

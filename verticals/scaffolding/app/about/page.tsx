@@ -117,7 +117,11 @@ export default function AboutPage() {
             Mainline Scaffold is one of five specialist divisions under Mainline Group. Other divisions cover drainage, surveying, groundworks and commercial security. You are on the{" "}
             <strong className="text-foreground">Mainline Scaffold</strong> site; sister divisions are linked below.
           </p>
-          <GroupFooter items={groupLinks} variant="default" />
+          <GroupFooter
+            items={groupLinks}
+            variant="default"
+            groupLinkUtmSource={verticalConfig.verticalId}
+          />
         </div>
       </section>
 

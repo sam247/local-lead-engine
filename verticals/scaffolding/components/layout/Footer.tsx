@@ -126,6 +126,7 @@ const Footer = () => {
           <GroupFooter
             items={groupLinks}
             variant="onPrimary"
+            groupLinkUtmSource={verticalConfig.verticalId}
             trustLine="Our scaffolding contractors are NASC accredited, fully insured and CISRS-trained"
             citbLogoSrc="/citb.png"
             dbsLogoSrc="/dbs.png"

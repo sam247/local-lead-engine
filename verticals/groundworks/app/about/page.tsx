@@ -114,7 +114,11 @@ export default function AboutPage() {
             Mainline Groundworks is one of five specialist divisions under Mainline Group. Other divisions cover drainage, surveying, commercial security and access control, and scaffolding. You are on the{" "}
             <strong className="text-foreground">Mainline Groundworks</strong> site; sister divisions are linked below.
           </p>
-          <GroupFooter items={groupLinks} variant="default" />
+          <GroupFooter
+            items={groupLinks}
+            variant="default"
+            groupLinkUtmSource={verticalConfig.verticalId}
+          />
         </div>
       </section>
 

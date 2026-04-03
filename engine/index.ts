@@ -44,7 +44,11 @@ export { MidContentCTA, type MidContentCTAProps } from "./components/MidContentC
 export { ContentRelatedLinks, type ContentRelatedLinksProps } from "./components/ContentRelatedLinks";
 export { CTABanner, type CTABannerProps } from "./components/CTABanner";
 export { MainlineGroupLinks, type MainlineGroupLinksProps } from "./components/MainlineGroupLinks";
-export { GroupFooter, type GroupFooterProps } from "./components/footer/GroupFooter";
+export {
+  GroupFooter,
+  appendMainlineGroupFooterUtm,
+  type GroupFooterProps,
+} from "./components/footer/GroupFooter";
 export { TrustPoints, type TrustPointsProps } from "./components/home/TrustPoints";
 export { HomepageArticles, type HomepageArticlesProps, type HomepageArticleCard } from "./components/home/HomepageArticles";
 export {

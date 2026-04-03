@@ -1,11 +1,34 @@
 import type { MainlineGroupLinkItem } from "../../data/mainline-group";
 import { cn } from "../../utils/cn";
 
+/** Append GA-friendly UTMs so destination sites can attribute traffic to the referring vertical and placement. */
+export function appendMainlineGroupFooterUtm(
+  href: string,
+  verticalSource: string
+): string {
+  const source = verticalSource.trim();
+  if (!source) return href;
+  try {
+    const u = new URL(href);
+    u.searchParams.set("utm_source", source);
+    u.searchParams.set("utm_medium", "footer");
+    u.searchParams.set("utm_campaign", "mainline_group");
+    return u.toString();
+  } catch {
+    return href;
+  }
+}
+
 export interface GroupFooterProps {
   items: MainlineGroupLinkItem[];
   className?: string;
   /** `onPrimary`: light text on dark footer. `default`: muted text on light section (e.g. About page). */
   variant?: "onPrimary" | "default";
+  /**
+   * Vertical id of the site rendering the footer (e.g. `verticalConfig.verticalId`).
+   * When set, division links get `utm_source={verticalId}&utm_medium=footer&utm_campaign=mainline_group`.
+   */
+  groupLinkUtmSource?: string;
   /** Optional short trust copy shown above badge row (footer, right column). */
   trustLine?: string;
   /** Optional trust mark image URL (e.g. `/dbs.png` from each vertical `public/`). */
@@ -23,7 +46,7 @@ const LINK_TITLES: Record<string, string> = {
   "Mainline Surveys": "Land and drone surveying services across the UK",
   "Mainline Access": "Commercial security and access control services across the UK",
   "Mainline Groundworks": "Commercial groundworks services across the UK",
-  "Mainline Scaffold": "NASC accredited scaffolding contractors across the UK",
+  "Mainline Scaffolding": "NASC accredited scaffolding contractors across the UK",
 };
 
 /** Footer badge row: match hero trust strip scale; shrink-0 keeps all marks visible in flex layouts. */
@@ -37,6 +60,7 @@ export function GroupFooter({
   items,
   className,
   variant = "onPrimary",
+  groupLinkUtmSource,
   trustLine,
   dbsLogoSrc,
   citbLogoSrc,
@@ -46,6 +70,7 @@ export function GroupFooter({
   if (!items.length) return null;
 
   const onPrimary = variant === "onPrimary";
+  const utmSource = groupLinkUtmSource?.trim() ?? "";
   const showBadges = Boolean(dbsLogoSrc || citbLogoSrc || trustmarkLogoSrc || fmbLogoSrc);
   const showRightColumn = Boolean(trustLine || showBadges);
 
@@ -67,9 +92,9 @@ export function GroupFooter({
         </p>
         <ul className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:gap-x-5 sm:gap-y-1 md:gap-x-6">
           {items.map((item) => (
-            <li key={item.href} className="min-w-0">
+            <li key={item.name} className="min-w-0">
               <a
-                href={item.href}
+                href={utmSource ? appendMainlineGroupFooterUtm(item.href, utmSource) : item.href}
                 title={LINK_TITLES[item.name] ?? `${item.name} website`}
                 aria-current={item.isCurrent ? "page" : undefined}
                 className={cn(

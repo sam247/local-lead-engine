@@ -136,6 +136,7 @@ const Footer = () => {
           <GroupFooter
             items={groupLinks}
             variant="onPrimary"
+            groupLinkUtmSource={verticalConfig.verticalId}
             trustLine="Our contractors are fully vetted, insured and accredited to UK industry standards"
             dbsLogoSrc="/dbs.png"
             citbLogoSrc="/citb.png"

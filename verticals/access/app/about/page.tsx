@@ -114,7 +114,11 @@ export default function AboutPage() {
             Mainline Access is one of five specialist divisions under Mainline Group. Other divisions cover drainage, land and building surveys, groundworks, and scaffolding. You are on the{" "}
             <strong className="text-foreground">Mainline Access</strong> site; related divisions are linked below.
           </p>
-          <GroupFooter items={groupLinks} variant="default" />
+          <GroupFooter
+            items={groupLinks}
+            variant="default"
+            groupLinkUtmSource={verticalConfig.verticalId}
+          />
         </div>
       </section>
 
