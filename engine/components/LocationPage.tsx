@@ -17,7 +17,7 @@ import { getVariantIndex } from "../lib/contentVariants";
 import { getPageTier, pageSeoDataAttrs, type PageType } from "../lib/pageWeighting";
 import { locations as allLocationsDataset } from "../data/locations";
 import { getCountyPeerLocationIds, getUkGroupingForLocationId } from "../data/uk-location-hierarchy";
-import type { Service, Location, CompanyInfo } from "../types";
+import type { Service, Location, CompanyInfo, LocationPageSupplementalSection } from "../types";
 
 const LOCATION_ABOUT_LABELS = ["Learn more about our team", "How we work with clients"] as const;
 
@@ -439,10 +439,14 @@ export interface LocationPageProps {
   nearbyProjects?: Array<{ id: string; title: string; description: string; image: string; url: string }>;
   /** Optional topic links for "Helpful guidance" block (4–6 links to topic pages). When provided, section is rendered above FAQ. */
   relatedTopicLinks?: { title: string; href: string }[];
+  /** Optional page-specific local links added for striking-distance optimisation. */
+  priorityLocalLinks?: { href: string; label: string }[];
   /** Optional heading for the related topics block. Default: "Helpful guidance related to this service". */
   relatedTopicsSectionTitle?: string;
   /** Optional intro paragraph for the related topics block. */
   relatedTopicsSectionIntro?: string;
+  /** Optional page-specific content sections for L4 strengthening. */
+  supplementalSections?: LocationPageSupplementalSection[];
   /** Vertical id for call-click analytics (e.g. verticalConfig.verticalId). */
   callTrackVertical: string;
   /** Optional internal link count for page tiering (future crawl/analytics feed). */
@@ -478,8 +482,10 @@ export function LocationPage({
   locationContextParagraph,
   nearbyProjects,
   relatedTopicLinks,
+  priorityLocalLinks,
   relatedTopicsSectionTitle,
   relatedTopicsSectionIntro,
+  supplementalSections,
   callTrackVertical,
   inlinkCount,
   conversionAsideTitle = "Get a quote",
@@ -608,6 +614,11 @@ export function LocationPage({
   ];
   const activeTrustPoints =
     trustPoints && trustPoints.length > 0 ? trustPoints : defaultTrustPoints;
+  const uniquePriorityLocalLinks = (priorityLocalLinks ?? []).filter(
+    (link, index, links) =>
+      link.href !== `/${service.slug}/${location.id}` &&
+      links.findIndex((candidate) => candidate.href === link.href) === index
+  );
 
   const whenNeededSection = (
     <div className="mb-8">
@@ -782,6 +793,20 @@ export function LocationPage({
                     .
                   </p>
                 )}
+                {uniquePriorityLocalLinks.length > 0 && (
+                  <p className="text-muted-foreground">
+                    Related local options include{" "}
+                    {uniquePriorityLocalLinks.map((link, index) => (
+                      <span key={link.href}>
+                        {index > 0 && (index === uniquePriorityLocalLinks.length - 1 ? " and " : ", ")}
+                        <Link href={link.href} className="text-primary hover:underline">
+                          {link.label}
+                        </Link>
+                      </span>
+                    ))}
+                    .
+                  </p>
+                )}
                 {earlyTopicLinks.length > 0 && (
                   <p>
                     For related guidance, see{" "}
@@ -880,6 +905,27 @@ export function LocationPage({
                 <h2 className="mb-3 font-display text-xl font-bold">Project context in {location.name}</h2>
                 <p className="text-muted-foreground">{activeLocationContext}</p>
               </div>
+              {supplementalSections && supplementalSections.length > 0 && (
+                <>
+                  {supplementalSections.map((section) => (
+                    <div key={section.heading} className="mb-8">
+                      <h2 className="mb-3 font-display text-xl font-bold">{section.heading}</h2>
+                      <div className="space-y-4 text-muted-foreground">
+                        {section.paragraphs.map((paragraph, index) => (
+                          <p key={`${section.heading}-p-${index}`}>{paragraph}</p>
+                        ))}
+                        {section.bullets && section.bullets.length > 0 && (
+                          <ul className="list-disc space-y-2 pl-6">
+                            {section.bullets.map((bullet) => (
+                              <li key={bullet}>{bullet}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
               {!isWhenNeededEarly && whenNeededSection}
               {isProcessEarly && processSection}
               <p className="mb-8 text-muted-foreground">{service.description}</p>

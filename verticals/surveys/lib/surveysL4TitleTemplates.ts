@@ -1,6 +1,7 @@
 import type { Location, Service } from "engine";
 import { clampMetaTitle, getVariantIndex, maybeAddNearMeMetaTitle } from "engine";
 import { services } from "@/lib/data";
+import { getL4StrikingDistanceTarget } from "@/data/l4StrikingDistance";
 
 const VERTICAL_LABEL = "Surveyors";
 
@@ -66,6 +67,10 @@ function applyLocation(template: string, locationName: string): string {
 }
 
 export function pickSurveysL4MetaTitle(service: Service, location: Location): string {
+  const strikingDistanceTarget = getL4StrikingDistanceTarget(service.slug, location.id);
+  if (strikingDistanceTarget?.metaTitleOverride) {
+    return clampMetaTitle(maybeAddNearMeMetaTitle(strikingDistanceTarget.metaTitleOverride));
+  }
   const locName = location.name;
   const pair = SURVEYS_L4_TITLE_TEMPLATES[service.slug as SurveysServiceSlug];
   if (!pair) {

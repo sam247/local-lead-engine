@@ -21,7 +21,8 @@
     "images:roundtrip-from-public": "npm run images:sync-assets && npm run images:place-all",
     "verify:public-images": "node scripts/verify-public-images.mjs",
     "verify:unique-project-images": "node scripts/verify-unique-project-images.mjs",
-    "images:compress": "node scripts/compress-public-images.mjs"
+    "images:compress": "node scripts/compress-public-images.mjs",
+    "seo:striking-distance": "node scripts/gsc-striking-distance.mjs"
   },
   "devDependencies": {
     "sharp": "^0.34.5"

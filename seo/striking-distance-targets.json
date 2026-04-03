@@ -1,0 +1,314 @@
+[
+  {
+    "vertical": "drains",
+    "serviceSlug": "drain-excavation",
+    "locationSlug": "ealing",
+    "currentPosition": null,
+    "clicks": null,
+    "impressions": null,
+    "ctr": null,
+    "sourceRowCount": 1,
+    "sourceMatchType": "exact",
+    "sampleQueries": [
+      "drain excavation ealing"
+    ],
+    "donorAssignments": {
+      "relatedServicePages": [
+        "/drain-collapse-repair/ealing",
+        "/drain-pipe-replacement/ealing"
+      ],
+      "nearbyLocationPages": [
+        "/drain-excavation/chiswick",
+        "/drain-excavation/fulham"
+      ],
+      "guideDonorStrategy": "Guide pages related to drain excavation and repair-method content"
+    },
+    "locationArea": "West London"
+  },
+  {
+    "vertical": "drains",
+    "serviceSlug": "drain-jetting",
+    "locationSlug": "dartford",
+    "currentPosition": null,
+    "clicks": null,
+    "impressions": null,
+    "ctr": null,
+    "sourceRowCount": 1,
+    "sourceMatchType": "exact",
+    "sampleQueries": [
+      "drain jetting dartford"
+    ],
+    "donorAssignments": {
+      "relatedServicePages": [
+        "/blocked-drains/dartford",
+        "/drain-unblocking/dartford"
+      ],
+      "nearbyLocationPages": [
+        "/drain-jetting/gravesend",
+        "/drain-jetting/maidstone"
+      ],
+      "guideDonorStrategy": "Guide pages related to blockages, jetting, and maintenance content"
+    },
+    "locationArea": "Kent"
+  },
+  {
+    "vertical": "drains",
+    "serviceSlug": "cctv-drain-surveys",
+    "locationSlug": "ilford",
+    "currentPosition": null,
+    "clicks": null,
+    "impressions": null,
+    "ctr": null,
+    "sourceRowCount": 1,
+    "sourceMatchType": "exact",
+    "sampleQueries": [
+      "drain survey barking ilford"
+    ],
+    "donorAssignments": {
+      "relatedServicePages": [
+        "/drain-collapse-repair/ilford",
+        "/drain-relining/ilford"
+      ],
+      "nearbyLocationPages": [
+        "/cctv-drain-surveys/romford",
+        "/cctv-drain-surveys/london"
+      ],
+      "guideDonorStrategy": "Guide pages related to inspection, mapping, and survey content"
+    },
+    "locationArea": "East London"
+  },
+  {
+    "vertical": "surveys",
+    "serviceSlug": "utility-survey",
+    "locationSlug": "barnet",
+    "currentPosition": null,
+    "clicks": null,
+    "impressions": null,
+    "ctr": null,
+    "sourceRowCount": 1,
+    "sourceMatchType": "exact",
+    "sampleQueries": [
+      "utility surveys barnet"
+    ],
+    "donorAssignments": {
+      "relatedServicePages": [
+        "/utility-mapping-survey/barnet",
+        "/topographical-survey/barnet"
+      ],
+      "nearbyLocationPages": [
+        "/utility-survey/enfield",
+        "/utility-survey/london"
+      ],
+      "guideDonorStrategy": "Guide pages related to utility mapping, underground services, and dig planning"
+    },
+    "locationArea": "North London"
+  },
+  {
+    "vertical": "surveys",
+    "serviceSlug": "measured-building-survey",
+    "locationSlug": "barnet",
+    "currentPosition": null,
+    "clicks": null,
+    "impressions": null,
+    "ctr": null,
+    "sourceRowCount": 1,
+    "sourceMatchType": "exact",
+    "sampleQueries": [
+      "measured building surveyors barnet"
+    ],
+    "donorAssignments": {
+      "relatedServicePages": [
+        "/laser-scanning-survey/barnet",
+        "/topographical-survey/barnet"
+      ],
+      "nearbyLocationPages": [
+        "/measured-building-survey/enfield",
+        "/measured-building-survey/london"
+      ],
+      "guideDonorStrategy": "Guide pages related to measured surveys, building plans, and design prep"
+    },
+    "locationArea": "North London"
+  },
+  {
+    "vertical": "surveys",
+    "serviceSlug": "drone-building-inspection",
+    "locationSlug": "wandsworth",
+    "currentPosition": null,
+    "clicks": null,
+    "impressions": null,
+    "ctr": null,
+    "sourceRowCount": 1,
+    "sourceMatchType": "exact",
+    "sampleQueries": [
+      "drone surveys wandsworth london"
+    ],
+    "donorAssignments": {
+      "relatedServicePages": [
+        "/drone-roof-inspection/wandsworth",
+        "/measured-building-survey/wandsworth"
+      ],
+      "nearbyLocationPages": [
+        "/drone-building-inspection/croydon",
+        "/drone-building-inspection/sutton"
+      ],
+      "guideDonorStrategy": "Guide pages related to drone inspection, roof access, and condition reporting"
+    },
+    "locationArea": "South London"
+  },
+  {
+    "vertical": "access",
+    "serviceSlug": "commercial-cctv-installation",
+    "locationSlug": "teddington",
+    "currentPosition": null,
+    "clicks": null,
+    "impressions": null,
+    "ctr": null,
+    "sourceRowCount": 1,
+    "sourceMatchType": "mapped",
+    "sampleQueries": [
+      "cctv in stevenage"
+    ],
+    "donorAssignments": {
+      "relatedServicePages": [
+        "/ip-camera-systems/teddington",
+        "/access-control-systems/teddington"
+      ],
+      "nearbyLocationPages": [
+        "/commercial-cctv-installation/richmond",
+        "/commercial-cctv-installation/wimbledon"
+      ],
+      "guideDonorStrategy": "Guide pages related to CCTV planning, coverage, and commercial systems"
+    },
+    "locationArea": "South West London"
+  },
+  {
+    "vertical": "access",
+    "serviceSlug": "access-control-systems",
+    "locationSlug": "isleworth",
+    "currentPosition": null,
+    "clicks": null,
+    "impressions": null,
+    "ctr": null,
+    "sourceRowCount": 1,
+    "sourceMatchType": "mapped",
+    "sampleQueries": [
+      "commercial access control hemel hempstead"
+    ],
+    "donorAssignments": {
+      "relatedServicePages": [
+        "/commercial-cctv-installation/isleworth",
+        "/security-system-integration/isleworth"
+      ],
+      "nearbyLocationPages": [
+        "/access-control-systems/chiswick",
+        "/access-control-systems/fulham"
+      ],
+      "guideDonorStrategy": "Guide pages related to entry control, doors, and access management"
+    },
+    "locationArea": "West London"
+  },
+  {
+    "vertical": "access",
+    "serviceSlug": "security-system-integration",
+    "locationSlug": "stevenage",
+    "currentPosition": null,
+    "clicks": null,
+    "impressions": null,
+    "ctr": null,
+    "sourceRowCount": 1,
+    "sourceMatchType": "mapped",
+    "sampleQueries": [
+      "network cabling stevenage"
+    ],
+    "donorAssignments": {
+      "relatedServicePages": [
+        "/access-control-systems/stevenage",
+        "/commercial-cctv-installation/stevenage"
+      ],
+      "nearbyLocationPages": [
+        "/security-system-integration/watford",
+        "/security-system-integration/st-albans"
+      ],
+      "guideDonorStrategy": "Guide pages related to integrated security, cabling, and monitoring workflows"
+    },
+    "locationArea": "Hertfordshire"
+  },
+  {
+    "vertical": "groundworks",
+    "serviceSlug": "cfa-piling",
+    "locationSlug": "derby",
+    "currentPosition": null,
+    "clicks": null,
+    "impressions": null,
+    "ctr": null,
+    "sourceRowCount": 1,
+    "sourceMatchType": "exact",
+    "sampleQueries": [
+      "cfa piling borrowash derbyshire"
+    ],
+    "donorAssignments": {
+      "relatedServicePages": [
+        "/piling-contractors/derby",
+        "/mini-piling-contractors/derby"
+      ],
+      "nearbyLocationPages": [
+        "/cfa-piling/london",
+        "/cfa-piling/richmond"
+      ],
+      "guideDonorStrategy": "Guide pages related to piling, ground support, and foundation method choice"
+    },
+    "locationArea": "Derbyshire"
+  },
+  {
+    "vertical": "groundworks",
+    "serviceSlug": "foundation-repair",
+    "locationSlug": "brentwood",
+    "currentPosition": null,
+    "clicks": null,
+    "impressions": null,
+    "ctr": null,
+    "sourceRowCount": 1,
+    "sourceMatchType": "exact",
+    "sampleQueries": [
+      "groundworks brentford"
+    ],
+    "donorAssignments": {
+      "relatedServicePages": [
+        "/underpinning/brentwood",
+        "/foundation-contractors/brentwood"
+      ],
+      "nearbyLocationPages": [
+        "/foundation-repair/basildon",
+        "/foundation-repair/braintree"
+      ],
+      "guideDonorStrategy": "Guide pages related to movement, structural repair, and foundation defects"
+    },
+    "locationArea": "Essex"
+  },
+  {
+    "vertical": "groundworks",
+    "serviceSlug": "enabling-works-contractors",
+    "locationSlug": "ashford",
+    "currentPosition": null,
+    "clicks": null,
+    "impressions": null,
+    "ctr": null,
+    "sourceRowCount": 1,
+    "sourceMatchType": "exact",
+    "sampleQueries": [
+      "site enabling ashford"
+    ],
+    "donorAssignments": {
+      "relatedServicePages": [
+        "/site-clearance-contractors/ashford",
+        "/groundworks-contractors/ashford"
+      ],
+      "nearbyLocationPages": [
+        "/enabling-works-contractors/dartford",
+        "/enabling-works-contractors/gravesend"
+      ],
+      "guideDonorStrategy": "Guide pages related to site preparation, enabling works, and early packages"
+    },
+    "locationArea": "Kent"
+  }
+]

@@ -12,6 +12,7 @@ import {
 } from "engine";
 import { buildLocationMetadata, buildTopicLocationMetadata } from "engine";
 import { pickAccessL4MetaTitle } from "@/lib/accessL4TitleTemplates";
+import { getL4PriorityLocalLinks, getL4StrikingDistanceTarget } from "@/data/l4StrikingDistance";
 import type { Location } from "engine";
 import type { Metadata } from "next";
 import { Phone } from "lucide-react";
@@ -223,6 +224,7 @@ export default async function LocationRoute({ params }: Props) {
 
   const service = services.find((s) => s.slug === serviceSlug);
   if (!service) notFound();
+  const strikingDistanceTarget = getL4StrikingDistanceTarget(service.slug, location.id);
 
   const sameAreaLocations = locations.filter(
     (l) => l.id !== location.id && l.area === location.area
@@ -303,7 +305,9 @@ export default async function LocationRoute({ params }: Props) {
       url: `/projects#${p.id}`,
     }));
 
-  const introParagraph = `We provide ${service.title} across ${location.name} and ${location.area}. Our team offers design, installation and maintenance for commercial and public-sector sites, with free no-obligation site surveys and quotes.`;
+  const introParagraph =
+    strikingDistanceTarget?.introOverride ??
+    `We provide ${service.title} across ${location.name} and ${location.area}. Our team offers design, installation and maintenance for commercial and public-sector sites, with free no-obligation site surveys and quotes.`;
 
   const relatedTopicLinks = getRelevantTopicsForService(service.slug);
   const extraServiceLocationLinks = pickRelatedServiceLocationLinks({
@@ -313,6 +317,11 @@ export default async function LocationRoute({ params }: Props) {
     priorityByService: RELATED_SERVICE_SLUGS_BY_SERVICE,
     maxLinks: 3,
   }).map((link) => ({ href: link.href, children: link.label }));
+  const priorityLocalLinks = getL4PriorityLocalLinks(
+    service.slug,
+    location.id,
+    RELATED_SERVICE_SLUGS_BY_SERVICE
+  );
 
   const sidebarBullets = trustPoints.map((point) => trimSidebarBullet(point, 8)).slice(0, 5);
 
@@ -335,6 +344,8 @@ export default async function LocationRoute({ params }: Props) {
         trustPoints={trustPoints}
         introParagraph={introParagraph}
         extraServiceLocationLinks={extraServiceLocationLinks}
+        priorityLocalLinks={priorityLocalLinks}
+        supplementalSections={strikingDistanceTarget?.supplementalSections}
         nearbyAreasDescription={`Compare our ${service.title} in nearby areas.`}
         neighbourLocationsForContext={neighbourLocationsForContext}
         locationContextParagraph={locationContextParagraph}

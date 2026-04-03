@@ -45,6 +45,12 @@ export interface Location {
   propertyTypes?: string;
 }
 
+export interface LocationPageSupplementalSection {
+  heading: string;
+  paragraphs: string[];
+  bullets?: string[];
+}
+
 export interface HubData {
   category: string;
   basePath: string;

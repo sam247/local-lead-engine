@@ -12,6 +12,7 @@ import {
 import { buildLocationMetadata } from "engine";
 import { pickSurveysL4MetaTitle } from "@/lib/surveysL4TitleTemplates";
 import { hasNumericDuplicateSuffix, stripNumericDuplicateSuffix } from "@/lib/numericSlugSuffix";
+import { getL4PriorityLocalLinks, getL4StrikingDistanceTarget } from "@/data/l4StrikingDistance";
 import type { Metadata } from "next";
 import CTABanner from "@/components/sections/CTABanner";
 
@@ -168,6 +169,7 @@ export default async function LocationRoute({ params }: Props) {
   }
   const location = locations.find((l) => l.id === canonicalLocationSlug);
   if (!service || !location) notFound();
+  const strikingDistanceTarget = getL4StrikingDistanceTarget(service.slug, location.id);
 
   const sameAreaLocations = locations.filter(
     (l) => l.id !== location.id && l.area === location.area
@@ -252,7 +254,9 @@ export default async function LocationRoute({ params }: Props) {
       url: `/projects#${p.id}`,
     }));
 
-  const introParagraph = `We provide ${service.title} across ${location.name} and ${location.area}. Our survey partners deliver accurate, planning-ready data for residential and commercial projects, with free no-obligation quotes.`;
+  const introParagraph =
+    strikingDistanceTarget?.introOverride ??
+    `We provide ${service.title} across ${location.name} and ${location.area}. Our survey partners deliver accurate, planning-ready data for residential and commercial projects, with free no-obligation quotes.`;
 
   const relatedTopicLinks = getRelevantTopicsForService(service.slug);
   const extraServiceLocationLinks = pickRelatedServiceLocationLinks({
@@ -262,6 +266,11 @@ export default async function LocationRoute({ params }: Props) {
     priorityByService: RELATED_SERVICE_SLUGS_BY_SERVICE,
     maxLinks: 3,
   }).map((link) => ({ href: link.href, children: link.label }));
+  const priorityLocalLinks = getL4PriorityLocalLinks(
+    service.slug,
+    location.id,
+    RELATED_SERVICE_SLUGS_BY_SERVICE
+  );
 
   const sidebarBullets = trustPoints.map((point) => trimSidebarBullet(point, 8)).slice(0, 5);
 
@@ -285,6 +294,8 @@ export default async function LocationRoute({ params }: Props) {
         diagnosisGuidePath="/do-i-need-a-drain-survey"
         introParagraph={introParagraph}
         extraServiceLocationLinks={extraServiceLocationLinks}
+        priorityLocalLinks={priorityLocalLinks}
+        supplementalSections={strikingDistanceTarget?.supplementalSections}
         nearbyAreasDescription={`Compare our ${service.title} in nearby areas.`}
         neighbourLocationsForContext={neighbourLocationsForContext}
         locationContextParagraph={locationContextParagraph}

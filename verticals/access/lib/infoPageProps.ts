@@ -10,6 +10,7 @@ import {
 import { getHeroImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
 import { buildFeaturedServiceLocationLinks, getServiceUrl, type RelatedPageLink } from "engine";
+import { getL4GuideTargetLinksForServices } from "@/data/l4StrikingDistance";
 
 export function getInfoPageProps(category: string, slug: string) {
   const hub = getHubData(category);
@@ -73,23 +74,26 @@ export function getInfoPageProps(category: string, slug: string) {
         maxLinks: 1,
       })
     : [];
+  const strikingDistanceGuideLinks = getL4GuideTargetLinksForServices(page.relatedServices).slice(0, 2);
   const primaryServiceLocationLink = page.serviceLocationLink ?? (
     featuredPrimaryLinks[0]
       ? { href: featuredPrimaryLinks[0].href, linkText: featuredPrimaryLinks[0].label }
       : undefined
   );
-  const additionalServiceLocationLinks = featuredSecondaryLinks
-    .map((link) => ({
+  const overriddenPrimaryServiceLocationLink = strikingDistanceGuideLinks[0] ?? primaryServiceLocationLink;
+  const additionalServiceLocationLinks = [
+    ...strikingDistanceGuideLinks.slice(1),
+    ...featuredSecondaryLinks.map((link) => ({
       href: link.href,
       linkText: link.label,
-    }))
-    .filter((link) => link.href !== primaryServiceLocationLink?.href);
+    })),
+  ].filter((link, index, links) => link.href !== overriddenPrimaryServiceLocationLink?.href && links.findIndex((candidate) => candidate.href === link.href) === index);
 
   return {
     hub,
     page: {
       ...page,
-      serviceLocationLink: primaryServiceLocationLink,
+      serviceLocationLink: overriddenPrimaryServiceLocationLink,
       additionalServiceLocationLinks,
     },
     otherPages,
