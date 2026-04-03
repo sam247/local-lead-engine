@@ -1,7 +1,11 @@
 import Link from "next/link";
 import type { Location, Service } from "../types";
 import { getServiceUrl } from "./serviceUrls";
-import { KEY_SERVICE_DETAIL_LOCATION_IDS } from "../data/key-location-ids";
+import {
+  buildFeaturedServiceLocationLinks,
+  buildServiceLocationAnchor,
+  pickFeaturedLocationsForInternalLinks,
+} from "./internalLinkTargets";
 
 export interface GuideInternalLinksModel {
   serviceLinks: { href: string; label: string }[];
@@ -22,13 +26,22 @@ export function buildGuideInternalLinksWithLocations(
   const serviceLinks: { href: string; label: string }[] = [];
   if (primary) serviceLinks.push({ href: getServiceUrl(primary.slug), label: primary.title });
   if (secondary) serviceLinks.push({ href: getServiceUrl(secondary.slug), label: secondary.title });
-  const locMap = new Map(locations.map((l) => [l.id, l]));
-  const orderedIds = [...KEY_SERVICE_DETAIL_LOCATION_IDS].filter((id) => locMap.has(id)).sort();
-  const picked = orderedIds.slice(0, 2).map((id) => locMap.get(id)!);
-  const locationLinks = picked.map((loc) => ({
-    href: `/${primaryServiceSlug}/${loc.id}`,
-    label: `${loc.name}`,
-  }));
+  const picked = primary
+    ? buildFeaturedServiceLocationLinks({
+        service: primary,
+        locations,
+        seed: `guide-internal-links:${primary.slug}`,
+        maxLinks: 2,
+      })
+    : [];
+  const fallbackLocations =
+    secondary == null
+      ? []
+      : pickFeaturedLocationsForInternalLinks(locations, `guide-secondary:${secondary.slug}`, 1).map((location) => ({
+          href: `/${secondary.slug}/${location.id}`,
+          label: buildServiceLocationAnchor(secondary.title, location.name),
+        }));
+  const locationLinks = [...picked, ...fallbackLocations].slice(0, 2);
   return {
     serviceLinks,
     locationLinks,
@@ -52,7 +65,7 @@ export function GuideInternalLinksBlock({ model }: { model: GuideInternalLinksMo
         {model.locationLinks.map((l) => (
           <li key={l.href}>
             <Link href={l.href} className="text-primary hover:underline">
-              Coverage in {l.label}
+              {l.label}
             </Link>
           </li>
         ))}

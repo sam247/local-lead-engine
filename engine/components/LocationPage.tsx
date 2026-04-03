@@ -555,10 +555,7 @@ export function LocationPage({
     `typical-projects-h2:${service.slug}:${location.id}`,
     TYPICAL_PROJECTS_HEADINGS.length
   );
-  const relatedTopicInlineIndex =
-    relatedTopicLinks && relatedTopicLinks.length > 0
-      ? getVariantIndex(`related-topic-inline:${service.slug}:${location.id}`, relatedTopicLinks.length)
-      : 0;
+  const earlyTopicLinks = relatedTopicLinks?.slice(0, 2) ?? [];
 
   const introLines = INTRO_VARIANTS[introVariantIndex](displayTitle, location.name);
   const openingPrimaryVariantIndex = getVariantIndex(
@@ -585,7 +582,14 @@ export function LocationPage({
   const fallbackLocationContext =
     LOCATION_CONTEXT_VARIANTS[locationContextVariantIndex](location.name, location.area, displayTitle);
   const activeLocationContext = locationContextParagraph ?? fallbackLocationContext;
-  const relatedService = otherServices[linksVariantIndex % Math.max(otherServices.length, 1)];
+  const earlyServiceLinkHrefs = new Set((extraServiceLocationLinks ?? []).map((link) => link.href));
+  const earlyTopicLinkHrefs = new Set(earlyTopicLinks.map((link) => link.href));
+  const remainingOtherServices = otherServices.filter(
+    (candidate) => !earlyServiceLinkHrefs.has(`/${candidate.slug}/${location.id}`)
+  );
+  const remainingTopicLinks = (relatedTopicLinks ?? []).filter((link) => !earlyTopicLinkHrefs.has(link.href));
+  const relatedServicePool = remainingOtherServices.length > 0 ? remainingOtherServices : otherServices;
+  const relatedService = relatedServicePool[linksVariantIndex % Math.max(relatedServicePool.length, 1)];
   const nearbyLocation = mergedNearby[linksVariantIndex % Math.max(mergedNearby.length, 1)];
   const nearbyAnchorText = NEARBY_ANCHOR_VARIANTS[linksVariantIndex].replace(
     "{location}",
@@ -778,15 +782,17 @@ export function LocationPage({
                     .
                   </p>
                 )}
-                {relatedTopicLinks && relatedTopicLinks.length > 0 && (
+                {earlyTopicLinks.length > 0 && (
                   <p>
                     For related guidance, see{" "}
-                    <Link
-                      href={relatedTopicLinks[relatedTopicInlineIndex]!.href}
-                      className="text-primary hover:underline"
-                    >
-                      {relatedTopicLinks[relatedTopicInlineIndex]!.title}
-                    </Link>
+                    {earlyTopicLinks.map((link, index) => (
+                      <span key={link.href}>
+                        {index > 0 && (index === earlyTopicLinks.length - 1 ? " and " : ", ")}
+                        <Link href={link.href} className="text-primary hover:underline">
+                          {link.title}
+                        </Link>
+                      </span>
+                    ))}
                     .
                   </p>
                 )}
@@ -1080,29 +1086,31 @@ export function LocationPage({
                 </p>
               </div>
 
-              <div className="rounded-lg bg-secondary p-6">
-                <h2 className="mb-4 font-display text-lg font-bold">Other Services</h2>
-                <p className="mb-3 text-xs text-muted-foreground">
-                  If your project needs more than one service, compare relevant options available in {location.name}.
-                </p>
-                <div className="space-y-2">
-                  {otherServices.map((s) => (
-                    <Link
-                      key={s.id}
-                      href={`/${s.slug}/${location.id}`}
-                      className="block text-sm text-primary hover:underline"
-                    >
-                      {s.title} in {location.name}
-                    </Link>
-                  ))}
+              {remainingOtherServices.length > 0 && (
+                <div className="rounded-lg bg-secondary p-6">
+                  <h2 className="mb-4 font-display text-lg font-bold">Other Services</h2>
+                  <p className="mb-3 text-xs text-muted-foreground">
+                    If your project needs more than one service, compare relevant options available in {location.name}.
+                  </p>
+                  <div className="space-y-2">
+                    {remainingOtherServices.map((s) => (
+                      <Link
+                        key={s.id}
+                        href={`/${s.slug}/${location.id}`}
+                        className="block text-sm text-primary hover:underline"
+                      >
+                        {s.title} in {location.name}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {relatedTopicLinks && relatedTopicLinks.length > 0 && (
+      {remainingTopicLinks.length > 0 && (
         <section className="bg-secondary/50 py-12">
           <div className="container">
             <h2 className="mb-4 font-display text-2xl font-bold text-center">
@@ -1113,7 +1121,7 @@ export function LocationPage({
                 "These guides explain common issues, planning considerations, and practical decisions related to this service."}
             </p>
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-              {relatedTopicLinks.map((link) => (
+              {remainingTopicLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -1152,27 +1160,29 @@ export function LocationPage({
         </div>
       </section>
 
-      <section className="section-padding pt-0">
-        <div className="container">
-          <h2 className="mb-6 font-display text-2xl font-bold text-center">
-            Services in this area
-          </h2>
-          <p className="mb-4 text-center text-sm text-muted-foreground">
-            Explore related services that are often commissioned alongside this work in {location.name}.
-          </p>
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-            {otherServices.map((s) => (
-              <Link
-                key={s.id}
-                href={`/${s.slug}/${location.id}`}
-                className="text-primary hover:underline"
-              >
-                {s.title} in {location.name}
-              </Link>
-            ))}
+      {remainingOtherServices.length > 0 && (
+        <section className="section-padding pt-0">
+          <div className="container">
+            <h2 className="mb-6 font-display text-2xl font-bold text-center">
+              Services in this area
+            </h2>
+            <p className="mb-4 text-center text-sm text-muted-foreground">
+              Explore related services that are often commissioned alongside this work in {location.name}.
+            </p>
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+              {remainingOtherServices.map((s) => (
+                <Link
+                  key={s.id}
+                  href={`/${s.slug}/${location.id}`}
+                  className="text-primary hover:underline"
+                >
+                  {s.title} in {location.name}
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="bg-primary py-16">
         <div className="container text-center">

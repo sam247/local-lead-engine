@@ -3,6 +3,7 @@ import {
   getHubData,
   hubPages,
   services,
+  locations,
   categoryImages,
   categoryAltText,
 } from "@/lib/data";
@@ -49,6 +50,7 @@ export function getHubPageProps(category: string) {
     heroAlt,
     crossSections,
     keyServices,
+    featuredLocations: locations,
     companyInfo: verticalConfig.companyInfo,
     baseUrl: verticalConfig.baseUrl,
     pillarGuides,

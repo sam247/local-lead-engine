@@ -18,6 +18,7 @@ import { getVariantIndex } from "../lib/contentVariants";
 import { getPageTier, pageSeoDataAttrs, type PageType } from "../lib/pageWeighting";
 import { pickServiceDetailFeaturedLocations } from "../utils/pickFeaturedLocations";
 import { getServiceUrl } from "../utils/serviceUrls";
+import { buildFeaturedServiceLocationLinks } from "../utils/internalLinkTargets";
 import type { Service, Location, VerticalConfig } from "../types";
 
 function pickServiceDetailSidebarLocations(all: Location[]): Location[] {
@@ -407,6 +408,13 @@ export function ServiceDetailContent({
   ];
   const openingLeadIndex = getVariantIndex(`svc-opening-lead:${service.slug}`, openingLeadCandidates.length);
   const openingLead = openingLeadCandidates[openingLeadIndex];
+  const earlyLocationLinks = buildFeaturedServiceLocationLinks({
+    service,
+    locations,
+    seed: `${verticalConfig.verticalId}:${service.slug}:service-early-links`,
+    maxLinks: 3,
+  });
+  const earlyLocationHrefs = new Set(earlyLocationLinks.map((link) => link.href));
 
   const typicalSituationsSection = TYPICAL_SITUATIONS_SECTIONS[typicalSituationsSectionIndex];
   const processIntroPick = SERVICE_PROCESS_SECTION_INTROS[processIntroIndex];
@@ -503,7 +511,21 @@ export function ServiceDetailContent({
             <div className="lg:col-span-2">
               <p className="mb-4 text-muted-foreground">{overviewDescriptions[overviewVariant]}</p>
               <p className="mb-4 text-muted-foreground">{service.description}</p>
-              <p className="mb-8 text-muted-foreground">{openingLead}</p>
+              <p className="mb-4 text-muted-foreground">{openingLead}</p>
+              {earlyLocationLinks.length > 0 && (
+                <p className="mb-8 text-muted-foreground">
+                  Explore recent demand for this service in{" "}
+                  {earlyLocationLinks.map((link, index) => (
+                    <span key={link.href}>
+                      {index > 0 && (index === earlyLocationLinks.length - 1 ? " and " : ", ")}
+                      <Link href={link.href} className="text-primary hover:underline">
+                        {link.label}
+                      </Link>
+                    </span>
+                  ))}
+                  .
+                </p>
+              )}
               <p className="mb-8 text-sm text-muted-foreground">
                 <Link href="/about" className="text-primary hover:underline">
                   {SERVICE_DETAIL_ABOUT_LABELS[aboutLinkVariant]}
@@ -718,7 +740,7 @@ export function ServiceDetailContent({
                   locations,
                   service.slug,
                   verticalConfig.verticalId
-                );
+                ).filter((location) => !earlyLocationHrefs.has(locationLinkPath(service.slug, location.id)));
                 const showRelatedServices =
                   otherServices.length > 0 && verticalConfig.relatedServicesIntro;
                 const showRelatedLocations = featuredLocations.length > 0;

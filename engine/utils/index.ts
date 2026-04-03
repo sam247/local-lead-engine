@@ -22,3 +22,10 @@ export {
   type GuideInternalLinksModel,
 } from "./guideInternalLinks";
 export { pickServiceDetailFeaturedLocations } from "./pickFeaturedLocations";
+export {
+  buildServiceLocationAnchor,
+  pickRelatedServiceLocationLinks,
+  pickFeaturedLocationsForInternalLinks,
+  buildFeaturedServiceLocationLinks,
+  type InternalLinkTarget,
+} from "./internalLinkTargets";

@@ -118,9 +118,14 @@ export function InfoPage({
     ? services.find((s) => s.slug === firstRelatedServiceSlug)
     : undefined;
   const earlyServiceHubLink =
-    page.topicLocationLink || page.serviceLocationLink
+    page.topicLocationLink || page.serviceLocationLink || (page.additionalServiceLocationLinks?.length ?? 0) > 0
       ? null
       : (firstRelatedService ?? services[0] ?? null);
+  const earlyServiceLocationLinks = [
+    ...(page.serviceLocationLink ? [page.serviceLocationLink] : []),
+    ...((page.additionalServiceLocationLinks ?? []).slice(0, 1)),
+  ];
+  const earlyServiceLocationHrefSet = new Set(earlyServiceLocationLinks.map((link) => link.href));
   const h2Seed = `info-h2:${hub.category}:${page.slug}`;
   const h2When = INFO_H2_WHEN_NEEDED[getVariantIndex(`${h2Seed}:when`, INFO_H2_WHEN_NEEDED.length)];
   const h2Signs = INFO_H2_SIGNS[getVariantIndex(`${h2Seed}:signs`, INFO_H2_SIGNS.length)];
@@ -193,7 +198,7 @@ export function InfoPage({
                 <p className="mb-6 text-lg text-muted-foreground">{primaryOpening}</p>
               ) : null}
               <p className="mb-6 text-muted-foreground">{openingLead}</p>
-              {(page.topicLocationLink || page.serviceLocationLink) && (
+              {(page.topicLocationLink || earlyServiceLocationLinks.length > 0) && (
                 <p className="mb-8 text-muted-foreground">
                   {page.topicLocationLink && (
                     <>
@@ -201,15 +206,20 @@ export function InfoPage({
                       <Link href={page.topicLocationLink.href} className="text-primary hover:underline">
                         {page.topicLocationLink.linkText}
                       </Link>
-                      {page.serviceLocationLink ? ", or " : "."}
+                      {earlyServiceLocationLinks.length > 0 ? ", or " : "."}
                     </>
                   )}
-                  {page.serviceLocationLink && (
+                  {earlyServiceLocationLinks.length > 0 && (
                     <>
                       review{" "}
-                      <Link href={page.serviceLocationLink.href} className="text-primary hover:underline">
-                        {page.serviceLocationLink.linkText}
-                      </Link>
+                      {earlyServiceLocationLinks.map((link, index) => (
+                        <span key={link.href}>
+                          {index > 0 && (index === earlyServiceLocationLinks.length - 1 ? " and " : ", ")}
+                          <Link href={link.href} className="text-primary hover:underline">
+                            {link.linkText}
+                          </Link>
+                        </span>
+                      ))}
                       .
                     </>
                   )}
@@ -322,7 +332,15 @@ export function InfoPage({
                 <div className="mb-8">
                   <h3 className="mb-3 font-display text-lg font-bold">We provide these services across the UK, including</h3>
                   <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                    {locations.slice(0, 8).map((loc) => (
+                    {locations
+                      .slice(0, 8)
+                      .filter(
+                        (loc) =>
+                          !earlyServiceLocationHrefSet.has(
+                            `/${page.relatedServices?.[0] || services[0]?.slug}/${loc.id}`
+                          )
+                      )
+                      .map((loc) => (
                       <Link
                         key={loc.id}
                         href={`/${page.relatedServices?.[0] || services[0]?.slug}/${loc.id}`}
@@ -330,7 +348,7 @@ export function InfoPage({
                       >
                         {loc.name}
                       </Link>
-                    ))}
+                      ))}
                   </div>
                 </div>
               )}
@@ -372,6 +390,7 @@ export function InfoPage({
                 locations={locations}
                 hubPages={hubPages}
                 getCategoryPages={getCategoryPages}
+                excludedLocationPageHrefs={earlyServiceLocationLinks.map((link) => link.href)}
               />
               {relatedGuides.length > 0 && (
                 <div className="rounded-lg bg-secondary p-6">

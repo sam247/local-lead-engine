@@ -74,6 +74,8 @@ export interface InfoPageData {
   topicLocationLink?: { href: string; linkText: string };
   /** Optional in-content link to a service×location page for crawl flow (e.g. guide → service-location). */
   serviceLocationLink?: { href: string; linkText: string };
+  /** Optional additional service×location links for early in-content local relevance. */
+  additionalServiceLocationLinks?: { href: string; linkText: string }[];
 }
 
 /** Single homepage trust row; icon is a Lucide icon name supported by TrustPoints (e.g. Shield, Users). */

@@ -16,6 +16,7 @@ export interface RelatedLinksProps {
   localServicesTitle?: string;
   serviceDetailPath?: (slug: string) => string;
   locationPagePath?: (serviceSlug: string, locationId: string) => string;
+  excludedLocationPageHrefs?: string[];
 }
 
 export function RelatedLinks({
@@ -30,10 +31,16 @@ export function RelatedLinks({
   localServicesTitle = "Local Services",
   serviceDetailPath = getServiceUrl,
   locationPagePath = (serviceSlug, locationId) => `/${serviceSlug}/${locationId}`,
+  excludedLocationPageHrefs = [],
 }: RelatedLinksProps) {
   const matchedServices = services.filter((s) => relatedServices.includes(s.slug));
   const firstServiceSlug = relatedServices[0] || services[0]?.slug;
-  const featuredLocations = locations.slice(0, 8);
+  const excludedLocationPageHrefSet = new Set(excludedLocationPageHrefs);
+  const featuredLocations = locations
+    .filter((location) =>
+      firstServiceSlug ? !excludedLocationPageHrefSet.has(locationPagePath(firstServiceSlug, location.id)) : true
+    )
+    .slice(0, 8);
 
   const relatedHubs = hubPages
     .filter((h) => h.category !== category && getCategoryPages(h.category).length > 0)

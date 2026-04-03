@@ -9,7 +9,7 @@ import {
 } from "@/lib/data";
 import { getHeroImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
-import { getServiceUrl, type RelatedPageLink } from "engine";
+import { buildFeaturedServiceLocationLinks, getServiceUrl, type RelatedPageLink } from "engine";
 
 export function getInfoPageProps(category: string, slug: string) {
   const hub = getHubData(category);
@@ -51,10 +51,45 @@ export function getInfoPageProps(category: string, slug: string) {
       return { title: rp.title, href };
     }
   );
+  const primaryRelatedService = page.relatedServices[0]
+    ? services.find((service) => service.slug === page.relatedServices[0])
+    : undefined;
+  const secondaryRelatedService = page.relatedServices[1]
+    ? services.find((service) => service.slug === page.relatedServices[1])
+    : undefined;
+  const featuredPrimaryLinks = primaryRelatedService
+    ? buildFeaturedServiceLocationLinks({
+        service: primaryRelatedService,
+        locations,
+        seed: `surveys:info:${category}:${page.slug}:primary`,
+        maxLinks: 1,
+      })
+    : [];
+  const featuredSecondaryLinks = secondaryRelatedService
+    ? buildFeaturedServiceLocationLinks({
+        service: secondaryRelatedService,
+        locations,
+        seed: `surveys:info:${category}:${page.slug}:secondary`,
+        maxLinks: 1,
+      })
+    : [];
+  const primaryServiceLocationLink = featuredPrimaryLinks[0]
+    ? { href: featuredPrimaryLinks[0].href, linkText: featuredPrimaryLinks[0].label }
+    : page.serviceLocationLink;
+  const additionalServiceLocationLinks = featuredSecondaryLinks
+    .map((link) => ({
+      href: link.href,
+      linkText: link.label,
+    }))
+    .filter((link) => link.href !== primaryServiceLocationLink?.href);
 
   return {
     hub,
-    page,
+    page: {
+      ...page,
+      serviceLocationLink: primaryServiceLocationLink,
+      additionalServiceLocationLinks,
+    },
     otherPages,
     heroImage,
     heroAlt,
