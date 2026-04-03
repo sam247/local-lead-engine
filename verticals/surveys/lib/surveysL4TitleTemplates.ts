@@ -8,56 +8,56 @@ type SurveysServiceSlug = (typeof services)[number]["slug"];
 
 const SURVEYS_L4_TITLE_TEMPLATES: Record<SurveysServiceSlug, [string, string]> = {
   "topographical-survey": [
-    `Topographical survey in {location} | Levels & contours`,
-    `Land topo for {location} | CAD-ready drawings`,
+    `Topographical Survey {location} - Accurate Plans & Fast Delivery`,
+    `Topographical Survey {location} - Planning-Ready Drawings & Clear Quotes`,
   ],
   "measured-building-survey": [
-    `Measured building survey in {location} | Plans & elevations`,
-    `As-built surveys in {location} | Refurb & extension`,
+    `Measured Building Survey {location} - Accurate Plans & Fast Delivery`,
+    `Measured Building Survey {location} - Clear Drawings & Reliable Turnaround`,
   ],
   "utility-survey": [
-    `Utility survey in {location} | GPR & EML locate`,
-    `Buried services in {location} | Pre-excavation`,
+    `Utility Survey {location} - Clear Site Data & Fast Turnaround`,
+    `Utility Survey {location} - Safer Dig Planning & Reliable Reports`,
   ],
   "utility-mapping-survey": [
-    `Utility mapping in {location} | Coordinated plans`,
-    `Subsurface utilities for {location} | Major sites`,
+    `Utility Mapping Survey {location} - Accurate Plans & Fast Reports`,
+    `Utility Mapping Survey {location} - Clear Site Data & Reliable Delivery`,
   ],
   "boundary-survey": [
-    `Boundary survey in {location} | Title-aligned plans`,
-    `Legal boundary work in {location} | Clear drawings`,
+    `Boundary Survey {location} - Clear Plans & Reliable Advice`,
+    `Boundary Survey {location} - Accurate Boundaries & Fast Turnaround`,
   ],
   "laser-scanning-survey": [
-    `Laser scanning in {location} | Point clouds & BIM`,
-    `3D scan surveys in {location} | Complex buildings`,
+    `Laser Scanning Survey {location} - Accurate Point Clouds & Fast Delivery`,
+    `Laser Scanning Survey {location} - Detailed 3D Data & Clear Quotes`,
   ],
   "drone-survey": [
-    `Drone survey in {location} | Fast aerial capture`,
-    `UAV mapping in {location} | Orthos & volumes`,
+    `Drone Survey {location} - Fast Site Capture & Clear Reports`,
+    `Drone Survey {location} - Accurate Aerial Data & Reliable Turnaround`,
   ],
   "drone-roof-inspection": [
-    `Drone roof inspection in {location} | No scaffolding`,
-    `Aerial roof survey in {location} | Defect photos`,
+    `Drone Roof Inspection {location} - Fast Checks & Clear Images`,
+    `Drone Roof Inspection {location} - Safe Access & Fast Reports`,
   ],
   "drone-building-inspection": [
-    `Drone façade inspection in {location} | High-level checks`,
-    `External building drone survey in {location} | Safe access`,
+    `Drone Building Inspection {location} - Safe Checks & Fast Reports`,
+    `Drone Building Inspection {location} - High-Level Access & Clear Images`,
   ],
   "drone-topographical-survey": [
-    `Drone topo survey in {location} | Large open sites`,
-    `Aerial topo for {location} | DTM & contours`,
+    `Drone Topographical Survey {location} - Fast Coverage & Accurate Data`,
+    `Drone Topographical Survey {location} - Large-Site Capture & Clear Reports`,
   ],
   "drone-construction-survey": [
-    `Construction drone survey in {location} | Progress & volumes`,
-    `Site progress drones in {location} | Repeatable data`,
+    `Construction Drone Survey {location} - Fast Progress Data & Clear Reporting`,
+    `Construction Drone Survey {location} - Reliable Site Capture & Fast Turnaround`,
   ],
   "building-surveys": [
-    `Building survey in {location} | Pre-purchase clarity`,
-    `Property condition survey in {location} | Defects & risks`,
+    `Building Surveys {location} - Clear Findings & Reliable Advice`,
+    `Building Surveys {location} - Fast Reports & Specialist Guidance`,
   ],
   "party-wall-surveyors": [
-    `Party wall surveyor in {location} | Notices & awards`,
-    `Party Wall Act advice in {location} | Neighbouring sites`,
+    `Party Wall Surveyors {location} - Clear Advice & Reliable Support`,
+    `Party Wall Surveyors {location} - Fast Guidance & Expert Help`,
   ],
 };
 
@@ -69,7 +69,7 @@ export function pickSurveysL4MetaTitle(service: Service, location: Location): st
   const locName = location.name;
   const pair = SURVEYS_L4_TITLE_TEMPLATES[service.slug as SurveysServiceSlug];
   if (!pair) {
-    const base = `${service.titleSingular ?? service.title} in ${locName} | Local ${VERTICAL_LABEL}`;
+    const base = `${service.titleSingular ?? service.title} ${locName} - Fast Turnaround & ${VERTICAL_LABEL}`;
     return clampMetaTitle(base);
   }
   const idx = getVariantIndex(`l4-meta-title:${service.slug}:${location.id}`, 2);

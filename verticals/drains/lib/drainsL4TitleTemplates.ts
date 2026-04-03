@@ -9,48 +9,48 @@ type DrainServiceSlug = (typeof services)[number]["slug"];
 
 const DRAIN_L4_TITLE_TEMPLATES: Record<DrainServiceSlug, [string, string]> = {
   "drain-collapse-repair": [
-    `Collapsed drain repair in {location} | Fast site quotes`,
-    `Fix collapsed drains in {location} | CCTV-led repairs`,
+    `Collapsed Drain Repair {location} - Fast Diagnosis & Expert Repairs`,
+    `Collapsed Drain Repair {location} - CCTV Checks & Same-Day Help`,
   ],
   "drain-relining": [
-    `No-dig drain relining in {location} | Trenchless fix`,
-    `Relined drains for {location} | Less disruption`,
+    `Drain Relining {location} - No-Dig Repairs & Clear Pricing`,
+    `Drain Relining {location} - Less Disruption & Fixed Quotes`,
   ],
   "cctv-drain-surveys": [
-    `CCTV drain surveys in {location} | Clear diagnosis`,
-    `Camera drain inspection in {location} | Written report`,
+    `CCTV Drain Survey {location} - Fixed Price Surveys & Fast Reports`,
+    `CCTV Drain Survey {location} - Fast Reports & Clear Findings`,
   ],
   "drain-excavation": [
-    `Drain excavation in {location} | Open-cut repairs`,
-    `Excavation & replacement in {location} | Full reinstatement`,
+    `Drain Excavation {location} - Full Repairs & Clear Reinstatement`,
+    `Drain Excavation {location} - Expert Repairs & Clear Pricing`,
   ],
   "emergency-drainage": [
-    `24/7 emergency drainage in {location} | Rapid response`,
-    `Urgent drain faults in {location} | Same-day attendance`,
+    `Emergency Drainage {location} - Fast Response & 24/7 Help`,
+    `Emergency Drainage {location} - Same-Day Help & Expert Engineers`,
   ],
   "blocked-drains": [
-    `Blocked drains cleared in {location} | Jetting & checks`,
-    `Slow or blocked drains in {location} | Fast clearance`,
+    `Blocked Drains {location} - Fast Clearance & Same-Day Help`,
+    `Blocked Drains {location} - Rapid Unblocking & Clear Pricing`,
   ],
   "drain-jetting": [
-    `High-pressure drain jetting in {location} | Deep clean`,
-    `Jetting for stubborn blockages in {location} | Full bore flush`,
+    `Drain Jetting {location} - Fast Clearance & Same-Day Service`,
+    `Drain Jetting {location} - Powerful Cleaning & Clear Pricing`,
   ],
   "drain-root-removal": [
-    `Tree root removal from drains in {location} | Cut & clear`,
-    `Roots in pipework in {location} | Mechanical removal`,
+    `Drain Root Removal {location} - Fast Clearance & Lasting Repairs`,
+    `Drain Root Removal {location} - Specialist Cutting & Clear Pricing`,
   ],
   "drain-unblocking": [
-    `Drain unblocking in {location} | Same-day options`,
-    `Blocked lines cleared in {location} | CCTV follow-up`,
+    `Drain Unblocking {location} - Fast Response & Same-Day Help`,
+    `Drain Unblocking {location} - Rapid Clearance & Clear Pricing`,
   ],
   "drain-pipe-replacement": [
-    `Drain pipe replacement in {location} | New pipe runs`,
-    `Replace failed drain runs in {location} | Fixed pricing after survey`,
+    `Drain Pipe Replacement {location} - Reliable Repairs & Clear Quotes`,
+    `Drain Pipe Replacement {location} - New Pipe Runs & Fixed Pricing`,
   ],
   "commercial-drainage": [
-    `Commercial drainage in {location} | Planned & emergency`,
-    `Business drainage contracts in {location} | Compliance support`,
+    `Commercial Drainage {location} - Reliable Support & Fast Response`,
+    `Commercial Drainage {location} - Planned Works & Clear Pricing`,
   ],
 };
 
@@ -58,7 +58,7 @@ export function pickDrainsL4MetaTitle(service: Service, location: Location): str
   const locName = location.name;
   const pair = DRAIN_L4_TITLE_TEMPLATES[service.slug as DrainServiceSlug];
   if (!pair) {
-    const base = `${service.titleSingular ?? service.title} in ${locName} | Local ${VERTICAL_LABEL}`;
+    const base = `${service.titleSingular ?? service.title} ${locName} - Fast Response & ${VERTICAL_LABEL}`;
     return clampMetaTitle(base);
   }
   const idx = getVariantIndex(`l4-meta-title:${service.slug}:${location.id}`, 2);

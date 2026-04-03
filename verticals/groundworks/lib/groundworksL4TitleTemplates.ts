@@ -8,52 +8,52 @@ type GroundworksServiceSlug = (typeof services)[number]["slug"];
 
 const GROUNDWORKS_L4_TITLE_TEMPLATES: Record<GroundworksServiceSlug, [string, string]> = {
   "groundworks-contractors": [
-    `Groundworks contractors in {location} | Full packages`,
-    `Site groundworks for {location} | Excavation to handover`,
+    `Groundworks Contractors {location} - Reliable Site Prep & Fast Turnaround`,
+    `Groundworks Contractors {location} - Full Packages & Clear Quotes`,
   ],
   underpinning: [
-    `Underpinning contractors in {location} | Stabilise movement`,
-    `Structural underpinning in {location} | Engineer-led work`,
+    `Underpinning Contractors {location} - Structural Repairs & Clear Quotes`,
+    `Underpinning Contractors {location} - Reliable Stabilisation & Fast Advice`,
   ],
   "piling-contractors": [
-    `Piling contractors in {location} | Foundations & rigs`,
-    `Piled foundations in {location} | Ground model led`,
+    `Piling Contractors {location} - Reliable Foundations & Fast Turnaround`,
+    `Piling Contractors {location} - Specialist Ground Support & Clear Quotes`,
   ],
   "cfa-piling": [
-    `CFA piling in {location} | Low-vibration urban work`,
-    `Continuous flight auger piling in {location} | Tight sites`,
+    `CFA Piling {location} - Reliable Foundations & Fast Delivery`,
+    `CFA Piling {location} - Low-Vibration Ground Support & Clear Quotes`,
   ],
   "mini-piling-contractors": [
-    `Mini piling in {location} | Low headroom & access`,
-    `Section & mini CFA piles in {location} | Domestic & commercial`,
+    `Mini Piling Contractors {location} - Reliable Foundations & Fast Turnaround`,
+    `Mini Piling Contractors {location} - Tight Access Solutions & Clear Quotes`,
   ],
   "foundation-contractors": [
-    `Foundation contractors in {location} | Strip, pad & raft`,
-    `New foundations in {location} | Design coordination`,
+    `Foundation Contractors {location} - Reliable Bases & Fast Turnaround`,
+    `Foundation Contractors {location} - Accurate Ground Prep & Clear Quotes`,
   ],
   "foundation-repair": [
-    `Foundation repair in {location} | Cracks & movement`,
-    `Stabilise failing foundations in {location} | Scoped repairs`,
+    `Foundation Repair {location} - Reliable Structural Fixes & Clear Quotes`,
+    `Foundation Repair {location} - Crack Repairs & Fast Specialist Advice`,
   ],
   "concrete-repair": [
-    `Concrete repair in {location} | Structural patch works`,
-    `Spalled concrete fixed in {location} | Spec-compliant`,
+    `Concrete Repair {location} - Reliable Structural Repairs & Clear Quotes`,
+    `Concrete Repair {location} - Fast Specialist Fixes & Trusted Workmanship`,
   ],
   "excavation-contractors": [
-    `Excavation contractors in {location} | Bulk & trench`,
-    `Earthworks & trenching in {location} | Programme-led`,
+    `Excavation Contractors {location} - Reliable Ground Prep & Fast Turnaround`,
+    `Excavation Contractors {location} - Bulk Digging & Clear Quotes`,
   ],
   "site-clearance-contractors": [
-    `Site clearance in {location} | Demolition & vegetation`,
-    `Clear & level sites in {location} | Waste tickets`,
+    `Site Clearance Contractors {location} - Fast Site Prep & Clear Quotes`,
+    `Site Clearance Contractors {location} - Reliable Clearance & Trusted Teams`,
   ],
   "concrete-foundations": [
-    `Concrete foundations in {location} | Pour & reinforcement`,
-    `Ground beams & blinding in {location} | Cube records`,
+    `Concrete Foundations {location} - Reliable Bases & Clear Quotes`,
+    `Concrete Foundations {location} - Fast Ground Prep & Trusted Installers`,
   ],
   "enabling-works-contractors": [
-    `Enabling works in {location} | Access & temp drainage`,
-    `Site set-up before main build in {location} | Early programme`,
+    `Enabling Works Contractors {location} - Fast Site Prep & Clear Quotes`,
+    `Enabling Works Contractors {location} - Reliable Early Works & Trusted Teams`,
   ],
 };
 
@@ -65,7 +65,7 @@ export function pickGroundworksL4MetaTitle(service: Service, location: Location)
   const locName = location.name;
   const pair = GROUNDWORKS_L4_TITLE_TEMPLATES[service.slug as GroundworksServiceSlug];
   if (!pair) {
-    const base = `${service.titleSingular ?? service.title} in ${locName} | Local ${VERTICAL_LABEL}`;
+    const base = `${service.titleSingular ?? service.title} ${locName} - Fast Turnaround & ${VERTICAL_LABEL}`;
     return clampMetaTitle(base);
   }
   const idx = getVariantIndex(`l4-meta-title:${service.slug}:${location.id}`, 2);

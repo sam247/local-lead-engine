@@ -13,6 +13,183 @@ const TITLE_MAX = 65;
 const DESC_MIN = 120;
 const DESC_MAX = 155;
 
+type MetaVariantPair = readonly [string, string];
+
+const SERVICE_HUB_TITLE_TEMPLATES: Record<string, Record<string, MetaVariantPair>> = {
+  drains: {
+    "drain-collapse-repair": [
+      "Collapsed Drain Repair - Fast Diagnosis & Expert Repairs",
+      "Collapsed Drain Repair - CCTV Checks & Same-Day Help",
+    ],
+    "drain-relining": [
+      "Drain Relining - No-Dig Repairs & Clear Pricing",
+      "Drain Relining - Less Disruption & Fixed Quotes",
+    ],
+    "cctv-drain-surveys": [
+      "CCTV Drain Survey - Fixed Price Surveys & Fast Reports",
+      "CCTV Drain Survey - Fast Reports & Clear Findings",
+    ],
+    "drain-excavation": [
+      "Drain Excavation - Full Repairs & Clear Reinstatement",
+      "Drain Excavation - Expert Repairs & Clear Pricing",
+    ],
+    "emergency-drainage": [
+      "Emergency Drainage - Fast Response & 24/7 Help",
+      "Emergency Drainage - Same-Day Help & Expert Engineers",
+    ],
+    "blocked-drains": [
+      "Blocked Drains - Fast Clearance & Same-Day Help",
+      "Blocked Drains - Rapid Unblocking & Clear Pricing",
+    ],
+    "drain-jetting": [
+      "Drain Jetting - Fast Clearance & Same-Day Service",
+      "Drain Jetting - Powerful Cleaning & Clear Pricing",
+    ],
+    "drain-root-removal": [
+      "Drain Root Removal - Fast Clearance & Lasting Repairs",
+      "Drain Root Removal - Specialist Cutting & Clear Pricing",
+    ],
+    "drain-unblocking": [
+      "Drain Unblocking - Fast Response & Same-Day Help",
+      "Drain Unblocking - Rapid Clearance & Clear Pricing",
+    ],
+    "drain-pipe-replacement": [
+      "Drain Pipe Replacement - Reliable Repairs & Clear Quotes",
+      "Drain Pipe Replacement - New Pipe Runs & Fixed Pricing",
+    ],
+    "commercial-drainage": [
+      "Commercial Drainage - Reliable Support & Fast Response",
+      "Commercial Drainage - Planned Works & Clear Pricing",
+    ],
+  },
+  surveys: {
+    "topographical-survey": [
+      "Topographical Survey - Accurate Plans & Fast Delivery",
+      "Topographical Survey - Planning-Ready Drawings & Clear Quotes",
+    ],
+    "measured-building-survey": [
+      "Measured Building Survey - Accurate Plans & Fast Delivery",
+      "Measured Building Survey - Clear Drawings & Reliable Turnaround",
+    ],
+    "utility-survey": [
+      "Utility Survey - Clear Site Data & Fast Turnaround",
+      "Utility Survey - Safer Dig Planning & Reliable Reports",
+    ],
+    "utility-mapping-survey": [
+      "Utility Mapping Survey - Accurate Plans & Fast Reports",
+      "Utility Mapping Survey - Clear Site Data & Reliable Delivery",
+    ],
+    "boundary-survey": [
+      "Boundary Survey - Clear Plans & Reliable Advice",
+      "Boundary Survey - Accurate Boundaries & Fast Turnaround",
+    ],
+    "laser-scanning-survey": [
+      "Laser Scanning Survey - Accurate Point Clouds & Fast Delivery",
+      "Laser Scanning Survey - Detailed 3D Data & Clear Quotes",
+    ],
+    "drone-survey": [
+      "Drone Survey - Fast Site Capture & Clear Reports",
+      "Drone Survey - Accurate Aerial Data & Reliable Turnaround",
+    ],
+    "drone-roof-inspection": [
+      "Drone Roof Inspection - Fast Checks & Clear Images",
+      "Drone Roof Inspection - Safe Access & Fast Reports",
+    ],
+    "drone-building-inspection": [
+      "Drone Building Inspection - Safe Checks & Fast Reports",
+      "Drone Building Inspection - High-Level Access & Clear Images",
+    ],
+    "drone-topographical-survey": [
+      "Drone Topographical Survey - Fast Coverage & Accurate Data",
+      "Drone Topographical Survey - Large-Site Capture & Clear Reports",
+    ],
+    "drone-construction-survey": [
+      "Construction Drone Survey - Fast Progress Data & Clear Reporting",
+      "Construction Drone Survey - Reliable Site Capture & Fast Turnaround",
+    ],
+    "building-surveys": [
+      "Building Surveys - Clear Findings & Reliable Advice",
+      "Building Surveys - Fast Reports & Specialist Guidance",
+    ],
+    "party-wall-surveyors": [
+      "Party Wall Surveyors - Clear Advice & Reliable Support",
+      "Party Wall Surveyors - Fast Guidance & Expert Help",
+    ],
+  },
+  access: {
+    "access-control-systems": [
+      "Access Control Systems - Secure Entry & Clear Quotes",
+      "Access Control Systems - Reliable Security & Fast Surveys",
+    ],
+    "commercial-cctv-installation": [
+      "Commercial CCTV Installation - Reliable Coverage & Fast Surveys",
+      "Commercial CCTV Installation - Clear Imaging & Trusted Installers",
+    ],
+    "ip-camera-systems": [
+      "IP Camera Systems - Clear Coverage & Reliable Installers",
+      "IP Camera Systems - Smart Security & Fast Surveys",
+    ],
+    "perimeter-security-systems": [
+      "Perimeter Security Systems - Stronger Protection & Clear Quotes",
+      "Perimeter Security Systems - Reliable Detection & Fast Surveys",
+    ],
+    "security-system-integration": [
+      "Security System Integration - Joined-Up Control & Clear Quotes",
+      "Security System Integration - Faster Response & Trusted Specialists",
+    ],
+  },
+  groundworks: {
+    "groundworks-contractors": [
+      "Groundworks Contractors - Reliable Site Prep & Fast Turnaround",
+      "Groundworks Contractors - Full Packages & Clear Quotes",
+    ],
+    underpinning: [
+      "Underpinning Contractors - Structural Repairs & Clear Quotes",
+      "Underpinning Contractors - Reliable Stabilisation & Fast Advice",
+    ],
+    "piling-contractors": [
+      "Piling Contractors - Reliable Foundations & Fast Turnaround",
+      "Piling Contractors - Specialist Ground Support & Clear Quotes",
+    ],
+    "cfa-piling": [
+      "CFA Piling - Reliable Foundations & Fast Delivery",
+      "CFA Piling - Low-Vibration Ground Support & Clear Quotes",
+    ],
+    "mini-piling-contractors": [
+      "Mini Piling Contractors - Reliable Foundations & Fast Turnaround",
+      "Mini Piling Contractors - Tight Access Solutions & Clear Quotes",
+    ],
+    "foundation-contractors": [
+      "Foundation Contractors - Reliable Bases & Fast Turnaround",
+      "Foundation Contractors - Accurate Ground Prep & Clear Quotes",
+    ],
+    "foundation-repair": [
+      "Foundation Repair - Reliable Structural Fixes & Clear Quotes",
+      "Foundation Repair - Crack Repairs & Fast Specialist Advice",
+    ],
+    "concrete-repair": [
+      "Concrete Repair - Reliable Structural Repairs & Clear Quotes",
+      "Concrete Repair - Fast Specialist Fixes & Trusted Workmanship",
+    ],
+    "excavation-contractors": [
+      "Excavation Contractors - Reliable Ground Prep & Fast Turnaround",
+      "Excavation Contractors - Bulk Digging & Clear Quotes",
+    ],
+    "site-clearance-contractors": [
+      "Site Clearance Contractors - Fast Site Prep & Clear Quotes",
+      "Site Clearance Contractors - Reliable Clearance & Trusted Teams",
+    ],
+    "concrete-foundations": [
+      "Concrete Foundations - Reliable Bases & Clear Quotes",
+      "Concrete Foundations - Fast Ground Prep & Trusted Installers",
+    ],
+    "enabling-works-contractors": [
+      "Enabling Works Contractors - Fast Site Prep & Clear Quotes",
+      "Enabling Works Contractors - Reliable Early Works & Trusted Teams",
+    ],
+  },
+};
+
 function normaliseBaseUrl(baseUrl: string): string {
   return baseUrl.replace(/\/$/, "");
 }
@@ -75,6 +252,28 @@ function infoMetaDescriptionNeedsRewrite(meta: string, title: string): boolean {
   return false;
 }
 
+function pickServiceHubTitle(service: Service, config: VerticalConfig): string {
+  const templates = SERVICE_HUB_TITLE_TEMPLATES[config.verticalId]?.[service.slug];
+  if (templates) {
+    return pickMetaTitle(templates, `svc-hub-title:${config.verticalId}:${service.slug}`);
+  }
+  const displayTitle = service.titleSingular ?? service.title;
+  return pickMetaTitle(
+    [
+      `${displayTitle} - Fast Response & Clear Pricing`,
+      `${displayTitle} - Specialist Advice & Trusted Service`,
+    ],
+    `svc-hub-title:${config.verticalId}:${service.slug}`
+  );
+}
+
+function buildServiceHubDescription(service: Service): string {
+  const displayTitle = service.titleSingular ?? service.title;
+  return clampMetaDescription(
+    `Get ${displayTitle} with fast response, clear pricing, and practical advice from a specialist team. Speak to a specialist today or request a quote.`
+  );
+}
+
 function synthesiseInfoDescription(page: InfoPageData): string {
   const parts = [page.intro, page.whenNeeded, page.diagnosis].filter(Boolean).join(" ");
   const stripped = parts.replace(/\s+/g, " ").trim();
@@ -96,42 +295,19 @@ export function buildLocationMetadata(
 ): Metadata {
   const displayTitle = service.titleSingular ?? service.title;
   const base = normaliseBaseUrl(config.baseUrl);
-  const area = location.area?.trim() || location.name;
-  const titleSeed = `loc-title:${service.slug}:${location.id}`;
-  const titleCandidates = [
-    `${displayTitle} in ${location.name}`,
-    `Local ${displayTitle} in ${location.name}`,
-    `${location.name} ${displayTitle} specialists`,
-    `${displayTitle} in ${location.name} (${area})`,
-    `${location.name}: ${displayTitle}`,
-  ];
-  const title = pickMetaTitle(titleCandidates, titleSeed);
-  const industry = config.industry?.trim();
-  const descCore = industry
-    ? `${displayTitle} in ${location.name}. Fast response, local engineers, clear pricing for ${industry}. Get help today.`
-    : `${displayTitle} in ${location.name}. Fast response, local engineers, clear pricing. Get help today.`;
-  const description = clampMetaDescription(descCore);
+  const description = clampMetaDescription(
+    `Get ${displayTitle} in ${location.name} with fast response, clear pricing, and practical advice from a specialist team. Speak to a specialist today or request a quote.`
+  );
   return {
-    title,
     description,
     alternates: { canonical: `${base}/${service.slug}/${location.id}` },
   };
 }
 
 export function buildServiceHubMetadata(service: Service, config: VerticalConfig): Metadata {
-  const displayTitle = service.titleSingular ?? service.title;
   const base = normaliseBaseUrl(config.baseUrl);
-  const titleSeed = `svc-hub-title:${service.slug}`;
-  const titleCandidates = [
-    displayTitle,
-    `${displayTitle} services`,
-    `Professional ${displayTitle}`,
-    `${displayTitle} for projects`,
-  ];
-  const title = pickMetaTitle(titleCandidates, titleSeed);
-  const description = clampMetaDescription(
-    `Professional ${displayTitle.toLowerCase()} for residential and commercial projects. Speak to a specialist today.`
-  );
+  const title = pickServiceHubTitle(service, config);
+  const description = buildServiceHubDescription(service);
   return {
     title,
     description,

@@ -2,6 +2,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { services } from "@/lib/data";
 import ServiceDetailContent from "@/components/pages/ServiceDetailContent";
 import { verticalConfig } from "@/config";
+import { buildServiceHubMetadata } from "engine";
 import type { Metadata } from "next";
 import {
   isTopicLocationSlug,
@@ -31,13 +32,7 @@ export async function generateMetadata({
     }
     return { title: "Not Found" };
   }
-  const displayTitle = service.titleSingular ?? service.title;
-  const baseUrl = verticalConfig.baseUrl.replace(/\/$/, "");
-  return {
-    title: `${displayTitle} | ${verticalConfig.siteName}`,
-    description: service.description.slice(0, 160),
-    alternates: { canonical: `${baseUrl}/${service.slug}` },
-  };
+  return buildServiceHubMetadata(service, verticalConfig);
 }
 
 export default async function RootServiceHubPage({
