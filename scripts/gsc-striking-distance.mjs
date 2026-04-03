@@ -38,6 +38,11 @@ const verticalConfigs = {
       "drain-jetting": "Guide pages related to blockages, jetting, and maintenance content",
       "cctv-drain-surveys": "Guide pages related to inspection, mapping, and survey content",
     },
+    highPriorityServiceSlugs: [
+      "drain-excavation",
+      "drain-jetting",
+      "cctv-drain-surveys",
+    ],
     slugMappings: {},
   },
   surveys: {
@@ -71,6 +76,11 @@ const verticalConfigs = {
       "measured-building-survey": "Guide pages related to measured surveys, building plans, and design prep",
       "drone-building-inspection": "Guide pages related to drone inspection, roof access, and condition reporting",
     },
+    highPriorityServiceSlugs: [
+      "utility-survey",
+      "measured-building-survey",
+      "drone-building-inspection",
+    ],
     slugMappings: {},
   },
   access: {
@@ -98,6 +108,11 @@ const verticalConfigs = {
       "access-control-systems": "Guide pages related to entry control, doors, and access management",
       "security-system-integration": "Guide pages related to integrated security, cabling, and monitoring workflows",
     },
+    highPriorityServiceSlugs: [
+      "commercial-cctv-installation",
+      "access-control-systems",
+      "security-system-integration",
+    ],
     slugMappings: {
       "commercial-cctv-systems": "commercial-cctv-installation",
       "cctv-installation": "commercial-cctv-installation",
@@ -138,6 +153,11 @@ const verticalConfigs = {
       "foundation-repair": "Guide pages related to movement, structural repair, and foundation defects",
       "enabling-works-contractors": "Guide pages related to site preparation, enabling works, and early packages",
     },
+    highPriorityServiceSlugs: [
+      "cfa-piling",
+      "foundation-repair",
+      "enabling-works-contractors",
+    ],
     slugMappings: {
       "foundation-underpinning": "underpinning",
       "site-clearance-muck-away": "site-clearance-contractors",
@@ -149,6 +169,27 @@ const verticalConfigs = {
     },
   },
 };
+
+const HIGH_PRIORITY_LOCATION_SLUGS = new Set([
+  "london",
+  "barnet",
+  "ealing",
+  "ilford",
+  "wandsworth",
+  "teddington",
+  "isleworth",
+  "stevenage",
+  "dartford",
+]);
+
+const HIGH_PRIORITY_LOCATION_AREAS = new Set([
+  "West London",
+  "East London",
+  "North London",
+  "South London",
+  "South West London",
+  "Central London",
+]);
 
 function parseLocationRecords() {
   const source = fs.readFileSync(path.join(repoRoot, "engine/data/locations.ts"), "utf8");
@@ -206,6 +247,41 @@ function pickNearbyLocationDonors(locationSlug, locationById, areaLookup) {
   if (sameArea.length >= 2) return sameArea.slice(0, 2);
   const fallback = Object.keys(locationById).filter((id) => id !== locationSlug && !sameArea.includes(id));
   return [...sameArea, ...fallback].slice(0, 2);
+}
+
+function getManifestKey(entry) {
+  return `${entry.vertical}:${entry.serviceSlug}:${entry.locationSlug}`;
+}
+
+function readExistingManifest(manifestPath) {
+  if (!fs.existsSync(manifestPath)) return new Map();
+
+  try {
+    const parsed = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+    if (!Array.isArray(parsed)) return new Map();
+    return new Map(parsed.map((entry) => [getManifestKey(entry), entry]));
+  } catch {
+    return new Map();
+  }
+}
+
+function derivePriority(candidate, config, locationArea) {
+  const isCoreService = (config.highPriorityServiceSlugs ?? []).includes(candidate.serviceSlug);
+  const isStrongLocation =
+    HIGH_PRIORITY_LOCATION_SLUGS.has(candidate.locationSlug) ||
+    (locationArea != null && HIGH_PRIORITY_LOCATION_AREAS.has(locationArea));
+  return isCoreService && isStrongLocation ? "high" : "medium";
+}
+
+function buildLifecycleFields(candidate, config, locationArea, existingEntry, nowIso) {
+  return {
+    priority: derivePriority(candidate, config, locationArea),
+    phase: existingEntry?.phase ?? 1,
+    status: existingEntry?.status ?? "testing",
+    dateAdded: existingEntry?.dateAdded ?? nowIso,
+    lastUpdated: nowIso,
+    notes: existingEntry?.notes ?? "",
+  };
 }
 
 function aggregateCandidates(verticalName, config, locationById) {
@@ -285,7 +361,7 @@ function pickTargets(candidates, config) {
   return selected.slice(0, 3);
 }
 
-function buildManifestEntry(candidate, config, locationById, areaLookup) {
+function buildManifestEntry(candidate, config, locationById, areaLookup, existingEntry, nowIso) {
   const location = locationById[candidate.locationSlug];
   const relatedServices = (config.relatedServiceDonors[candidate.serviceSlug] ?? []).slice(0, 2);
   const nearbyLocations = pickNearbyLocationDonors(candidate.locationSlug, locationById, areaLookup);
@@ -310,22 +386,35 @@ function buildManifestEntry(candidate, config, locationById, areaLookup) {
       guideDonorStrategy: config.guideDonorStrategy[candidate.serviceSlug] ?? "Guide pages related to this service",
     },
     locationArea: location?.area ?? null,
+    ...buildLifecycleFields(candidate, config, location?.area ?? null, existingEntry, nowIso),
   };
 }
 
 const { records, byId: locationById } = parseLocationRecords();
 const areaLookup = buildAreaLookup(records);
+const outputDir = path.join(repoRoot, "seo");
+const manifestPath = path.join(outputDir, "striking-distance-targets.json");
+const existingManifest = readExistingManifest(manifestPath);
+const nowIso = new Date().toISOString();
 
 const manifest = Object.entries(verticalConfigs).flatMap(([verticalName, config]) => {
   const candidates = aggregateCandidates(verticalName, config, locationById);
   const selectedTargets = pickTargets(candidates, config);
-  return selectedTargets.map((candidate) => buildManifestEntry(candidate, config, locationById, areaLookup));
+  return selectedTargets.map((candidate) =>
+    buildManifestEntry(
+      candidate,
+      config,
+      locationById,
+      areaLookup,
+      existingManifest.get(getManifestKey(candidate)),
+      nowIso
+    )
+  );
 });
 
-const outputDir = path.join(repoRoot, "seo");
 fs.mkdirSync(outputDir, { recursive: true });
 fs.writeFileSync(
-  path.join(outputDir, "striking-distance-targets.json"),
+  manifestPath,
   `${JSON.stringify(manifest, null, 2)}\n`
 );
 

@@ -6,7 +6,8 @@
     "verticals/drains",
     "verticals/surveys",
     "verticals/access",
-    "verticals/groundworks"
+    "verticals/groundworks",
+    "verticals/scaffolding"
   ],
   "scripts": {
     "dev": "npm run dev --workspace=verticals-drains",

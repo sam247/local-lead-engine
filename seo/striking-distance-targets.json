@@ -23,7 +23,13 @@
       ],
       "guideDonorStrategy": "Guide pages related to drain excavation and repair-method content"
     },
-    "locationArea": "West London"
+    "locationArea": "West London",
+    "priority": "high",
+    "phase": 1,
+    "status": "testing",
+    "dateAdded": "2026-04-03T12:30:45.455Z",
+    "lastUpdated": "2026-04-03T12:30:45.455Z",
+    "notes": ""
   },
   {
     "vertical": "drains",
@@ -49,7 +55,13 @@
       ],
       "guideDonorStrategy": "Guide pages related to blockages, jetting, and maintenance content"
     },
-    "locationArea": "Kent"
+    "locationArea": "Kent",
+    "priority": "high",
+    "phase": 1,
+    "status": "testing",
+    "dateAdded": "2026-04-03T12:30:45.455Z",
+    "lastUpdated": "2026-04-03T12:30:45.455Z",
+    "notes": ""
   },
   {
     "vertical": "drains",
@@ -75,7 +87,13 @@
       ],
       "guideDonorStrategy": "Guide pages related to inspection, mapping, and survey content"
     },
-    "locationArea": "East London"
+    "locationArea": "East London",
+    "priority": "high",
+    "phase": 1,
+    "status": "testing",
+    "dateAdded": "2026-04-03T12:30:45.455Z",
+    "lastUpdated": "2026-04-03T12:30:45.455Z",
+    "notes": ""
   },
   {
     "vertical": "surveys",
@@ -101,7 +119,13 @@
       ],
       "guideDonorStrategy": "Guide pages related to utility mapping, underground services, and dig planning"
     },
-    "locationArea": "North London"
+    "locationArea": "North London",
+    "priority": "high",
+    "phase": 1,
+    "status": "testing",
+    "dateAdded": "2026-04-03T12:30:45.455Z",
+    "lastUpdated": "2026-04-03T12:30:45.455Z",
+    "notes": ""
   },
   {
     "vertical": "surveys",
@@ -127,7 +151,13 @@
       ],
       "guideDonorStrategy": "Guide pages related to measured surveys, building plans, and design prep"
     },
-    "locationArea": "North London"
+    "locationArea": "North London",
+    "priority": "high",
+    "phase": 1,
+    "status": "testing",
+    "dateAdded": "2026-04-03T12:30:45.455Z",
+    "lastUpdated": "2026-04-03T12:30:45.455Z",
+    "notes": ""
   },
   {
     "vertical": "surveys",
@@ -153,7 +183,13 @@
       ],
       "guideDonorStrategy": "Guide pages related to drone inspection, roof access, and condition reporting"
     },
-    "locationArea": "South London"
+    "locationArea": "South London",
+    "priority": "high",
+    "phase": 1,
+    "status": "testing",
+    "dateAdded": "2026-04-03T12:30:45.455Z",
+    "lastUpdated": "2026-04-03T12:30:45.455Z",
+    "notes": ""
   },
   {
     "vertical": "access",
@@ -179,7 +215,13 @@
       ],
       "guideDonorStrategy": "Guide pages related to CCTV planning, coverage, and commercial systems"
     },
-    "locationArea": "South West London"
+    "locationArea": "South West London",
+    "priority": "high",
+    "phase": 1,
+    "status": "testing",
+    "dateAdded": "2026-04-03T12:30:45.455Z",
+    "lastUpdated": "2026-04-03T12:30:45.455Z",
+    "notes": ""
   },
   {
     "vertical": "access",
@@ -205,7 +247,13 @@
       ],
       "guideDonorStrategy": "Guide pages related to entry control, doors, and access management"
     },
-    "locationArea": "West London"
+    "locationArea": "West London",
+    "priority": "high",
+    "phase": 1,
+    "status": "testing",
+    "dateAdded": "2026-04-03T12:30:45.455Z",
+    "lastUpdated": "2026-04-03T12:30:45.455Z",
+    "notes": ""
   },
   {
     "vertical": "access",
@@ -231,7 +279,13 @@
       ],
       "guideDonorStrategy": "Guide pages related to integrated security, cabling, and monitoring workflows"
     },
-    "locationArea": "Hertfordshire"
+    "locationArea": "Hertfordshire",
+    "priority": "high",
+    "phase": 1,
+    "status": "testing",
+    "dateAdded": "2026-04-03T12:30:45.455Z",
+    "lastUpdated": "2026-04-03T12:30:45.455Z",
+    "notes": ""
   },
   {
     "vertical": "groundworks",
@@ -257,7 +311,13 @@
       ],
       "guideDonorStrategy": "Guide pages related to piling, ground support, and foundation method choice"
     },
-    "locationArea": "Derbyshire"
+    "locationArea": "Derbyshire",
+    "priority": "medium",
+    "phase": 1,
+    "status": "testing",
+    "dateAdded": "2026-04-03T12:30:45.455Z",
+    "lastUpdated": "2026-04-03T12:30:45.455Z",
+    "notes": ""
   },
   {
     "vertical": "groundworks",
@@ -283,7 +343,13 @@
       ],
       "guideDonorStrategy": "Guide pages related to movement, structural repair, and foundation defects"
     },
-    "locationArea": "Essex"
+    "locationArea": "Essex",
+    "priority": "medium",
+    "phase": 1,
+    "status": "testing",
+    "dateAdded": "2026-04-03T12:30:45.455Z",
+    "lastUpdated": "2026-04-03T12:30:45.455Z",
+    "notes": ""
   },
   {
     "vertical": "groundworks",
@@ -309,6 +375,12 @@
       ],
       "guideDonorStrategy": "Guide pages related to site preparation, enabling works, and early packages"
     },
-    "locationArea": "Kent"
+    "locationArea": "Kent",
+    "priority": "medium",
+    "phase": 1,
+    "status": "testing",
+    "dateAdded": "2026-04-03T12:30:45.455Z",
+    "lastUpdated": "2026-04-03T12:30:45.455Z",
+    "notes": ""
   }
 ]
