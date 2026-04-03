@@ -447,6 +447,12 @@ export interface LocationPageProps {
   callTrackVertical: string;
   /** Optional internal link count for page tiering (future crawl/analytics feed). */
   inlinkCount?: number | null;
+  /**
+   * When set (e.g. trust bullets from the vertical), renders a “Get a quote” card at the top of the
+   * sticky sidebar above the map — avoids a second outer column beside LocationPage.
+   */
+  conversionAsideTitle?: string;
+  conversionAsideBullets?: string[];
 }
 
 export function LocationPage({
@@ -476,6 +482,8 @@ export function LocationPage({
   relatedTopicsSectionIntro,
   callTrackVertical,
   inlinkCount,
+  conversionAsideTitle = "Get a quote",
+  conversionAsideBullets,
 }: LocationPageProps) {
   const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
   const displayTitle = service.titleSingular ?? service.title;
@@ -816,23 +824,6 @@ export function LocationPage({
                   </>
                 )}
               </div>
-              {countyPeerLocations.length > 0 && (
-                <div className="mb-8">
-                  <h2 className="mb-3 font-display text-xl font-bold">Nearby areas we cover</h2>
-                  <p className="mb-3 text-sm text-muted-foreground">
-                    Other locations in {ukGroup?.countyName ?? location.area} where we deliver the same service:
-                  </p>
-                  <ul className="flex flex-wrap gap-x-4 gap-y-2 text-primary">
-                    {countyPeerLocations.map((loc) => (
-                      <li key={loc.id}>
-                        <Link href={`/${service.slug}/${loc.id}`} className="hover:underline">
-                          {displayTitle} in {loc.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
               {neighbourLocationsForContext && neighbourLocationsForContext.length > 0 && (
                 <>
                   <LocationContext
@@ -997,7 +988,33 @@ export function LocationPage({
               />
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-6 lg:sticky lg:top-24 h-fit">
+              {conversionAsideBullets && conversionAsideBullets.length > 0 && (
+                <div className="space-y-4 rounded-xl border border-border bg-card p-5">
+                  <h2 className="font-display text-lg font-semibold text-foreground">{conversionAsideTitle}</h2>
+                  <Button asChild>
+                    <Link href={contactPath}>Get a quote</Link>
+                  </Button>
+                  <TrackablePhoneLink
+                    phone={companyInfo.phone}
+                    vertical={callTrackVertical}
+                    serviceSlug={service.slug}
+                    locationSlug={location.id}
+                    source="cta"
+                    className="flex items-center gap-2 text-primary hover:underline"
+                  >
+                    <Phone className="h-4 w-4" /> Call Now
+                  </TrackablePhoneLink>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    {conversionAsideBullets.slice(0, 5).map((point) => (
+                      <li key={point} className="flex items-start gap-2">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {showMapEmbed && (
                 <div className="rounded-lg overflow-hidden">
                   <MapEmbed
