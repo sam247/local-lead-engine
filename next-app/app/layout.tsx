@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyEmergencyBar from "@/components/sections/StickyEmergencyBar";
+import { ScrollToTop } from "engine";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen flex flex-col antialiased">
         <Providers>
+          <ScrollToTop />
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

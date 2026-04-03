@@ -25,6 +25,7 @@ export * from "./data/location-neighbours";
 export { locations } from "./data/locations";
 export * from "./data/projects";
 
+export { ScrollToTop } from "./components/ScrollToTop";
 export { BreadcrumbNav, type BreadcrumbNavProps, type BreadcrumbItem } from "./components/BreadcrumbNav";
 export { LocationContext, type LocationContextProps } from "./components/LocationContext";
 export { LocationPage, type LocationPageProps } from "./components/LocationPage";

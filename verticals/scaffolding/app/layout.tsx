@@ -8,6 +8,7 @@ import { stickyCtaConfig } from "@/lib/stickyCtaConfig";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { companyInfo } from "@/lib/data";
 import { verticalConfig } from "@/config";
+import { ScrollToTop } from "engine";
 import { mainlineGroupLinksForSite } from "engine/data/mainline-group";
 import { Providers } from "./providers";
 
@@ -45,6 +46,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
         <Providers>
+          <ScrollToTop />
           <SelectedIssueProvider>
             <Header />
             <main className="flex-1">{children}</main>
