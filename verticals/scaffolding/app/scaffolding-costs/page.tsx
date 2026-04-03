@@ -1,5 +1,6 @@
-import { HubPage } from "engine";
-import { getHubData, getCategoryPages } from "@/lib/data";
+import { HubPage, buildHubMetadata } from "engine";
+import { getHubData } from "@/lib/data";
+import { getHubPageProps } from "@/lib/hubPageProps";
 import { verticalConfig } from "@/config";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -12,23 +13,11 @@ const category = "costs";
 export function generateMetadata(): Metadata {
   const hub = getHubData(category);
   if (!hub) return { title: "Not Found" };
-  return {
-    title: `${hub.title} | ${verticalConfig.siteName}`,
-    description: hub.metaDescription,
-    alternates: { canonical: `${verticalConfig.baseUrl}${hub.basePath}` },
-  };
+  return buildHubMetadata(hub, verticalConfig);
 }
 
 export default function ScaffoldingCostsHubPage() {
-  const hub = getHubData(category);
-  if (!hub) notFound();
-  const pages = getCategoryPages(category);
-  return (
-    <HubPage
-      hub={hub}
-      pages={pages}
-      companyInfo={verticalConfig.companyInfo}
-      baseUrl={verticalConfig.baseUrl}
-    />
-  );
+  const props = getHubPageProps(category);
+  if (!props) notFound();
+  return <HubPage {...props} />;
 }
