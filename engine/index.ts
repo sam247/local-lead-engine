@@ -22,6 +22,7 @@ export {
   type GetPageTypeInput,
 } from "./lib/pageWeighting";
 export * from "./utils";
+export { buildScenarioArticle, type ScenarioArticleDefinition } from "./utils/scenarioArticle";
 export * from "./schema";
 export * from "./validation";
 export * from "./data/location-neighbours";
@@ -73,9 +74,18 @@ export {
   type ProblemPreviewItem,
 } from "./components/ProblemPreviewSection";
 export { ProjectCardWithLinks, type ProjectCardWithLinksProps, type ProjectForCard } from "./components/ProjectCardWithLinks";
+export { ProjectDetailPage, type ProjectDetailPageProps } from "./components/ProjectDetailPage";
 export { RelatedLinks, type RelatedLinksProps } from "./components/RelatedLinks";
 export { ServiceImageGallery, type ServiceImageGalleryProps } from "./components/ServiceImageGallery";
 export { ServiceDetailContent, type ServiceDetailContentProps, type SymptomLink } from "./components/ServiceDetailContent";
+export {
+  ArticleDetailPage,
+  type ArticleDetailPageProps,
+  type ArticleDetailData,
+  type ArticleFaq,
+  type ArticleIntent,
+  type ArticleSection,
+} from "./components/ArticleDetailPage";
 export {
   TopicLocationPage,
   type TopicLocationPageProps,

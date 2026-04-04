@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { verticalConfig } from "@/config";
 import { buildUrlset } from "@/lib/sitemapXml";
+import { projects } from "@/data/projects";
+import { blogPosts } from "@/lib/blogData";
 
 export const dynamic = "force-static";
 export const revalidate = false;
@@ -53,6 +55,18 @@ export async function GET() {
       lastmod,
       changefreq: "monthly" as const,
       priority: 0.7,
+    })),
+    ...projects.map((project) => ({
+      url: `${baseUrl}/projects/${project.slug}`,
+      lastmod,
+      changefreq: "monthly" as const,
+      priority: 0.65,
+    })),
+    ...blogPosts.map((post) => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastmod,
+      changefreq: "monthly" as const,
+      priority: 0.65,
     })),
   ];
   const xml = buildUrlset(entries);

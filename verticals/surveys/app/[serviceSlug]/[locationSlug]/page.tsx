@@ -251,7 +251,7 @@ export default async function LocationRoute({ params }: Props) {
       title: p.title,
       description: p.description,
       image: getProjectImage(p, i),
-      url: `/projects#${p.id}`,
+      url: `/projects/${p.slug}`,
     }));
 
   const introParagraph =

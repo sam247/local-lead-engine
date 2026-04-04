@@ -53,6 +53,7 @@ export default function ProjectsPage() {
                 key={project.id}
                 project={{
                   id: project.id,
+                  slug: project.slug,
                   title: project.title,
                   description: project.description,
                   location: project.location,
@@ -65,6 +66,7 @@ export default function ProjectsPage() {
                 services={services}
                 locationLinkPath={(slug, locId) => `/${slug}/${locId}`}
                 servicesPath="/services"
+                projectHref={`/projects/${project.slug}`}
               />
             ))}
           </div>

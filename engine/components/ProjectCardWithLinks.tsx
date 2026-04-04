@@ -3,6 +3,7 @@ import type { Service } from "../types";
 
 export interface ProjectForCard {
   id: string;
+  slug?: string;
   title: string;
   description: string;
   location: string;
@@ -18,8 +19,7 @@ export interface ProjectCardWithLinksProps {
   services: Service[];
   locationLinkPath: (serviceSlug: string, locationId: string) => string;
   servicesPath: string;
-  /** Optional link to projects listing (e.g. /projects). Not required for the card. */
-  projectsPath?: string;
+  projectHref?: string;
 }
 
 export function ProjectCardWithLinks({
@@ -29,6 +29,7 @@ export function ProjectCardWithLinks({
   services,
   locationLinkPath,
   servicesPath,
+  projectHref,
 }: ProjectCardWithLinksProps) {
   const relatedServices = services
     .filter((s) => s.slug !== project.serviceSlug)
@@ -53,7 +54,15 @@ export function ProjectCardWithLinks({
             {project.service}
           </Link>
         </p>
-        <h3 className="mt-1 font-display font-semibold">{project.title}</h3>
+        <h3 className="mt-1 font-display font-semibold">
+          {projectHref ? (
+            <Link href={projectHref} className="hover:text-primary">
+              {project.title}
+            </Link>
+          ) : (
+            project.title
+          )}
+        </h3>
         {project.locationId ? (
           <p className="text-sm text-muted-foreground">
             Area:{" "}

@@ -10,7 +10,8 @@ import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { TrustPoints, pickHomepageArticleCards } from "engine";
 import { verticalConfig } from "@/config";
-import { blogPosts, getCategoryPages, getHubData } from "@/lib/data";
+import { getCategoryPages, getHubData } from "@/lib/data";
+import { blogPosts } from "@/lib/blogData";
 import { accessProblemPages } from "@/data/problemPages";
 import { ArrowRight } from "lucide-react";
 
@@ -31,7 +32,7 @@ export default function HomePage() {
       }))
     : [];
   const articleCards = pickHomepageArticleCards(
-    blogPosts.map((p) => ({ id: p.id, title: p.title, excerpt: p.excerpt })),
+    blogPosts.map((p) => ({ slug: p.slug, title: p.title, excerpt: p.excerpt })),
     fallbacks
   );
   const problemItems = accessProblemPages.slice(0, 6).map((problem) => ({

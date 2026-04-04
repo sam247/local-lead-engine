@@ -45,9 +45,18 @@ export {
   type ProblemPreviewItem,
 } from "./ProblemPreviewSection";
 export { ProjectCardWithLinks, type ProjectCardWithLinksProps, type ProjectForCard } from "./ProjectCardWithLinks";
+export { ProjectDetailPage, type ProjectDetailPageProps } from "./ProjectDetailPage";
 export { RelatedLinks, type RelatedLinksProps } from "./RelatedLinks";
 export { ServiceImageGallery, type ServiceImageGalleryProps } from "./ServiceImageGallery";
 export { ServiceDetailContent, type ServiceDetailContentProps, type SymptomLink } from "./ServiceDetailContent";
+export {
+  ArticleDetailPage,
+  type ArticleDetailPageProps,
+  type ArticleDetailData,
+  type ArticleFaq,
+  type ArticleIntent,
+  type ArticleSection,
+} from "./ArticleDetailPage";
 export {
   TopicLocationPage,
   type TopicLocationPageProps,

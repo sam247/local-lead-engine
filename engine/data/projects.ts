@@ -1,16 +1,65 @@
 import type { Location, Service, VerticalConfig } from "../types";
 
+export type JobType = "domestic" | "commercial";
+export type JobUrgency = "urgent" | "planned";
+export type JobComplexity = "simple" | "complex";
+export type BlogIntent = "diagnostic" | "explanatory" | "cost-related" | "decision-making";
+
+export interface ContentScenario {
+  propertyType: string;
+  specificIssue: string;
+  constraints: string[];
+  jobType: JobType;
+  urgency: JobUrgency;
+  complexityLevel: JobComplexity;
+}
+
+export interface ProjectImage {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
 export interface Project {
   id: string;
+  slug: string;
   title: string;
   location: string;
-  locationId?: string;
+  locationId: string;
   service: string;
   serviceSlug: string;
   description: string;
+  summary: string;
+  problem: string[];
+  solution: string[];
+  outcome: string[];
+  whenNeeded: string[];
+  relatedServicesSection: string[];
+  metaDescription: string;
+  scenario: ContentScenario;
+  equipmentOrMethod: string;
+  timeTaken: string;
   imagePrompt: string;
   image: string;
   imageIndex: number;
+  images?: ProjectImage[];
+}
+
+export interface ProjectScenarioDefinition {
+  id: string;
+  slug?: string;
+  title?: string;
+  scenario: ContentScenario;
+  summary: string;
+  problem: string[];
+  solution: string[];
+  outcome: string[];
+  whenNeeded: string[];
+  relatedServicesSection: string[];
+  equipmentOrMethod?: string;
+  timeTaken?: string;
+  metaDescription?: string;
+  images?: ProjectImage[];
 }
 
 const PROPERTY_TYPES = [
@@ -120,6 +169,25 @@ function seededShuffle<T>(array: T[], seed: number): T[] {
   return out;
 }
 
+function createDefaultScenario(propertyType: string): ContentScenario {
+  return {
+    propertyType,
+    specificIssue: "a site issue that needed a clear technical fix",
+    constraints: ["site access"],
+    jobType: propertyType.includes("office") || propertyType.includes("warehouse") || propertyType.includes("data centre") ? "commercial" : "domestic",
+    urgency: "planned",
+    complexityLevel: "simple",
+  };
+}
+
+function createProjectSlug(serviceSlug: string, locationId: string): string {
+  return `${serviceSlug}-${locationId}-project`;
+}
+
+function createFallbackMetaDescription(service: string, location: string, timeTaken: string) {
+  return `${service} in ${location} completed with a clear scope, controlled delivery, and a practical result inside ${timeTaken}.`;
+}
+
 export function generateProjects(
   verticalConfig: VerticalConfig,
   locations: Location[],
@@ -160,24 +228,68 @@ export function generateProjects(
     const imagePrompt = prompts[index % prompts.length];
     return {
       id: `project-${verticalId}-${index + 1}`,
+      slug: createProjectSlug(service.slug, location.id),
       title,
       location: location.name,
       locationId: location.id,
       service: service.title,
       serviceSlug: service.slug,
       description,
+      summary: description,
+      problem: [description],
+      solution: [`We scoped ${service.title.toLowerCase()} around the live site conditions and kept the work aligned with the programme in ${location.name}.`],
+      outcome: [`The job was completed with a clear handover, practical next steps, and a more reliable outcome for the property in ${location.name}.`],
+      whenNeeded: [`This kind of job usually starts when a ${property.toLowerCase()} needs ${service.title.toLowerCase()} without adding avoidable delay or disruption.`],
+      relatedServicesSection: [`For similar work, the next useful pages are the main [${service.title} in ${location.name}](/${service.slug}/${location.id}) page and other same-location services for neighbouring issues.`],
+      metaDescription: createFallbackMetaDescription(service.title, location.name, "a standard programme"),
+      scenario: createDefaultScenario(property.toLowerCase()),
+      equipmentOrMethod: service.process[0] ?? "site survey",
+      timeTaken: "a standard programme",
       imagePrompt,
       image: `/images/projects/project-${verticalId}-${index + 1}.jpg`,
-      /** 0-based slot matching asset `{verticalId}-{index+1}.jpg` in project-place-images (30 distinct images per vertical). */
       imageIndex: index,
     };
   });
 }
 
+export function mergeProjectScenarioContent(
+  projects: Project[],
+  definitions: ProjectScenarioDefinition[]
+): Project[] {
+  return definitions.flatMap((definition) => {
+    const base = projects.find((project) => project.id === definition.id);
+    if (!base) return [];
+
+    return [
+      {
+        ...base,
+        slug: definition.slug ?? base.slug,
+        title: definition.title ?? base.title,
+        summary: definition.summary,
+        description: definition.summary,
+        problem: definition.problem,
+        solution: definition.solution,
+        outcome: definition.outcome,
+        whenNeeded: definition.whenNeeded,
+        relatedServicesSection: definition.relatedServicesSection,
+        metaDescription:
+          definition.metaDescription ??
+          createFallbackMetaDescription(base.service, base.location, definition.timeTaken ?? base.timeTaken),
+        scenario: definition.scenario,
+        equipmentOrMethod: definition.equipmentOrMethod ?? base.equipmentOrMethod,
+        timeTaken: definition.timeTaken ?? base.timeTaken,
+        images: definition.images ?? base.images,
+      },
+    ];
+  });
+}
+
 /**
- * Returns 6 projects for homepage display. Deterministic shuffle so SSG is stable.
+ * Returns a deterministic homepage subset.
  */
 export function getProjectsForHomepage(projects: Project[], seed?: number): Project[] {
   const s = seed ?? 42;
   return seededShuffle(projects, s).slice(0, 6);
 }
+
+export type PublishedProject = Project;

@@ -1,20 +1,11 @@
 import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
-import { blogPosts } from "@/lib/data";
+import { blogPosts } from "@/lib/blogData";
 import { getBlogImage } from "@/lib/images";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getServiceUrl } from "engine";
-
-const categoryServiceMap: Record<string, { slug: string; label: string }> = {
-  "Drain Repair": { slug: "drain-collapse-repair", label: "Drain Collapse Repair" },
-  "Drain Surveys": { slug: "cctv-drain-surveys", label: "CCTV Drain Surveys" },
-  "Blocked Drains": { slug: "blocked-drains", label: "Blocked Drains" },
-  "Emergency": { slug: "emergency-drainage", label: "Emergency Drainage" },
-  "Maintenance": { slug: "drain-jetting", label: "Drain Jetting" },
-  "Commercial": { slug: "commercial-drainage", label: "Commercial Drainage" },
-};
 
 const BlogPreview = () => {
   const recentPosts = blogPosts.slice(0, 3);
@@ -36,10 +27,9 @@ const BlogPreview = () => {
 
         <div className="grid gap-6 md:grid-cols-3">
           {recentPosts.map((post, index) => {
-            const relatedService = categoryServiceMap[post.category];
             return (
               <Card
-                key={post.id}
+                key={post.slug}
                 className="group overflow-hidden border-border bg-card transition-all hover:shadow-lg animate-fade-in opacity-0"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
@@ -53,10 +43,10 @@ const BlogPreview = () => {
                 <CardHeader>
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge variant="secondary">{post.category}</Badge>
-                    {relatedService && (
-                      <Link href={getServiceUrl(relatedService.slug)}>
+                    {post.serviceSlug && post.serviceTitle ? (
+                      <Link href={getServiceUrl(post.serviceSlug)}>
                         <Badge variant="outline" className="text-primary transition-colors hover:bg-primary hover:text-primary-foreground">
-                          {relatedService.label} →
+                          {post.serviceTitle} →
                         </Badge>
                       </Link>
                     )}
@@ -70,13 +60,13 @@ const BlogPreview = () => {
                     </span>
                   </div>
                   <CardTitle className="font-display text-lg group-hover:text-primary">
-                    <Link href={`/blog/${post.id}`}>{post.title}</Link>
+                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                   </CardTitle>
                   <CardDescription>{post.excerpt}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Link
-                    href={`/blog/${post.id}`}
+                    href={`/blog/${post.slug}`}
                     className="inline-flex items-center text-sm font-medium text-primary transition-colors hover:underline"
                   >
                     Read More

@@ -437,7 +437,7 @@ export interface LocationPageProps {
   neighbourLocationsForContext?: Location[];
   /** Optional 60–100 word paragraph for the Location Context section (H2 + paragraph). When provided, LocationContext uses it instead of the default short text. */
   locationContextParagraph?: string;
-  /** Optional 2–3 projects near this location for "Recent Projects Near {Location}" block. Each url typically points to /projects or /projects#id. */
+  /** Optional 2–3 projects near this location for "Recent Projects Near {Location}" block. Each url typically points to /projects or /projects/[slug]. */
   nearbyProjects?: Array<{ id: string; title: string; description: string; image: string; url: string }>;
   /** Optional topic links for "Helpful guidance" block (4–6 links to topic pages). When provided, section is rendered above FAQ. */
   relatedTopicLinks?: { title: string; href: string }[];

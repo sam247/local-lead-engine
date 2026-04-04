@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { blogPosts } from "@/lib/data";
+import { blogPosts } from "@/lib/blogData";
 import { getBlogImage } from "@/lib/images";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -32,7 +32,7 @@ export default function BlogPage() {
         <div className="container">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {blogPosts.map((post, index) => (
-              <Link key={post.id} href={`/blog/${post.id}`}>
+              <Link key={post.slug} href={`/blog/${post.slug}`}>
                 <Card className="group overflow-hidden transition-all hover:shadow-lg">
                   <div className="aspect-video overflow-hidden">
                     <img src={getBlogImage(post, index)} alt={post.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />

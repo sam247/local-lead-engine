@@ -5,7 +5,7 @@ export interface HomepageArticleCard {
 }
 
 export interface BlogPostLike {
-  id: string;
+  slug: string;
   title: string;
   excerpt: string;
 }
@@ -23,11 +23,11 @@ export function pickHomepageArticleCards(
   blogPosts: BlogPostLike[],
   guideFallbacks: GuideFallbackLike[]
 ): [HomepageArticleCard, HomepageArticleCard, HomepageArticleCard] {
-  const sortedPosts = [...blogPosts].sort((a, b) => a.id.localeCompare(b.id));
+  const sortedPosts = [...blogPosts].sort((a, b) => a.slug.localeCompare(b.slug));
   const out: HomepageArticleCard[] = sortedPosts.slice(0, 3).map((p) => ({
     title: p.title,
     excerpt: p.excerpt,
-    href: `/blog/${p.id}`,
+    href: `/blog/${p.slug}`,
   }));
   let fi = 0;
   while (out.length < 3 && fi < guideFallbacks.length) {

@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { homepageProjects } from "@/data/projects";
 import { getProjectImage } from "@/lib/images";
-import { getServiceUrl } from "engine";
 
 const ProjectsPreview = () => {
   return (
@@ -29,24 +28,28 @@ const ProjectsPreview = () => {
               className="group overflow-hidden rounded-lg bg-card animate-fade-in opacity-0"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="aspect-[4/3] overflow-hidden">
+              <Link href={`/projects/${project.slug}`} className="block aspect-[4/3] overflow-hidden">
                 <img
                   src={getProjectImage(project, index)}
                   alt={project.title}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-              </div>
+              </Link>
               <div className="p-4">
-                <h3 className="font-display font-semibold text-foreground">{project.title}</h3>
+                <h3 className="font-display font-semibold text-foreground">
+                  <Link href={`/projects/${project.slug}`} className="hover:text-primary">
+                    {project.title}
+                  </Link>
+                </h3>
                 <p className="mt-1 text-xs text-muted-foreground line-clamp-1">
                   {project.service} · {project.location}
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{project.description}</p>
                 <Link
-                  href={getServiceUrl(project.serviceSlug)}
+                  href={`/projects/${project.slug}`}
                   className="mt-3 inline-flex items-center text-xs font-medium text-primary transition-colors hover:underline"
                 >
-                  View Service
+                  View Project
                   <ArrowRight className="ml-1 h-3 w-3" />
                 </Link>
               </div>
