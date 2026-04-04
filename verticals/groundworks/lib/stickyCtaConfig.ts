@@ -3,7 +3,6 @@ export type StickyCtaConfig = {
   defaultText: string;
   issueMap: Record<string, string>;
   ctaPrimary: string;
-  ctaSecondary: string;
 };
 
 export const stickyCtaConfig: StickyCtaConfig = {
@@ -17,5 +16,4 @@ export const stickyCtaConfig: StickyCtaConfig = {
     "high-water-table-during-excavation": "High water table? Get excavation support today",
   },
   ctaPrimary: "Call Now",
-  ctaSecondary: "Get Quote",
 };

@@ -46,8 +46,7 @@ export default function NearMeRoute() {
         "Handover certificates issued on every project",
       ]}
       conversionHeading="Need scaffolding? Get a free quote"
-      secondaryCtaLabel={verticalConfig.heroSecondaryCtaText}
-      secondaryCtaPath="/contact"
+      ctaVariants={verticalConfig.ctaVariants}
       callTrackVertical={verticalConfig.verticalId}
     />
   );

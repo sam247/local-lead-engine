@@ -8,6 +8,8 @@ export async function POST(req: Request) {
       location_slug: body.location_slug ?? null,
       vertical: typeof body.vertical === "string" ? body.vertical : "",
       user_agent: req.headers.get("user-agent") ?? undefined,
+      cta_text: typeof body.cta_text === "string" ? body.cta_text : "",
+      cta_seed: typeof body.cta_seed === "string" ? body.cta_seed : "",
     };
     console.log("[track-call-click]", JSON.stringify(record));
   } catch {

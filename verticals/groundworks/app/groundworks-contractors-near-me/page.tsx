@@ -46,8 +46,7 @@ export default function NearMeRoute() {
         "Underpinning, foundation repair and concrete work delivered to specification",
       ]}
       conversionHeading="Planning a groundworks package?"
-      secondaryCtaLabel={verticalConfig.heroSecondaryCtaText}
-      secondaryCtaPath="/contact"
+      ctaVariants={verticalConfig.ctaVariants}
       callTrackVertical={verticalConfig.verticalId}
     />
   );

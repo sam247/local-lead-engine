@@ -1,6 +1,5 @@
-import Link from "next/link";
-import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
+import { QuoteFormPrimaryCta } from "./QuoteFormPrimaryCta";
 import type { CompanyInfo } from "../types";
 import type { PageTier, PageType } from "../lib/pageWeighting";
 import { pageSeoDataAttrs } from "../lib/pageWeighting";
@@ -11,6 +10,7 @@ export interface CTABannerProps {
   heading?: string;
   body?: string;
   ctaText?: string;
+  ctaSeed?: string;
   pageTier?: PageTier;
   pageType?: PageType;
 }
@@ -21,6 +21,7 @@ export function CTABanner({
   heading = "Need project guidance?",
   body = "Share your site details and priorities. We will outline a practical scope, likely timeline, and next steps.",
   ctaText = "Request a site visit",
+  ctaSeed,
   pageTier,
   pageType,
 }: CTABannerProps) {
@@ -37,12 +38,17 @@ export function CTABanner({
           <p className="mb-8 text-lg text-primary">{body}</p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button size="lg" variant="highlight" className="text-base" asChild>
-              <Link href={contactPath}>
-                {ctaText}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+            <QuoteFormPrimaryCta
+              contactPath={contactPath}
+              size="lg"
+              variant="highlight"
+              className="text-base"
+              ctaText={ctaText}
+              ctaSeed={ctaSeed}
+            >
+              {ctaText}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </QuoteFormPrimaryCta>
           </div>
         </div>
       </div>

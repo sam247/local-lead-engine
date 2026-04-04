@@ -35,7 +35,11 @@ export const verticalConfig: VerticalConfig = {
   baseUrl: "https://mainlinescaffold.co.uk",
   primaryService: "Scaffolding Contractors",
   industry: "scaffolding",
-  heroSecondaryCtaText: "Get a Scaffolding Quote",
+  ctaVariants: [
+    "Get scaffold pricing",
+    "Speak to a scaffolding team",
+    "Check scaffold availability",
+  ] as const,
   problemLabel: "Scaffolding",
   relatedServicesLabel: "Scaffolding",
   serviceTypesBySlug,

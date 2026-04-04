@@ -63,8 +63,9 @@ export function TopicLocationPage({
       primaryCtaHref={primaryServiceLocationPath ?? "/contact"}
       secondaryCtaText={`View topic guide: ${topic.title}`}
       secondaryCtaHref={resolvedHubPath}
-      contactQuoteText={`contact ${verticalConfig.companyInfo.name} for a quote`}
-      companyName={verticalConfig.companyInfo.name}
+      contactPath="/contact"
+      ctaVariants={verticalConfig.ctaVariants}
+      quoteCtaBiasServiceSlug={primaryServiceSlug ?? null}
     />
   );
 }

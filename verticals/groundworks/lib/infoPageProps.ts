@@ -113,5 +113,6 @@ export function getInfoPageProps(category: string, slug: string) {
     getCategoryPages,
     relatedGuidesTitle: "Related Groundworks Guides",
     callTrackVertical: verticalConfig.verticalId,
+    ctaVariants: verticalConfig.ctaVariants,
   };
 }

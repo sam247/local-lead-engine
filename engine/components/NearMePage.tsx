@@ -6,8 +6,10 @@ import { BreadcrumbNav } from "./BreadcrumbNav";
 import { InspectionCTA } from "./InspectionCTA";
 import { NearMeLocationList } from "./NearMeLocationList";
 import { TrackablePhoneLink } from "./TrackablePhoneLink";
+import { QuoteFormPrimaryCta } from "./QuoteFormPrimaryCta";
 import type { Service, Location, CompanyInfo } from "../types";
 import { getServiceUrl } from "../utils/serviceUrls";
+import { getCtaVariant } from "../utils/ctaVariants";
 
 export interface NearMePageProps {
   service: Service;
@@ -28,10 +30,8 @@ export interface NearMePageProps {
   trustBlockPoints?: string[];
   /** Conversion block heading above location list (e.g. "Need urgent drain repair?"). */
   conversionHeading?: string;
-  /** Secondary CTA label (e.g. "Book CCTV Drain Survey"). */
-  secondaryCtaLabel?: string;
-  /** Secondary CTA path (defaults to contactPath). */
-  secondaryCtaPath?: string;
+  /** Deterministic A/B copy for all quote CTAs on this page (shared seed per vertical near-me URL). */
+  ctaVariants: readonly string[];
   callTrackVertical: string;
 }
 
@@ -49,12 +49,12 @@ export function NearMePage({
   trustBlockTitle,
   trustBlockPoints,
   conversionHeading,
-  secondaryCtaLabel,
-  secondaryCtaPath,
+  ctaVariants,
   callTrackVertical,
 }: NearMePageProps) {
   const pageTitle = `${service.title} Near Me`;
-  const secondaryPath = secondaryCtaPath ?? contactPath;
+  const nearMeQuoteSeed = `${callTrackVertical}-near-me`;
+  const quoteCtaLabel = getCtaVariant(nearMeQuoteSeed, ctaVariants, { serviceSlug: service.slug });
 
   return (
     <>
@@ -101,9 +101,15 @@ export function NearMePage({
               guaranteed workmanship.
             </p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button size="lg" variant="highlight" asChild>
-                <Link href={contactPath}>Get a Free Quote</Link>
-              </Button>
+              <QuoteFormPrimaryCta
+                contactPath={contactPath}
+                size="lg"
+                variant="highlight"
+                ctaText={quoteCtaLabel}
+                ctaSeed={nearMeQuoteSeed}
+              >
+                {quoteCtaLabel}
+              </QuoteFormPrimaryCta>
               <TrackablePhoneLink
                 phone={companyInfo.phone}
                 vertical={callTrackVertical}
@@ -146,14 +152,21 @@ export function NearMePage({
               {conversionHeading}
             </h2>
             <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-              {secondaryCtaLabel && (
-                <Button size="lg" variant="outline" className="min-h-12 flex-1 border-2 sm:flex-initial" asChild>
-                  <Link href={secondaryPath}>
-                    {secondaryCtaLabel}
-                    <span className="ml-2" aria-hidden>→</span>
-                  </Link>
-                </Button>
-              )}
+              <QuoteFormPrimaryCta
+                contactPath={contactPath}
+                size="lg"
+                variant="outline"
+                className="min-h-12 flex-1 border-2 sm:flex-initial"
+                ctaText={quoteCtaLabel}
+                ctaSeed={nearMeQuoteSeed}
+              >
+                <span className="inline-flex items-center">
+                  {quoteCtaLabel}
+                  <span className="ml-2" aria-hidden>
+                    →
+                  </span>
+                </span>
+              </QuoteFormPrimaryCta>
               <TrackablePhoneLink
                 phone={companyInfo.phone}
                 vertical={callTrackVertical}
@@ -225,6 +238,8 @@ export function NearMePage({
         <InspectionCTA
           companyInfo={companyInfo}
           contactPath={contactPath}
+          ctaText={quoteCtaLabel}
+          ctaSeed={nearMeQuoteSeed}
           callTrackVertical={callTrackVertical}
           callTrackServiceSlug={service.slug}
           callTrackLocationSlug={null}
@@ -239,9 +254,15 @@ export function NearMePage({
           <p className="mb-6 text-primary-foreground/80">
             Contact us for fast, reliable services in your area.
           </p>
-          <Button size="lg" variant="highlight" asChild>
-            <Link href={contactPath}>Get Your Free Quote</Link>
-          </Button>
+          <QuoteFormPrimaryCta
+            contactPath={contactPath}
+            size="lg"
+            variant="highlight"
+            ctaText={quoteCtaLabel}
+            ctaSeed={nearMeQuoteSeed}
+          >
+            {quoteCtaLabel}
+          </QuoteFormPrimaryCta>
         </div>
       </section>
     </>

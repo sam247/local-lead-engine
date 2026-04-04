@@ -1,6 +1,7 @@
 import { google } from "googleapis";
 
 import { deleteCallSid, getIntentIdByCallSid } from "@/lib/twilioIntentStore";
+import { recordCtaResult } from "engine";
 
 const SHEET_TAB_NAME = "call_clicks";
 const FALLBACK_WINDOW_MS = 15 * 60 * 1000;
@@ -14,6 +15,12 @@ function toStringValue(value: FormDataEntryValue | null, fallback = ""): string 
 function toDuration(value: string): number {
   const parsed = Number(value);
   return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+}
+
+function callQualityFromDuration(seconds: number): "junk" | "weak" | "strong" {
+  if (seconds < 10) return "junk";
+  if (seconds < 60) return "weak";
+  return "strong";
 }
 
 function trimToString(value: unknown): string {
@@ -129,7 +136,12 @@ async function updateTwilioColumnsOnly(
   spreadsheetId: string,
   headers: string[],
   sheetRow1Based: number,
-  twilio: { twilio_call_sid: string; call_status: string; call_duration: string }
+  twilio: {
+    twilio_call_sid: string;
+    call_status: string;
+    call_duration: string;
+    call_quality: string;
+  }
 ): Promise<void> {
   const idxSid = headers.indexOf("twilio_call_sid");
   const idxSt = headers.indexOf("call_status");
@@ -138,7 +150,7 @@ async function updateTwilioColumnsOnly(
     console.error("[twilio_status] Sheet missing twilio_call_sid, call_status, or call_duration column");
     return;
   }
-  const data = [
+  const data: { range: string; values: string[][] }[] = [
     {
       range: `${SHEET_TAB_NAME}!${columnIndexToLetter(idxSid)}${sheetRow1Based}`,
       values: [[twilio.twilio_call_sid]],
@@ -152,6 +164,13 @@ async function updateTwilioColumnsOnly(
       values: [[twilio.call_duration]],
     },
   ];
+  const idxQual = headers.indexOf("call_quality");
+  if (idxQual >= 0) {
+    data.push({
+      range: `${SHEET_TAB_NAME}!${columnIndexToLetter(idxQual)}${sheetRow1Based}`,
+      values: [[twilio.call_quality]],
+    });
+  }
   await sheets.spreadsheets.values.batchUpdate({
     spreadsheetId,
     requestBody: {
@@ -196,7 +215,12 @@ async function appendOrphanRow(
   sheets: ReturnType<typeof google.sheets>,
   spreadsheetId: string,
   headers: string[],
-  twilio: { twilio_call_sid: string; call_status: string; call_duration: string },
+  twilio: {
+    twilio_call_sid: string;
+    call_status: string;
+    call_duration: string;
+    call_quality: string;
+  },
   toNumber: string
 ): Promise<void> {
   const callId = await getNextCallIdForOrphan(sheets, spreadsheetId, headers);
@@ -218,6 +242,9 @@ async function appendOrphanRow(
     to_number: toNumber,
     twilio_call_sid: twilio.twilio_call_sid,
     call_duration: twilio.call_duration,
+    call_quality: twilio.call_quality,
+    cta_text: "",
+    cta_seed: "",
     orphan: "yes",
   };
   const row: string[] = headers.map((h) => byHeader[h] ?? "");
@@ -272,10 +299,12 @@ export async function POST(req: Request) {
     callStatus: status,
   });
 
+  const callQuality = callQualityFromDuration(duration);
   const twilioPayload = {
     twilio_call_sid: callSid,
     call_status: status,
     call_duration: String(duration),
+    call_quality: callQuality,
   };
 
   const forwardTo = trimToString(process.env.FORWARD_PHONE_NUMBER);
@@ -300,6 +329,19 @@ export async function POST(req: Request) {
       await updateTwilioColumnsOnly(sheets, spreadsheetId, snapshot.headers, matchedRow, twilioPayload);
       if (parentCallSidRaw) deleteCallSid(parentCallSidRaw);
       if (callSidRaw && callSidRaw !== parentCallSidRaw) deleteCallSid(callSidRaw);
+      if (status.toLowerCase() === "completed") {
+        const rowIdx = matchedRow - 2;
+        if (rowIdx >= 0 && rowIdx < snapshot.rows.length) {
+          const row = snapshot.rows[rowIdx];
+          const svcIdx = snapshot.headers.indexOf("service_slug");
+          const ctaIdx = snapshot.headers.indexOf("cta_text");
+          if (svcIdx >= 0 && ctaIdx >= 0) {
+            const serviceSlug = trimToString(row[svcIdx]);
+            const ctaText = trimToString(row[ctaIdx]);
+            recordCtaResult(serviceSlug, ctaText, callQuality === "strong");
+          }
+        }
+      }
     } else {
       await appendOrphanRow(sheets, spreadsheetId, snapshot.headers, twilioPayload, forwardTo || to);
     }

@@ -57,6 +57,7 @@ export default function DrainProblemsSlugPage({ params }: Props) {
         primaryServiceSlug={problem.primaryServiceSlug}
         primaryServiceLabel={problem.primaryServiceLabel}
         locationLinkPath={(slug, id) => `/${slug}/${id}`}
+        ctaVariants={verticalConfig.ctaVariants}
         servicesNearYouTitle="Drain repair services near you"
         servicesNearYouIntro={SERVICES_NEAR_YOU_INTRO}
       />

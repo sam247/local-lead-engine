@@ -1,29 +1,32 @@
 "use client";
 
-import Link from "next/link";
 import type { MouseEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Phone, ArrowRight } from "lucide-react";
-import { digitsFromPhone, handleCallClick } from "engine";
-import { companyInfo } from "@/lib/data";
+import { digitsFromPhone, handleCallClick, QuoteFormPrimaryCta, getCtaVariant, inferServiceSlugForCtaBias } from "engine";
+import { companyInfo, services } from "@/lib/data";
 import { verticalConfig } from "@/config";
 import { usePathname } from "next/navigation";
 import { useSelectedIssue } from "@/components/context/SelectedIssueContext";
 import type { StickyCtaConfig } from "@/lib/stickyCtaConfig";
 
-export function StickyCTA({ defaultText, issueMap, ctaPrimary, ctaSecondary }: StickyCtaConfig) {
+export function StickyCTA({ defaultText, issueMap, ctaPrimary }: StickyCtaConfig) {
   const { selectedIssue } = useSelectedIssue();
   const pathname = usePathname();
+  const verticalId = verticalConfig.verticalId;
+  const page_path = pathname && pathname.length > 0 ? pathname : "/";
+  const formCtaSeed = `${verticalId}-${page_path}`;
+  const formCtaLabel = getCtaVariant(formCtaSeed, verticalConfig.ctaVariants, {
+    serviceSlug: inferServiceSlugForCtaBias(pathname, services),
+  });
 
   const displayText =
     selectedIssue && issueMap?.[selectedIssue] ? issueMap[selectedIssue] : defaultText;
 
   const digits = digitsFromPhone(companyInfo.phone);
-  const page_path = pathname ?? "";
-  const verticalId = verticalConfig.verticalId;
 
   const callContext = {
-    page_path,
+    page_path: pathname ?? "",
     service_slug: null as string | null,
     location_slug: null as string | null,
     vertical: verticalId,
@@ -67,12 +70,20 @@ export function StickyCTA({ defaultText, issueMap, ctaPrimary, ctaSecondary }: S
               {ctaPrimary}
             </a>
           </Button>
-          <Button asChild className="min-w-0 flex-1 sm:flex-none">
-            <Link href="/contact" className="gap-2" onClick={onFormClick}>
-              {ctaSecondary}
+          <QuoteFormPrimaryCta
+            contactPath="/contact"
+            variant="default"
+            size="default"
+            className="min-w-0 flex-1 gap-2 sm:flex-none"
+            ctaText={formCtaLabel}
+            ctaSeed={formCtaSeed}
+            onBeforeNavigate={onFormClick}
+          >
+            <span className="inline-flex items-center gap-2">
+              {formCtaLabel}
               <ArrowRight className="h-4 w-4 shrink-0" />
-            </Link>
-          </Button>
+            </span>
+          </QuoteFormPrimaryCta>
         </div>
       </div>
     </div>

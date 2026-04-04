@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Button } from "./ui/button";
+import { QuoteFormPrimaryCta } from "./QuoteFormPrimaryCta";
 import { Phone, Camera } from "lucide-react";
 import type { CompanyInfo } from "../types";
 import type { PageTier, PageType } from "../lib/pageWeighting";
@@ -11,6 +11,8 @@ export interface MidContentCTAProps {
   message?: string;
   buttonText?: string;
   buttonLink?: string;
+  /** Seed aligned with getCtaVariant for this button (when label is variant-driven). */
+  buttonCtaSeed?: string;
   callTrackVertical?: string;
   callTrackServiceSlug?: string | null;
   callTrackLocationSlug?: string | null;
@@ -24,6 +26,7 @@ export function MidContentCTA({
   message = "Think you may have an issue? A professional inspection will give you a definitive answer.",
   buttonText = "Book an Inspection",
   buttonLink = "/contact",
+  buttonCtaSeed,
   callTrackVertical,
   callTrackServiceSlug = null,
   callTrackLocationSlug = null,
@@ -43,9 +46,15 @@ export function MidContentCTA({
         <div className="flex-1">
           <p className="mb-4 font-medium">{message}</p>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button size="default" variant="highlight" asChild>
-              <Link href={buttonLink}>{buttonText}</Link>
-            </Button>
+            <QuoteFormPrimaryCta
+              contactPath={buttonLink}
+              variant="highlight"
+              size="default"
+              ctaText={buttonText}
+              ctaSeed={buttonCtaSeed}
+            >
+              {buttonText}
+            </QuoteFormPrimaryCta>
             <TrackablePhoneLink
               phone={companyInfo.phone}
               vertical={callTrackVertical ?? ""}

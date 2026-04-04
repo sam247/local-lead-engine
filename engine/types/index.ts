@@ -108,8 +108,8 @@ export interface VerticalConfig {
   baseUrl: string;
   primaryService?: string;
   industry?: string;
-  /** Optional action-oriented label for hero/secondary CTA (e.g. "Book CCTV Drain Survey"). */
-  heroSecondaryCtaText?: string;
+  /** Deterministic A/B copy pool for primary quote CTAs (see getCtaVariant). */
+  ctaVariants: readonly string[];
   /** Optional label for problem/guide hub breadcrumb (e.g. "Drain Problems", "Access Problems"). Falls back to "Problems" in ProblemPage. */
   problemLabel?: string;
   companyInfo: CompanyInfo;

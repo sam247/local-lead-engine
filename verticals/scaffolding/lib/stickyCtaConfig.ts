@@ -2,7 +2,6 @@ export type StickyCtaConfig = {
   defaultText: string;
   issueMap: Record<string, string>;
   ctaPrimary: string;
-  ctaSecondary: string;
 };
 
 export const stickyCtaConfig: StickyCtaConfig = {
@@ -16,5 +15,4 @@ export const stickyCtaConfig: StickyCtaConfig = {
     "commercial-scaffolding": "Commercial scaffolding quote — fast response",
   },
   ctaPrimary: "Call Now",
-  ctaSecondary: "Get Quote",
 };

@@ -106,6 +106,7 @@ export default async function DrainProblemsInfoPage({ params }: Props) {
         primaryServiceSlug={problem.primaryServiceSlug}
         primaryServiceLabel={problem.primaryServiceLabel}
         locationLinkPath={(slug, id) => `/${slug}/${id}`}
+        ctaVariants={verticalConfig.ctaVariants}
         servicesNearYouTitle="Survey services near you"
         servicesNearYouIntro="Our teams deliver survey services across the area. Compare the main service route below."
       />

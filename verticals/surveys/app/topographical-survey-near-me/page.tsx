@@ -44,8 +44,7 @@ export default function NearMeRoute() {
         "Clear programmes from brief through capture to delivery",
       ]}
       conversionHeading="Need survey data for your site?"
-      secondaryCtaLabel={verticalConfig.heroSecondaryCtaText}
-      secondaryCtaPath="/contact"
+      ctaVariants={verticalConfig.ctaVariants}
       callTrackVertical={verticalConfig.verticalId}
     />
   );

@@ -7,7 +7,15 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { trackEvent, leadEmailField, leadPhoneField, leadPostcodeField, issuesToFieldErrorMap } from "engine";
+import {
+  trackEvent,
+  leadEmailField,
+  leadPhoneField,
+  leadPostcodeField,
+  issuesToFieldErrorMap,
+  QUOTE_FORM_ELEMENT_ID,
+  getLastCtaFromSession,
+} from "engine";
 import { z } from "zod";
 
 const SERVICE_OPTIONS = ["Drain survey", "Blocked drain", "Drain repair", "Drain inspection", "Advice"] as const;
@@ -78,7 +86,12 @@ export default function ContactForm() {
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...result.data, ...getPathMetadata(), utm_source: utmSource }),
+        body: JSON.stringify({
+          ...result.data,
+          ...getPathMetadata(),
+          ...getLastCtaFromSession(),
+          utm_source: utmSource,
+        }),
       });
       if (res.status === 400) {
         const data = (await res.json().catch(() => null)) as {
@@ -115,7 +128,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form id={QUOTE_FORM_ELEMENT_ID} onSubmit={handleSubmit} className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <Label htmlFor="first_name">First name *</Label>

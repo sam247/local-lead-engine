@@ -31,6 +31,8 @@ const EXPECTED_SHEET_HEADERS = [
   "estimated_value",
   "won",
   "quote_sent",
+  "cta_text",
+  "cta_seed",
 ] as const;
 const PROJECT_STAGE_OPTIONS = new Set(["planning", "ready", "exploring"]);
 const ASSIGNED_TO = "Drains";
@@ -51,6 +53,8 @@ const LeadInputSchema = z.object({
   service_slug: z.string().trim().max(150).optional(),
   location_slug: z.string().trim().max(150).optional(),
   project_stage: z.string().trim().max(50).optional(),
+  cta_text: z.string().trim().max(500).optional(),
+  cta_seed: z.string().trim().max(200).optional(),
 });
 
 type LeadInput = z.infer<typeof LeadInputSchema>;
@@ -221,6 +225,8 @@ function normalizeLeadData(input: LeadInput, req: Request): LeadRecord {
     estimated_value: "",
     won: "",
     quote_sent: "",
+    cta_text: trimToString(input.cta_text),
+    cta_seed: trimToString(input.cta_seed),
   };
 
   if (process.env.NODE_ENV !== "production" && (!lead.service_slug || !lead.location_slug || lead.page_path === "/")) {

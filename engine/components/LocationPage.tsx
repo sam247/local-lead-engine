@@ -13,6 +13,8 @@ import { TrustReassuranceStrip } from "./TrustReassuranceStrip";
 import { TrustStrip } from "./TrustStrip";
 import { ActionPanel } from "./ActionPanel";
 import { TrackablePhoneLink } from "./TrackablePhoneLink";
+import { QuoteFormPrimaryCta } from "./QuoteFormPrimaryCta";
+import { getCtaVariant } from "../utils/ctaVariants";
 import { getVariantIndex } from "../lib/contentVariants";
 import { getPageTier, pageSeoDataAttrs, type PageType } from "../lib/pageWeighting";
 import { locations as allLocationsDataset } from "../data/locations";
@@ -449,6 +451,8 @@ export interface LocationPageProps {
   supplementalSections?: LocationPageSupplementalSection[];
   /** Vertical id for call-click analytics (e.g. verticalConfig.verticalId). */
   callTrackVertical: string;
+  /** Deterministic A/B copy pool for primary quote CTAs on this page. */
+  ctaVariants: readonly string[];
   /** Optional internal link count for page tiering (future crawl/analytics feed). */
   inlinkCount?: number | null;
   /**
@@ -487,12 +491,15 @@ export function LocationPage({
   relatedTopicsSectionIntro,
   supplementalSections,
   callTrackVertical,
+  ctaVariants,
   inlinkCount,
   conversionAsideTitle = "Get a quote",
   conversionAsideBullets,
 }: LocationPageProps) {
   const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
   const displayTitle = service.titleSingular ?? service.title;
+  const quoteCtaSeed = `${service.slug}-${location.id}`;
+  const quoteCtaLabel = getCtaVariant(quoteCtaSeed, ctaVariants, { serviceSlug: service.slug });
   const seoPageType: PageType = "service_location";
   const pageTier = getPageTier({ inlinks: inlinkCount ?? null, pageType: seoPageType });
   const rootSeoAttrs = pageSeoDataAttrs(pageTier, seoPageType);
@@ -732,9 +739,16 @@ export function LocationPage({
               </p>
             </div>
             <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button size="lg" variant="highlight" className="shadow-md ring-2 ring-primary-foreground/20" asChild>
-                <Link href={contactPath}>Get a Free Quote</Link>
-              </Button>
+              <QuoteFormPrimaryCta
+                contactPath={contactPath}
+                size="lg"
+                variant="highlight"
+                className="shadow-md ring-2 ring-primary-foreground/20"
+                ctaText={quoteCtaLabel}
+                ctaSeed={quoteCtaSeed}
+              >
+                {quoteCtaLabel}
+              </QuoteFormPrimaryCta>
               <TrackablePhoneLink
                 phone={companyInfo.phone}
                 vertical={callTrackVertical}
@@ -1009,7 +1023,8 @@ export function LocationPage({
                 contactPath={contactPath}
                 heading={`Need guidance before starting ${displayTitle.toLowerCase()} work?`}
                 body={`Share your site details and priorities in ${location.name}; we will recommend the right scope, likely timeline, and practical next step.`}
-                ctaText="Get project advice"
+                ctaText={quoteCtaLabel}
+                ctaSeed={quoteCtaSeed}
                 callTrackVertical={callTrackVertical}
                 callTrackServiceSlug={service.slug}
                 callTrackLocationSlug={location.id}
@@ -1022,7 +1037,8 @@ export function LocationPage({
                 contactPath={contactPath}
                 heading={`Need ${displayTitle.toLowerCase()} in ${location.name}?`}
                 body="Tell us what you need and we will advise on the right approach, timeline, and next step for your property."
-                ctaText="Get pricing for your site"
+                ctaText={quoteCtaLabel}
+                ctaSeed={quoteCtaSeed}
                 callTrackVertical={callTrackVertical}
                 callTrackServiceSlug={service.slug}
                 callTrackLocationSlug={location.id}
@@ -1032,6 +1048,8 @@ export function LocationPage({
               <InspectionCTA
                 companyInfo={companyInfo}
                 contactPath={contactPath}
+                ctaText={quoteCtaLabel}
+                ctaSeed={quoteCtaSeed}
                 callTrackVertical={callTrackVertical}
                 callTrackServiceSlug={service.slug}
                 callTrackLocationSlug={location.id}
@@ -1044,9 +1062,15 @@ export function LocationPage({
               {conversionAsideBullets && conversionAsideBullets.length > 0 && (
                 <div className="space-y-4 rounded-xl border border-border bg-card p-5">
                   <h2 className="font-display text-lg font-semibold text-foreground">{conversionAsideTitle}</h2>
-                  <Button asChild>
-                    <Link href={contactPath}>Get a quote</Link>
-                  </Button>
+                  <QuoteFormPrimaryCta
+                    contactPath={contactPath}
+                    variant="default"
+                    size="default"
+                    ctaText={quoteCtaLabel}
+                    ctaSeed={quoteCtaSeed}
+                  >
+                    {quoteCtaLabel}
+                  </QuoteFormPrimaryCta>
                   <TrackablePhoneLink
                     phone={companyInfo.phone}
                     vertical={callTrackVertical}
@@ -1096,9 +1120,16 @@ export function LocationPage({
                     <Mail className="h-4 w-4" /> {companyInfo.email}
                   </a>
                 </div>
-                <Button asChild className="mt-4 w-full" variant="highlight">
-                  <Link href={contactPath}>Get a Free Quote</Link>
-                </Button>
+                <QuoteFormPrimaryCta
+                  contactPath={contactPath}
+                  variant="highlight"
+                  size="default"
+                  className="mt-4 w-full"
+                  ctaText={quoteCtaLabel}
+                  ctaSeed={quoteCtaSeed}
+                >
+                  {quoteCtaLabel}
+                </QuoteFormPrimaryCta>
               </div>
 
               <div className="rounded-lg bg-secondary p-6">
@@ -1238,9 +1269,15 @@ export function LocationPage({
           <p className="mb-6 text-primary-foreground/80">
             Contact us today for a free, no-obligation quote.
           </p>
-          <Button size="lg" variant="highlight" asChild>
-            <Link href={contactPath}>Get Your Free Quote</Link>
-          </Button>
+          <QuoteFormPrimaryCta
+            contactPath={contactPath}
+            size="lg"
+            variant="highlight"
+            ctaText={quoteCtaLabel}
+            ctaSeed={quoteCtaSeed}
+          >
+            {quoteCtaLabel}
+          </QuoteFormPrimaryCta>
         </div>
       </section>
     </div>

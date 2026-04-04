@@ -1,4 +1,4 @@
-export { getServiceUrl, getLegacyServiceUrl, isServiceHubPath } from "./serviceUrls";
+export { getServiceUrl, getLegacyServiceUrl, isServiceHubPath, inferServiceSlugForCtaBias } from "./serviceUrls";
 export { cn } from "./cn";
 export { getImageAlt, type GetImageAltParams } from "./imageAlt";
 export { buildLocationContextParagraph, type BuildLocationContextParams } from "./locationContext";
@@ -30,3 +30,11 @@ export {
   buildFeaturedServiceLocationLinks,
   type InternalLinkTarget,
 } from "./internalLinkTargets";
+export { hashCode, getCtaVariant, type GetCtaVariantOptions } from "./ctaVariants";
+export {
+  QUOTE_FORM_ELEMENT_ID,
+  handlePrimaryCtaClick,
+  LAST_CTA_TEXT_KEY,
+  LAST_CTA_SEED_KEY,
+  getLastCtaFromSession,
+} from "./quoteFormCta";

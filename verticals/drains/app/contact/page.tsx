@@ -2,7 +2,7 @@ import { companyInfo } from "@/lib/data";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import ContactForm from "@/components/sections/ContactForm";
-import { TrackablePhoneLink } from "engine";
+import { TrackablePhoneLink, QuoteFormHashHandler } from "engine";
 import { verticalConfig } from "@/config";
 import type { Metadata } from "next";
 
@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
+      <QuoteFormHashHandler />
       <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Contact", url: "/contact" }] }} />
       <section className="bg-primary py-16 md:py-24">
         <div className="container">

@@ -39,7 +39,11 @@ export const verticalConfig: VerticalConfig = {
   baseUrl: "https://mainlinegroundworks.co.uk",
   primaryService: "Groundworks Contractors",
   industry: "groundworks",
-  heroSecondaryCtaText: "Get a Groundworks Quote",
+  ctaVariants: [
+    "Price your project",
+    "Speak to a groundworks specialist",
+    "Get foundation work quote",
+  ] as const,
   problemLabel: "Groundworks",
   relatedServicesLabel: "Groundworks",
   serviceTypesBySlug,

@@ -106,5 +106,6 @@ export function getInfoPageProps(category: string, slug: string) {
     getCategoryPages,
     relatedGuidesTitle: "Related Scaffolding Guides",
     callTrackVertical: verticalConfig.verticalId,
+    ctaVariants: verticalConfig.ctaVariants,
   };
 }

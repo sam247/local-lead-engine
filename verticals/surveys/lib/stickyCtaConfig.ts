@@ -3,7 +3,6 @@ export type StickyCtaConfig = {
   defaultText: string;
   issueMap: Record<string, string>;
   ctaPrimary: string;
-  ctaSecondary: string;
 };
 
 export const stickyCtaConfig: StickyCtaConfig = {
@@ -17,5 +16,4 @@ export const stickyCtaConfig: StickyCtaConfig = {
     "pre-purchase-issues": "Buying before surveys? Get the right checks",
   },
   ctaPrimary: "Call Now",
-  ctaSecondary: "Request Survey Quote",
 };

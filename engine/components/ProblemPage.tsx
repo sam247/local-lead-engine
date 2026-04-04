@@ -5,6 +5,7 @@ import { SchemaMarkup } from "../schema/SchemaMarkup";
 import { getVariantIndex } from "../lib/contentVariants";
 import { getPageTier, pageSeoDataAttrs, type PageType } from "../lib/pageWeighting";
 import type { ProblemData, Service, CompanyInfo } from "../types";
+import { getCtaVariant } from "../utils/ctaVariants";
 
 export interface FeaturedLocation {
   id: string;
@@ -45,6 +46,8 @@ export interface ProblemPageProps {
   servicesNearYouIntro?: string;
   /** Optional internal link count for page tiering (future crawl/analytics feed). */
   inlinkCount?: number | null;
+  /** When set, Problem CTA quote label uses deterministic A/B. */
+  ctaVariants?: readonly string[];
 }
 
 const RELATED_PROBLEMS_MAX = 5;
@@ -91,7 +94,18 @@ export function ProblemPage({
   servicesNearYouTitle,
   servicesNearYouIntro,
   inlinkCount,
+  ctaVariants,
 }: ProblemPageProps) {
+  const quoteCtaSeed = `problem-${problem.slug}`;
+  const relatedServices = problem.relatedServiceSlugs
+    .map((slug) => services.find((s) => s.slug === slug))
+    .filter((s): s is Service => s != null);
+  const firstRelatedService = relatedServices[0];
+  const ctaBiasSlug = primaryServiceSlug ?? firstRelatedService?.slug ?? "";
+  const problemQuoteCtaLabel = getCtaVariant(quoteCtaSeed, ctaVariants, {
+    serviceSlug: ctaBiasSlug || undefined,
+  });
+
   const seoPageType: PageType = "problem";
   const pageTier = getPageTier({ inlinks: inlinkCount ?? null, pageType: seoPageType });
   const rootSeoAttrs = pageSeoDataAttrs(pageTier, seoPageType);
@@ -106,10 +120,6 @@ export function ProblemPage({
     problem.contextualOpening !== undefined && problem.contextualOpening !== null
       ? problem.contextualOpening.trim() || null
       : defaultContextualOpening;
-  const relatedServices = problem.relatedServiceSlugs
-    .map((slug) => services.find((s) => s.slug === slug))
-    .filter((s): s is Service => s != null);
-  const firstRelatedService = relatedServices[0];
   const h2WhenNeeded =
     PROBLEM_H2_WHEN_NEEDED[getVariantIndex(`problem-when-h2:${problem.slug}`, PROBLEM_H2_WHEN_NEEDED.length)];
   const h2ApproachFix =
@@ -354,6 +364,8 @@ export function ProblemPage({
             serviceLinks={serviceLinks}
             basePath={basePath}
             contactPath={contactPath}
+            quoteCtaLabel={problemQuoteCtaLabel}
+            quoteCtaSeed={quoteCtaSeed}
             pageTier={pageTier}
             pageType={seoPageType}
           />

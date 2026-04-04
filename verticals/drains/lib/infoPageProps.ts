@@ -113,5 +113,6 @@ export function getInfoPageProps(category: string, slug: string) {
     getCategoryPages,
     relatedGuidesTitle: "Related Drain Guides",
     callTrackVertical: verticalConfig.verticalId,
+    ctaVariants: verticalConfig.ctaVariants,
   };
 }

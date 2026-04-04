@@ -69,6 +69,7 @@ export default function AccessProblemSlugPage({ params }: Props) {
       featuredLocations={locations.slice(0, 1).map((loc) => ({ id: loc.id, name: loc.name }))}
       primaryServiceSlug={problem.primaryServiceSlug}
       primaryServiceLabel={problem.primaryServiceLabel}
+      ctaVariants={verticalConfig.ctaVariants}
       locationLinkPath={(slug, id) => `/${slug}/${id}`}
       servicesNearYouTitle="Access control services near you"
       servicesNearYouIntro="Our teams deliver access control and security integration across the area. Find a local service option below."

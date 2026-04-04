@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowRight, ArrowLeft, Ban, Wind, Droplets, TrendingDown, Search } from "lucide-react";
 import { heroBg } from "@/lib/images";
+import { services } from "@/lib/data";
 import { verticalConfig } from "@/config";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -19,6 +20,10 @@ import {
   mapLeadApiErrorsToHeroUi,
   issuesToFieldErrorMap,
   zodIssuesToFieldErrorMap,
+  QUOTE_FORM_ELEMENT_ID,
+  QuoteFormPrimaryCta,
+  getCtaVariant,
+  getLastCtaFromSession,
 } from "engine";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
@@ -105,6 +110,10 @@ function buildHeroLeadSchema() {
 
 const Hero = () => {
   const aboutLabelIndex = getVariantIndex(`about:home:${verticalConfig.verticalId}`, HERO_ABOUT_LABELS.length);
+  const homeCtaSeed = `${verticalConfig.verticalId}-home`;
+  const homeCtaLabel = getCtaVariant(homeCtaSeed, verticalConfig.ctaVariants, {
+    serviceSlug: services[0]?.slug,
+  });
   const { toast } = useToast();
   const [utmSource, setUtmSource] = useState<string | undefined>(undefined);
   const [step, setStep] = useState(1);
@@ -192,6 +201,7 @@ const Hero = () => {
           source_site: "groundworks",
           utm_source: utmSource,
           ...getPathMetadata(),
+          ...getLastCtaFromSession(),
         }),
       });
 
@@ -256,12 +266,18 @@ const Hero = () => {
             </p>
 
             <div>
-              <Button variant="highlight" size="lg" asChild>
-                <Link href="/contact">
-                  {verticalConfig.heroSecondaryCtaText ?? "Request Inspection"}
+              <QuoteFormPrimaryCta
+                contactPath="/contact"
+                variant="highlight"
+                size="lg"
+                ctaText={homeCtaLabel}
+                ctaSeed={homeCtaSeed}
+              >
+                <span className="inline-flex items-center">
+                  {homeCtaLabel}
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+                </span>
+              </QuoteFormPrimaryCta>
             </div>
           </div>
 
@@ -272,7 +288,7 @@ const Hero = () => {
                 {step === 1 ? "Tell us about your project." : "We'll call you back to discuss your requirements."}
               </p>
 
-              <form onSubmit={handleSubmit} className="space-y-3">
+              <form id={QUOTE_FORM_ELEMENT_ID} onSubmit={handleSubmit} className="space-y-3">
                 {step === 1 ? (
                   <>
                     <div className="grid grid-cols-2 gap-2">

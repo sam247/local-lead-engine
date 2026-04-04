@@ -7,6 +7,8 @@ import { InspectionCTA } from "./InspectionCTA";
 import { getImageAlt } from "../utils/imageAlt";
 import type { CompanyInfo } from "../types";
 import { TrackablePhoneLink } from "./TrackablePhoneLink";
+import { QuoteFormPrimaryCta } from "./QuoteFormPrimaryCta";
+import { getCtaVariant } from "../utils/ctaVariants";
 
 export interface PillarGuideSection {
   id: string;
@@ -30,6 +32,9 @@ export interface PillarGuideProps {
   /** Optional: render DiagnosisTool, CostEstimator, etc. between sections */
   extraSections?: { id: string; title: string; content: React.ReactNode }[];
   callTrackVertical: string;
+  ctaVariants: readonly string[];
+  /** When set, CTA auto-optimization keys off this service slug. */
+  ctaBiasServiceSlug?: string | null;
 }
 
 export function PillarGuide({
@@ -46,7 +51,13 @@ export function PillarGuide({
   bottomCtaBody = "Contact us for a free inspection and no-obligation quote.",
   extraSections = [],
   callTrackVertical,
+  ctaVariants,
+  ctaBiasServiceSlug = null,
 }: PillarGuideProps) {
+  const quoteCtaSeed = `${callTrackVertical}-pillar${guidePath}`;
+  const quoteCtaLabel = getCtaVariant(quoteCtaSeed, ctaVariants, {
+    serviceSlug: ctaBiasServiceSlug ?? undefined,
+  });
   const toc: { id: string; title: string }[] = [
     ...sections.map((s) => ({ id: s.id, title: s.title })),
     ...extraSections.map((s) => ({ id: s.id, title: s.title })),
@@ -91,9 +102,15 @@ export function PillarGuide({
             </h1>
             <p className="mb-6 text-lg text-primary-foreground/80">{heroSubtitle}</p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button size="lg" variant="secondary" asChild>
-                <Link href={contactPath}>Get a Free Quote</Link>
-              </Button>
+              <QuoteFormPrimaryCta
+                contactPath={contactPath}
+                size="lg"
+                variant="secondary"
+                ctaText={quoteCtaLabel}
+                ctaSeed={quoteCtaSeed}
+              >
+                {quoteCtaLabel}
+              </QuoteFormPrimaryCta>
               <TrackablePhoneLink
                 phone={companyInfo.phone}
                 vertical={callTrackVertical}
@@ -147,6 +164,8 @@ export function PillarGuide({
             <InspectionCTA
               companyInfo={companyInfo}
               contactPath={contactPath}
+              ctaText={quoteCtaLabel}
+              ctaSeed={quoteCtaSeed}
               callTrackVertical={callTrackVertical}
               callTrackPagePath={guidePath}
             />
@@ -166,9 +185,15 @@ export function PillarGuide({
             {bottomCtaTitle}
           </h2>
           <p className="mb-6 text-primary-foreground/80">{bottomCtaBody}</p>
-          <Button size="lg" variant="secondary" asChild>
-            <Link href={contactPath}>Get Your Free Quote</Link>
-          </Button>
+          <QuoteFormPrimaryCta
+            contactPath={contactPath}
+            size="lg"
+            variant="secondary"
+            ctaText={quoteCtaLabel}
+            ctaSeed={quoteCtaSeed}
+          >
+            {quoteCtaLabel}
+          </QuoteFormPrimaryCta>
         </div>
       </section>
     </>

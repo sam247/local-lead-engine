@@ -353,6 +353,7 @@ export default async function LocationRoute({ params }: Props) {
         relatedTopicLinks={relatedTopicLinks.length > 0 ? relatedTopicLinks : undefined}
         relatedTopicsSectionTitle={relatedTopicLinks.length > 0 ? `Security advice for businesses in ${location.name}` : undefined}
         callTrackVertical={verticalConfig.verticalId}
+        ctaVariants={verticalConfig.ctaVariants}
         conversionAsideBullets={sidebarBullets}
       />
       <CTABanner />

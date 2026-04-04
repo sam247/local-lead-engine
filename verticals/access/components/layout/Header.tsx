@@ -21,7 +21,14 @@ import {
   getResourcesMenuFlatLinks,
   insertResourcesLinksAfterHref,
 } from "engine/components/navigation/ResourcesMenu";
-import { getServiceUrl, isServiceHubPath, TrackablePhoneLink } from "engine";
+import {
+  getServiceUrl,
+  isServiceHubPath,
+  TrackablePhoneLink,
+  QuoteFormPrimaryCta,
+  getCtaVariant,
+  inferServiceSlugForCtaBias,
+} from "engine";
 import { verticalConfig } from "@/config";
 import { cn } from "@/lib/utils";
 
@@ -49,6 +56,11 @@ const Header = () => {
   const [locationsOpen, setLocationsOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const pathname = usePathname();
+
+  const headerQuoteSeed = `${verticalConfig.verticalId}-header-${pathname && pathname.length > 0 ? pathname : "/"}`;
+  const headerQuoteLabel = getCtaVariant(headerQuoteSeed, verticalConfig.ctaVariants, {
+    serviceSlug: inferServiceSlugForCtaBias(pathname, services),
+  });
 
   const isActive = (path: string) => pathname === path;
 
@@ -152,9 +164,15 @@ const Header = () => {
             <Phone className="h-4 w-4" />
             Call Now
           </TrackablePhoneLink>
-          <Button asChild>
-            <Link href="/contact">Get a Quote</Link>
-          </Button>
+          <QuoteFormPrimaryCta
+            contactPath="/contact"
+            variant="default"
+            size="default"
+            ctaText={headerQuoteLabel}
+            ctaSeed={headerQuoteSeed}
+          >
+            {headerQuoteLabel}
+          </QuoteFormPrimaryCta>
         </div>
 
         <button
@@ -253,11 +271,17 @@ const Header = () => {
                 <Phone className="h-4 w-4" />
                 Call Now
               </TrackablePhoneLink>
-              <Button asChild className="w-full">
-                <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
-                  Get a Quote
-                </Link>
-              </Button>
+              <QuoteFormPrimaryCta
+                contactPath="/contact"
+                variant="default"
+                size="default"
+                className="w-full"
+                ctaText={headerQuoteLabel}
+                ctaSeed={headerQuoteSeed}
+                onAfterNavigate={() => setMobileMenuOpen(false)}
+              >
+                {headerQuoteLabel}
+              </QuoteFormPrimaryCta>
             </div>
           </nav>
         </div>

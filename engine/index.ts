@@ -4,7 +4,10 @@ export {
   digitsFromPhone,
   type TrackCallClickContext,
 } from "./lib/phone/handleCallClick";
+export { recordCtaResult, getBestCtaForService, type CtaPerfStats } from "./lib/ctaPerformanceStore";
 export { TrackablePhoneLink, type TrackablePhoneLinkProps } from "./components/TrackablePhoneLink";
+export { QuoteFormPrimaryCta, type QuoteFormPrimaryCtaProps } from "./components/QuoteFormPrimaryCta";
+export { QuoteFormHashHandler } from "./components/QuoteFormHashHandler";
 export { getVariantIndex } from "./lib/contentVariants";
 export {
   getPageTier,

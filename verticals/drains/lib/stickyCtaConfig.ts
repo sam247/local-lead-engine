@@ -3,7 +3,6 @@ export type StickyCtaConfig = {
   defaultText: string;
   issueMap: Record<string, string>;
   ctaPrimary: string;
-  ctaSecondary: string;
 };
 
 export const stickyCtaConfig: StickyCtaConfig = {
@@ -17,5 +16,4 @@ export const stickyCtaConfig: StickyCtaConfig = {
     "blocked-drains": "Blocked drains? Speak to an engineer now",
   },
   ctaPrimary: "Call Now",
-  ctaSecondary: "Book CCTV Survey",
 };

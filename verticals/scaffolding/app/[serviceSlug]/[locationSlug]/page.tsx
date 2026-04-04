@@ -120,6 +120,7 @@ export default async function LocationRoute({ params }: Props) {
         relatedTopicsSectionTitle={`Scaffolding guidance for ${location.name}`}
         nearbyAreasDescription={`Compare our ${service.title} in nearby areas.`}
         callTrackVertical={verticalConfig.verticalId}
+        ctaVariants={verticalConfig.ctaVariants}
       />
       <CTABanner />
     </>

@@ -32,7 +32,11 @@ export const verticalConfig: VerticalConfig = {
   baseUrl: "https://mainlineaccess.co.uk",
   primaryService: "Access Control Systems",
   industry: "Commercial access control and security systems",
-  heroSecondaryCtaText: "Get Security System Quote",
+  ctaVariants: [
+    "Get a security quote",
+    "Secure your property",
+    "Speak to a security specialist",
+  ] as const,
   problemLabel: "Access Problems",
   relatedServicesLabel: "Access",
   serviceTypesBySlug,

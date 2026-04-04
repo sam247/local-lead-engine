@@ -44,8 +44,7 @@ export default function NearMeRoute() {
         "CCTV diagnostics and drain repair specialists",
       ]}
       conversionHeading="Need urgent drain repair?"
-      secondaryCtaLabel={verticalConfig.heroSecondaryCtaText}
-      secondaryCtaPath="/contact"
+      ctaVariants={verticalConfig.ctaVariants}
       callTrackVertical={verticalConfig.verticalId}
     />
   );

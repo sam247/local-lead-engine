@@ -1,3 +1,5 @@
+import { LAST_CTA_SEED_KEY, LAST_CTA_TEXT_KEY } from "../../utils/quoteFormCta";
+
 export type TrackCallClickContext = {
   page_path?: string;
   service_slug?: string | null;
@@ -59,6 +61,17 @@ export function handleCallClick(
     // Do not block call behavior when GA4 is unavailable.
   }
 
+  let ctaText = "";
+  let ctaSeed = "";
+  try {
+    if (typeof window !== "undefined") {
+      ctaText = String(window.sessionStorage.getItem(LAST_CTA_TEXT_KEY) ?? "").trim();
+      ctaSeed = String(window.sessionStorage.getItem(LAST_CTA_SEED_KEY) ?? "").trim();
+    }
+  } catch {
+    // ignore
+  }
+
   const clickTimestamp = new Date().toISOString();
   const intentId =
     typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
@@ -86,6 +99,8 @@ export function handleCallClick(
       source,
       intent_id: intentId,
       click_timestamp: clickTimestamp,
+      cta_text: ctaText,
+      cta_seed: ctaSeed,
     }),
     keepalive: true,
   }).catch(() => {

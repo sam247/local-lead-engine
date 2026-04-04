@@ -9,6 +9,7 @@ import { ActionPanel } from "./ActionPanel";
 import type { HubData, InfoPageData, Service, CompanyInfo, Location } from "../types";
 import { getServiceUrl } from "../utils/serviceUrls";
 import { buildFeaturedServiceLocationLinks } from "../utils/internalLinkTargets";
+import { getCtaVariant } from "../utils/ctaVariants";
 
 export interface CrossSection {
   label: string;
@@ -38,6 +39,9 @@ export interface HubPageProps {
   serviceCtaBody?: string;
   serviceCtaText?: string;
   callTrackVertical: string;
+  /** When set with ctaBannerSeed, hub bottom banner CTA label uses deterministic A/B. */
+  ctaVariants?: readonly string[];
+  ctaBannerSeed?: string;
 }
 
 export function HubPage({
@@ -56,7 +60,17 @@ export function HubPage({
   serviceCtaBody,
   serviceCtaText,
   callTrackVertical,
+  ctaVariants,
+  ctaBannerSeed,
 }: HubPageProps) {
+  const hubBiasSlug = keyServices[0]?.slug;
+  const hubQuoteCtaLabel =
+    ctaVariants && ctaBannerSeed
+      ? getCtaVariant(ctaBannerSeed, ctaVariants, { serviceSlug: hubBiasSlug })
+      : null;
+  const bannerCtaLabel = hubQuoteCtaLabel ?? "Request a site visit";
+  const actionPanelCtaText = hubQuoteCtaLabel ?? (serviceCtaText ?? "Speak to an Expert");
+
   const featuredPages = pages.slice(0, 3);
   const remainingPages = pages.slice(3);
   const earlyLocationLinks = keyServices.flatMap((service, index) =>
@@ -146,7 +160,8 @@ export function HubPage({
                 serviceCtaBody ??
                 "If you need direct advice on your situation, speak to our team and we will help you choose the right service."
               }
-              ctaText={serviceCtaText ?? "Speak to an Expert"}
+              ctaText={actionPanelCtaText}
+              ctaSeed={hubQuoteCtaLabel && ctaBannerSeed ? ctaBannerSeed : undefined}
               callTrackVertical={callTrackVertical}
               callTrackServiceSlug={keyServices[0]?.slug ?? null}
               callTrackLocationSlug={null}
@@ -282,7 +297,12 @@ export function HubPage({
           </div>
         </div>
       </section>
-      <CTABanner companyInfo={companyInfo} contactPath={contactPath} />
+      <CTABanner
+        companyInfo={companyInfo}
+        contactPath={contactPath}
+        ctaText={bannerCtaLabel}
+        ctaSeed={hubQuoteCtaLabel && ctaBannerSeed ? ctaBannerSeed : undefined}
+      />
     </>
   );
 }

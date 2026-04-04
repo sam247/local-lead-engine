@@ -35,7 +35,11 @@ export const verticalConfig: VerticalConfig = {
   baseUrl: "https://mainlinesurveys.co.uk",
   primaryService: "Land & Drone Surveying",
   industry: "surveying",
-  heroSecondaryCtaText: "Request a Survey Quote",
+  ctaVariants: [
+    "Get a survey quote",
+    "Speak to a surveyor",
+    "Check survey availability",
+  ] as const,
   problemLabel: "Survey Guides",
   relatedServicesLabel: "Survey",
   serviceTypesBySlug,

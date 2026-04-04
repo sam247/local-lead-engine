@@ -287,6 +287,7 @@ export default async function LocationRoute({ params }: Props) {
         nearbyProjects={nearbyProjectsList.length > 0 ? nearbyProjectsList : undefined}
         relatedTopicLinks={relatedTopicLinks.length > 0 ? relatedTopicLinks : undefined}
         callTrackVertical={verticalConfig.verticalId}
+        ctaVariants={verticalConfig.ctaVariants}
         conversionAsideBullets={sidebarBullets}
       />
       <CTABanner />

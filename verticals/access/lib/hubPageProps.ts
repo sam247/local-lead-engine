@@ -34,5 +34,7 @@ export function getHubPageProps(category: string) {
     companyInfo: verticalConfig.companyInfo,
     baseUrl: verticalConfig.baseUrl,
     callTrackVertical: verticalConfig.verticalId,
+    ctaVariants: verticalConfig.ctaVariants,
+    ctaBannerSeed: `${hub.category}-${hub.basePath}`,
   };
 }

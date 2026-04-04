@@ -21,6 +21,9 @@ const OPTIONAL_CALL_HEADERS = [
   "twilio_call_sid",
   "call_duration",
   "orphan",
+  "cta_text",
+  "cta_seed",
+  "call_quality",
 ] as const;
 
 /** Appended to sheet header row when missing (to the right of existing columns). */
@@ -30,6 +33,9 @@ const TRAILING_COLUMN_NAMES = [
   "twilio_call_sid",
   "call_duration",
   "orphan",
+  "cta_text",
+  "cta_seed",
+  "call_quality",
 ] as const;
 
 type CallRecord = Record<string, string>;
@@ -205,6 +211,9 @@ function normalizeInput(body: Record<string, unknown>, req: Request): CallRecord
     twilio_call_sid: "",
     call_duration: "",
     orphan: "",
+    cta_text: trimToString(body.cta_text),
+    cta_seed: trimToString(body.cta_seed),
+    call_quality: "",
   };
 }
 

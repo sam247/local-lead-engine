@@ -34,7 +34,11 @@ export const verticalConfig: VerticalConfig = {
   baseUrl: "https://mainlinedrains.co.uk",
   primaryService: "Drain Collapse Repair",
   industry: "drainage",
-  heroSecondaryCtaText: "Book CCTV Drain Survey",
+  ctaVariants: [
+    "Get a drain inspection",
+    "Book a drain survey",
+    "Speak to a drainage engineer",
+  ] as const,
   problemLabel: "Drain Problems",
   relatedServicesLabel: "Drain",
   serviceTypesBySlug,

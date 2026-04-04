@@ -116,5 +116,7 @@ export function getCollapsedDrainsGuideProps() {
     bottomCtaBody:
       "Contact us for a free, no-obligation quote. We'll match you with a qualified survey partner.",
     callTrackVertical: verticalConfig.verticalId,
+    ctaVariants: verticalConfig.ctaVariants,
+    ctaBiasServiceSlug: "topographical-survey",
   };
 }

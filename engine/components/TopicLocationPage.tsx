@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { BreadcrumbNav } from "./BreadcrumbNav";
 import { Button } from "./ui/button";
+import { QuoteFormPrimaryCta } from "./QuoteFormPrimaryCta";
 import type { Location } from "../types";
 import { getVariantIndex } from "../lib/contentVariants";
 import { getPageTier, pageSeoDataAttrs, type PageType } from "../lib/pageWeighting";
+import { getCtaVariant } from "../utils/ctaVariants";
 
 export interface TopicLocationProcessStep {
   title: string;
@@ -31,8 +33,10 @@ export interface TopicLocationPageProps {
   primaryCtaHref: string;
   secondaryCtaText?: string;
   secondaryCtaHref?: string;
-  contactQuoteText?: string;
-  companyName?: string;
+  contactPath?: string;
+  ctaVariants: readonly string[];
+  /** Service slug for CTA performance bias (e.g. primary service for this topic). */
+  quoteCtaBiasServiceSlug?: string | null;
   /** Optional internal link count for page tiering (future crawl/analytics feed). */
   inlinkCount?: number | null;
 }
@@ -100,10 +104,15 @@ export function TopicLocationPage({
   primaryCtaHref,
   secondaryCtaText,
   secondaryCtaHref,
-  contactQuoteText,
-  companyName,
+  contactPath = "/contact",
+  ctaVariants,
+  quoteCtaBiasServiceSlug = null,
   inlinkCount,
 }: TopicLocationPageProps) {
+  const topicQuoteCtaSeed = `${topicSlug}-${locationSlug}`;
+  const topicQuoteCtaLabel = getCtaVariant(topicQuoteCtaSeed, ctaVariants, {
+    serviceSlug: quoteCtaBiasServiceSlug ?? undefined,
+  });
   const seoPageType: PageType = "service_location";
   const pageTier = getPageTier({ inlinks: inlinkCount ?? null, pageType: seoPageType });
   const rootSeoAttrs = pageSeoDataAttrs(pageTier, seoPageType);
@@ -319,9 +328,14 @@ export function TopicLocationPage({
             View full {topicTitle.toLowerCase()} guide
           </Link>{" "}
           for wider planning context, or{" "}
-          <Link href="/contact" className="text-primary hover:underline">
-            {contactQuoteText ?? `contact ${companyName ?? "our team"} for a quote`}
-          </Link>
+          <QuoteFormPrimaryCta
+            contactPath={contactPath}
+            linkClassName="text-primary hover:underline"
+            ctaText={topicQuoteCtaLabel}
+            ctaSeed={topicQuoteCtaSeed}
+          >
+            {topicQuoteCtaLabel}
+          </QuoteFormPrimaryCta>
           .
         </p>
       </section>

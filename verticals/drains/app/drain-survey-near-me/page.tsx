@@ -35,6 +35,7 @@ export default function NearMeRoute() {
       otherServices={otherServices}
       baseUrl={verticalConfig.baseUrl}
       pagePath={pagePath}
+      ctaVariants={verticalConfig.ctaVariants}
       callTrackVertical={verticalConfig.verticalId}
     />
   );

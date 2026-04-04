@@ -43,6 +43,7 @@ export default function FoundationProblemSlugPage({ params }: Props) {
       featuredLocations={locations.slice(0, 1).map((loc) => ({ id: loc.id, name: loc.name }))}
       primaryServiceSlug={problem.primaryServiceSlug}
       primaryServiceLabel={problem.primaryServiceLabel}
+      ctaVariants={verticalConfig.ctaVariants}
       locationLinkPath={(slug, id) => `/${slug}/${id}`}
       servicesNearYouTitle="Groundworks services near you"
       servicesNearYouIntro="Our teams deliver foundation, piling, and excavation services across the area. See a local service route below."

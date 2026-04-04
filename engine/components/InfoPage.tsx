@@ -9,7 +9,9 @@ import { RelatedLinks } from "./RelatedLinks";
 import { BreadcrumbNav } from "./BreadcrumbNav";
 import { CTABanner } from "./CTABanner";
 import { TrackablePhoneLink } from "./TrackablePhoneLink";
+import { QuoteFormPrimaryCta } from "./QuoteFormPrimaryCta";
 import { getVariantIndex } from "../lib/contentVariants";
+import { getCtaVariant } from "../utils/ctaVariants";
 import { getPageTier, pageSeoDataAttrs, type PageType } from "../lib/pageWeighting";
 import { getServiceUrl } from "../utils/serviceUrls";
 import type { HubData, InfoPageData, Service, Location, CompanyInfo } from "../types";
@@ -73,6 +75,8 @@ export interface InfoPageProps {
   /** Title for the related guides block in sidebar. Default "Related Articles". */
   relatedGuidesTitle?: string;
   callTrackVertical: string;
+  /** Deterministic A/B copy pool for primary quote CTAs on this page. */
+  ctaVariants: readonly string[];
   /** Optional internal link count for page tiering (future crawl/analytics feed). */
   inlinkCount?: number | null;
 }
@@ -94,8 +98,10 @@ export function InfoPage({
   getCategoryPages,
   relatedGuidesTitle = "Related Articles",
   callTrackVertical,
+  ctaVariants,
   inlinkCount,
 }: InfoPageProps) {
+  const quoteCtaSeed = `info-${hub.category}-${page.slug}`;
   const seoPageType: PageType = "topic";
   const pageTier = getPageTier({ inlinks: inlinkCount ?? null, pageType: seoPageType });
   const rootSeoAttrs = pageSeoDataAttrs(pageTier, seoPageType);
@@ -126,6 +132,10 @@ export function InfoPage({
     ...((page.additionalServiceLocationLinks ?? []).slice(0, 1)),
   ];
   const earlyServiceLocationHrefSet = new Set(earlyServiceLocationLinks.map((link) => link.href));
+  const quoteCtaBiasSlug = firstRelatedServiceSlug ?? services[0]?.slug;
+  const quoteCtaLabel = getCtaVariant(quoteCtaSeed, ctaVariants, {
+    serviceSlug: quoteCtaBiasSlug,
+  });
   const h2Seed = `info-h2:${hub.category}:${page.slug}`;
   const h2When = INFO_H2_WHEN_NEEDED[getVariantIndex(`${h2Seed}:when`, INFO_H2_WHEN_NEEDED.length)];
   const h2Signs = INFO_H2_SIGNS[getVariantIndex(`${h2Seed}:signs`, INFO_H2_SIGNS.length)];
@@ -263,7 +273,9 @@ export function InfoPage({
               <MidContentCTA
                 companyInfo={companyInfo}
                 message={`Think you might have ${page.title.toLowerCase()}? A professional inspection will confirm the diagnosis.`}
+                buttonText={quoteCtaLabel}
                 buttonLink={contactPath}
+                buttonCtaSeed={quoteCtaSeed}
                 callTrackVertical={callTrackVertical}
                 callTrackServiceSlug={page.relatedServices?.[0] ?? services[0]?.slug ?? null}
                 callTrackLocationSlug={null}
@@ -321,9 +333,14 @@ export function InfoPage({
                       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
                         {relatedPageLinks.length + 1}
                       </span>
-                      <Link href={contactPath} className="text-sm text-primary hover:underline">
-                        Get a Free Quote →
-                      </Link>
+                      <QuoteFormPrimaryCta
+                        contactPath={contactPath}
+                        linkClassName="text-sm text-primary hover:underline"
+                        ctaText={`${quoteCtaLabel} →`}
+                        ctaSeed={quoteCtaSeed}
+                      >
+                        {quoteCtaLabel} →
+                      </QuoteFormPrimaryCta>
                     </li>
                   </ol>
                 </div>
@@ -356,6 +373,8 @@ export function InfoPage({
                 <InspectionCTA
                   companyInfo={companyInfo}
                   contactPath={contactPath}
+                  ctaText={quoteCtaLabel}
+                  ctaSeed={quoteCtaSeed}
                   callTrackVertical={callTrackVertical}
                   callTrackServiceSlug={page.relatedServices?.[0] ?? services[0]?.slug ?? null}
                   callTrackLocationSlug={null}
@@ -366,9 +385,15 @@ export function InfoPage({
               <div className="rounded-lg bg-primary p-6 text-center">
                 <p className="mb-4 text-lg font-medium text-primary-foreground">{page.ctaText}</p>
                 <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-                  <Button size="lg" variant="secondary" asChild>
-                    <Link href={contactPath}>Discuss your project</Link>
-                  </Button>
+                  <QuoteFormPrimaryCta
+                    contactPath={contactPath}
+                    size="lg"
+                    variant="secondary"
+                    ctaText={quoteCtaLabel}
+                    ctaSeed={quoteCtaSeed}
+                  >
+                    {quoteCtaLabel}
+                  </QuoteFormPrimaryCta>
                   <TrackablePhoneLink
                     phone={companyInfo.phone}
                     vertical={callTrackVertical}
@@ -419,9 +444,16 @@ export function InfoPage({
                 >
                   <Phone className="h-4 w-4" /> Call Now
                 </TrackablePhoneLink>
-                <Button asChild className="mt-4 w-full">
-                  <Link href={contactPath}>Get a Free Quote</Link>
-                </Button>
+                <QuoteFormPrimaryCta
+                  contactPath={contactPath}
+                  className="mt-4 w-full"
+                  variant="default"
+                  size="default"
+                  ctaText={quoteCtaLabel}
+                  ctaSeed={quoteCtaSeed}
+                >
+                  {quoteCtaLabel}
+                </QuoteFormPrimaryCta>
               </div>
             </div>
           </div>
@@ -431,6 +463,8 @@ export function InfoPage({
       <CTABanner
         companyInfo={companyInfo}
         contactPath={contactPath}
+        ctaText={quoteCtaLabel}
+        ctaSeed={quoteCtaSeed}
         pageTier={pageTier}
         pageType={seoPageType}
       />

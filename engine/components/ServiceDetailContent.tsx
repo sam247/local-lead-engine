@@ -12,6 +12,7 @@ import { SectionIntro } from "./SectionIntro";
 import { ProcessTimeline } from "./ProcessTimeline";
 import { TrustStrip } from "./TrustStrip";
 import { ActionPanel } from "./ActionPanel";
+import { QuoteFormPrimaryCta } from "./QuoteFormPrimaryCta";
 import { getImageAlt } from "../utils/imageAlt";
 import { KEY_SERVICE_DETAIL_LOCATION_IDS } from "../data/key-location-ids";
 import { getVariantIndex } from "../lib/contentVariants";
@@ -20,6 +21,7 @@ import { pickServiceDetailFeaturedLocations } from "../utils/pickFeaturedLocatio
 import { getServiceUrl } from "../utils/serviceUrls";
 import { buildFeaturedServiceLocationLinks } from "../utils/internalLinkTargets";
 import type { Service, Location, VerticalConfig } from "../types";
+import { getCtaVariant } from "../utils/ctaVariants";
 
 function pickServiceDetailSidebarLocations(all: Location[]): Location[] {
   return all
@@ -396,8 +398,10 @@ export function ServiceDetailContent({
     "Each project is delivered using the most suitable method for site conditions and requirements, supported by clear reporting at every stage.",
   ];
   const discussCta = ctaCopy.discuss[ctaVariant % ctaCopy.discuss.length];
-  const requestCta = ctaCopy.request[ctaVariant % ctaCopy.request.length];
-  const sidebarCta = ctaCopy.sidebar[ctaVariant % ctaCopy.sidebar.length];
+  const quoteCtaSeed = `${verticalConfig.verticalId}-service-hub-${service.slug}`;
+  const quoteCtaLabel = getCtaVariant(quoteCtaSeed, verticalConfig.ctaVariants, {
+    serviceSlug: service.slug,
+  });
   const actionHeading = ctaCopy.actionHeading[ctaVariant % ctaCopy.actionHeading.length];
   const openingLeadCandidates = [
     `In practice, that means balancing programme, cost certainty, and delivery constraints before site works begin, so decisions stay practical through to completion.`,
@@ -617,8 +621,9 @@ export function ServiceDetailContent({
               <MidContentCTA
                 companyInfo={verticalConfig.companyInfo}
                 message={firstCtaMessage}
-                buttonText={firstCtaButtonText}
+                buttonText={firstCtaButtonText ?? quoteCtaLabel}
                 buttonLink={firstCtaButtonLink}
+                buttonCtaSeed={firstCtaButtonText ? `${quoteCtaSeed}:mid-first` : quoteCtaSeed}
                 callTrackVertical={verticalConfig.verticalId}
                 callTrackServiceSlug={service.slug}
                 callTrackLocationSlug={null}
@@ -814,7 +819,8 @@ export function ServiceDetailContent({
                 contactPath={contactPath}
                 heading={secondCtaHeading}
                 body={secondCtaBody}
-                ctaText={secondCtaButtonText}
+                ctaText={secondCtaButtonText ?? quoteCtaLabel}
+                ctaSeed={secondCtaButtonText ? `${quoteCtaSeed}:inspection` : quoteCtaSeed}
                 callTrackVertical={verticalConfig.verticalId}
                 callTrackServiceSlug={service.slug}
                 callTrackLocationSlug={null}
@@ -827,6 +833,7 @@ export function ServiceDetailContent({
                 heading={actionHeading}
                 body="Share your site details and goals. We will recommend the right scope and provide a clear quote."
                 ctaText={discussCta.replace("quote", "site visit")}
+                ctaSeed={`${quoteCtaSeed}:action-discuss`}
                 callTrackVertical={verticalConfig.verticalId}
                 callTrackServiceSlug={service.slug}
                 callTrackLocationSlug={null}
@@ -876,9 +883,16 @@ export function ServiceDetailContent({
                   </Link>
                 </p>
               </div>
-              <Button asChild className="w-full" variant="highlight">
-                <Link href={contactPath}>{sidebarCta}</Link>
-              </Button>
+              <QuoteFormPrimaryCta
+                contactPath={contactPath}
+                className="w-full"
+                variant="highlight"
+                size="default"
+                ctaText={quoteCtaLabel}
+                ctaSeed={quoteCtaSeed}
+              >
+                {quoteCtaLabel}
+              </QuoteFormPrimaryCta>
             </div>
           </div>
         </div>
@@ -893,7 +907,8 @@ export function ServiceDetailContent({
         contactPath={contactPath}
         heading={secondCtaHeading}
         body={secondCtaBody}
-        ctaText={secondCtaButtonText ?? requestCta}
+        ctaText={secondCtaButtonText ?? quoteCtaLabel}
+        ctaSeed={secondCtaButtonText ? `${quoteCtaSeed}:banner` : quoteCtaSeed}
         pageTier={pageTier}
         pageType={seoPageType}
       />

@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { Phone } from "lucide-react";
 import { Button } from "./ui/button";
+import { QuoteFormPrimaryCta } from "./QuoteFormPrimaryCta";
 import type { CompanyInfo } from "../types";
 import type { PageTier, PageType } from "../lib/pageWeighting";
 import { pageSeoDataAttrs } from "../lib/pageWeighting";
@@ -12,6 +12,8 @@ export interface ActionPanelProps {
   heading: string;
   body: string;
   ctaText: string;
+  /** Same seed passed to getCtaVariant for this label (when applicable). */
+  ctaSeed?: string;
   className?: string;
   callTrackVertical?: string;
   callTrackServiceSlug?: string | null;
@@ -27,6 +29,7 @@ export function ActionPanel({
   heading,
   body,
   ctaText,
+  ctaSeed,
   className,
   callTrackVertical,
   callTrackServiceSlug = null,
@@ -43,9 +46,15 @@ export function ActionPanel({
       <h3 className="mb-2 font-display text-xl font-bold">{heading}</h3>
       <p className="mb-4 text-muted-foreground">{body}</p>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Button asChild variant="highlight">
-          <Link href={contactPath}>{ctaText}</Link>
-        </Button>
+        <QuoteFormPrimaryCta
+          contactPath={contactPath}
+          variant="highlight"
+          size="default"
+          ctaText={ctaText}
+          ctaSeed={ctaSeed}
+        >
+          {ctaText}
+        </QuoteFormPrimaryCta>
         <TrackablePhoneLink
           phone={companyInfo.phone}
           vertical={callTrackVertical ?? ""}

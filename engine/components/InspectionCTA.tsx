@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Button } from "./ui/button";
+import { QuoteFormPrimaryCta } from "./QuoteFormPrimaryCta";
 import { Phone, Search } from "lucide-react";
 import type { CompanyInfo } from "../types";
 import type { PageTier, PageType } from "../lib/pageWeighting";
@@ -12,6 +12,7 @@ export interface InspectionCTAProps {
   heading?: string;
   body?: string;
   ctaText?: string;
+  ctaSeed?: string;
   /** When set, phone taps are tracked before opening the dialer */
   callTrackVertical?: string;
   callTrackServiceSlug?: string | null;
@@ -27,6 +28,7 @@ export function InspectionCTA({
   heading = "Get a Free Quote",
   body = "Contact us for a no-obligation quote or to discuss your project. We'll advise on the best approach and provide clear pricing.",
   ctaText = "Get a Quote",
+  ctaSeed,
   callTrackVertical,
   callTrackServiceSlug = null,
   callTrackLocationSlug = null,
@@ -47,9 +49,15 @@ export function InspectionCTA({
           <h3 className="mb-2 font-display text-xl font-bold">{heading}</h3>
           <p className="mb-4 text-muted-foreground">{body}</p>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button variant="highlight" size="lg" asChild>
-              <Link href={contactPath}>{ctaText}</Link>
-            </Button>
+            <QuoteFormPrimaryCta
+              contactPath={contactPath}
+              variant="highlight"
+              size="lg"
+              ctaText={ctaText}
+              ctaSeed={ctaSeed}
+            >
+              {ctaText}
+            </QuoteFormPrimaryCta>
             <TrackablePhoneLink
               phone={companyInfo.phone}
               vertical={callTrackVertical ?? ""}

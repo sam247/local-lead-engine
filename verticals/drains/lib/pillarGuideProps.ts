@@ -124,5 +124,7 @@ export function getCollapsedDrainsGuideProps() {
     bottomCtaBody:
       "Contact us for a free CCTV survey and no-obligation repair quote.",
     callTrackVertical: verticalConfig.verticalId,
+    ctaVariants: verticalConfig.ctaVariants,
+    ctaBiasServiceSlug: "drain-collapse-repair",
   };
 }

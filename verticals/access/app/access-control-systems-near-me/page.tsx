@@ -44,8 +44,7 @@ export default function NearMeRoute() {
         "Integration with major brands, BMS and legacy building systems",
       ]}
       conversionHeading="Need a security or access survey?"
-      secondaryCtaLabel={verticalConfig.heroSecondaryCtaText}
-      secondaryCtaPath="/contact"
+      ctaVariants={verticalConfig.ctaVariants}
       callTrackVertical={verticalConfig.verticalId}
     />
   );
