@@ -7,10 +7,11 @@ import { sitePreparationPages } from "@/data/sitePreparationPages";
 import { drivewayGroundworksPages } from "@/data/drivewayGroundworksPages";
 import { constructionDrainagePages } from "@/data/constructionDrainagePages";
 
-// Company info – used by config and layout
+// Company info – used by config and layout (public Twilio inbound; set NEXT_PUBLIC_PHONE_NUMBER in deploy)
+const publicPhone = (process.env.NEXT_PUBLIC_PHONE_NUMBER ?? "").trim();
 export const companyInfo = {
   name: "Mainline Groundworks",
-  phone: "+44 1865 537995",
+  phone: publicPhone,
   email: "info@mainlinegroundworks.co.uk",
   address: "128 City Road, London, EC1V 2NX",
   hours: "Mon–Fri 8am–6pm, 24/7 emergency callout support",

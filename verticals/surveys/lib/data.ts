@@ -453,10 +453,11 @@ export const blogPosts = [
   }
 ];
 
-// Company info
+// Company info (public Twilio inbound; set NEXT_PUBLIC_PHONE_NUMBER in deploy)
+const publicPhone = (process.env.NEXT_PUBLIC_PHONE_NUMBER ?? "").trim();
 export const companyInfo = {
   name: "Mainline Surveys",
-  phone: "+44 7455 493536",
+  phone: publicPhone,
   email: "info@mainlinesurveys.co.uk",
   address: "128 City Road, London, EC1V 2NX",
   hours: "Mon–Fri 8am–6pm, 24/7 emergency callout support",

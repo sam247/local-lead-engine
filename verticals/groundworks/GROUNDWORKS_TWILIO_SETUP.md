@@ -6,7 +6,8 @@ This runbook is for the groundworks vertical only.
 
 Set these in the groundworks deployment environment:
 
-- `FORWARD_PHONE_NUMBER=+447XXXXXXXXX`
+- `NEXT_PUBLIC_PHONE_NUMBER=+44XXXXXXXXXX` (your Twilio **inbound** number; must match what users dial from the site and what appears in JSON-LD)
+- `FORWARD_PHONE_NUMBER=+447XXXXXXXXX` (server-only; staff mobile/desk that Twilio `<Dial>` forwards to)
 - `GA4_MEASUREMENT_ID=G-XXXXXXXXXX`
 - `GA4_API_SECRET=XXXXXXXXXX`
 - `GOOGLE_SHEETS_WEBHOOK_URL=https://hooks.zapier.com/...`
@@ -21,8 +22,8 @@ Optional existing click-log vars (already used by `/api/track-call-click`):
 
 In Twilio Console for the groundworks number:
 
-- **Groundworks Twilio number**
-  - `+441865537995`
+- **Groundworks Twilio number** (same E.164 value as `NEXT_PUBLIC_PHONE_NUMBER` in deploy)
+  - Example placeholder: `+44XXXXXXXXXX`
 
 - **A call comes in**
   - Type: `Webhook`

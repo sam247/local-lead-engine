@@ -6,15 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowRight, ArrowLeft, Phone, FileCheck, Home, Map, Camera, Search } from "lucide-react";
+import { ArrowRight, ArrowLeft, FileCheck, Home, Map, Camera, Search } from "lucide-react";
 import { heroBg } from "@/lib/images";
-import { companyInfo } from "@/lib/data";
 import { verticalConfig } from "@/config";
 import { useToast } from "@/hooks/use-toast";
 import {
   trackEvent,
   getVariantIndex,
-  TrackablePhoneLink,
   leadEmailField,
   leadPhoneField,
   leadPostcodeField,
@@ -247,23 +245,13 @@ const Hero = () => {
               </Link>
             </p>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div>
               <Button variant="highlight" size="lg" asChild>
                 <Link href="/contact">
                   {verticalConfig.heroSecondaryCtaText ?? "Request Inspection"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <TrackablePhoneLink
-                phone={companyInfo.phone}
-                vertical={verticalConfig.verticalId}
-                serviceSlug={null}
-                locationSlug={null}
-                className="inline-flex items-center gap-2 text-primary-foreground hover:underline"
-              >
-                <Phone className="h-5 w-5" />
-                Call Now
-              </TrackablePhoneLink>
             </div>
           </div>
 

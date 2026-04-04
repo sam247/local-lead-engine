@@ -190,7 +190,7 @@ async function getNextCallId(
 
 function normalizeInput(body: Record<string, unknown>, req: Request): CallRecord {
   const pagePath = trimToString(body.page_path) || parsePathFromReferer(req);
-  const forwardTo = trimToString(process.env.FORWARD_PHONE_NUMBER);
+  const publicTo = trimToString(process.env.NEXT_PUBLIC_PHONE_NUMBER);
   return {
     vertical: trimToString(body.vertical),
     source_site: getRequestDomain(req),
@@ -204,7 +204,7 @@ function normalizeInput(body: Record<string, unknown>, req: Request): CallRecord
     call_status: "",
     event_type: "click",
     intent_id: trimToString(body.intent_id),
-    to_number: forwardTo,
+    to_number: publicTo,
     twilio_call_sid: "",
     call_duration: "",
     orphan: "",

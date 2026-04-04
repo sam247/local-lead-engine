@@ -477,10 +477,11 @@ export const blogPosts = [
   }
 ];
 
-// Company info
+// Company info (public Twilio inbound; set NEXT_PUBLIC_PHONE_NUMBER in deploy)
+const publicPhone = (process.env.NEXT_PUBLIC_PHONE_NUMBER ?? "").trim();
 export const companyInfo = {
   name: "Mainline Drains",
-  phone: "+44 7455 493536",
+  phone: publicPhone,
   email: "info@mainlinedrains.co.uk",
   address: "123 Drainage Way, London, SW1A 1AA",
   hours: "24/7 Emergency Service Available",

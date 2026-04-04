@@ -3,10 +3,11 @@ import { guidesPages } from "@/data/guides";
 import { safetyPages } from "@/data/safetyPages";
 import { costsPages } from "@/data/costsPages";
 
-// Company info – used by config and layout
+// Company info – used by config and layout (public Twilio inbound; set NEXT_PUBLIC_PHONE_NUMBER in deploy)
+const publicPhone = (process.env.NEXT_PUBLIC_PHONE_NUMBER ?? "").trim();
 export const companyInfo = {
   name: "Mainline Scaffold",
-  phone: "+44 1865 537996",
+  phone: publicPhone,
   email: "info@mainlinescaffold.co.uk",
   address: "128 City Road, London, EC1V 2NX",
   hours: "Mon–Fri 8am–6pm, 24/7 emergency callout support",
