@@ -24,8 +24,8 @@ const faqSections = [
   {
     title: "Survey Costs",
     items: [
-      { question: "How much does a topographical survey cost?", answer: "Costs depend on site size and complexity. Small residential plots typically range from around £600–£1,200 + VAT; larger sites can be £1,500–£4,000+. Survey partners provide fixed quotes once scope is clear.", link: "/drain-costs/topographical-survey-cost" },
-      { question: "How much does a drone survey cost?", answer: "Drone survey pricing depends on site size, deliverables and airspace. Small sites or roof inspections often start from around £750–£1,500 + VAT; larger sites may be £2,000–£7,000+. Request a quote for your project.", link: "/drain-costs/drone-survey-cost" },
+      { question: "How much does a topographical survey cost?", answer: "Costs depend on site size and complexity. Small residential plots typically range from around £600–£1,200 + VAT; larger sites can be £1,500–£4,000+. Survey partners provide fixed quotes once scope is clear.", link: "/survey-costs/topographical-survey-cost" },
+      { question: "How much does a drone survey cost?", answer: "Drone survey pricing depends on site size, deliverables and airspace. Small sites or roof inspections often start from around £750–£1,500 + VAT; larger sites may be £2,000–£7,000+. Request a quote for your project.", link: "/survey-costs/drone-survey-cost" },
       { question: "How long does a survey take?", answer: "A typical topographical or measured building survey for a single dwelling can be completed on site in one day, with drawings delivered within a few days to a week. Larger or drone surveys may need more processing time.", link: "/survey-guides/how-long-does-a-drone-survey-take" },
     ],
   },

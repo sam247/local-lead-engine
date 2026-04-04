@@ -16,8 +16,9 @@ import { surveyProblemPages } from "@/data/problemPages";
 import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Mainline Surveys | Land & Drone Surveying Across the UK",
-  description: "Professional land and drone surveys for planning, development and construction. Topographical, measured building, utility and drone survey services.",
+  title: "Mainline Surveys | Land, Building & Drone Surveyors Across the UK",
+  description:
+    "Professional topographical, measured building, boundary, utility and drone surveys for planning, development and construction. UK survey quotes and specialist partners.",
   alternates: { canonical: "https://mainlinesurveys.co.uk" },
 };
 
@@ -38,7 +39,7 @@ export default function HomePage() {
   const problemItems = surveyProblemPages.slice(0, 6).map((problem) => ({
     slug: problem.slug,
     title: problem.title,
-    href: `/drain-problems/${problem.slug}`,
+    href: `/survey-issues/${problem.slug}`,
     context: problem.whenToCall,
   }));
 

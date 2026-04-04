@@ -44,20 +44,20 @@ export function getHubPageProps(category: string) {
   const pages = getCategoryPages(category);
   if (!hub || pages.length === 0) return null;
   const keyServices = services.filter((s) =>
-    ["drain-collapse-repair", "cctv-drain-surveys", "drain-excavation"].includes(
+    ["topographical-survey", "measured-building-survey", "drone-survey", "boundary-survey", "utility-survey"].includes(
       s.slug
     )
-  );
+  ).slice(0, 3);
   const heroImage = getHeroImage({
     category,
     categoryImagesMap: categoryImages,
   });
   const heroAlt =
-    categoryAltText[category] || `${hub.title} - drainage services`;
+    categoryAltText[category] || `${hub.title} - professional survey services`;
   const crossSections = categorisePages(category);
   const pillarGuides = [
-    { title: "Collapsed Drains Complete Guide", href: "/collapsed-drains-complete-guide" },
-    { title: "CCTV Drain Survey Guide", href: "/survey-guides" },
+    { title: "When you need a survey", href: "/survey-issues" },
+    { title: "Survey guides hub", href: "/survey-guides" },
   ];
   return {
     hub,

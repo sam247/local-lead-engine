@@ -291,7 +291,7 @@ export default async function LocationRoute({ params }: Props) {
         contactPath="/contact"
         trustSectionTitle={`Trusted survey partners in ${location.name}`}
         trustPoints={trustPoints}
-        diagnosisGuidePath="/do-i-need-a-drain-survey"
+        diagnosisGuidePath="/do-i-need-a-land-survey"
         introParagraph={introParagraph}
         extraServiceLocationLinks={extraServiceLocationLinks}
         priorityLocalLinks={priorityLocalLinks}

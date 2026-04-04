@@ -14,7 +14,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { ResourcesMenu, getDefaultResourcesMenuLabels, getResourcesMenuFlatLinks } from "engine/components/navigation/ResourcesMenu";
+import { SurveysResourcesMenuContent, surveysMobileResourceLinks } from "@/components/layout/SurveysResourcesMenu";
 import {
   getServiceUrl,
   isServiceHubPath,
@@ -26,8 +26,6 @@ import {
 import { verticalConfig } from "@/config";
 import { cn } from "@/lib/utils";
 
-const resourceLabels = getDefaultResourcesMenuLabels(verticalConfig.siteName);
-const mobileResourceLinks = getResourcesMenuFlatLinks(verticalConfig.siteName);
 const HEADER_LOGO_WIDTH = 210;
 
 const Header = () => {
@@ -112,7 +110,7 @@ const Header = () => {
                   Resources
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ResourcesMenu labels={resourceLabels} />
+                  <SurveysResourcesMenuContent />
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -175,7 +173,7 @@ const Header = () => {
               </button>
               {resourcesOpen && (
                 <div className="ml-4 border-l border-border pl-4">
-                  {mobileResourceLinks.map((item) => (
+                  {surveysMobileResourceLinks.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}

@@ -77,12 +77,12 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/companies-cost" className="text-sm text-neutral-300 transition-colors hover:text-white">
+                <Link href="/survey-costs" className="text-sm text-neutral-300 transition-colors hover:text-white">
                   Survey Costs
                 </Link>
               </li>
               <li>
-                <Link href="/drain-survey" className="text-sm text-neutral-300 transition-colors hover:text-white">
+                <Link href="/survey-services" className="text-sm text-neutral-300 transition-colors hover:text-white">
                   Survey Types
                 </Link>
               </li>
@@ -92,7 +92,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/homebuyer-drainage" className="text-sm text-neutral-300 transition-colors hover:text-white">
+                <Link href="/homebuyer-surveys" className="text-sm text-neutral-300 transition-colors hover:text-white">
                   Homebuyer Guides
                 </Link>
               </li>

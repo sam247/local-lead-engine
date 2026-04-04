@@ -1,5 +1,12 @@
 import { notFound, permanentRedirect } from "next/navigation";
-import { getHubData, getCategoryPages, services, locations } from "@/lib/data";
+import {
+  getHubData,
+  getCategoryPages,
+  getGuideHubCategoryForSlug,
+  getGuideTopicHref,
+  services,
+  locations,
+} from "@/lib/data";
 import { InfoPage, ProblemPage } from "engine";
 import { buildInfoMetadata, buildProblemMetadata } from "engine";
 import { verticalConfig } from "@/config";
@@ -12,23 +19,17 @@ export const dynamic = "force-static";
 export const revalidate = false;
 
 const category = "problems";
-const guidesCategory = "guides";
+const issuesBasePath = "/survey-issues";
 
 export async function generateStaticParams() {
-  const hubSlugs = getCategoryPages(category).map((page) => ({ slug: page.slug }));
-  const problemSlugs = surveyProblemPages.map((page) => ({ slug: page.slug }));
-  return [...problemSlugs, ...hubSlugs];
+  return surveyProblemPages.map((page) => ({ slug: page.slug }));
 }
 
 type Props = { params: { slug: string } };
 
-function slugResolvesInDrainProblemsHub(canonicalSlug: string): boolean {
+function slugResolvesInSurveyIssuesHub(canonicalSlug: string): boolean {
   if (getSurveyProblemPageBySlug(canonicalSlug)) return true;
   return getCategoryPages(category).some((p) => p.slug === canonicalSlug);
-}
-
-function slugResolvesInSurveyGuidesHub(canonicalSlug: string): boolean {
-  return getCategoryPages(guidesCategory).some((p) => p.slug === canonicalSlug);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -37,29 +38,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const suffixDuplicate = hasNumericDuplicateSuffix(rawSlug);
   const canonicalIfDuplicate =
     suffixDuplicate &&
-    (slugResolvesInDrainProblemsHub(stripped) || slugResolvesInSurveyGuidesHub(stripped))
+    (slugResolvesInSurveyIssuesHub(stripped) || getGuideHubCategoryForSlug(stripped) !== null)
       ? stripped
       : null;
 
   const problem = getSurveyProblemPageBySlug(canonicalIfDuplicate ?? rawSlug);
   if (problem) {
     const base = verticalConfig.baseUrl.replace(/\/$/, "");
-    return buildProblemMetadata(problem, verticalConfig, `${base}/drain-problems/${problem.slug}`);
+    return buildProblemMetadata(problem, verticalConfig, `${base}${issuesBasePath}/${problem.slug}`);
   }
 
-  const hubPageDrain = getCategoryPages(category).find((p) => p.slug === (canonicalIfDuplicate ?? rawSlug));
-  if (hubPageDrain) {
+  const hubPage = getCategoryPages(category).find((p) => p.slug === (canonicalIfDuplicate ?? rawSlug));
+  if (hubPage) {
     const hub = getHubData(category);
     if (!hub) return { title: "Not Found" };
-    return buildInfoMetadata(hub, hubPageDrain, verticalConfig);
+    return buildInfoMetadata(hub, hubPage, verticalConfig);
   }
 
-  if (suffixDuplicate && slugResolvesInSurveyGuidesHub(stripped) && !slugResolvesInDrainProblemsHub(stripped)) {
-    const guidePage = getCategoryPages(guidesCategory).find((p) => p.slug === stripped);
-    if (guidePage) {
-      const guidesHub = getHubData(guidesCategory);
-      if (!guidesHub) return { title: "Not Found" };
-      return buildInfoMetadata(guidesHub, guidePage, verticalConfig);
+  if (suffixDuplicate && !slugResolvesInSurveyIssuesHub(stripped)) {
+    const gCat = getGuideHubCategoryForSlug(stripped);
+    if (gCat) {
+      const guidePage = getCategoryPages(gCat).find((p) => p.slug === stripped);
+      const guidesHub = getHubData(gCat);
+      if (guidePage && guidesHub) return buildInfoMetadata(guidesHub, guidePage, verticalConfig);
     }
   }
 
@@ -73,16 +74,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: "Not Found" };
 }
 
-export default async function DrainProblemsInfoPage({ params }: Props) {
+export default async function SurveyIssuesPage({ params }: Props) {
   const rawSlug = params.slug;
   if (hasNumericDuplicateSuffix(rawSlug)) {
     const canonicalSlug = stripNumericDuplicateSuffix(rawSlug);
-    if (slugResolvesInDrainProblemsHub(canonicalSlug)) {
-      permanentRedirect(`/drain-problems/${canonicalSlug}`);
+    if (slugResolvesInSurveyIssuesHub(canonicalSlug)) {
+      permanentRedirect(`${issuesBasePath}/${canonicalSlug}`);
     }
-    if (slugResolvesInSurveyGuidesHub(canonicalSlug)) {
-      permanentRedirect(`/survey-guides/${canonicalSlug}`);
-    }
+    const guideHref = getGuideTopicHref(canonicalSlug);
+    if (guideHref) permanentRedirect(guideHref);
   }
 
   const problem = getSurveyProblemPageBySlug(rawSlug);
@@ -95,7 +95,7 @@ export default async function DrainProblemsInfoPage({ params }: Props) {
         baseUrl={verticalConfig.baseUrl}
         contactPath="/contact"
         basePath="/services"
-        problemsBasePath="/drain-problems"
+        problemsBasePath={issuesBasePath}
         problemsBreadcrumbLabel={verticalConfig.problemLabel ?? "Problems"}
         allProblems={surveyProblemPages}
         relatedProblemsTitle="Related survey issues"

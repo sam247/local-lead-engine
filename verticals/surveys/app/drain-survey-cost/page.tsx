@@ -52,16 +52,16 @@ export default function SurveyCostPage() {
               <p className="mb-6 text-muted-foreground">Survey pricing depends on site size, complexity, deliverables and access. Our survey partners provide fixed quotes once they know your scope. Use the guides below for typical ranges.</p>
               <div className="mb-8 flex flex-wrap gap-3">
                 <Button asChild variant="outline">
-                  <Link href="/drain-costs/topographical-survey-cost">Topographical Survey Cost</Link>
+                  <Link href="/survey-costs/topographical-survey-cost">Topographical Survey Cost</Link>
                 </Button>
                 <Button asChild variant="outline">
-                  <Link href="/drain-costs/measured-building-survey-cost">Measured Building Survey Cost</Link>
+                  <Link href="/survey-costs/measured-building-survey-cost">Measured Building Survey Cost</Link>
                 </Button>
                 <Button asChild variant="outline">
-                  <Link href="/drain-costs/utility-survey-cost">Utility Survey Cost</Link>
+                  <Link href="/survey-costs/utility-survey-cost">Utility Survey Cost</Link>
                 </Button>
                 <Button asChild variant="outline">
-                  <Link href="/drain-costs/drone-survey-cost">Drone Survey Cost</Link>
+                  <Link href="/survey-costs/drone-survey-cost">Drone Survey Cost</Link>
                 </Button>
               </div>
               <h2 className="mb-4 font-display text-2xl font-bold">What Affects Survey Cost?</h2>
@@ -80,7 +80,7 @@ export default function SurveyCostPage() {
                   <Link href="/survey-guides/survey-for-planning-permission" className="text-sm text-primary hover:underline">Survey for Planning Permission →</Link>
                   <Link href="/survey-guides/survey-before-building-extension" className="text-sm text-primary hover:underline">Survey Before Extension →</Link>
                   <Link href="/survey-guides/when-to-use-drone-surveys" className="text-sm text-primary hover:underline">When to Use Drone Surveys →</Link>
-                  <Link href="/drain-costs" className="text-sm text-primary hover:underline">All Cost Guides →</Link>
+                  <Link href="/survey-costs" className="text-sm text-primary hover:underline">All Cost Guides →</Link>
                   <Link href={getServiceUrl("topographical-survey")} className="text-sm text-primary hover:underline">Topographical Survey →</Link>
                   <Link href={getServiceUrl("drone-survey")} className="text-sm text-primary hover:underline">Drone Survey →</Link>
                 </div>

@@ -118,7 +118,7 @@ const definitions: ScenarioArticleDefinition[] = [
       { href: "/utility-survey/wimbledon", label: "utility survey in Wimbledon" },
       { href: "/measured-building-survey/wimbledon", label: "measured building survey in Wimbledon" },
     ],
-    guideLink: { href: "/survey-guides/utility-survey-cost", label: "what changes utility survey cost" },
+    guideLink: { href: "/survey-costs/utility-survey-cost", label: "what changes utility survey cost" },
     projectLink: { href: "/projects/utility-mapping-wimbledon-school-site", label: "utility mapping on active school site in Wimbledon" },
   },
   {

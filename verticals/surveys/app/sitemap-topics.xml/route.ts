@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { hubPages, getCategoryPages } from "@/lib/data";
 import { verticalConfig } from "@/config";
 import { buildUrlset } from "@/lib/sitemapXml";
-import { surveyProblemPages } from "@/data/problemPages";
 
 export const dynamic = "force-static";
 export const revalidate = false;
@@ -28,9 +27,6 @@ export async function GET() {
     for (const page of pages) {
       addEntry(`${baseUrl}${hub.basePath}/${page.slug}`, "monthly", 0.6);
     }
-  }
-  for (const page of surveyProblemPages) {
-    addEntry(`${baseUrl}/drain-problems/${page.slug}`, "monthly", 0.6);
   }
 
   const xml = buildUrlset(entries);

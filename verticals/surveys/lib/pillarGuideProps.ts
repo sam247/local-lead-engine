@@ -83,7 +83,7 @@ export function getCollapsedDrainsGuideProps() {
         "Typical UK cost ranges for topographical, measured building, utility and drone surveys. Costs depend on site size, complexity and deliverables.",
       links: costPages.slice(0, 4).map((p) => ({
         label: p.title,
-        href: `/drain-costs/${p.slug}`,
+        href: `/survey-costs/${p.slug}`,
       })),
     },
     {
@@ -92,8 +92,8 @@ export function getCollapsedDrainsGuideProps() {
       intro:
         "Use our decision guide to find out which survey type fits your project, then request a free quote.",
       links: [
-        { label: "Do I Need a Land Survey?", href: "/do-i-need-a-drain-survey" },
-        { label: "Survey FAQ", href: "/drainage-faq" },
+        { label: "Do I Need a Land Survey?", href: "/do-i-need-a-land-survey" },
+        { label: "Survey FAQ", href: "/faq" },
         { label: "Request a Quote", href: "/contact" },
       ],
     },
@@ -107,7 +107,7 @@ export function getCollapsedDrainsGuideProps() {
     heroSubtitle:
       "When you need a survey, which type to choose, and how much it costs. Planning, development and construction.",
     heroImage,
-    guidePath: "/collapsed-drains-complete-guide",
+    guidePath: "/survey-issues",
     sections,
     guideFaqs,
     companyInfo: verticalConfig.companyInfo,

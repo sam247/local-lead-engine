@@ -2,6 +2,7 @@ import type { InfoPageData } from "engine";
 import { legalPages } from "@/data/legal";
 import { buyerPages } from "@/data/buyer";
 import { guidesPages } from "@/data/guides";
+import { surveyProblemPages } from "@/data/problemPages";
 
 export type { InfoPageData };
 
@@ -515,49 +516,42 @@ export interface HubData {
 export const hubPages: HubData[] = [
   {
     category: "problems",
-    basePath: "/drain-problems",
+    basePath: "/survey-issues",
     title: "When You Need a Survey",
     subtitle: "Understand when to commission land and building surveys for planning, extensions and development.",
     metaDescription: "When you need a topographical, measured building, utility or drone survey. Expert guidance for architects, developers and property owners."
   },
   {
     category: "collapse",
-    basePath: "/drain-collapse",
+    basePath: "/survey-project-types",
     title: "Survey Project Types",
     subtitle: "Survey solutions for different project types — planning, extensions, development and construction.",
     metaDescription: "Land and drone survey guides for planning applications, extensions, property development and construction. UK survey advice."
   },
   {
-    category: "insurance",
-    basePath: "/drain-insurance",
-    title: "Survey Costs & Quotes",
-    subtitle: "Typical UK survey pricing and how to get a fixed quote for your project.",
-    metaDescription: "How much do land and drone surveys cost? Price guides and quote advice for topographical, measured building, utility and drone surveys."
-  },
-  {
     category: "costs",
-    basePath: "/drain-costs",
+    basePath: "/survey-costs",
     title: "Survey Cost Guides",
     subtitle: "Typical UK pricing for topographical, measured building, utility and drone surveys.",
     metaDescription: "How much do land and drone surveys cost in the UK? Price guides for topographical, measured building, utility and drone survey services."
   },
   {
     category: "inspection",
-    basePath: "/drain-inspection",
+    basePath: "/survey-methods",
     title: "Survey Types & Technology",
     subtitle: "How land and drone surveys are carried out — equipment, methods and deliverables.",
     metaDescription: "Survey technology and methods. Total stations, GNSS, laser scanning, GPR and drone surveys explained for UK construction and development."
   },
   {
     category: "causes",
-    basePath: "/drain-causes",
+    basePath: "/survey-technology",
     title: "Survey Technology Guides",
     subtitle: "Understanding survey equipment and techniques used by professional surveyors.",
     metaDescription: "What is a total station, GNSS, LiDAR and GPR? Survey technology guides for architects and developers."
   },
   {
     category: "commercial",
-    basePath: "/commercial-drainage",
+    basePath: "/commercial-surveys",
     title: "Commercial Survey Services",
     subtitle: "Land and drone surveys for developers, commercial property and construction.",
     metaDescription: "Topographical, measured building, utility and drone surveys for commercial and development projects across the UK."
@@ -571,21 +565,21 @@ export const hubPages: HubData[] = [
   },
   {
     category: "repair-methods",
-    basePath: "/drain-repair-methods",
+    basePath: "/survey-deliverables",
     title: "Survey Methods & Deliverables",
     subtitle: "Compare survey types and understand which is right for your project.",
     metaDescription: "Topographical vs measured building vs drone surveys. Method and deliverable guides for UK projects."
   },
   {
     category: "property",
-    basePath: "/property-drainage",
+    basePath: "/property-surveys",
     title: "Property Survey Services",
     subtitle: "Land and building surveys for homeowners, landlords and property developers.",
     metaDescription: "Survey services for residential and commercial property. Planning, extension and development surveys across London and the South East."
   },
   {
     category: "survey",
-    basePath: "/drain-survey",
+    basePath: "/survey-services",
     title: "Land & Drone Surveys",
     subtitle: "Professional land and drone surveys for planning, development and construction.",
     metaDescription: "Topographical, measured building, utility and drone surveys for architects, developers and property owners across the UK."
@@ -599,14 +593,14 @@ export const hubPages: HubData[] = [
   },
   {
     category: "legal",
-    basePath: "/drain-responsibility",
+    basePath: "/boundary-legal-surveys",
     title: "Boundary & Legal Surveys",
     subtitle: "Boundary surveys and survey responsibility for development and disputes.",
     metaDescription: "Boundary surveys, party wall and development. When you need a survey for legal or boundary clarity."
   },
   {
     category: "buyer",
-    basePath: "/homebuyer-drainage",
+    basePath: "/homebuyer-surveys",
     title: "Surveys for Property Purchase",
     subtitle: "Survey advice for homebuyers and property investors.",
     metaDescription: "Do you need a survey before buying? Land and building survey guides for property purchase and development."
@@ -2058,7 +2052,6 @@ export const propertyTypePages: InfoPageData[] = [
 export const categoryAltText: Record<string, string> = {
   problems: "Land surveyor using total station on development site",
   collapse: "Drone survey over construction site",
-  insurance: "Survey cost and quote discussion with client",
   costs: "Topographical survey equipment and drawings",
   inspection: "Measured building survey with laser scanner",
   causes: "Utility survey with GPR equipment",
@@ -2077,7 +2070,6 @@ export const categoryAltText: Record<string, string> = {
 export const categoryImages: Record<string, string> = {
   problems: "topographical-survey",
   collapse: "drone-survey",
-  insurance: "measured-building-survey",
   costs: "topographical-survey",
   inspection: "utility-survey",
   causes: "laser-scanning-survey",
@@ -2089,26 +2081,61 @@ export const categoryImages: Record<string, string> = {
   "property-types": "measured-building-survey",
 };
 
+/** First N guides listed on the main /survey-guides hub; remaining guides are partitioned across other topic hubs (disjoint slugs). */
+const GUIDE_HUB_MAIN_COUNT = 14;
+
+const GUIDE_SECONDARY_HUB_ORDER = [
+  "collapse",
+  "survey",
+  "inspection",
+  "causes",
+  "commercial",
+  "emergency",
+  "repair-methods",
+  "property",
+  "legal",
+  "buyer",
+  "property-types",
+] as const;
+
+/** Hub category that owns this guide slug under the partitioned guides model, or null if not a guide. */
+export function getGuideHubCategoryForSlug(slug: string): string | null {
+  const idx = guidesPages.findIndex((g) => g.slug === slug);
+  if (idx === -1) return null;
+  if (idx < GUIDE_HUB_MAIN_COUNT) return "guides";
+  const j = idx - GUIDE_HUB_MAIN_COUNT;
+  return GUIDE_SECONDARY_HUB_ORDER[j % GUIDE_SECONDARY_HUB_ORDER.length];
+}
+
+/** Public path for a guide topic page (main hub or secondary hub), or null if slug is not a guide. */
+export function getGuideTopicHref(slug: string): string | null {
+  const cat = getGuideHubCategoryForSlug(slug);
+  if (!cat) return null;
+  const hub = hubPages.find((h) => h.category === cat);
+  return hub ? `${hub.basePath}/${slug}` : null;
+}
+
+const surveyProblemsAsInfoPages: InfoPageData[] = surveyProblemPages.map((p) => ({
+  slug: p.slug,
+  title: p.title,
+  metaDescription: (p.contextualOpening ?? p.whenToCall).slice(0, 160),
+  intro: p.contextualOpening ?? p.whenToCall,
+  signs: p.quickChecks ? [p.quickChecks] : [p.whenToCall.slice(0, 200)],
+  diagnosis: p.causes,
+  resolution: p.howFixed,
+  ctaText: p.ctaMessage,
+  relatedServices: [...p.relatedServiceSlugs],
+}));
+
 // Helper to get all pages for a category (canonical topic families only)
 export const getCategoryPages = (category: string): InfoPageData[] => {
-  const map: Record<string, InfoPageData[]> = {
-    problems: [],
-    collapse: [],
-    insurance: [],
-    costs: costPages,
-    inspection: [],
-    causes: [],
-    commercial: [],
-    emergency: [],
-    "repair-methods": [],
-    property: [],
-    survey: [],
-    "property-types": [],
-    legal: [],
-    buyer: [],
-    guides: guidesPages
-  };
-  return map[category] || [];
+  if (category === "costs") return costPages;
+  if (category === "problems") return surveyProblemsAsInfoPages;
+  if (category === "guides") return guidesPages.slice(0, GUIDE_HUB_MAIN_COUNT);
+  const rest = guidesPages.slice(GUIDE_HUB_MAIN_COUNT);
+  const idx = GUIDE_SECONDARY_HUB_ORDER.indexOf(category as (typeof GUIDE_SECONDARY_HUB_ORDER)[number]);
+  if (idx === -1) return [];
+  return rest.filter((_, j) => j % GUIDE_SECONDARY_HUB_ORDER.length === idx);
 };
 
 export const getHubData = (category: string): HubData | undefined => {
@@ -2160,7 +2187,8 @@ export const relatedGuideLinksByService: Record<string, { slug: string; path: st
   for (const g of guidesPages) {
     for (const s of g.relatedServices) {
       if (!map[s]) map[s] = [];
-      map[s].push({ slug: g.slug, path: `/survey-guides/${g.slug}`, title: g.title });
+      const path = getGuideTopicHref(g.slug) ?? `/survey-guides/${g.slug}`;
+      map[s].push({ slug: g.slug, path, title: g.title });
     }
   }
   return map;
@@ -2220,8 +2248,8 @@ export const serviceFaqsBySlug: Record<string, { question: string; answer: strin
 // Guides index page: featured guides and near-me links (survey-focused). Icon keys mapped in component.
 export const guidesIndexFeatured: { title: string; description: string; href: string; iconKey: "BookOpen" | "HelpCircle" }[] = [
   { title: "Survey Guides Overview", description: "When you need a survey, which type to choose, and how much it costs. Planning, development and construction.", href: "/guides", iconKey: "BookOpen" },
-  { title: "Do I Need a Land Survey?", description: "Not sure if you need a professional survey? Use our decision guide to find out based on your project.", href: "/do-i-need-a-drain-survey", iconKey: "HelpCircle" },
-  { title: "Survey FAQ", description: "Answers to common questions about survey types, costs, planning and when to use drone or ground surveys.", href: "/drainage-faq", iconKey: "HelpCircle" },
+  { title: "Do I Need a Land Survey?", description: "Not sure if you need a professional survey? Use our decision guide to find out based on your project.", href: "/do-i-need-a-land-survey", iconKey: "HelpCircle" },
+  { title: "Survey FAQ", description: "Answers to common questions about survey types, costs, planning and when to use drone or ground surveys.", href: "/faq", iconKey: "HelpCircle" },
 ];
 
 export const guidesIndexNearMe = [

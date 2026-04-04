@@ -24,7 +24,7 @@ export function getInfoPageProps(category: string, slug: string) {
     categoryImagesMap: categoryImages,
   });
   const heroAlt =
-    categoryAltText[category] || `${page.title} - professional drainage service`;
+    categoryAltText[category] || `${page.title} - professional survey services`;
   const pageFaqs = [
     {
       question: `What are the signs of ${page.title.toLowerCase()}?`,
@@ -42,7 +42,8 @@ export function getInfoPageProps(category: string, slug: string) {
 
   const relatedPageLinks: RelatedPageLink[] = (page.relatedPages ?? []).map(
     (rp) => {
-      const categoryHub = hubPages.find((h) => h.category === rp.category);
+      const resolvedCategory = rp.category === "insurance" ? "costs" : rp.category;
+      const categoryHub = hubPages.find((h) => h.category === resolvedCategory);
       const href =
         rp.category === "service"
           ? getServiceUrl(rp.slug)
@@ -110,7 +111,7 @@ export function getInfoPageProps(category: string, slug: string) {
     locations,
     hubPages,
     getCategoryPages,
-    relatedGuidesTitle: "Related Drain Guides",
+    relatedGuidesTitle: "Related survey guides",
     callTrackVertical: verticalConfig.verticalId,
     ctaVariants: verticalConfig.ctaVariants,
   };
