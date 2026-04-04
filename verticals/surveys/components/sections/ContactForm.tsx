@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { trackEvent, leadEmailField, leadPhoneField, leadPostcodeField } from "engine";
+import { trackEvent, leadEmailField, leadPhoneField, leadPostcodeField, issuesToFieldErrorMap } from "engine";
 import { z } from "zod";
 
 const SERVICE_OPTIONS = ["Topographical survey", "Drone survey", "Measured building survey", "Utility survey", "Advice / not sure"] as const;
@@ -80,8 +80,22 @@ export default function ContactForm() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ ...result.data, ...getPathMetadata(), utm_source: utmSource }),
       });
+      if (res.status === 400) {
+        const data = (await res.json().catch(() => null)) as {
+          issues?: { path: (string | number)[]; message: string }[];
+        } | null;
+        if (data?.issues?.length) {
+          setErrors(issuesToFieldErrorMap(data.issues) as Partial<Record<keyof EnquiryData, string>>);
+          return;
+        }
+      }
       if (!res.ok) {
-        throw new Error("Request failed");
+        toast({
+          title: "Submission failed",
+          description: "Please try again in a moment.",
+          variant: "destructive",
+        });
+        return;
       }
       setFormData({});
       setErrors({});

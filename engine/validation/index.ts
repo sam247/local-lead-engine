@@ -6,3 +6,9 @@ export {
   leadPhoneField,
   leadPostcodeField,
 } from "./lead";
+export {
+  issuesToFieldErrorMap,
+  zodIssuesToFieldErrorMap,
+  mapLeadApiErrorsToHeroUi,
+  type ApiValidationIssue,
+} from "./api-issues";

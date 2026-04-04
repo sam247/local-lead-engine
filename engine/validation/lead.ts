@@ -21,7 +21,7 @@ export function isValidUkPostcode(s: string): boolean {
 }
 
 const EMAIL_MSG = "Valid email required";
-const PHONE_MSG = "Valid phone number required";
+const PHONE_MSG = "Enter a valid UK phone number (include area code or leading 0)";
 const POSTCODE_MSG = "Valid UK postcode required";
 
 export const leadEmailField = z

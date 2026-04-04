@@ -11,7 +11,18 @@ import { heroBg } from "@/lib/images";
 import { companyInfo } from "@/lib/data";
 import { verticalConfig } from "@/config";
 import { useToast } from "@/hooks/use-toast";
-import { trackEvent, getVariantIndex, TrackablePhoneLink } from "engine";
+import {
+  trackEvent,
+  getVariantIndex,
+  TrackablePhoneLink,
+  leadEmailField,
+  leadPhoneField,
+  leadPostcodeField,
+  mapLeadApiErrorsToHeroUi,
+  issuesToFieldErrorMap,
+  zodIssuesToFieldErrorMap,
+} from "engine";
+import { z } from "zod";
 import { cn } from "@/lib/utils";
 
 const HERO_ABOUT_LABELS = ["Learn more about our team", "How we work with clients"] as const;
@@ -27,23 +38,70 @@ const issueOptions = [
   { id: "unsure", label: "Not sure", icon: Search },
 ];
 
+type HeroErrorKey =
+  | "firstName"
+  | "lastName"
+  | "phone"
+  | "email"
+  | "postcode"
+  | "town"
+  | "service"
+  | "details"
+  | "projectStage";
+
+const initialForm = {
+  firstName: "",
+  lastName: "",
+  phone: "",
+  email: "",
+  postcode: "",
+  town: "",
+  service: "",
+  issueType: "",
+  projectStage: "",
+  details: "",
+};
+
+const formKeyToErrorKey: Partial<Record<keyof typeof initialForm, HeroErrorKey>> = {
+  firstName: "firstName",
+  lastName: "lastName",
+  phone: "phone",
+  email: "email",
+  postcode: "postcode",
+  town: "town",
+  service: "service",
+  projectStage: "projectStage",
+  details: "details",
+};
+
+const heroStep1Schema = z.object({
+  first_name: z.string().trim().min(1, "First name is required").max(50),
+  last_name: z.string().trim().min(1, "Last name is required").max(50),
+  town: z.string().trim().min(1, "Town is required").max(100),
+  postcode: leadPostcodeField,
+});
+
+function buildHeroLeadSchema() {
+  return z.object({
+    first_name: z.string().trim().min(1, "First name is required").max(50),
+    last_name: z.string().trim().min(1, "Last name is required").max(50),
+    email: leadEmailField,
+    phone: leadPhoneField,
+    postcode: leadPostcodeField,
+    town: z.string().trim().min(1, "Town is required").max(100),
+    service: z.enum(SERVICE_OPTIONS, { message: "Please select a service" }),
+    description: z.string().trim().min(1, "Please describe your project or survey requirement").max(2000),
+    project_stage: z.enum(PROJECT_STAGE_OPTIONS).optional(),
+  });
+}
+
 const Hero = () => {
   const aboutLabelIndex = getVariantIndex(`about:home:${verticalConfig.verticalId}`, HERO_ABOUT_LABELS.length);
   const { toast } = useToast();
   const [utmSource, setUtmSource] = useState<string | undefined>(undefined);
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    postcode: "",
-    town: "",
-    service: "",
-    issueType: "",
-    projectStage: "",
-    details: "",
-  });
+  const [formData, setFormData] = useState(initialForm);
+  const [errors, setErrors] = useState<Partial<Record<HeroErrorKey, string>>>({});
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -66,9 +124,28 @@ const Hero = () => {
     };
   };
 
+  const patchForm = (patch: Partial<typeof formData>) => {
+    setFormData((p) => ({ ...p, ...patch }));
+    setErrors((prev) => {
+      const next = { ...prev };
+      for (const k of Object.keys(patch) as (keyof typeof initialForm)[]) {
+        const ek = formKeyToErrorKey[k];
+        if (ek) delete next[ek];
+      }
+      return next;
+    });
+  };
+
   const handleContinue = () => {
-    if (!formData.firstName || !formData.lastName || !formData.postcode || !formData.town) {
-      toast({ title: "Please fill in your first name, last name, postcode and town", variant: "destructive" });
+    setErrors({});
+    const step1 = heroStep1Schema.safeParse({
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      town: formData.town,
+      postcode: formData.postcode,
+    });
+    if (!step1.success) {
+      setErrors(mapLeadApiErrorsToHeroUi(zodIssuesToFieldErrorMap(step1.error.issues)) as Partial<Record<HeroErrorKey, string>>);
       return;
     }
     setStep(2);
@@ -76,18 +153,24 @@ const Hero = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.phone) {
-      toast({ title: "Please enter your phone number", variant: "destructive" });
+    setErrors({});
+    const heroLeadSchema = buildHeroLeadSchema();
+    const parsed = heroLeadSchema.safeParse({
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      email: formData.email,
+      phone: formData.phone,
+      postcode: formData.postcode,
+      town: formData.town,
+      service: formData.service || undefined,
+      description: formData.details,
+      project_stage: formData.projectStage || undefined,
+    });
+    if (!parsed.success) {
+      setErrors(mapLeadApiErrorsToHeroUi(zodIssuesToFieldErrorMap(parsed.error.issues)) as Partial<Record<HeroErrorKey, string>>);
       return;
     }
-    if (!formData.service) {
-      toast({ title: "Please select a service", variant: "destructive" });
-      return;
-    }
-    if (!formData.details.trim()) {
-      toast({ title: "Please describe your project or survey requirement", variant: "destructive" });
-      return;
-    }
+
     setSubmitting(true);
     try {
       trackEvent("lead_form_submit");
@@ -95,33 +178,34 @@ const Hero = () => {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          email: formData.email,
-          phone: formData.phone,
-          postcode: formData.postcode,
-          town: formData.town,
-          service: formData.service,
-          description: formData.details,
-          project_stage: formData.projectStage || "",
+          ...parsed.data,
+          project_stage: parsed.data.project_stage ?? "",
+          description: parsed.data.description,
           source_site: "surveys",
           utm_source: utmSource,
           ...getPathMetadata(),
         }),
       });
-      if (!res.ok) throw new Error("Request failed");
-      setFormData({
-        firstName: "",
-        lastName: "",
-        phone: "",
-        email: "",
-        postcode: "",
-        town: "",
-        service: "",
-        issueType: "",
-        projectStage: "",
-        details: "",
-      });
+
+      if (res.status === 400) {
+        const data = (await res.json().catch(() => null)) as { issues?: { path: (string | number)[]; message: string }[] } | null;
+        if (data?.issues?.length) {
+          setErrors(mapLeadApiErrorsToHeroUi(issuesToFieldErrorMap(data.issues)) as Partial<Record<HeroErrorKey, string>>);
+          return;
+        }
+      }
+
+      if (!res.ok) {
+        toast({
+          title: "Submission failed",
+          description: "Please try again in a moment.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      setFormData(initialForm);
+      setErrors({});
       setStep(1);
       toast({
         title: "Thanks for your enquiry.",
@@ -147,7 +231,6 @@ const Hero = () => {
 
       <div className="container relative">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-          {/* Left — Copy & CTAs */}
           <div className="animate-fade-in">
             <h1 className="mb-5 font-display text-3xl font-bold tracking-tight text-primary-foreground md:text-4xl lg:text-5xl">
               Professional Land &amp; Drone Surveys
@@ -182,11 +265,8 @@ const Hero = () => {
                 Call Now
               </TrackablePhoneLink>
             </div>
-
-            
           </div>
 
-          {/* Right — Two-Step Enquiry Form */}
           <div className="animate-fade-in opacity-0 [animation-delay:150ms]">
             <div className="rounded-xl border border-primary-foreground/10 bg-background p-6 shadow-2xl md:p-8">
               <h2 className="mb-1 font-display text-xl font-bold text-foreground">Get a Free Quote</h2>
@@ -198,31 +278,50 @@ const Hero = () => {
                 {step === 1 ? (
                   <>
                     <div className="grid grid-cols-2 gap-2">
-                      <Input
-                        placeholder="First name *"
-                        value={formData.firstName}
-                        onChange={(e) => setFormData((p) => ({ ...p, firstName: e.target.value }))}
-                      />
-                      <Input
-                        placeholder="Last name *"
-                        value={formData.lastName}
-                        onChange={(e) => setFormData((p) => ({ ...p, lastName: e.target.value }))}
-                      />
+                      <div>
+                        <Input
+                          placeholder="First name *"
+                          value={formData.firstName}
+                          onChange={(e) => patchForm({ firstName: e.target.value })}
+                          className={errors.firstName ? "border-destructive" : ""}
+                          aria-invalid={!!errors.firstName}
+                        />
+                        {errors.firstName && <p className="mt-1 text-xs text-destructive">{errors.firstName}</p>}
+                      </div>
+                      <div>
+                        <Input
+                          placeholder="Last name *"
+                          value={formData.lastName}
+                          onChange={(e) => patchForm({ lastName: e.target.value })}
+                          className={errors.lastName ? "border-destructive" : ""}
+                          aria-invalid={!!errors.lastName}
+                        />
+                        {errors.lastName && <p className="mt-1 text-xs text-destructive">{errors.lastName}</p>}
+                      </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
-                      <Input
-                        placeholder="Town *"
-                        value={formData.town}
-                        onChange={(e) => setFormData((p) => ({ ...p, town: e.target.value }))}
-                      />
-                      <Input
-                        placeholder="Postcode *"
-                        value={formData.postcode}
-                        onChange={(e) => setFormData((p) => ({ ...p, postcode: e.target.value }))}
-                      />
+                      <div>
+                        <Input
+                          placeholder="Town *"
+                          value={formData.town}
+                          onChange={(e) => patchForm({ town: e.target.value })}
+                          className={errors.town ? "border-destructive" : ""}
+                          aria-invalid={!!errors.town}
+                        />
+                        {errors.town && <p className="mt-1 text-xs text-destructive">{errors.town}</p>}
+                      </div>
+                      <div>
+                        <Input
+                          placeholder="Postcode *"
+                          value={formData.postcode}
+                          onChange={(e) => patchForm({ postcode: e.target.value })}
+                          className={errors.postcode ? "border-destructive" : ""}
+                          aria-invalid={!!errors.postcode}
+                        />
+                        {errors.postcode && <p className="mt-1 text-xs text-destructive">{errors.postcode}</p>}
+                      </div>
                     </div>
 
-                    {/* Symptom Selector Cards */}
                     <div>
                       <p className="mb-2 text-sm font-medium text-muted-foreground">What best describes your project?</p>
                       <div className="grid grid-cols-2 gap-2">
@@ -253,38 +352,55 @@ const Hero = () => {
                   </>
                 ) : (
                   <>
-                    <Input
-                      type="tel"
-                      placeholder="Phone Number *"
-                      value={formData.phone}
-                      onChange={(e) => setFormData((p) => ({ ...p, phone: e.target.value }))}
-                    />
-                    <Input
-                      type="email"
-                      placeholder="Email Address"
-                      value={formData.email}
-                      onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
-                    />
+                    <div>
+                      <Input
+                        type="tel"
+                        placeholder="Phone number *"
+                        value={formData.phone}
+                        onChange={(e) => patchForm({ phone: e.target.value })}
+                        className={errors.phone ? "border-destructive" : ""}
+                        aria-invalid={!!errors.phone}
+                      />
+                      {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
+                    </div>
+                    <div>
+                      <Input
+                        type="email"
+                        placeholder="Email address *"
+                        value={formData.email}
+                        onChange={(e) => patchForm({ email: e.target.value })}
+                        className={errors.email ? "border-destructive" : ""}
+                        aria-invalid={!!errors.email}
+                      />
+                      {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
+                    </div>
 
-                    <Select value={formData.service} onValueChange={(v) => setFormData((p) => ({ ...p, service: v }))}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="What survey do you need? *" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {SERVICE_OPTIONS.map((opt) => (
-                          <SelectItem key={opt} value={opt}>
-                            {opt}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <div>
+                      <Select value={formData.service} onValueChange={(v) => patchForm({ service: v })}>
+                        <SelectTrigger className={errors.service ? "border-destructive" : ""} aria-invalid={!!errors.service}>
+                          <SelectValue placeholder="What survey do you need? *" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {SERVICE_OPTIONS.map((opt) => (
+                            <SelectItem key={opt} value={opt}>
+                              {opt}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {errors.service && <p className="mt-1 text-xs text-destructive">{errors.service}</p>}
+                    </div>
 
-                    <Textarea
-                      placeholder="Describe your project or survey requirement *"
-                      value={formData.details}
-                      onChange={(e) => setFormData((p) => ({ ...p, details: e.target.value }))}
-                      className="min-h-[60px]"
-                    />
+                    <div>
+                      <Textarea
+                        placeholder="Describe your project or survey requirement *"
+                        value={formData.details}
+                        onChange={(e) => patchForm({ details: e.target.value })}
+                        className={cn("min-h-[60px]", errors.details && "border-destructive")}
+                        aria-invalid={!!errors.details}
+                      />
+                      {errors.details && <p className="mt-1 text-xs text-destructive">{errors.details}</p>}
+                    </div>
                     <div>
                       <p className="mb-2 text-sm font-medium text-muted-foreground">Project stage (optional)</p>
                       <div className="grid grid-cols-3 gap-2">
@@ -295,12 +411,13 @@ const Hero = () => {
                               name="project_stage"
                               value={option}
                               checked={formData.projectStage === option}
-                              onChange={(e) => setFormData((p) => ({ ...p, projectStage: e.target.value }))}
+                              onChange={(e) => patchForm({ projectStage: e.target.value })}
                             />
                             {option}
                           </label>
                         ))}
                       </div>
+                      {errors.projectStage && <p className="mt-1 text-xs text-destructive">{errors.projectStage}</p>}
                     </div>
 
                     <Button type="submit" size="lg" variant="highlight" className="w-full text-base" disabled={submitting}>
@@ -310,8 +427,11 @@ const Hero = () => {
 
                     <button
                       type="button"
-                      onClick={() => setStep(1)}
-                      className="flex w-full items-center justify-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      onClick={() => {
+                        setStep(1);
+                        setErrors({});
+                      }}
+                      className="flex w-full items-center justify-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
                     >
                       <ArrowLeft className="h-3 w-3" />
                       Back
