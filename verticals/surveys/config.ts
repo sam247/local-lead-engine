@@ -77,4 +77,9 @@ export const verticalConfig: VerticalConfig = {
     ctaSupportText: "Tell us the site, deliverable, and programme and we will price the right survey scope.",
     trustLine: "Used by developers, architects and contractors",
   },
+  blogPageSidebar: {
+    ctaHeading: "Get a survey quote",
+    ctaSupportText: "Tell us the site, scope, and output you need and we will recommend the right survey route.",
+    trustLine: "Used by developers, architects and contractors",
+  },
 };

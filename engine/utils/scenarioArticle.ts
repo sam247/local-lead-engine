@@ -22,35 +22,41 @@ export interface ScenarioArticleDefinition {
   relatedServiceLinks: Array<{ href: string; label: string }>;
   guideLink: { href: string; label: string };
   projectLink?: { href: string; label: string };
+  audience?: string;
   faq?: ArticleFaq[];
 }
 
-function intentFraming(intent: ArticleIntent) {
+function intentHeadings(intent: ArticleIntent) {
   switch (intent) {
     case "diagnostic":
       return {
-        sectionOne: "The job is useful because it shows what the early signs looked like before the issue turned into a wider repair.",
-        sectionFour: "This is most useful when someone needs to decide whether the symptoms justify a site visit, survey, or immediate reactive work.",
+        one: "What the signs usually point to",
+        two: "How to check it properly",
+        three: "When to get specialist input",
       };
     case "explanatory":
       return {
-        sectionOne: "The value in the example is that it shows the cause in context rather than describing the service in the abstract.",
-        sectionFour: "This is most useful when the cause is still unclear and the client needs a practical explanation before choosing the right scope.",
+        one: "What causes this",
+        two: "Why it matters on real sites",
+        three: "What usually happens next",
       };
     case "cost-related":
       return {
-        sectionOne: "The useful detail is not a generic price list but the factors on site that affected the eventual scope and cost decision.",
-        sectionFour: "This is most useful when a client is budgeting and needs to understand what changes a quote before committing to works.",
+        one: "What actually changes the cost",
+        two: "Where quotes usually widen",
+        three: "How to scope it properly",
       };
     case "decision-making":
       return {
-        sectionOne: "The example helps because it shows how the decision was made on a live site rather than through a generic pros-and-cons list.",
-        sectionFour: "This is most useful when two routes are possible and the right choice depends on access, programme, risk, or site constraints.",
+        one: "What the decision depends on",
+        two: "Where one route fits better than another",
+        three: "How to choose the right scope",
       };
     default:
       return {
-        sectionOne: "",
-        sectionFour: "",
+        one: "What this article covers",
+        two: "How to assess it",
+        three: "What to do next",
       };
   }
 }
@@ -62,15 +68,33 @@ function joinConstraintList(constraints: string[]): string {
   return `${constraints.slice(0, -1).join(", ")}, and ${constraints[constraints.length - 1]}`;
 }
 
-export function buildScenarioArticle(definition: ScenarioArticleDefinition): ArticleDetailData {
+function buildAudience(definition: ScenarioArticleDefinition): string {
+  if (definition.audience) return definition.audience;
+
+  switch (definition.intent) {
+    case "diagnostic":
+      return "Owners, managers, and project teams trying to confirm what the signs mean";
+    case "explanatory":
+      return "Clients and consultants who need the issue explained in practical terms";
+    case "cost-related":
+      return "Clients budgeting early and comparing scope before instruction";
+    case "decision-making":
+      return "Project teams choosing between methods, scopes, or next steps";
+    default:
+      return "Clients and project teams researching the right next step";
+  }
+}
+
+export function buildIntentArticle(definition: ScenarioArticleDefinition): ArticleDetailData {
   const constraintsText = joinConstraintList(definition.constraints);
-  const framing = intentFraming(definition.intent);
+  const headings = intentHeadings(definition.intent);
   const exactLink = `[${definition.serviceTitle} in ${definition.locationName}](/${definition.serviceSlug}/${definition.locationId})`;
   const sameLocationLinks = definition.relatedServiceLinks
     .map((link) => `[${link.label}](${link.href})`)
     .join(", ");
   const guideLink = `[${definition.guideLink.label}](${definition.guideLink.href})`;
-  const projectLink = definition.projectLink ? ` You can also compare it with [${definition.projectLink.label}](${definition.projectLink.href}).` : "";
+  const projectLink = definition.projectLink ? ` If you want to compare it with a live job, [${definition.projectLink.label}](${definition.projectLink.href}) shows how the issue played out on site.` : "";
+  const audience = buildAudience(definition);
 
   return {
     slug: definition.slug,
@@ -84,6 +108,7 @@ export function buildScenarioArticle(definition: ScenarioArticleDefinition): Art
     serviceSlug: definition.serviceSlug,
     serviceTitle: definition.serviceTitle,
     locationId: definition.locationId,
+    audience,
     scenario: {
       propertyType: definition.propertyType,
       specificIssue: definition.specificIssue,
@@ -91,41 +116,42 @@ export function buildScenarioArticle(definition: ScenarioArticleDefinition): Art
     },
     sections: [
       {
-        heading: "The issue on this job",
+        heading: headings.one,
         paragraphs: [
-          `This scenario centred on a ${definition.propertyType.toLowerCase()} in ${definition.locationName} where ${definition.specificIssue.toLowerCase()}. The job had to be planned around ${constraintsText}, so the first step was understanding the problem in its real site context rather than guessing from the headline symptom.`,
-          `${definition.issueSummary} ${framing.sectionOne}`.trim(),
+          `${definition.issueSummary} A common example is a ${definition.propertyType.toLowerCase()} where ${definition.specificIssue.toLowerCase()} and the next decision has to be made around ${constraintsText}.`,
+          `Used properly, this kind of example clarifies the decision without turning the whole article into a single case study.`,
         ],
       },
       {
-        heading: "How we handled it",
+        heading: headings.two,
         paragraphs: [
-          `${definition.handledSummary} That is why the exact local route matters: ${exactLink}.`,
-          `The work was scoped around the live conditions on site, not a generic template, which kept the response proportionate to the actual issue.`,
+          `${definition.handledSummary} For a local route, start with ${exactLink}.`,
+          `The practical value is in checking the issue against the real site conditions instead of relying on generic assumptions about the service or scope.`,
         ],
       },
       {
-        heading: "What the result was",
+        heading: headings.three,
         paragraphs: [
-          definition.resultSummary,
-          `The useful outcome was not just that the immediate issue was resolved, but that the next decision became clearer for the owner, site manager, or design team.`,
+          `${definition.resultSummary} The aim is to make the next decision clearer before time, cost, or disruption widen unnecessarily.`,
+          `That usually means confirming whether the issue needs a survey, a repair route, a tighter scope, or a more informed quote.`,
         ],
       },
       {
-        heading: "When this kind of work is needed",
+        heading: "Related services and guides",
         paragraphs: [
-          definition.whenNeededSummary,
-          framing.sectionFour,
-        ],
-      },
-      {
-        heading: "Related services in this area",
-        paragraphs: [
-          `If your site has the same kind of issue, start with ${exactLink}. For the same location, the most relevant next pages are ${sameLocationLinks}. For supporting guidance, use ${guideLink}.${projectLink}`.trim(),
+          `${definition.whenNeededSummary} If you need a local service page, start with ${exactLink}. For the same area, the most relevant supporting pages are ${sameLocationLinks}.`,
+          `For broader reading, use ${guideLink}.${projectLink}`.trim(),
         ],
       },
     ],
+    sidebarLinks: [
+      definition.guideLink,
+      ...definition.relatedServiceLinks,
+      ...(definition.projectLink ? [definition.projectLink] : []),
+    ],
     faq: definition.faq,
-    endCtaLead: `If you are dealing with ${definition.specificIssue.toLowerCase()} in ${definition.locationName}, the next step is a scoped quote that reflects the actual constraints on site.`,
+    endCtaLead: `If this article matches the issue you are planning around, the next step is a scoped quote that reflects the real site constraints and the right service route.`,
   };
 }
+
+export { buildIntentArticle as buildScenarioArticle };

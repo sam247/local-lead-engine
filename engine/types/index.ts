@@ -146,6 +146,12 @@ export interface VerticalConfig {
     ctaSupportText: string;
     trustLine: string;
   };
+  /** Optional copy for blog detail sidebar surfaces. */
+  blogPageSidebar?: {
+    ctaHeading: string;
+    ctaSupportText: string;
+    trustLine: string;
+  };
 }
 
 export interface ProblemData {

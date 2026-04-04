@@ -76,4 +76,9 @@ export const verticalConfig: VerticalConfig = {
     ctaSupportText: "Share the site, system scope, and programme and we will price the right security package.",
     trustLine: "Used by facilities managers, developers and commercial teams",
   },
+  blogPageSidebar: {
+    ctaHeading: "Get a security quote",
+    ctaSupportText: "Tell us the site, risk, and operational issue and we will recommend the right security scope.",
+    trustLine: "Used by facilities managers, developers and commercial teams",
+  },
 };

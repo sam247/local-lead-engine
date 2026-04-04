@@ -76,4 +76,9 @@ export const verticalConfig: VerticalConfig = {
     ctaSupportText: "Send over the issue, access constraints, and timing and we will price the right drainage scope.",
     trustLine: "Used by homeowners, facilities teams and site managers",
   },
+  blogPageSidebar: {
+    ctaHeading: "Get a drain quote",
+    ctaSupportText: "Send over the symptoms, access constraints, and timing and we will recommend the right next step.",
+    trustLine: "Used by homeowners, facilities teams and site managers",
+  },
 };

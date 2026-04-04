@@ -22,7 +22,7 @@ export {
   type GetPageTypeInput,
 } from "./lib/pageWeighting";
 export * from "./utils";
-export { buildScenarioArticle, type ScenarioArticleDefinition } from "./utils/scenarioArticle";
+export { buildIntentArticle, buildScenarioArticle, type ScenarioArticleDefinition } from "./utils/scenarioArticle";
 export * from "./schema";
 export * from "./validation";
 export * from "./data/location-neighbours";

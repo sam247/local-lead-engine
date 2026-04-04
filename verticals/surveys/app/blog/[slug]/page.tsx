@@ -34,7 +34,11 @@ export default async function BlogArticlePage({ params }: Props) {
       article={article}
       companyInfo={verticalConfig.companyInfo}
       baseUrl={verticalConfig.baseUrl}
+      verticalId={verticalConfig.verticalId}
       ctaVariants={verticalConfig.ctaVariants}
+      sidebarCtaHeading={verticalConfig.blogPageSidebar?.ctaHeading ?? "Get a quote"}
+      sidebarCtaSupportText={verticalConfig.blogPageSidebar?.ctaSupportText ?? "Tell us about the issue and we will recommend the right next step."}
+      sidebarTrustLine={verticalConfig.blogPageSidebar?.trustLine ?? ""}
     />
   );
 }

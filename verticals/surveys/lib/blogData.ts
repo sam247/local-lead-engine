@@ -1,10 +1,10 @@
-import { buildScenarioArticle, type ScenarioArticleDefinition } from "engine";
+import { buildIntentArticle, type ScenarioArticleDefinition } from "engine";
 
 const definitions: ScenarioArticleDefinition[] = [
   {
     slug: "when-do-you-need-a-topographical-survey",
-    title: "When a Topographical Survey Is Worth It on a London Development Plot",
-    excerpt: "A decision-led guide built around a constrained London redevelopment site, showing when a topographical survey becomes essential rather than optional.",
+    title: "When Do You Actually Need a Topographical Survey?",
+    excerpt: "A decision-led guide explaining when topographical survey data becomes essential for planning, design, and early coordination.",
     date: "2024-01-15",
     image: "/images/blog/when-do-you-need-a-topographical-survey.jpg",
     category: "Planning",
@@ -33,8 +33,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "drone-surveys-vs-traditional-surveys",
-    title: "Drone Survey vs Traditional Survey on a Richmond Conversion Site",
-    excerpt: "A decision-making comparison built around a Richmond conversion project where the question was not which method sounded newer, but which one actually suited the site.",
+    title: "Drone Survey vs Traditional Survey: Which One Fits the Brief?",
+    excerpt: "A decision-making comparison showing when drone capture helps, when ground-based methods still win, and how to choose the right survey scope.",
     date: "2024-01-08",
     image: "/images/blog/drone-surveys-vs-traditional-surveys.jpg",
     category: "Decision",
@@ -63,8 +63,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "survey-requirements-for-planning-permission",
-    title: "What Survey Information Planning Needed on a Chiswick Extension Site",
-    excerpt: "An explanatory article showing why planning teams ask for more than one type of survey on a constrained Chiswick extension site.",
+    title: "What Survey Information Is Usually Needed for Planning Permission?",
+    excerpt: "An explanatory article showing why planning teams often need more than one type of survey before a scheme can move forward cleanly.",
     date: "2023-12-20",
     image: "/images/blog/survey-requirements-for-planning-permission.jpg",
     category: "Planning",
@@ -93,8 +93,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "how-much-does-a-land-survey-cost",
-    title: "What Actually Changes the Cost of a Survey in Wimbledon",
-    excerpt: "A cost-led article based on a live school refurbishment survey, showing which site factors actually move the price rather than relying on generic ranges.",
+    title: "How Much Does a Land Survey Cost?",
+    excerpt: "A cost-led article explaining which site factors widen survey quotes and why headline rates rarely tell the full story.",
     date: "2023-12-12",
     image: "/images/blog/how-much-does-a-land-survey-cost.jpg",
     category: "Cost",
@@ -123,8 +123,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "when-to-use-a-drone-survey",
-    title: "When Drone Capture Helps and When Laser Scanning Still Wins in Fulham",
-    excerpt: "A decision-led guide that uses a Fulham commercial fit-out survey to show when drone capture adds value and when internal laser scanning is still the right tool.",
+    title: "When Should You Use a Drone Survey Instead of Laser Scanning?",
+    excerpt: "A decision-led guide explaining when drone capture adds value and when internal laser scanning is still the better fit.",
     date: "2023-12-01",
     image: "/images/blog/when-to-use-a-drone-survey.jpg",
     category: "Decision",
@@ -153,14 +153,14 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "utility-survey-before-excavation",
-    title: "How to Tell if You Need a Utility Survey Before Excavation in Kingston",
-    excerpt: "A diagnostic guide for domestic and small-site excavation where the real question is whether buried-service uncertainty is high enough to justify a survey before the dig starts.",
+    title: "Do You Need a Utility Survey Before Excavation?",
+    excerpt: "A diagnostic guide explaining when buried-service or boundary uncertainty is high enough to justify a survey before the dig starts.",
     date: "2023-11-25",
     image: "/images/blog/utility-survey-before-excavation.jpg",
     category: "Diagnostic",
     intent: "diagnostic",
-    serviceSlug: "boundary-survey",
-    serviceTitle: "Boundary Survey",
+    serviceSlug: "utility-survey",
+    serviceTitle: "Utility Survey",
     locationId: "kingston",
     locationName: "Kingston",
     propertyType: "semi-detached house with shared side access",
@@ -176,15 +176,15 @@ const definitions: ScenarioArticleDefinition[] = [
       "This guide is most useful before boundary-adjacent digging, extension work, or contractor mobilisation where the real risk is hidden information rather than obvious surface conditions.",
     relatedServiceLinks: [
       { href: "/topographical-survey/kingston", label: "topographical survey in Kingston" },
-      { href: "/utility-survey/kingston", label: "utility survey in Kingston" },
+      { href: "/boundary-survey/kingston", label: "boundary survey in Kingston" },
     ],
     guideLink: { href: "/survey-guides/survey-before-property-development", label: "surveys needed before development work starts" },
-    projectLink: { href: "/projects/boundary-survey-kingston-title-check", label: "boundary survey before title issue review in Kingston" },
+    projectLink: { href: "/projects/utility-survey-chiswick-before-excavation", label: "utility survey before excavation on constrained extension site" },
   },
 ];
 
 export const blogPosts = definitions.map((definition) =>
-  buildScenarioArticle(definition)
+  buildIntentArticle(definition)
 );
 
 export function getBlogPostBySlug(slug: string) {

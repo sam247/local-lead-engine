@@ -1,10 +1,10 @@
-import { buildScenarioArticle, type ScenarioArticleDefinition } from "engine";
+import { buildIntentArticle, type ScenarioArticleDefinition } from "engine";
 
 const definitions: ScenarioArticleDefinition[] = [
   {
     slug: "signs-of-drain-collapse",
-    title: "How to Tell if a London Basement Drain Has Collapsed",
-    excerpt: "A diagnostic guide built around a basement-level collapse in London, showing the signs that justified a CCTV survey and structural repair.",
+    title: "How to Tell if a Drain Has Collapsed",
+    excerpt: "A diagnostic guide explaining the signs that point to structural drain failure rather than a routine blockage.",
     date: "2024-01-15",
     image: "/images/blog/signs-of-drain-collapse.jpg",
     category: "Diagnostic",
@@ -37,8 +37,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "drain-relining-vs-excavation",
-    title: "Drain Relining vs Excavation in Richmond: Which Route Fits the Site?",
-    excerpt: "A decision-making article built around a Richmond basement flat where excavation was constrained and trenchless repair had to be weighed against a full dig.",
+    title: "Drain Relining vs Excavation: Which Route Fits the Site?",
+    excerpt: "A decision-making article explaining when trenchless repair makes sense and when excavation is still the right answer.",
     date: "2024-01-08",
     image: "/images/blog/drain-relining-vs-excavation.jpg",
     category: "Decision",
@@ -67,8 +67,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "cctv-drain-survey-guide",
-    title: "What a CCTV Drain Survey Picks Up on an Older Chiswick House",
-    excerpt: "An explanatory guide that shows how a CCTV survey was used on an older Chiswick property before purchase, and what the footage actually changed in the decision.",
+    title: "What Does a CCTV Drain Survey Actually Show?",
+    excerpt: "An explanatory guide showing what CCTV footage reveals, what it changes in the decision, and when a survey is worth booking.",
     date: "2023-12-20",
     image: "/images/blog/cctv-drain-survey-guide.jpg",
     category: "Explanatory",
@@ -97,8 +97,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "preventing-blocked-drains",
-    title: "What Causes Repeated Blocked Drains in a Fulham Mansion Flat",
-    excerpt: "An explanatory article focused on a Fulham mansion-flat branch connection, showing why repeat blockages come back when the real restriction sits deeper in the shared run.",
+    title: "What Usually Causes Repeated Blocked Drains?",
+    excerpt: "An explanatory article showing why recurring blockages come back when the underlying restriction sits deeper in the system.",
     date: "2023-12-12",
     image: "/images/blog/preventing-blocked-drains.jpg",
     category: "Explanatory",
@@ -127,8 +127,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "tree-root-drain-damage",
-    title: "How to Tell if Tree Roots Are Causing Drain Damage in Wimbledon",
-    excerpt: "A diagnostic article showing how root-related damage presents on older Wimbledon runs, and why repeat clearing is not enough when the root entry point is still open.",
+    title: "How to Tell if Tree Roots Are Causing Drain Damage",
+    excerpt: "A diagnostic article showing how root-related damage presents and why repeat clearing is not enough when the entry point is still open.",
     date: "2023-12-01",
     image: "/images/blog/tree-root-drain-damage.jpg",
     category: "Diagnostic",
@@ -156,8 +156,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "emergency-drainage-what-to-do",
-    title: "What to Do First During a Kingston Drainage Emergency",
-    excerpt: "A practical emergency guide built around a Kingston restaurant kitchen flood, showing what needs to happen first when the priority is getting the site safe and back into use.",
+    title: "What to Do First During a Drainage Emergency",
+    excerpt: "A practical emergency guide showing what needs to happen first when the priority is getting the site safe and back into use.",
     date: "2023-11-25",
     image: "/images/blog/emergency-drainage-what-to-do.jpg",
     category: "Emergency",
@@ -187,7 +187,7 @@ const definitions: ScenarioArticleDefinition[] = [
 ];
 
 export const blogPosts = definitions.map((definition) =>
-  buildScenarioArticle(definition)
+  buildIntentArticle(definition)
 );
 
 export function getBlogPostBySlug(slug: string) {

@@ -1,10 +1,10 @@
-import { buildScenarioArticle, type ScenarioArticleDefinition } from "engine";
+import { buildIntentArticle, type ScenarioArticleDefinition } from "engine";
 
 const definitions: ScenarioArticleDefinition[] = [
   {
     slug: "access-control-buying-guide",
-    title: "How to Tell What an Office Entrance Actually Needs From Access Control in London",
-    excerpt: "A decision-focused guide built around a live London office entrance, showing how to scope access control around workflow and audit needs rather than product features alone.",
+    title: "How to Scope Access Control Around What the Entrance Actually Needs",
+    excerpt: "A decision-focused guide showing how to scope access control around workflow, audit needs, and daily use rather than product features alone.",
     date: "2024-01-15",
     image: "/images/blog/access-control-buying-guide.jpg",
     category: "Access Control",
@@ -33,8 +33,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "cctv-vs-ip-cameras",
-    title: "When an IP Upgrade Beats a Like-for-Like CCTV Swap in Chiswick",
-    excerpt: "A decision-making comparison based on a Chiswick warehouse upgrade where image quality, playback use, and future expansion mattered more than just replacing cameras.",
+    title: "When an IP Upgrade Beats a Like-for-Like CCTV Swap",
+    excerpt: "A decision-making comparison showing when image quality, playback use, and future expansion matter more than simply replacing cameras.",
     date: "2024-01-08",
     image: "/images/blog/cctv-vs-ip-cameras.jpg",
     category: "CCTV",
@@ -63,8 +63,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "hospital-security-requirements",
-    title: "What Causes Hospital Access and CCTV Projects to Become Complex",
-    excerpt: "An explanatory article using a live campus-style control problem to show why healthcare security jobs become more complex than a standard office install.",
+    title: "What Causes Access and CCTV Projects to Become Complex?",
+    excerpt: "An explanatory article showing why campus and healthcare-style security jobs become more complex than a standard office install.",
     date: "2023-12-20",
     image: "/images/blog/hospital-security-requirements.jpg",
     category: "Healthcare",
@@ -93,8 +93,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "perimeter-security-guide",
-    title: "How to Tell if a Fence Line Needs Better Perimeter Security in Wimbledon",
-    excerpt: "A diagnostic guide based on a Wimbledon facility boundary where alert quality and camera verification had drifted apart over time.",
+    title: "How to Tell if a Fence Line Needs Better Perimeter Security",
+    excerpt: "A diagnostic guide explaining the signs that detection quality and camera verification are no longer working together properly.",
     date: "2023-12-12",
     image: "/images/blog/perimeter-security-guide.jpg",
     category: "Perimeter",
@@ -123,8 +123,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "security-system-integration",
-    title: "What Causes Separate Security Systems to Create More Work Than Value",
-    excerpt: "An explanatory article about integration friction on live estates, showing why separate access and CCTV platforms often become an operator problem long before they become a technical failure.",
+    title: "Why Separate Security Systems Often Create More Work Than Value",
+    excerpt: "An explanatory article showing why separate access and CCTV platforms often become an operator problem long before they become a technical failure.",
     date: "2023-12-01",
     image: "/images/blog/security-system-integration.jpg",
     category: "Integration",
@@ -153,8 +153,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "commercial-cctv-compliance",
-    title: "How to Tell if a Rear-Yard CCTV Layout Is Leaving Compliance Gaps in Richmond",
-    excerpt: "A diagnostic article based on a Richmond rear service yard where the client needed better evidence capture and a cleaner operating basis for commercial CCTV.",
+    title: "How to Tell if a CCTV Layout Is Leaving Compliance Gaps",
+    excerpt: "A diagnostic article showing when commercial CCTV coverage still leaves blind spots, weak evidence, and operational gaps.",
     date: "2023-11-25",
     image: "/images/blog/commercial-cctv-compliance.jpg",
     category: "Compliance",
@@ -184,7 +184,7 @@ const definitions: ScenarioArticleDefinition[] = [
 ];
 
 export const blogPosts = definitions.map((definition) =>
-  buildScenarioArticle(definition)
+  buildIntentArticle(definition)
 );
 
 export function getBlogPostBySlug(slug: string) {

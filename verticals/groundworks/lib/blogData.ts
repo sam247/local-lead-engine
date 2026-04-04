@@ -1,10 +1,10 @@
-import { buildScenarioArticle, type ScenarioArticleDefinition } from "engine";
+import { buildIntentArticle, type ScenarioArticleDefinition } from "engine";
 
 const definitions: ScenarioArticleDefinition[] = [
   {
     slug: "when-is-piling-required-on-an-urban-site",
-    title: "How to Tell if an Urban Site Actually Needs Piling in London",
-    excerpt: "A diagnostic article built around a tight London redevelopment plot, showing the signs that the foundation strategy has moved beyond straightforward trench fill or shallow foundations.",
+    title: "How to Tell if a Site Actually Needs Piling",
+    excerpt: "A diagnostic article explaining the signs that a foundation strategy has moved beyond straightforward trench fill or shallow foundations.",
     date: "2024-01-15",
     image: "/images/blog/blog-1.jpg",
     category: "Piling",
@@ -33,8 +33,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "what-causes-underpinning-to-be-needed",
-    title: "What Causes an Extension Scheme to Need Underpinning in Richmond",
-    excerpt: "An explanatory guide built around a Richmond terrace alteration where the structural sequence had to work with party-wall conditions and existing foundation limits.",
+    title: "What Usually Causes a Scheme to Need Underpinning?",
+    excerpt: "An explanatory guide showing why structural change, foundation limits, and sequencing often push a job toward underpinning.",
     date: "2024-01-08",
     image: "/images/blog/blog-2.jpg",
     category: "Underpinning",
@@ -63,8 +63,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "how-much-does-tight-access-piling-cost",
-    title: "What Actually Changes the Cost of Tight-Access Piling in Chiswick",
-    excerpt: "A cost-led article focused on an infill Chiswick plot where restricted access and site geometry changed the piling scope more than the headline pile count alone.",
+    title: "What Actually Changes the Cost of Tight-Access Piling?",
+    excerpt: "A cost-led article explaining why restricted access, rig choice, and site geometry often matter more than pile count alone.",
     date: "2023-12-20",
     image: "/images/blog/blog-3.jpg",
     category: "Cost",
@@ -93,8 +93,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "when-to-use-cfa-piling",
-    title: "When CFA Piling Is the Better Fit on a Noise-Sensitive Wimbledon Site",
-    excerpt: "A decision-making article built around a Wimbledon urban plot where the piling method had to work with neighbour sensitivity and controlled hours.",
+    title: "When Is CFA Piling the Better Fit?",
+    excerpt: "A decision-making article showing when CFA piling suits noise-sensitive or more tightly controlled urban sites.",
     date: "2023-12-12",
     image: "/images/blog/blog-1.jpg",
     category: "CFA Piling",
@@ -123,8 +123,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "how-to-tell-if-mini-piling-is-the-right-option",
-    title: "How to Tell if Mini Piling Is the Right Recovery Option in Kingston",
-    excerpt: "A diagnostic guide based on a Kingston extension plot where the original foundation route changed quickly and access ruled out a broader piling setup.",
+    title: "How to Tell if Mini Piling Is the Right Recovery Option",
+    excerpt: "A diagnostic guide explaining when access limits and programme pressure make mini piling the more practical recovery route.",
     date: "2023-12-01",
     image: "/images/blog/blog-2.jpg",
     category: "Mini Piling",
@@ -153,8 +153,8 @@ const definitions: ScenarioArticleDefinition[] = [
   },
   {
     slug: "when-a-foundation-package-needs-more-than-a-simple-pour",
-    title: "When a Foundation Package in Fulham Needs More Than a Simple Pour",
-    excerpt: "An explanatory guide showing why apparently straightforward foundation work on a Fulham urban plot still depends on sequencing, handover, and site logistics.",
+    title: "When a Foundation Package Needs More Than a Simple Pour",
+    excerpt: "An explanatory guide showing why apparently straightforward foundation work still depends on sequencing, handover, and site logistics.",
     date: "2023-11-25",
     image: "/images/blog/blog-3.jpg",
     category: "Foundations",
@@ -184,7 +184,7 @@ const definitions: ScenarioArticleDefinition[] = [
 ];
 
 export const blogPosts = definitions.map((definition) =>
-  buildScenarioArticle(definition)
+  buildIntentArticle(definition)
 );
 
 export function getBlogPostBySlug(slug: string) {

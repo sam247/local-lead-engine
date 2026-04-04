@@ -82,4 +82,9 @@ export const verticalConfig: VerticalConfig = {
     ctaSupportText: "Tell us the site constraints, design stage, and programme and we will price the right package.",
     trustLine: "Used by developers, engineers and main contractors",
   },
+  blogPageSidebar: {
+    ctaHeading: "Get a groundworks quote",
+    ctaSupportText: "Tell us the site constraints, design stage, and sequencing issue and we will recommend the right package.",
+    trustLine: "Used by developers, engineers and main contractors",
+  },
 };
