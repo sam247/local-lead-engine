@@ -71,4 +71,9 @@ export const verticalConfig: VerticalConfig = {
   locationContextTemplate:
     "We provide {serviceTitle} across {locationName} and the wider {area} region. Our engineers attend residential and commercial properties throughout the area, including in {nearbyTowns}, for CCTV surveys, drain repairs, relining and emergency call-outs. Contact us for a free no-obligation quote or to discuss your project in {locationName}.",
   homepageTrustPoints,
+  projectPageSidebar: {
+    ctaHeading: "Get a drain quote",
+    ctaSupportText: "Send over the issue, access constraints, and timing and we will price the right drainage scope.",
+    trustLine: "Used by homeowners, facilities teams and site managers",
+  },
 };

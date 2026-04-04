@@ -77,4 +77,9 @@ export const verticalConfig: VerticalConfig = {
     },
   },
   homepageTrustPoints,
+  projectPageSidebar: {
+    ctaHeading: "Get a groundworks quote",
+    ctaSupportText: "Tell us the site constraints, design stage, and programme and we will price the right package.",
+    trustLine: "Used by developers, engineers and main contractors",
+  },
 };

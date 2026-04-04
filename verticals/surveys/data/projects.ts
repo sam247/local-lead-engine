@@ -42,6 +42,10 @@ const projectDefinitions: ProjectScenarioDefinition[] = [
     ],
     equipmentOrMethod: "total-station control with supplementary GNSS",
     timeTaken: "one field shift with same-week CAD delivery",
+    outputSummary: "CAD / Planning-ready drawings",
+    detailMedia: {
+      inlineCaption: "Survey data capture in constrained city-centre conditions",
+    },
   },
   {
     id: "project-surveys-2",

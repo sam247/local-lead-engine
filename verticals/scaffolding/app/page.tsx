@@ -28,7 +28,7 @@ export default function HomePage() {
       }))
     : [];
   const articleCards = pickHomepageArticleCards(
-    blogPosts.map((p) => ({ id: p.id, title: p.title, excerpt: "" })),
+    blogPosts.map((p) => ({ slug: p.id, title: p.title, excerpt: "" })),
     fallbacks
   );
 

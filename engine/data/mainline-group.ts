@@ -7,7 +7,7 @@ export const MAINLINE_GROUP_DIVISIONS = [
   { name: "Mainline Surveys", baseUrl: "https://mainlinesurveys.co.uk" },
   { name: "Mainline Access", baseUrl: "https://mainlineaccess.co.uk" },
   { name: "Mainline Groundworks", baseUrl: "https://mainlinegroundworks.co.uk" },
-  { name: "Mainline Scaffolding", baseUrl: "https://mainlinescaffold.co.uk" },
+  { name: "Mainline Scaffold", baseUrl: "https://mainlinescaffold.co.uk" },
 ] as const;
 
 export type MainlineGroupLinkItem = {

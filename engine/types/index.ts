@@ -140,6 +140,12 @@ export interface VerticalConfig {
   imageAltNoLocationSuffix?: string;
   /** Exactly six items for the shared homepage TrustPoints section. */
   homepageTrustPoints: HomepageTrustPointsSix;
+  /** Optional copy for project detail sidebar surfaces. */
+  projectPageSidebar?: {
+    ctaHeading: string;
+    ctaSupportText: string;
+    trustLine: string;
+  };
 }
 
 export interface ProblemData {

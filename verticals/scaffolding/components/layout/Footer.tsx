@@ -6,6 +6,8 @@ import { verticalConfig } from "@/config";
 import { FooterServiceAreaGroups, GroupFooter, getServiceUrl } from "engine";
 import { mainlineGroupLinksForSite } from "engine/data/mainline-group";
 
+const FOOTER_LOGO_WIDTH = 210;
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const groupLinks = mainlineGroupLinksForSite(verticalConfig.baseUrl);
@@ -20,9 +22,9 @@ const Footer = () => {
               <Image
                 src="/logo_white.svg"
                 alt="Mainline Scaffold"
-                width={84}
+                width={FOOTER_LOGO_WIDTH}
                 height={24}
-                className="h-5 w-auto sm:h-6"
+                className="h-5 w-[175px] object-contain object-left sm:h-6 sm:w-[210px]"
               />
             </div>
             <p className="mb-6 text-sm text-neutral-300">
@@ -140,8 +142,11 @@ const Footer = () => {
           <nav className="flex flex-wrap items-center justify-center gap-x-1 gap-y-1 sm:justify-end" aria-label="Footer">
             <Link href="/about" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">About</Link>
             <Link href="/service-areas" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">Service Areas</Link>
+            <Link href="/projects" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">Projects</Link>
+            <Link href="/blog" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">Blog</Link>
             <Link href="/privacy" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">Privacy</Link>
             <Link href="/terms" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">Terms</Link>
+            <Link href="/contractors" className="inline-flex min-h-[44px] items-center px-2 text-sm text-neutral-400 transition-colors hover:text-white">Contractors</Link>
           </nav>
         </div>
       </div>

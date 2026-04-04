@@ -46,7 +46,7 @@ const LINK_TITLES: Record<string, string> = {
   "Mainline Surveys": "Land and drone surveying services across the UK",
   "Mainline Access": "Commercial security and access control services across the UK",
   "Mainline Groundworks": "Commercial groundworks services across the UK",
-  "Mainline Scaffolding": "NASC accredited scaffolding contractors across the UK",
+  "Mainline Scaffold": "NASC accredited scaffolding contractors across the UK",
 };
 
 /** Footer badge row: match hero trust strip scale; shrink-0 keeps all marks visible in flex layouts. */

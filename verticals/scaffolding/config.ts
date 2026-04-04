@@ -73,4 +73,9 @@ export const verticalConfig: VerticalConfig = {
     },
   },
   homepageTrustPoints,
+  projectPageSidebar: {
+    ctaHeading: "Get scaffold pricing",
+    ctaSupportText: "Share the access need, property type, and programme and we will scope the right scaffold setup.",
+    trustLine: "Used by homeowners, contractors and developers",
+  },
 };

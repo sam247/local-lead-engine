@@ -72,4 +72,9 @@ export const verticalConfig: VerticalConfig = {
   locationContextTemplate:
     "{locationName} and the wider {area} region see residential, commercial and infrastructure projects that often need topographical, measured building or drone surveys. Our survey partners deliver planning-ready data across the area, including in {nearbyTowns}. Contact us for a free no-obligation quote for your project in or around {locationName}.",
   homepageTrustPoints,
+  projectPageSidebar: {
+    ctaHeading: "Get a survey quote",
+    ctaSupportText: "Tell us the site, deliverable, and programme and we will price the right survey scope.",
+    trustLine: "Used by developers, architects and contractors",
+  },
 };

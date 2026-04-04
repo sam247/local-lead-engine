@@ -13,7 +13,7 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
-const verticals = ["drains", "surveys", "access", "groundworks"];
+const verticals = ["drains", "surveys", "access", "groundworks", "scaffolding"];
 
 const all = [];
 for (const vertical of verticals) {

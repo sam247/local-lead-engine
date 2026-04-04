@@ -20,6 +20,12 @@ export interface ProjectImage {
   caption?: string;
 }
 
+export interface ProjectDetailMedia {
+  hero?: ProjectImage;
+  inline?: ProjectImage;
+  inlineCaption?: string;
+}
+
 export interface Project {
   id: string;
   slug: string;
@@ -43,6 +49,8 @@ export interface Project {
   image: string;
   imageIndex: number;
   images?: ProjectImage[];
+  outputSummary: string;
+  detailMedia?: ProjectDetailMedia;
 }
 
 export interface ProjectScenarioDefinition {
@@ -60,6 +68,8 @@ export interface ProjectScenarioDefinition {
   timeTaken?: string;
   metaDescription?: string;
   images?: ProjectImage[];
+  outputSummary?: string;
+  detailMedia?: ProjectDetailMedia;
 }
 
 const PROPERTY_TYPES = [
@@ -188,6 +198,14 @@ function createFallbackMetaDescription(service: string, location: string, timeTa
   return `${service} in ${location} completed with a clear scope, controlled delivery, and a practical result inside ${timeTaken}.`;
 }
 
+function createDefaultOutputSummary(verticalId: string, serviceTitle: string): string {
+  if (verticalId === "surveys") return "CAD / Planning-ready drawings";
+  if (verticalId === "access") return "Installation-ready scope and documented handover";
+  if (verticalId === "groundworks") return "Programme-ready set-out and site handover";
+  if (verticalId === "drains") return "First-visit diagnosis and repair outcome";
+  return `${serviceTitle} completed with a documented handover`;
+}
+
 export function generateProjects(
   verticalConfig: VerticalConfig,
   locations: Location[],
@@ -248,6 +266,7 @@ export function generateProjects(
       imagePrompt,
       image: `/images/projects/project-${verticalId}-${index + 1}.jpg`,
       imageIndex: index,
+      outputSummary: createDefaultOutputSummary(verticalId, service.title),
     };
   });
 }
@@ -279,6 +298,8 @@ export function mergeProjectScenarioContent(
         equipmentOrMethod: definition.equipmentOrMethod ?? base.equipmentOrMethod,
         timeTaken: definition.timeTaken ?? base.timeTaken,
         images: definition.images ?? base.images,
+        outputSummary: definition.outputSummary ?? base.outputSummary,
+        detailMedia: definition.detailMedia ?? base.detailMedia,
       },
     ];
   });

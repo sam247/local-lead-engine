@@ -15,12 +15,12 @@ export const serviceImages: Record<string, string> = {
 };
 
 const projectImagePaths = [
-  `${base}/projects/project-1.jpg`,
-  `${base}/projects/project-2.jpg`,
-  `${base}/projects/project-3.jpg`,
-  `${base}/projects/project-4.jpg`,
-  `${base}/projects/project-5.jpg`,
-  `${base}/projects/project-6.jpg`,
+  `${base}/projects/project-scaffolding-1.jpg`,
+  `${base}/projects/project-scaffolding-2.jpg`,
+  `${base}/projects/project-scaffolding-3.jpg`,
+  `${base}/projects/project-scaffolding-4.jpg`,
+  `${base}/projects/project-scaffolding-5.jpg`,
+  `${base}/projects/project-scaffolding-6.jpg`,
 ];
 
 /** Use project's dedicated image when available, else fallback to index in pool. */

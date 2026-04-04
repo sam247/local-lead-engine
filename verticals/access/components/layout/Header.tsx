@@ -6,12 +6,11 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { locations, services } from "@/lib/data";
+import { services } from "@/lib/data";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
@@ -50,10 +49,10 @@ const mobileResourceLinks = insertResourcesLinksAfterHref(
   "/services",
   [...ACCESS_INDUSTRIES_RESOURCE_LINKS]
 );
+const HEADER_LOGO_WIDTH = 210;
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [locationsOpen, setLocationsOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const pathname = usePathname();
 
@@ -64,8 +63,6 @@ const Header = () => {
 
   const isActive = (path: string) => pathname === path;
 
-  const topLocations = locations.slice(0, 8);
-
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between md:h-20">
@@ -73,9 +70,9 @@ const Header = () => {
           <Image
             src="/logo_black.svg"
             alt="Mainline Access"
-            width={84}
+            width={HEADER_LOGO_WIDTH}
             height={24}
-            className="h-6 w-auto sm:h-6"
+            className="h-6 w-[210px] object-contain object-left"
             priority
           />
         </Link>
@@ -102,42 +99,6 @@ const Header = () => {
           >
             About
           </Link>
-
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-muted-foreground hover:text-primary">
-                  Locations
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[320px] gap-1 p-4 md:grid-cols-2">
-                    {topLocations.map((loc) => (
-                      <li key={loc.id}>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href={`/access-control-systems/${loc.id}`}
-                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent focus:bg-accent"
-                          >
-                            <div className="text-sm font-medium">{loc.name}</div>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                    ))}
-                    <li className="col-span-2 border-t border-border pt-1">
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href="/access-control-systems-near-me"
-                          className="block select-none rounded-md p-3 text-sm font-medium text-primary no-underline outline-none transition-colors hover:bg-accent focus:bg-accent"
-                        >
-                          View All Areas →
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
 
           <NavigationMenu>
             <NavigationMenuList>
@@ -204,37 +165,6 @@ const Header = () => {
             >
               About
             </Link>
-
-            <div>
-              <button
-                className="flex min-h-[44px] w-full items-center justify-between text-sm font-medium text-foreground"
-                onClick={() => setLocationsOpen(!locationsOpen)}
-              >
-                Locations
-                <ChevronDown className={cn("h-4 w-4 transition-transform", locationsOpen && "rotate-180")} />
-              </button>
-              {locationsOpen && (
-                <div className="ml-4 border-l border-border pl-4">
-                  {topLocations.map((loc) => (
-                    <Link
-                      key={loc.id}
-                      href={`/access-control-systems/${loc.id}`}
-                      className="block py-2 text-sm text-muted-foreground"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {loc.name}
-                    </Link>
-                  ))}
-                  <Link
-                    href="/access-control-systems-near-me"
-                    className="block py-2 text-sm font-medium text-primary"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    View All Areas →
-                  </Link>
-                </div>
-              )}
-            </div>
 
             <div>
               <button

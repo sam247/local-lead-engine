@@ -56,9 +56,13 @@ export default async function ProjectPage({ params }: Props) {
       location={location}
       companyInfo={verticalConfig.companyInfo}
       baseUrl={verticalConfig.baseUrl}
+      verticalId={verticalConfig.verticalId}
       ctaVariants={verticalConfig.ctaVariants}
       guideLinks={guideLinks}
       relatedServiceLinks={relatedServiceLinks}
+      sidebarCtaHeading={verticalConfig.projectPageSidebar?.ctaHeading ?? "Get a quote"}
+      sidebarCtaSupportText={verticalConfig.projectPageSidebar?.ctaSupportText ?? "Tell us about the project and we will price the right scope."}
+      sidebarTrustLine={verticalConfig.projectPageSidebar?.trustLine ?? ""}
     />
   );
 }
