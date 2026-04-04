@@ -49,7 +49,7 @@ const BlogPreview = () => {
                           {post.serviceTitle} →
                         </Badge>
                       </Link>
-                    )}
+                    ) : null}
                     <span className="flex items-center gap-1 text-xs text-muted-foreground">
                       <Calendar className="h-3 w-3" />
                       {new Date(post.date).toLocaleDateString("en-GB", {
