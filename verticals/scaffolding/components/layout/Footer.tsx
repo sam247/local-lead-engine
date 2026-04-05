@@ -6,7 +6,7 @@ import { verticalConfig } from "@/config";
 import { FooterServiceAreaGroups, GroupFooter, getServiceUrl } from "engine";
 import { mainlineGroupLinksForSite } from "engine/data/mainline-group";
 
-const FOOTER_LOGO_WIDTH = 210;
+const FOOTER_LOGO_WIDTH = 228;
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -24,7 +24,7 @@ const Footer = () => {
                 alt="Mainline Scaffold"
                 width={FOOTER_LOGO_WIDTH}
                 height={24}
-                className="h-5 w-[175px] object-contain object-left sm:h-6 sm:w-[210px]"
+                className="h-5 w-[190px] object-contain object-left sm:h-6 sm:w-[228px]"
               />
             </div>
             <p className="mb-6 text-sm text-neutral-300">

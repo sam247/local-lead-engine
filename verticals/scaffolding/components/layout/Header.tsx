@@ -28,7 +28,7 @@ import { cn } from "@/lib/utils";
 
 const resourceLabels = getDefaultResourcesMenuLabels(verticalConfig.siteName);
 const mobileResourceLinks = getResourcesMenuFlatLinks(verticalConfig.siteName);
-const HEADER_LOGO_WIDTH = 210;
+const HEADER_LOGO_WIDTH = 228;
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -51,7 +51,7 @@ const Header = () => {
             alt="Mainline Scaffold"
             width={HEADER_LOGO_WIDTH}
             height={24}
-            className="h-6 w-[210px] object-contain object-left"
+            className="h-6 w-[228px] object-contain object-left"
             priority
           />
         </Link>

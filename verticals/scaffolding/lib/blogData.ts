@@ -7,7 +7,7 @@ const definitions: ScenarioArticleDefinition[] = [
     excerpt:
       "A decision guide explaining when domestic work moves beyond ladders and short-term access and needs a proper scaffold setup.",
     date: "2024-01-18",
-    image: "/images/blog/blog-1.jpg",
+    image: "/images/blog/blog-4.jpg",
     category: "Decision",
     intent: "decision-making",
     serviceSlug: "domestic-scaffolding",
@@ -44,7 +44,7 @@ const definitions: ScenarioArticleDefinition[] = [
     excerpt:
       "A cost guide explaining which site factors widen scaffold quotes and which ones matter less than clients expect.",
     date: "2024-01-12",
-    image: "/images/blog/blog-2.jpg",
+    image: "/images/blog/blog-5.jpg",
     category: "Cost",
     intent: "cost-related",
     serviceSlug: "scaffolding-contractors",
@@ -81,7 +81,7 @@ const definitions: ScenarioArticleDefinition[] = [
     excerpt:
       "A decision article showing when a scaffold alone is enough and when weather protection needs to be part of the access package.",
     date: "2024-01-08",
-    image: "/images/blog/blog-3.jpg",
+    image: "/images/blog/blog-6.jpg",
     category: "Decision",
     intent: "decision-making",
     serviceSlug: "temporary-roofing",
