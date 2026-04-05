@@ -2,13 +2,17 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import ServicesGrid from "@/components/sections/ServicesGrid";
+import ProjectsPreview from "@/components/sections/ProjectsPreview";
 import Testimonials from "@/components/sections/Testimonials";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import { TrustPoints, pickHomepageArticleCards } from "engine";
+import { TrustPoints } from "engine";
 import { verticalConfig } from "@/config";
-import { blogPosts, getCategoryPages, getHubData } from "@/lib/data";
-import { ArrowRight } from "lucide-react";
+import { blogPosts } from "@/lib/blogData";
+import { getBlogImage } from "@/lib/images";
+import { ArrowRight, Calendar } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
   title: "Mainline Scaffold | NASC Accredited Scaffolding Contractors UK",
@@ -18,19 +22,7 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  const hub = getHubData("guides");
-  const guidePages = getCategoryPages("guides");
-  const fallbacks = hub
-    ? guidePages.slice(0, 8).map((p) => ({
-        title: p.title,
-        intro: p.intro,
-        href: `${hub.basePath}/${p.slug}`,
-      }))
-    : [];
-  const articleCards = pickHomepageArticleCards(
-    blogPosts.map((p) => ({ slug: p.id, title: p.title, excerpt: "" })),
-    fallbacks
-  );
+  const featuredPosts = blogPosts.slice(0, 3);
 
   return (
     <>
@@ -41,7 +33,8 @@ export default function HomePage() {
         items={verticalConfig.homepageTrustPoints}
         className="[&_li>span:first-child]:h-[3.75rem] [&_li>span:first-child]:w-[3.75rem] [&_li_svg]:h-8 [&_li_svg]:w-8 [&_li_svg]:text-muted-foreground/90"
       />
-      {articleCards.length > 0 && (
+      <ProjectsPreview />
+      {featuredPosts.length > 0 && (
         <section className="section-padding bg-background">
           <div className="container">
             <div className="mx-auto mb-10 max-w-2xl text-center">
@@ -51,23 +44,52 @@ export default function HomePage() {
               <p className="mt-2 text-muted-foreground">Practical information from our scaffolding team.</p>
             </div>
             <ul className="grid gap-6 md:grid-cols-3">
-              {articleCards.map((card) => (
-                <li key={card.href}>
-                  <article className="flex h-full flex-col rounded-lg border border-border bg-card p-6 transition-shadow hover:shadow-md">
-                    <h3 className="font-display text-lg font-semibold text-foreground">
-                      <Link href={card.href} className="hover:text-primary">
-                        {card.title}
-                      </Link>
-                    </h3>
-                    <p className="mt-2 flex-1 text-sm text-muted-foreground">{card.excerpt}</p>
-                    <Link href={card.href} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-                      Read more
-                      <ArrowRight className="h-4 w-4" aria-hidden />
+              {featuredPosts.map((post, index) => (
+                <li key={post.slug}>
+                  <Card className="group h-full overflow-hidden border-border bg-card transition-all hover:shadow-lg">
+                    <Link href={`/blog/${post.slug}`} className="block aspect-video overflow-hidden">
+                      <img
+                        src={getBlogImage(post, index)}
+                        alt={post.title}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
                     </Link>
-                  </article>
+                    <CardHeader>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Badge variant="secondary">{post.category}</Badge>
+                        <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <Calendar className="h-3 w-3" />
+                          {new Date(post.date).toLocaleDateString("en-GB", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </span>
+                      </div>
+                      <CardTitle className="font-display text-lg group-hover:text-primary">
+                        <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                      </CardTitle>
+                      <CardDescription>{post.excerpt}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Link
+                        href={`/blog/${post.slug}`}
+                        className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                      >
+                        Read more
+                        <ArrowRight className="h-4 w-4" aria-hidden />
+                      </Link>
+                    </CardContent>
+                  </Card>
                 </li>
               ))}
             </ul>
+            <div className="mt-10 text-center">
+              <Link href="/blog" className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline">
+                View all articles
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </div>
           </div>
         </section>
       )}

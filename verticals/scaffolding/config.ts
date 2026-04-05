@@ -78,4 +78,9 @@ export const verticalConfig: VerticalConfig = {
     ctaSupportText: "Share the access need, property type, and programme and we will scope the right scaffold setup.",
     trustLine: "Used by homeowners, contractors and developers",
   },
+  blogPageSidebar: {
+    ctaHeading: "Get scaffold pricing",
+    ctaSupportText: "Tell us what access issue you are planning around and we will recommend the right scaffold route.",
+    trustLine: "Used by homeowners, contractors and developers",
+  },
 };

@@ -497,5 +497,3 @@ export const faqs = [
       "Yes. We work to NASC guidance and TG20 on all scaffolding structures. Our operatives are CISRS-trained and all scaffolding is erected, inspected and documented to current standards.",
   },
 ];
-
-export const blogPosts: { id: string; title: string; excerpt: string }[] = [];
