@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,7 +12,6 @@ import { verticalConfig } from "@/config";
 import { useToast } from "@/hooks/use-toast";
 import {
   trackEvent,
-  getVariantIndex,
   leadEmailField,
   leadPhoneField,
   leadPostcodeField,
@@ -27,8 +25,6 @@ import {
 } from "engine";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
-
-const HERO_ABOUT_LABELS = ["Learn more about our team", "How we work with clients"] as const;
 
 const SERVICE_OPTIONS = [
   "Groundworks Contractors",
@@ -109,7 +105,6 @@ function buildHeroLeadSchema() {
 }
 
 const Hero = () => {
-  const aboutLabelIndex = getVariantIndex(`about:home:${verticalConfig.verticalId}`, HERO_ABOUT_LABELS.length);
   const homeCtaSeed = `${verticalConfig.verticalId}-home`;
   const homeCtaLabel = getCtaVariant(homeCtaSeed, verticalConfig.ctaVariants, {
     serviceSlug: services[0]?.slug,
@@ -256,13 +251,8 @@ const Hero = () => {
             <p className="mb-4 text-base text-primary-foreground/80 md:text-lg">
               We deliver piling, excavation, foundation construction, enabling works and site preparation for live and new-build developments.
             </p>
-            <p className="mb-4 text-base text-primary-foreground/80 md:text-lg">
+            <p className="mb-8 text-base text-primary-foreground/80 md:text-lg">
               Main contractors, developers and site managers use our teams across UK project locations where programme certainty matters.
-            </p>
-            <p className="mb-8 text-xs text-primary-foreground/60">
-              <Link href="/about" className="underline-offset-2 hover:underline">
-                {HERO_ABOUT_LABELS[aboutLabelIndex]}
-              </Link>
             </p>
 
             <div>

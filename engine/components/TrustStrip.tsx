@@ -1,7 +1,7 @@
-import { Briefcase, Check, Shield } from "lucide-react";
+import { Briefcase, Phone, Shield, Star } from "lucide-react";
 import { cn } from "../utils/cn";
 
-export type TrustStripIcon = "check" | "shield" | "briefcase";
+export type TrustStripIcon = "shield" | "briefcase" | "star" | "phone";
 
 export interface TrustStripItem {
   label: string;
@@ -9,15 +9,17 @@ export interface TrustStripItem {
 }
 
 const DEFAULT_ITEMS: TrustStripItem[] = [
-  { label: "Vetted contractors", icon: "check" },
-  { label: "Fully insured", icon: "shield" },
-  { label: "Commercial & site work specialists", icon: "briefcase" },
+  { label: "Fully Insured", icon: "shield" },
+  { label: "Commercial & Site Work Specialists", icon: "briefcase" },
+  { label: "5 Star Rated", icon: "star" },
+  { label: "Emergency Callout", icon: "phone" },
 ];
 
-const ICONS: Record<TrustStripIcon, typeof Check> = {
-  check: Check,
+const ICONS: Record<TrustStripIcon, typeof Shield> = {
   shield: Shield,
   briefcase: Briefcase,
+  star: Star,
+  phone: Phone,
 };
 
 export interface TrustStripProps {
@@ -36,8 +38,8 @@ export function TrustStrip({ items, className }: TrustStripProps) {
       )}
     >
       {resolved.map((item, i) => {
-        const kind = item.icon ?? "check";
-        const Icon = ICONS[kind] ?? Check;
+        const kind = item.icon ?? "shield";
+        const Icon = ICONS[kind] ?? Shield;
         return (
           <li key={`${item.label}-${i}`} className="flex items-center gap-2 text-sm text-muted-foreground">
             <Icon className="h-4 w-4 shrink-0 text-muted-foreground/80" aria-hidden />

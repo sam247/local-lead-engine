@@ -6,7 +6,7 @@ import ProjectsPreview from "@/components/sections/ProjectsPreview";
 import Testimonials from "@/components/sections/Testimonials";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import { TrustPoints } from "engine";
+import { HomeTrustCoreBar, TrustPoints } from "engine";
 import { verticalConfig } from "@/config";
 import { blogPosts } from "@/lib/blogData";
 import { getBlogImage } from "@/lib/images";
@@ -28,6 +28,7 @@ export default function HomePage() {
     <>
       <SchemaMarkup type="LocalBusiness" data={{ areaServed: "UK" }} />
       <Hero />
+      <HomeTrustCoreBar />
       <ServicesGrid />
       <TrustPoints
         items={verticalConfig.homepageTrustPoints}

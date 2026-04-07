@@ -55,6 +55,7 @@ export {
   type GroupFooterProps,
 } from "./components/footer/GroupFooter";
 export { TrustPoints, type TrustPointsProps } from "./components/home/TrustPoints";
+export { HomeTrustCoreBar } from "./components/home/HomeTrustCoreBar";
 export { HomepageArticles, type HomepageArticlesProps, type HomepageArticleCard } from "./components/home/HomepageArticles";
 export {
   GuidePage,

@@ -26,6 +26,7 @@ export {
   type GroupFooterProps,
 } from "./footer/GroupFooter";
 export { TrustPoints, type TrustPointsProps } from "./home/TrustPoints";
+export { HomeTrustCoreBar } from "./home/HomeTrustCoreBar";
 export { HomepageArticles, type HomepageArticlesProps, type HomepageArticleCard } from "./home/HomepageArticles";
 export {
   GuidePage,

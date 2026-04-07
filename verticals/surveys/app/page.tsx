@@ -1,14 +1,13 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
-import { HomeTrustCoreBar } from "@/components/sections/HomeTrustCoreBar";
 import { HomeProblemPreviewSection } from "@/components/sections/HomeProblemPreviewSection";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import ProjectsPreview from "@/components/sections/ProjectsPreview";
 import Testimonials from "@/components/sections/Testimonials";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import { TrustPoints, pickHomepageArticleCards } from "engine";
+import { HomeTrustCoreBar, TrustPoints, pickHomepageArticleCards } from "engine";
 import { verticalConfig } from "@/config";
 import { getCategoryPages, getHubData } from "@/lib/data";
 import { blogPosts } from "@/lib/blogData";
