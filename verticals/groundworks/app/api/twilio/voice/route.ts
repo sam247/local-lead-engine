@@ -16,6 +16,9 @@ const VOICEMAIL_TRAILING_HEADERS = [
   "phone",
 ] as const;
 
+const VOICEMAIL_SAY_MESSAGE =
+  "Hi, you've reached Mainline Groundworks. We're likely on site at the moment. Please leave your name, number, location and a brief description of the work after the beep, and we'll get back to you shortly.";
+
 function xmlEscape(value: string): string {
   return value
     .replace(/&/g, "&amp;")
@@ -45,6 +48,21 @@ function firstFormString(formData: FormData, keys: string[]): string {
     }
   }
   return "";
+}
+
+/** Prefer form body, then query string; if still empty, use default. */
+function fieldOrDefault(
+  formData: FormData,
+  url: URL,
+  formKeys: string[],
+  queryKey: string,
+  fallback: string
+): string {
+  const fromForm = firstFormString(formData, formKeys);
+  if (fromForm.length > 0) return fromForm;
+  const fromQuery = trimToString(url.searchParams.get(queryKey));
+  if (fromQuery.length > 0) return fromQuery;
+  return fallback;
 }
 
 function requireEnv(name: string): string {
@@ -139,13 +157,16 @@ async function getNextCallId(
 }
 
 async function appendVoicemailToSheet(params: {
+  formData: FormData;
+  url: URL;
   callSid: string;
-  phone: string;
   callStatus: string;
   recordingUrl: string;
-  message: string;
   recordingDuration: string;
 }): Promise<void> {
+  const recordingUrl = trimToString(params.recordingUrl);
+  if (recordingUrl.length === 0) return;
+
   const spreadsheetId = requireEnv("GOOGLE_SHEETS_SHEET_ID");
   const sheets = await getSheetsClient();
   let headers = await getCallClicksHeaders(sheets, spreadsheetId);
@@ -153,15 +174,55 @@ async function appendVoicemailToSheet(params: {
 
   const callId = await getNextCallId(sheets, spreadsheetId, headers);
 
+  const phone =
+    firstFormString(params.formData, ["From", "from"]) || "unknown";
+  const message = `Voicemail: ${recordingUrl}`;
+
+  const source_site = fieldOrDefault(
+    params.formData,
+    params.url,
+    ["source_site"],
+    "source_site",
+    "mainlinegroundworks.co.uk"
+  );
+  const page_path = fieldOrDefault(
+    params.formData,
+    params.url,
+    ["page_path"],
+    "page_path",
+    "phone_call"
+  );
+  const service_slug = fieldOrDefault(
+    params.formData,
+    params.url,
+    ["service_slug"],
+    "service_slug",
+    "unknown"
+  );
+  const location_slug = fieldOrDefault(
+    params.formData,
+    params.url,
+    ["location_slug"],
+    "location_slug",
+    "unknown"
+  );
+  const utm_source = fieldOrDefault(
+    params.formData,
+    params.url,
+    ["utm_source"],
+    "utm_source",
+    "offline"
+  );
+
   const byHeader: Record<string, string> = {
     timestamp: new Date().toISOString(),
     call_id: callId,
     vertical: "groundworks",
-    source_site: "",
-    page_path: "",
-    service_slug: "",
-    location_slug: "",
-    utm_source: "",
+    source_site,
+    page_path,
+    service_slug,
+    location_slug,
+    utm_source,
     source: "twilio",
     user_agent: "",
     contractor: "",
@@ -176,10 +237,10 @@ async function appendVoicemailToSheet(params: {
     cta_text: "",
     cta_seed: "",
     lead_type: "call",
-    recording_url: params.recordingUrl,
+    recording_url: recordingUrl,
     call_sid: params.callSid,
-    message: params.message,
-    phone: params.phone,
+    message,
+    phone,
   };
 
   const row: string[] = headers.map((h) => byHeader[h] ?? "");
@@ -218,7 +279,6 @@ export async function POST(req: Request) {
   const formData = await req.formData();
 
   const callSid = firstFormString(formData, ["CallSid", "call_sid"]);
-  const fromNumber = firstFormString(formData, ["From", "from"]);
   const callStatus = firstFormString(formData, ["CallStatus", "call_status"]);
   const recordingUrl = firstFormString(formData, ["RecordingUrl", "recording_url"]);
   const recordingDuration = firstFormString(formData, ["RecordingDuration", "recording_duration"]);
@@ -226,20 +286,19 @@ export async function POST(req: Request) {
   const dialStep = trimToString(url.searchParams.get("dial_step"));
 
   if (isRecordingStatusCallback(formData)) {
-    const message =
-      recordingUrl.length > 0 ? `Voicemail: ${recordingUrl}` : "Missed call - no voicemail";
-
-    try {
-      await appendVoicemailToSheet({
-        callSid: callSid || "unknown",
-        phone: fromNumber || "unknown",
-        callStatus: callStatus || "unknown",
-        recordingUrl,
-        message,
-        recordingDuration,
-      });
-    } catch (err) {
-      console.error("[twilio_voice] Voicemail sheet append failed", err);
+    if (recordingUrl.length > 0) {
+      try {
+        await appendVoicemailToSheet({
+          formData,
+          url,
+          callSid: callSid || "unknown",
+          callStatus: callStatus || "unknown",
+          recordingUrl,
+          recordingDuration,
+        });
+      } catch (err) {
+        console.error("[twilio_voice] Voicemail sheet append failed", err);
+      }
     }
 
     return new Response(`<?xml version="1.0" encoding="UTF-8"?><Response></Response>`, {
@@ -276,11 +335,9 @@ export async function POST(req: Request) {
     const dialCallStatus = firstFormString(formData, ["DialCallStatus", "dial_call_status"]).toLowerCase();
 
     if (VOICEMAIL_AFTER_DIAL_STATUSES.has(dialCallStatus)) {
-      const message =
-        "Sorry we could not take your call. Please leave a message after the tone.";
       const twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Say>${xmlEscape(message)}</Say>
+  <Say>${xmlEscape(VOICEMAIL_SAY_MESSAGE)}</Say>
   <Record recordingStatusCallback="${xmlEscape("/api/twilio/voice")}" recordingStatusCallbackMethod="POST" />
 </Response>`;
       return new Response(twiml, {
