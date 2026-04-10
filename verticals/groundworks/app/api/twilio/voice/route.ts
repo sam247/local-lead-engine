@@ -17,7 +17,7 @@ const VOICEMAIL_TRAILING_HEADERS = [
 ] as const;
 
 const VOICEMAIL_SAY_MESSAGE =
-  "Hi, you've reached Mainline Groundworks. We're likely on site at the moment. Please leave your name, number, location and a brief description of the work after the beep, and we'll get back to you shortly.";
+  "Hi, you've reached Mainline. We're likely on site at the moment. Please leave your name, number, location and a brief description of the work after the beep, and we'll get back to you shortly.";
 
 function xmlEscape(value: string): string {
   return value
