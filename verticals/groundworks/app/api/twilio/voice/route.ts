@@ -199,16 +199,14 @@ function isRecordingStatusCallback(formData: FormData): boolean {
   return firstFormString(formData, ["RecordingUrl", "recording_url"]).length > 0;
 }
 
-function buildDialActionUrl(baseUrl: URL, intentId: string | undefined): string {
-  const u = new URL("/api/twilio/voice", `${baseUrl.protocol}//${baseUrl.host}`);
-  u.searchParams.set("dial_step", "1");
-  if (intentId) u.searchParams.set("intent_id", intentId);
-  return u.toString();
+/** Relative path for Dial action (resolved by Twilio against the voice webhook host). */
+function buildDialActionAttr(intentId: string | undefined): string {
+  let path = "/api/twilio/voice?dial_step=1";
+  if (intentId) path += `&intent_id=${encodeURIComponent(intentId)}`;
+  return path;
 }
 
-function buildRecordingCallbackUrl(baseUrl: URL): string {
-  return new URL("/api/twilio/voice", `${baseUrl.protocol}//${baseUrl.host}`).toString();
-}
+const VOICEMAIL_AFTER_DIAL_STATUSES = new Set(["no-answer", "busy", "failed", "canceled", "cancelled"]);
 
 export async function POST(req: Request) {
   const url = new URL(req.url);
@@ -276,18 +274,14 @@ export async function POST(req: Request) {
 
   if (dialStep === "1") {
     const dialCallStatus = firstFormString(formData, ["DialCallStatus", "dial_call_status"]).toLowerCase();
-    const recordingCb = buildRecordingCallbackUrl(url);
 
-    if (["no-answer", "busy", "failed", "canceled"].includes(dialCallStatus)) {
+    if (VOICEMAIL_AFTER_DIAL_STATUSES.has(dialCallStatus)) {
+      const message =
+        "Sorry we could not take your call. Please leave a message after the tone.";
       const twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Say voice="Polly.Amy">Sorry we could not take your call. Please leave a message after the tone.</Say>
-  <Record
-    maxLength="120"
-    playBeep="true"
-    recordingStatusCallback="${xmlEscape(recordingCb)}"
-    recordingStatusCallbackMethod="POST"
-  />
+  <Say>${xmlEscape(message)}</Say>
+  <Record recordingStatusCallback="${xmlEscape("/api/twilio/voice")}" recordingStatusCallbackMethod="POST" />
 </Response>`;
       return new Response(twiml, {
         headers: { "Content-Type": "text/xml" },
@@ -299,19 +293,20 @@ export async function POST(req: Request) {
     });
   }
 
-  const dialActionUrl = buildDialActionUrl(url, intentId);
+  const dialActionAttr = buildDialActionAttr(intentId);
 
   console.log("[twilio_voice]", {
     intentId,
     callSid: callSid || undefined,
     statusCallback,
-    dialActionUrl,
+    dialActionAttr,
   });
 
   const twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Dial
-    action="${xmlEscape(dialActionUrl)}"
+    timeout="15"
+    action="${xmlEscape(dialActionAttr)}"
     method="POST"
     statusCallback="${xmlEscape(statusCallback)}"
     statusCallbackEvent="completed"
