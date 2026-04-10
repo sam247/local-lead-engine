@@ -13,6 +13,9 @@ export const serviceImages: Record<string, string> = {
   "concrete-repair": `${base}/services/concrete-foundations.jpg`,
   "excavation-contractors": `${base}/services/excavation-contractors.jpg`,
   "site-clearance-contractors": `${base}/services/site-clearance-contractors.jpg`,
+  "muck-away-services": `${base}/services/site-clearance-contractors.jpg`,
+  "bulk-earthworks": `${base}/services/excavation-contractors.jpg`,
+  "site-preparation-services": `${base}/services/enabling-works-contractors.jpg`,
   "concrete-foundations": `${base}/services/concrete-foundations.jpg`,
   "enabling-works-contractors": `${base}/services/enabling-works-contractors.jpg`,
 };

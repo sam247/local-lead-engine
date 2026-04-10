@@ -82,7 +82,7 @@ export const guidesPages: InfoPageData[] = [
     diagnosis: "We quote from your drawings and site visit. Volumes and support requirements define the price.",
     resolution: "We carry out excavation to design with appropriate support and reinstatement.",
     ctaText: "Need excavation for your project? Request a quote.",
-    relatedServices: ["excavation-contractors", "groundworks-contractors"],
+    relatedServices: ["excavation-contractors", "bulk-earthworks", "muck-away-services"],
     relatedPages: [{ slug: "groundworks-process", category: "guides", title: "Groundworks Process" }],
   },
   {
@@ -94,7 +94,7 @@ export const guidesPages: InfoPageData[] = [
     diagnosis: "We assess the site and provide a quote for clearance and disposal. Tree preservation and planning may apply.",
     resolution: "We deliver a clear site ready for groundworks with waste removed and tickets provided.",
     ctaText: "Get a site clearance quote.",
-    relatedServices: ["site-clearance-contractors", "groundworks-contractors"],
+    relatedServices: ["site-clearance-contractors", "muck-away-services", "site-preparation-services"],
     relatedPages: [{ slug: "construction-site-preparation", category: "guides", title: "Construction Site Preparation" }],
   },
   {
@@ -106,7 +106,7 @@ export const guidesPages: InfoPageData[] = [
     diagnosis: "We plan enabling works with you so the site is ready for the main build. We can include temporary drainage and coordinate with permanent drainage later.",
     resolution: "We deliver enabling works to programme so your main contractor can start on day one.",
     ctaText: "Plan enabling works for your project.",
-    relatedServices: ["enabling-works-contractors", "groundworks-contractors"],
+    relatedServices: ["enabling-works-contractors", "site-preparation-services", "groundworks-contractors"],
     relatedPages: [{ slug: "construction-site-preparation", category: "guides", title: "Construction Site Preparation" }, { slug: "groundworks-process", category: "guides", title: "Groundworks Process" }],
   },
   {
@@ -118,7 +118,7 @@ export const guidesPages: InfoPageData[] = [
     diagnosis: "We work from your design and programme. Surveys and ground investigation inform the sequence and method.",
     resolution: "We manage the groundworks package so your project stays on track with clear communication and documentation.",
     ctaText: "Discuss your groundworks programme with us.",
-    relatedServices: ["groundworks-contractors", "excavation-contractors", "foundation-contractors"],
+    relatedServices: ["groundworks-contractors", "site-preparation-services", "bulk-earthworks"],
     relatedPages: [{ slug: "construction-site-preparation", category: "guides", title: "Construction Site Preparation" }, { slug: "what-are-enabling-works", category: "guides", title: "What Are Enabling Works?" }],
   },
   {
@@ -130,7 +130,7 @@ export const guidesPages: InfoPageData[] = [
     diagnosis: "We coordinate with surveyors and designers so preparation matches the programme. Surveys reduce risk and rework.",
     resolution: "We deliver site preparation and enabling works so your build can start on time.",
     ctaText: "Plan site preparation for your project.",
-    relatedServices: ["site-clearance-contractors", "enabling-works-contractors", "groundworks-contractors"],
+    relatedServices: ["site-clearance-contractors", "site-preparation-services", "enabling-works-contractors"],
     relatedPages: [{ slug: "what-are-enabling-works", category: "guides", title: "What Are Enabling Works?" }, { slug: "groundworks-process", category: "guides", title: "Groundworks Process" }],
   },
   {
@@ -250,7 +250,7 @@ export const guidesPages: InfoPageData[] = [
     diagnosis: "We quote from a site visit. We advise on tree preservation and planning where relevant.",
     resolution: "We deliver site clearance to programme with waste removed and documentation.",
     ctaText: "Need site clearance? Get a quote from us.",
-    relatedServices: ["site-clearance-contractors", "groundworks-contractors", "excavation-contractors"],
+    relatedServices: ["site-clearance-contractors", "muck-away-services", "site-preparation-services"],
     relatedPages: [{ slug: "construction-site-preparation", category: "guides", title: "Construction Site Preparation" }, { slug: "site-clearance-cost", category: "guides", title: "Site Clearance Cost" }],
   },
   {
@@ -298,7 +298,7 @@ export const guidesPages: InfoPageData[] = [
     diagnosis: "We deliver groundworks and support to the build-over design. We do not obtain the agreement.",
     resolution: "We build to the agreed design and provide certification.",
     ctaText: "Building over a drain? We deliver to your build-over agreement.",
-    relatedServices: ["groundworks-contractors", "excavation-contractors", "foundation-contractors"],
+    relatedServices: ["groundworks-contractors", "site-preparation-services", "bulk-earthworks"],
     relatedPages: [{ slug: "groundworks-process", category: "guides", title: "Groundworks Process" }],
   },
   {
@@ -322,7 +322,7 @@ export const guidesPages: InfoPageData[] = [
     diagnosis: "We quote for muck-away from your drawings and site visit. We advise on reuse where possible.",
     resolution: "We remove spoil to programme with correct documentation.",
     ctaText: "Need muck-away? Get a quote from us.",
-    relatedServices: ["excavation-contractors", "site-clearance-contractors", "groundworks-contractors"],
+    relatedServices: ["muck-away-services", "site-clearance-contractors", "bulk-earthworks"],
     relatedPages: [{ slug: "excavation-cost", category: "guides", title: "Excavation Cost Guide" }, { slug: "site-clearance-cost", category: "guides", title: "Site Clearance Cost" }],
   },
   {
@@ -382,7 +382,7 @@ export const guidesPages: InfoPageData[] = [
     diagnosis: "We strip and stockpile topsoil from your levels and specification. We advise on depth and area.",
     resolution: "We deliver topsoil stripping and stockpiling with the material ready for reuse.",
     ctaText: "Need topsoil stripped and stockpiled? We can deliver.",
-    relatedServices: ["excavation-contractors", "groundworks-contractors", "site-clearance-contractors"],
+    relatedServices: ["bulk-earthworks", "site-preparation-services", "site-clearance-contractors"],
     relatedPages: [{ slug: "construction-site-preparation", category: "guides", title: "Construction Site Preparation" }, { slug: "groundworks-process", category: "guides", title: "Groundworks Process" }],
   },
   {

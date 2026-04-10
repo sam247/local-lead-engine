@@ -116,6 +116,138 @@ export const services = [
     icon: "Warehouse",
   },
   {
+    id: "foundation-depth-issues",
+    slug: "foundation-depth-issues",
+    title: "Foundation Depth Issues",
+    titleSingular: "Foundation Depth Issue",
+    shortDescription: "Investigate and correct shallow or inconsistent foundation depths.",
+    description:
+      "We assess foundation depth issues where existing footings are too shallow, variable or exposed to frost and movement risk. Our team works from engineer-led recommendations and can deliver underpinning, piling or local remedial work depending on the structure and ground.",
+    benefits: ["Engineer-led solutions", "Suitable for existing buildings", "Reduces movement risk", "Clear certification"],
+    process: ["Site review and survey", "Depth assessment", "Engineer coordination", "Repair or strengthening works"],
+    icon: "AlertTriangle",
+  },
+  {
+    id: "building-regs-foundation-compliance",
+    slug: "building-regs-foundation-compliance",
+    title: "Building Regs Foundation Compliance",
+    titleSingular: "Building Regs Foundation Compliance",
+    shortDescription: "Bring foundations into line with building control and structural requirements.",
+    description:
+      "We help when foundation work needs to be aligned with building control, structural design and practical site constraints. That can mean checking what was built, planning remedial work and coordinating with the wider project team to achieve compliance.",
+    benefits: ["Supports compliance checks", "Works with structural design", "Useful for extensions and alterations", "Clear handover records"],
+    process: ["Review the issue", "Check drawings and site conditions", "Agree remedial scope", "Deliver compliant works"],
+    icon: "Building2",
+  },
+  {
+    id: "clay-soil-foundation-problems",
+    slug: "clay-soil-foundation-problems",
+    title: "Clay Soil Foundation Problems",
+    titleSingular: "Clay Soil Foundation Problem",
+    shortDescription: "Assess and resolve foundation movement caused by clay soil conditions.",
+    description:
+      "Clay soils shrink and swell with seasonal moisture changes, which can affect foundations and create movement. We work with engineers to stabilise the structure and select the right foundation or remedial approach for the clay conditions.",
+    benefits: ["Clarity on clay-related risk", "Supports structural design", "Suitable for new build and remedial work", "Helps avoid repeat movement"],
+    process: ["Review ground conditions", "Coordinate investigation", "Agree foundation strategy", "Deliver works to design"],
+    icon: "Droplets",
+  },
+  {
+    id: "tree-impact-foundations",
+    slug: "tree-impact-foundations",
+    title: "Tree Impact Foundation Solutions",
+    titleSingular: "Tree Impact Foundation Solution",
+    shortDescription: "Foundation solutions where nearby trees are affecting ground moisture or support.",
+    description:
+      "Trees can change soil moisture levels and affect nearby foundations, especially on clay ground. We help assess tree-related foundation risk and deliver solutions such as underpinning, piling or remedial works.",
+    benefits: ["Tree risk assessment support", "Links to engineer-led repair", "Suitable for extensions and existing homes", "Clear programme and handover"],
+    process: ["Assess tree influence", "Review foundation depth", "Coordinate with engineer", "Install remedy"],
+    icon: "TreeDeciduous",
+  },
+  {
+    id: "foundation-remedial-work",
+    slug: "foundation-remedial-work",
+    title: "Foundation Remedial Work",
+    titleSingular: "Foundation Remedial Work",
+    shortDescription: "Targeted remedial works for compromised or under-performing foundations.",
+    description:
+      "We carry out remedial foundation work where support has been compromised by movement, design issues or ground conditions. Every scheme is coordinated with structural design and staged to keep the structure safe.",
+    benefits: ["Targeted repair options", "Engineer-led delivery", "Works for damaged or under-designed foundations", "Full documentation"],
+    process: ["Inspection and diagnosis", "Engineer specification", "Controlled remedial works", "Sign-off and records"],
+    icon: "Wrench",
+  },
+  {
+    id: "underpinning-advice",
+    slug: "underpinning-advice",
+    title: "Underpinning Advice",
+    titleSingular: "Underpinning Advice",
+    shortDescription: "Practical advice and delivery support for underpinning projects.",
+    description:
+      "We provide practical underpinning advice and delivery support where existing foundations need to be deepened or stabilised. The solution is always chosen against the structure, the soil and the engineer's specification.",
+    benefits: ["Clear direction on next steps", "Suitable for movement and shallow foundations", "Works with existing structures", "Engineer-led approach"],
+    process: ["Initial consultation", "Review of drawings and symptoms", "Engineer coordination", "Underpinning works"],
+    icon: "Replace",
+  },
+  {
+    id: "structural-groundworks-consultation",
+    slug: "structural-groundworks-consultation",
+    title: "Structural Groundworks Consultation",
+    titleSingular: "Structural Groundworks Consultation",
+    shortDescription: "Consultation for projects with uncertainty around foundations, soil and buildability.",
+    description:
+      "We provide structural groundworks consultation for projects with uncertainty around foundations, soil and buildability. The aim is to define the right groundworks route before costly mistakes are made on site.",
+    benefits: ["Early-stage advice", "Buildability and risk review", "Helps define scope and sequence", "Useful for complex sites"],
+    process: ["Project review", "Site and drawing assessment", "Plan options and risks", "Recommend next steps"],
+    icon: "Building2",
+  },
+  {
+    id: "ground-investigation-services",
+    slug: "ground-investigation-services",
+    title: "Ground Investigation Services",
+    titleSingular: "Ground Investigation Service",
+    shortDescription: "Coordinate ground investigation inputs for foundation and testing decisions.",
+    description:
+      "We arrange and interpret ground investigation inputs so the foundation strategy is based on real site conditions rather than assumptions. That supports foundation design, testing and buildability decisions.",
+    benefits: ["Site-specific ground data", "Supports design and warranty", "Helps avoid over- or under-design", "Useful before foundation decisions"],
+    process: ["Desktop review", "Trial pits or boreholes plan", "Data review with engineer", "Deliver foundation route"],
+    icon: "Shovel",
+  },
+  {
+    id: "soil-bearing-capacity-testing",
+    slug: "soil-bearing-capacity-testing",
+    title: "Soil Bearing Capacity Testing",
+    titleSingular: "Soil Bearing Capacity Testing",
+    shortDescription: "Assess how well ground can support load before foundation decisions are made.",
+    description:
+      "We assess soil bearing capacity so the foundation design reflects the ground's real ability to support load. This is especially useful on variable sites, made ground or where settlement risk needs checking.",
+    benefits: ["Clarifies bearing performance", "Supports design decisions", "Useful on weak or variable soils", "Buildability insight"],
+    process: ["Initial site review", "Testing plan", "Capacity assessment", "Engineer handover"],
+    icon: "Droplets",
+  },
+  {
+    id: "plate-load-testing",
+    slug: "plate-load-testing",
+    title: "Plate Load Testing",
+    titleSingular: "Plate Load Testing",
+    shortDescription: "Verify ground response under load before finalising foundation choices.",
+    description:
+      "Plate load testing helps verify how ground responds under load, giving confidence around foundation performance and settlement. We use it where bearing performance needs practical confirmation.",
+    benefits: ["Direct load response data", "Useful for design verification", "Supports foundation decisions", "Clear test records"],
+    process: ["Set out test location", "Load application", "Record settlement", "Report results"],
+    icon: "Layers",
+  },
+  {
+    id: "incremental-plate-load-testing",
+    slug: "incremental-plate-load-testing",
+    title: "Incremental Plate Load Testing",
+    titleSingular: "Incremental Plate Load Testing",
+    shortDescription: "Staged plate load testing for more detailed bearing data.",
+    description:
+      "Incremental plate load testing applies load in stages so the ground response can be checked more carefully. It is useful where the engineer wants detailed bearing data before finalising foundation design.",
+    benefits: ["Detailed load-response data", "Supports engineering sign-off", "Useful on uncertain ground", "Clear reporting"],
+    process: ["Prepare test point", "Apply staged loading", "Measure settlement", "Compile report"],
+    icon: "Camera",
+  },
+  {
     id: "concrete-repair",
     slug: "concrete-repair",
     title: "Concrete Repair",
@@ -148,6 +280,42 @@ export const services = [
     benefits: ["Full site strip capability", "Waste removed and recycled where possible", "Safe demolition and clearance", "Site ready for groundworks", "Documented disposal"],
     process: ["Site survey and scope", "Clearance and demolition", "Vegetation and topsoil strip", "Waste removal and tickets", "Handover of clear site"],
     icon: "TreePine",
+  },
+  {
+    id: "muck-away-services",
+    slug: "muck-away-services",
+    title: "Muck Away Services",
+    titleSingular: "Muck Away Service",
+    shortDescription: "Excavate, load and dispose of spoil with the right documentation.",
+    description:
+      "Muck away services cover the loading, removal and disposal of spoil from groundworks and excavation. We plan routes, waste handling and documentation so the site is cleared efficiently and the next phase can start on programme.",
+    benefits: ["Licensed disposal routes", "Efficient spoil removal", "Supports fast site clearance", "Works with excavation and enabling works"],
+    process: ["Scope spoil volumes", "Plan access and collections", "Load and remove material", "Provide waste records"],
+    icon: "Shovel",
+  },
+  {
+    id: "bulk-earthworks",
+    slug: "bulk-earthworks",
+    title: "Bulk Earthworks",
+    titleSingular: "Bulk Earthworks",
+    shortDescription: "Large-scale cut, fill and formation works for development sites.",
+    description:
+      "Bulk earthworks cover the large-scale movement of soil and fill needed to get a site to formation or platform levels. We work to the design and programme, managing excavation, reuse, import and compaction so the site is ready for the next stage.",
+    benefits: ["Large-volume excavation", "Cut and fill coordination", "Formation and platform prep", "Works with site prep and enabling"],
+    process: ["Review levels and volumes", "Plan cut and fill", "Excavate and move material", "Compact and hand over"],
+    icon: "Layers",
+  },
+  {
+    id: "site-preparation-services",
+    slug: "site-preparation-services",
+    title: "Site Preparation Services",
+    titleSingular: "Site Preparation Service",
+    shortDescription: "Early site preparation to get a project ready for main works.",
+    description:
+      "Site preparation services bring together clearance, temporary access, spoil management and early formation work so the site is ready for the main build. We keep the sequence practical and aligned to the project programme.",
+    benefits: ["Early-stage project readiness", "Clearance and access coordination", "Supports efficient main works", "Works with enabling and excavation"],
+    process: ["Site review", "Clearance and access plan", "Prepare formation and logistics", "Handover ready for main works"],
+    icon: "Building2",
   },
   {
     id: "concrete-foundations",
@@ -286,6 +454,20 @@ const GROUNDWORKS_SERVICE_TO_TOPIC_CATEGORIES: Record<string, string[]> = {
   "mini-piling-contractors": ["ground-conditions", "groundworks-costs", "guides"],
   "underpinning": ["foundation-problems", "groundworks-costs", "guides"],
   "foundation-repair": ["foundation-problems", "groundworks-costs", "guides"],
+  "foundation-depth-issues": ["foundation-problems", "ground-conditions", "guides"],
+  "building-regs-foundation-compliance": ["foundation-problems", "site-preparation", "guides"],
+  "clay-soil-foundation-problems": ["foundation-problems", "ground-conditions", "guides"],
+  "tree-impact-foundations": ["foundation-problems", "ground-conditions", "guides"],
+  "foundation-remedial-work": ["foundation-problems", "groundworks-costs", "guides"],
+  "underpinning-advice": ["foundation-problems", "groundworks-costs", "guides"],
+  "structural-groundworks-consultation": ["foundation-problems", "groundworks-costs", "guides"],
+  "ground-investigation-services": ["ground-conditions", "foundation-problems", "guides"],
+  "soil-bearing-capacity-testing": ["ground-conditions", "foundation-problems", "guides"],
+  "plate-load-testing": ["ground-conditions", "groundworks-costs", "guides"],
+  "incremental-plate-load-testing": ["ground-conditions", "groundworks-costs", "guides"],
+  "muck-away-services": ["site-preparation", "groundworks-costs", "guides"],
+  "bulk-earthworks": ["site-preparation", "groundworks-costs", "guides"],
+  "site-preparation-services": ["site-preparation", "groundworks-costs", "guides"],
   "concrete-repair": ["foundation-problems", "groundworks-costs", "guides"],
   "excavation-contractors": ["site-preparation", "groundworks-costs", "guides"],
   "site-clearance-contractors": ["site-preparation", "groundworks-costs"],
@@ -360,6 +542,20 @@ function buildRelatedGuideLinksByService(): Record<string, { slug: string; path:
     "mini-piling-contractors": ["mini-piling-cost", "types-of-piling", "when-is-piling-required"],
     "underpinning": ["foundation-cost", "groundworks-process", "types-of-piling"],
     "foundation-repair": ["foundation-cost", "groundworks-process", "concrete-foundations-cost"],
+    "foundation-depth-issues": ["foundation-depth-frost", "foundation-cost", "ground-investigation-before-build"],
+    "building-regs-foundation-compliance": ["extension-foundations-guide", "groundworks-process", "ground-investigation-before-build"],
+    "clay-soil-foundation-problems": ["how-ground-conditions-affect-foundation-design", "when-is-piling-required", "ground-investigation-before-build"],
+    "tree-impact-foundations": ["underpinning-vs-piling", "foundation-depth-frost", "extension-foundations-guide"],
+    "foundation-remedial-work": ["underpinning-vs-piling", "foundation-cost", "groundworks-process"],
+    "underpinning-advice": ["underpinning-vs-piling", "when-is-piling-required", "foundation-cost"],
+    "structural-groundworks-consultation": ["ground-investigation-before-build", "groundworks-process", "how-ground-conditions-affect-foundation-design"],
+    "ground-investigation-services": ["ground-investigation-before-build", "how-ground-conditions-affect-foundation-design", "groundworks-process"],
+    "soil-bearing-capacity-testing": ["ground-investigation-before-build", "how-ground-conditions-affect-foundation-design", "when-is-piling-required"],
+    "plate-load-testing": ["ground-investigation-before-build", "when-is-piling-required", "types-of-piling"],
+    "incremental-plate-load-testing": ["ground-investigation-before-build", "piling-cost", "when-is-piling-required"],
+    "muck-away-services": ["muck-away-and-disposal", "site-clearance-what-to-expect", "construction-site-preparation"],
+    "bulk-earthworks": ["muck-away-and-disposal", "topsoil-stripping-and-stockpile", "groundworks-process"],
+    "site-preparation-services": ["construction-site-preparation", "what-are-enabling-works", "groundworks-process"],
     "concrete-repair": ["concrete-foundations-cost", "foundation-cost", "groundworks-process"],
     "excavation-contractors": ["excavation-cost", "groundworks-process"],
     "site-clearance-contractors": ["site-clearance-cost", "construction-site-preparation"],
@@ -380,6 +576,97 @@ function buildRelatedGuideLinksByService(): Record<string, { slug: string; path:
 }
 
 export const relatedGuideLinksByService = buildRelatedGuideLinksByService();
+
+export const relatedCostGuideLinksByService: Record<string, { slug: string; path: string; title: string }[]> = {
+  "groundworks-contractors": [
+    { slug: "groundworks-cost-overview", path: "/groundworks-costs/groundworks-cost-overview", title: "Groundworks cost overview" },
+    { slug: "budgeting-for-groundworks", path: "/groundworks-costs/budgeting-for-groundworks", title: "Budgeting for groundworks" },
+  ],
+  "foundation-contractors": [
+    { slug: "foundation-cost-per-metre", path: "/groundworks-costs/foundation-cost-per-metre", title: "Foundation cost per metre" },
+    { slug: "extension-foundation-cost", path: "/groundworks-costs/extension-foundation-cost", title: "Extension foundation cost" },
+  ],
+  "underpinning": [
+    { slug: "underpinning-cost", path: "/groundworks-costs/underpinning-cost", title: "Underpinning cost" },
+    { slug: "mass-concrete-underpinning-cost", path: "/groundworks-costs/mass-concrete-underpinning-cost", title: "Mass concrete underpinning cost" },
+  ],
+  "foundation-repair": [
+    { slug: "underpinning-cost", path: "/groundworks-costs/underpinning-cost", title: "Underpinning cost" },
+    { slug: "foundation-cost-per-metre", path: "/groundworks-costs/foundation-cost-per-metre", title: "Foundation cost per metre" },
+  ],
+  "foundation-depth-issues": [
+    { slug: "foundation-cost-per-metre", path: "/groundworks-costs/foundation-cost-per-metre", title: "Foundation cost per metre" },
+    { slug: "underpinning-cost", path: "/groundworks-costs/underpinning-cost", title: "Underpinning cost" },
+  ],
+  "building-regs-foundation-compliance": [
+    { slug: "extension-foundation-cost", path: "/groundworks-costs/extension-foundation-cost", title: "Extension foundation cost" },
+    { slug: "groundworks-cost-overview", path: "/groundworks-costs/groundworks-cost-overview", title: "Groundworks cost overview" },
+  ],
+  "clay-soil-foundation-problems": [
+    { slug: "ground-investigation-cost", path: "/groundworks-costs/ground-investigation-cost", title: "Ground investigation cost" },
+    { slug: "foundation-cost-per-metre", path: "/groundworks-costs/foundation-cost-per-metre", title: "Foundation cost per metre" },
+  ],
+  "tree-impact-foundations": [
+    { slug: "ground-investigation-cost", path: "/groundworks-costs/ground-investigation-cost", title: "Ground investigation cost" },
+    { slug: "foundation-cost-per-metre", path: "/groundworks-costs/foundation-cost-per-metre", title: "Foundation cost per metre" },
+  ],
+  "foundation-remedial-work": [
+    { slug: "underpinning-cost", path: "/groundworks-costs/underpinning-cost", title: "Underpinning cost" },
+    { slug: "foundation-cost-per-metre", path: "/groundworks-costs/foundation-cost-per-metre", title: "Foundation cost per metre" },
+  ],
+  "underpinning-advice": [
+    { slug: "underpinning-cost", path: "/groundworks-costs/underpinning-cost", title: "Underpinning cost" },
+    { slug: "foundation-cost-per-metre", path: "/groundworks-costs/foundation-cost-per-metre", title: "Foundation cost per metre" },
+  ],
+  "structural-groundworks-consultation": [
+    { slug: "groundworks-cost-overview", path: "/groundworks-costs/groundworks-cost-overview", title: "Groundworks cost overview" },
+    { slug: "budgeting-for-groundworks", path: "/groundworks-costs/budgeting-for-groundworks", title: "Budgeting for groundworks" },
+  ],
+  "ground-investigation-services": [
+    { slug: "ground-investigation-cost", path: "/groundworks-costs/ground-investigation-cost", title: "Ground investigation cost" },
+    { slug: "groundworks-contingency-budget", path: "/groundworks-costs/groundworks-contingency-budget", title: "Groundworks contingency budget" },
+  ],
+  "soil-bearing-capacity-testing": [
+    { slug: "ground-investigation-cost", path: "/groundworks-costs/ground-investigation-cost", title: "Ground investigation cost" },
+    { slug: "foundation-cost-per-metre", path: "/groundworks-costs/foundation-cost-per-metre", title: "Foundation cost per metre" },
+  ],
+  "plate-load-testing": [
+    { slug: "ground-investigation-cost", path: "/groundworks-costs/ground-investigation-cost", title: "Ground investigation cost" },
+    { slug: "piling-cost-per-metre", path: "/groundworks-costs/piling-cost-per-metre", title: "Piling cost per linear metre" },
+  ],
+  "incremental-plate-load-testing": [
+    { slug: "ground-investigation-cost", path: "/groundworks-costs/ground-investigation-cost", title: "Ground investigation cost" },
+    { slug: "piling-cost-per-metre", path: "/groundworks-costs/piling-cost-per-metre", title: "Piling cost per linear metre" },
+  ],
+  "muck-away-services": [
+    { slug: "site-clearance-muck-away-price", path: "/groundworks-costs/site-clearance-muck-away-price", title: "Site clearance and muck-away price" },
+    { slug: "excavation-cost-per-cubic-metre", path: "/groundworks-costs/excavation-cost-per-cubic-metre", title: "Excavation cost per cubic metre" },
+  ],
+  "bulk-earthworks": [
+    { slug: "groundworks-cost-overview", path: "/groundworks-costs/groundworks-cost-overview", title: "Groundworks cost overview" },
+    { slug: "excavation-cost-per-cubic-metre", path: "/groundworks-costs/excavation-cost-per-cubic-metre", title: "Excavation cost per cubic metre" },
+  ],
+  "site-preparation-services": [
+    { slug: "enabling-works-cost", path: "/guides/enabling-works-cost", title: "Enabling works cost" },
+    { slug: "site-clearance-muck-away-price", path: "/groundworks-costs/site-clearance-muck-away-price", title: "Site clearance and muck-away price" },
+  ],
+  "excavation-contractors": [
+    { slug: "excavation-cost-per-cubic-metre", path: "/groundworks-costs/excavation-cost-per-cubic-metre", title: "Excavation cost per cubic metre" },
+    { slug: "groundworks-cost-overview", path: "/groundworks-costs/groundworks-cost-overview", title: "Groundworks cost overview" },
+  ],
+  "site-clearance-contractors": [
+    { slug: "site-clearance-cost", path: "/guides/site-clearance-cost", title: "Site Clearance Cost" },
+    { slug: "site-clearance-muck-away-price", path: "/groundworks-costs/site-clearance-muck-away-price", title: "Site clearance and muck-away price" },
+  ],
+  "enabling-works-contractors": [
+    { slug: "enabling-works-cost", path: "/guides/enabling-works-cost", title: "Enabling works cost" },
+    { slug: "groundworks-cost-overview", path: "/groundworks-costs/groundworks-cost-overview", title: "Groundworks cost overview" },
+  ],
+  "concrete-foundations": [
+    { slug: "concrete-foundation-cost", path: "/groundworks-costs/concrete-foundation-cost", title: "Concrete foundation cost" },
+    { slug: "foundation-cost-per-metre", path: "/groundworks-costs/foundation-cost-per-metre", title: "Foundation cost per metre" },
+  ],
+};
 
 export const serviceFaqsBySlug: Record<string, { question: string; answer: string }[]> = {
   "groundworks-contractors": [
@@ -424,10 +711,108 @@ export const serviceFaqsBySlug: Record<string, { question: string; answer: strin
         "Underpinning usually means extending or deepening foundations to stabilise the building. Foundation repair can cover localised fixes. A structural engineer defines the right method after assessment.",
     },
   ],
+  "foundation-depth-issues": [
+    {
+      question: "When do shallow foundations need more than a simple repair?",
+      answer:
+        "If the foundations are too shallow for the ground conditions, frost depth or nearby trees, the fix often needs deeper support such as underpinning or piling. We work from the engineer's specification.",
+    },
+  ],
+  "building-regs-foundation-compliance": [
+    {
+      question: "Can you help bring foundation works into compliance?",
+      answer:
+        "Yes. We review the issue, coordinate with the wider project team and deliver remedial works so the foundations align with building control and structural requirements.",
+    },
+  ],
+  "clay-soil-foundation-problems": [
+    {
+      question: "How do you deal with clay soil movement?",
+      answer:
+        "We work with engineers to determine whether deeper foundations, underpinning or another remedial approach is needed. The right solution depends on the structure, the clay behavior and the ground investigation.",
+    },
+  ],
+  "tree-impact-foundations": [
+    {
+      question: "Are nearby trees always a foundation risk?",
+      answer:
+        "Not always, but tree species, soil type and distance from the building all matter. We assess the risk with the engineer and then deliver the right foundation or remedial solution.",
+    },
+  ],
+  "foundation-remedial-work": [
+    {
+      question: "Do you work from engineer-led remedial details?",
+      answer:
+        "Yes. We scope and deliver remedial foundation work from the agreed design, including sequencing, support and handover records.",
+    },
+  ],
+  "underpinning-advice": [
+    {
+      question: "When is underpinning the right option?",
+      answer:
+        "Underpinning is usually chosen when existing foundations need deeper or wider support to stabilise movement or meet a revised design. A structural engineer confirms the method after assessment.",
+    },
+  ],
+  "structural-groundworks-consultation": [
+    {
+      question: "Can you review foundation options before work starts?",
+      answer:
+        "Yes. We review drawings, site conditions and buildability concerns early so the project team can choose a practical groundworks route before work starts.",
+    },
+  ],
+  "ground-investigation-services": [
+    {
+      question: "Do you coordinate ground investigation with the foundation design?",
+      answer:
+        "We work from the ground investigation findings and the engineer's design so the foundation route reflects what the site is actually doing.",
+    },
+  ],
+  "soil-bearing-capacity-testing": [
+    {
+      question: "Why test soil bearing capacity before foundations?",
+      answer:
+        "Testing confirms whether the ground can carry the intended load and helps avoid under- or over-designed foundations on uncertain sites.",
+    },
+  ],
+  "plate-load-testing": [
+    {
+      question: "When is plate load testing useful?",
+      answer:
+        "Plate load testing is useful when the engineer wants direct evidence of how the ground responds under load before finalising the foundation approach.",
+    },
+  ],
+  "incremental-plate-load-testing": [
+    {
+      question: "What does incremental plate load testing tell you?",
+      answer:
+        "It shows how the ground behaves under staged loading, which gives a more detailed picture of settlement and bearing response.",
+    },
+  ],
   "foundation-repair": [
     {
       question: "Can you work from a structural engineer's report?",
       answer: "Yes. We scope and price from engineer drawings and specifications, and agree sequencing and protection before work starts.",
+    },
+  ],
+  "muck-away-services": [
+    {
+      question: "What does muck away include?",
+      answer:
+        "Muck away includes loading, removal and disposal of spoil from excavation or site preparation, with the right waste documentation and route planning.",
+    },
+  ],
+  "bulk-earthworks": [
+    {
+      question: "When do bulk earthworks become the right option?",
+      answer:
+        "Bulk earthworks are the right option when a site needs large-scale cut, fill or formation work to bring levels to design before the main build.",
+    },
+  ],
+  "site-preparation-services": [
+    {
+      question: "What is included in site preparation services?",
+      answer:
+        "Site preparation can include clearance, spoil management, access, formation prep and early enabling works so the site is ready for the main build.",
     },
   ],
   "concrete-repair": [

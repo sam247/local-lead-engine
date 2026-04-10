@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCategoryPages, getHubData, hubPages, companyInfo, categoryImages, categoryAltText } from "@/lib/data";
+import { getCategoryPages, getHubData, hubPages, companyInfo, categoryImages, categoryAltText, services } from "@/lib/data";
 import { getHeroImage } from "@/lib/images";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Phone } from "lucide-react";
@@ -103,6 +103,27 @@ export default function InfoPageContent({ category, slug }: InfoPageContentProps
                       </Link>
                     </li>
                   </ol>
+                </div>
+              )}
+              {page.relatedServices && page.relatedServices.length > 0 && (
+                <div className="mb-8 rounded-lg border border-border bg-secondary/50 p-6">
+                  <h3 className="mb-4 font-display text-lg font-bold">Related Services</h3>
+                  <p className="mb-4 text-sm text-muted-foreground">
+                    If you need a live quotation or a site visit, these services are the best next step:
+                  </p>
+                  <ul className="space-y-2">
+                    {page.relatedServices.map((slug) => {
+                      const service = services.find((s) => s.slug === slug);
+                      if (!service) return null;
+                      return (
+                        <li key={service.slug}>
+                          <Link href={getServiceUrl(service.slug)} className="text-sm text-primary hover:underline">
+                            {service.title}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
               )}
               <div className="mb-8">

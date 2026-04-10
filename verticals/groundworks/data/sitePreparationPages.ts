@@ -10,7 +10,7 @@ export const sitePreparationPages: InfoPageData[] = [
     diagnosis: "We plan site preparation with you and any surveyors or designers. Surveys inform the sequence and reduce the chance of rework or delays.",
     resolution: "We deliver clearance and enabling works to programme. We can coordinate with surveyors and the main contractor so the site is ready on day one.",
     ctaText: "Need site preparation? We can clear the site and deliver enabling works.",
-    relatedServices: ["site-clearance-contractors", "enabling-works-contractors", "groundworks-contractors"],
+    relatedServices: ["site-clearance-contractors", "site-preparation-services", "enabling-works-contractors"],
     relatedPages: [
       { slug: "enabling-works-explained", category: "site-preparation", title: "Enabling works explained" },
       { slug: "groundworks-process", category: "guides", title: "Groundworks Process" },
@@ -25,7 +25,7 @@ export const sitePreparationPages: InfoPageData[] = [
     diagnosis: "We plan enabling works with your programme and site layout. We allow for access, drainage and any early services needed.",
     resolution: "We deliver enabling works to an agreed programme and hand over a site that is ready for the main build. We work with main contractors and project managers.",
     ctaText: "Plan enabling works for your project.",
-    relatedServices: ["enabling-works-contractors", "groundworks-contractors", "site-clearance-contractors"],
+    relatedServices: ["enabling-works-contractors", "site-preparation-services", "muck-away-services"],
     relatedPages: [
       { slug: "site-preparation-overview", category: "site-preparation", title: "Site preparation overview" },
       { slug: "what-are-enabling-works", category: "guides", title: "What Are Enabling Works?" },
@@ -40,7 +40,7 @@ export const sitePreparationPages: InfoPageData[] = [
     diagnosis: "We assess the site and scope, then quote for clearance and muck-away. We advise on reuse and licensed disposal.",
     resolution: "We clear the site and remove spoil to programme. We provide waste transfer notes and keep the site ready for the next phase.",
     ctaText: "Need site clearance or muck-away? We can quote and deliver.",
-    relatedServices: ["site-clearance-contractors", "excavation-contractors", "groundworks-contractors"],
+    relatedServices: ["site-clearance-contractors", "muck-away-services", "site-preparation-services"],
   },
   {
     slug: "topsoil-stripping-reduced-level-dig",
@@ -51,7 +51,7 @@ export const sitePreparationPages: InfoPageData[] = [
     diagnosis: "We work from your drawings and site visit. We strip topsoil, excavate to formation and leave the site ready for foundations.",
     resolution: "We deliver topsoil stripping and reduced-level dig to programme. We manage stockpiles and access.",
     ctaText: "Need topsoil strip or reduced-level dig? We can deliver.",
-    relatedServices: ["excavation-contractors", "groundworks-contractors", "site-clearance-contractors"],
+    relatedServices: ["bulk-earthworks", "muck-away-services", "excavation-contractors"],
   },
   {
     slug: "ground-investigation-soil-testing",
@@ -150,7 +150,7 @@ export const sitePreparationPages: InfoPageData[] = [
     diagnosis: "We work from your drawings and levels. We advise on balance and deliver cut, fill and compaction to specification.",
     resolution: "We excavate, place and compact fill to design. We provide compaction records and reduce off-site disposal where possible.",
     ctaText: "Need cut and fill planned and delivered? We can balance and execute.",
-    relatedServices: ["excavation-contractors", "groundworks-contractors", "site-clearance-contractors"],
+    relatedServices: ["bulk-earthworks", "site-preparation-services", "groundworks-contractors"],
   },
   {
     slug: "site-fencing-hoardings",

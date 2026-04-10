@@ -10,7 +10,7 @@ export const groundworksCostsPages: InfoPageData[] = [
     diagnosis: "We quote from your drawings, site visit and programme. Ground conditions and access have a big impact on final cost.",
     resolution: "We provide fixed-price quotes where possible and deliver to programme with full documentation. Get in touch with your project details for a tailored quote.",
     ctaText: "Need a groundworks quote? Send us your design and site details.",
-    relatedServices: ["groundworks-contractors", "piling-contractors", "foundation-contractors"],
+    relatedServices: ["groundworks-contractors", "bulk-earthworks", "site-preparation-services"],
     relatedPages: [
       { slug: "piling-cost", category: "guides", title: "Piling Cost Guide" },
       { slug: "foundation-cost", category: "guides", title: "Foundation Cost Guide" },
@@ -25,7 +25,7 @@ export const groundworksCostsPages: InfoPageData[] = [
     diagnosis: "We advise on the right sequence: survey and ground investigation first, then design, then our quote for the works. Early engagement helps avoid surprises.",
     resolution: "We provide clear quotes and work to programme. We can work with your designer or engineer to align scope and budget.",
     ctaText: "Planning your groundworks budget? Contact us for advice and a quote.",
-    relatedServices: ["groundworks-contractors", "foundation-contractors", "piling-contractors"],
+    relatedServices: ["groundworks-contractors", "site-preparation-services", "bulk-earthworks"],
     relatedPages: [
       { slug: "groundworks-cost-overview", category: "groundworks-costs", title: "Groundworks cost overview" },
       { slug: "excavation-cost", category: "guides", title: "Excavation Cost" },
@@ -62,7 +62,7 @@ export const groundworksCostsPages: InfoPageData[] = [
     diagnosis: "We quote from a site visit and scope. We can advise on reuse, segregation and disposal routes.",
     resolution: "We deliver clearance and muck-away to programme with the correct documentation for disposal. Contact us for a quote.",
     ctaText: "Need site clearance or muck-away? Get a quote from us.",
-    relatedServices: ["site-clearance-contractors", "excavation-contractors", "groundworks-contractors"],
+    relatedServices: ["site-clearance-contractors", "muck-away-services", "site-preparation-services"],
   },
   {
     slug: "piling-cost-per-metre",
@@ -84,7 +84,7 @@ export const groundworksCostsPages: InfoPageData[] = [
     diagnosis: "We quote from your drawings and site visit. We advise on reuse and disposal options.",
     resolution: "We deliver excavation to programme with correct disposal documentation. Contact us for a quote.",
     ctaText: "Need excavation? Get a quote from us.",
-    relatedServices: ["excavation-contractors", "groundworks-contractors", "site-clearance-contractors"],
+    relatedServices: ["excavation-contractors", "bulk-earthworks", "muck-away-services"],
   },
   {
     slug: "underpinning-cost",
@@ -128,7 +128,7 @@ export const groundworksCostsPages: InfoPageData[] = [
     diagnosis: "We do not usually carry out the investigation; we use the report to deliver foundations. We can recommend ground investigation contractors.",
     resolution: "We deliver foundations to the design that follows from the investigation. Contact us once you have a design for a quote.",
     ctaText: "Have a ground investigation and design? Get a foundation quote from us.",
-    relatedServices: ["foundation-contractors", "piling-contractors", "groundworks-contractors"],
+    relatedServices: ["foundation-contractors", "ground-investigation-services", "soil-bearing-capacity-testing"],
   },
   {
     slug: "concrete-foundation-cost",
@@ -216,7 +216,7 @@ export const groundworksCostsPages: InfoPageData[] = [
     diagnosis: "We quote from your site layout and programme. We deliver enabling works so main construction can start on time.",
     resolution: "We deliver enabling works to programme. Contact us for a quote.",
     ctaText: "Need enabling works? Get a quote from us.",
-    relatedServices: ["enabling-works-contractors", "groundworks-contractors", "site-clearance-contractors"],
+    relatedServices: ["enabling-works-contractors", "site-preparation-services", "muck-away-services"],
   },
   {
     slug: "extension-foundation-cost",

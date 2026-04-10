@@ -86,6 +86,82 @@ const addedGroundworksProblemPages: GroundworksProblemPage[] = [
     primaryServiceLabel: "Foundation repair",
   },
   {
+    slug: "foundations-too-shallow",
+    title: "Foundations too shallow",
+    contextualOpening:
+      "Shallow foundations can turn into a structural risk once movement, frost exposure or added load starts to matter. Foundation depth issues in your area are best assessed before a repair route is chosen.",
+    causes:
+      "Foundations may be too shallow because the original build did not account for frost depth, soil conditions, nearby trees or later changes to the structure. Older extensions and altered buildings are especially vulnerable.",
+    howFixed:
+      "We review the structure and ground conditions with an engineer, then deliver underpinning, piling or local remedial work to the agreed design so the foundation reaches the required depth.",
+    whenToCall:
+      "Call when an inspection flags shallow founding, when cracking suggests inadequate depth, or before loading the structure further.",
+    relatedServiceSlugs: ["foundation-depth-issues", "underpinning-advice", "foundation-remedial-work"],
+    ctaMessage: "Foundations look too shallow? Arrange an engineer-led depth review before the issue grows.",
+    quickChecks: "Record crack patterns, any seasonal movement, and whether nearby trees or frost exposure are present.",
+    seriousSigns:
+      "Escalate quickly when movement is progressing, doors or floors are changing level, or the foundation depth is visibly below expected support.",
+    primaryServiceSlug: "foundation-depth-issues",
+    primaryServiceLabel: "Foundation depth issues",
+  },
+  {
+    slug: "extension-not-building-regs-compliant",
+    title: "Extension not building regs compliant",
+    contextualOpening:
+      "When an extension foundation scheme fails building control checks, the fix usually needs a practical review rather than a cosmetic patch. Building regs foundation compliance support helps define the next step.",
+    causes:
+      "The issue may stem from insufficient depth, missing design input, undocumented changes or ground conditions not matching the approved details.",
+    howFixed:
+      "We review the drawings, site condition and engineer input, then carry out the remedial foundation or structural groundworks needed to align the extension with building regulations.",
+    whenToCall:
+      "Call when building control queries the foundation work, when sign-off is blocked, or when the extension needs remedial foundation support.",
+    relatedServiceSlugs: ["building-regs-foundation-compliance", "structural-groundworks-consultation", "foundation-contractors"],
+    ctaMessage: "Extension compliance issue? Book a practical foundation review before sign-off delays mount.",
+    quickChecks: "Check the approved drawings, note any site changes, and record exactly what building control has queried.",
+    seriousSigns:
+      "Treat as urgent when the extension cannot be signed off, when access for follow-on works is limited, or when structural movement is active.",
+    primaryServiceSlug: "building-regs-foundation-compliance",
+    primaryServiceLabel: "Building regs foundation compliance",
+  },
+  {
+    slug: "foundation-near-tree-clay-soil",
+    title: "Foundation near tree and clay soil",
+    contextualOpening:
+      "Tree influence on clay soils can change moisture levels and push foundations into movement long before the problem is obvious. Clay soil foundation problems are best assessed with a site-specific review.",
+    causes:
+      "Nearby trees, reactive clay and shallow founding can combine to create shrink-swell movement, local settlement or seasonal cracking.",
+    howFixed:
+      "We coordinate with the engineer to confirm the risk, then deliver solutions such as deeper foundations, underpinning, piling or remedial work depending on the structure and ground model.",
+    whenToCall:
+      "Call when cracking appears near trees, when the site sits on clay, or when the structure is showing seasonal movement.",
+    relatedServiceSlugs: ["clay-soil-foundation-problems", "tree-impact-foundations", "soil-bearing-capacity-testing"],
+    ctaMessage: "Tree and clay soil risk? Arrange a foundation review before movement becomes structural.",
+    quickChecks: "Note tree species, distance to the building, seasonal crack changes and any changes in moisture or drainage.",
+    seriousSigns:
+      "Escalate quickly when crack widths are changing, floors are moving, or the tree influence appears to be driving active movement.",
+    primaryServiceSlug: "clay-soil-foundation-problems",
+    primaryServiceLabel: "Clay soil foundation problems",
+  },
+  {
+    slug: "house-foundation-advice",
+    title: "House foundation advice",
+    contextualOpening:
+      "House foundation advice is most useful when you need a clear next step before committing to a repair or new foundation route. Structural groundworks consultation helps turn the symptoms into a practical plan.",
+    causes:
+      "Advice is usually needed because the foundation depth is uncertain, the ground conditions are variable, or a survey has highlighted movement or compliance risk.",
+    howFixed:
+      "We review the available drawings, symptoms and site conditions, then direct you toward the right investigation, testing or remedial foundation route.",
+    whenToCall:
+      "Call before starting an extension, after a survey raises concerns, or whenever you need a practical route from symptoms to remedial work.",
+    relatedServiceSlugs: ["structural-groundworks-consultation", "ground-investigation-services", "foundation-contractors"],
+    ctaMessage: "Need clear house foundation advice? Arrange a review before the project moves on.",
+    quickChecks: "Gather drawings, survey notes, photos of cracks or movement, and any building control correspondence.",
+    seriousSigns:
+      "Escalate when movement is getting worse, a survey flags structural risk, or you need a formal next-step plan for a live project.",
+    primaryServiceSlug: "structural-groundworks-consultation",
+    primaryServiceLabel: "Structural groundworks consultation",
+  },
+  {
     slug: "unstable-ground-construction",
     title: "Unstable ground for construction",
     contextualOpening:
