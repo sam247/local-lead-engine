@@ -397,13 +397,14 @@ function buildProcessOutcome(step: string, service: Service, location: Location)
 
 const locationBreadcrumbs = (
   serviceTitle: string,
-  serviceSlug: string,
+  hubSlug: string,
+  getServiceHubUrl: (slug: string) => string,
   locationName: string,
   serviceSlugParam: string,
   locationSlugParam: string
 ) => [
   { name: "Home", url: "/" },
-  { name: serviceTitle, url: `/${serviceSlug}` },
+  { name: serviceTitle, url: getServiceHubUrl(hubSlug) },
   { name: `${serviceTitle} in ${locationName}`, url: `/${serviceSlugParam}/${locationSlugParam}` },
 ];
 
@@ -461,6 +462,12 @@ export interface LocationPageProps {
    */
   conversionAsideTitle?: string;
   conversionAsideBullets?: string[];
+  /** Service hub URL for breadcrumbs and sidebar overview. Default `/${slug}` (root hub). */
+  serviceHubHref?: (slug: string) => string;
+  /** Links to related service hub pages (not L4). */
+  relatedServiceHubLinks?: { href: string; title: string }[];
+  /** Links to related problem/issue pages (e.g. foundation-problems). */
+  relatedProblemPageLinks?: { href: string; title: string }[];
 }
 
 export function LocationPage({
@@ -495,6 +502,9 @@ export function LocationPage({
   inlinkCount,
   conversionAsideTitle = "Get a quote",
   conversionAsideBullets,
+  serviceHubHref = (slug: string) => `/${slug}`,
+  relatedServiceHubLinks,
+  relatedProblemPageLinks,
 }: LocationPageProps) {
   const showMapEmbed = showMap && typeof location.lat === "number" && typeof location.lng === "number";
   const displayTitle = service.titleSingular ?? service.title;
@@ -708,7 +718,14 @@ export function LocationPage({
         companyInfo={companyInfo}
         baseUrl={baseUrl}
         data={{
-          breadcrumbs: locationBreadcrumbs(displayTitle, service.slug, location.name, serviceSlug, locationSlug),
+          breadcrumbs: locationBreadcrumbs(
+            displayTitle,
+            service.slug,
+            serviceHubHref,
+            location.name,
+            serviceSlug,
+            locationSlug
+          ),
         }}
       />
 
@@ -728,7 +745,14 @@ export function LocationPage({
           <div className="mx-auto max-w-3xl text-center">
             <div className="flex flex-col items-center gap-4">
               <BreadcrumbNav
-                items={locationBreadcrumbs(displayTitle, service.slug, location.name, serviceSlug, locationSlug)}
+                items={locationBreadcrumbs(
+                  displayTitle,
+                  service.slug,
+                  serviceHubHref,
+                  location.name,
+                  serviceSlug,
+                  locationSlug
+                )}
                 variant="inverse"
               />
               <h1 className="font-display text-4xl font-bold text-primary-foreground md:text-5xl">
@@ -869,6 +893,37 @@ export function LocationPage({
                   </>
                 )}
               </div>
+              {relatedServiceHubLinks && relatedServiceHubLinks.length > 0 && (
+                <div className="mb-8 max-w-prose">
+                  <h2 className="mb-3 font-display text-xl font-bold">Related services</h2>
+                  <p className="mb-3 text-sm text-muted-foreground">
+                    Compare service overviews that are often scoped alongside this work.
+                  </p>
+                  <ul className="list-inside list-disc space-y-2 text-muted-foreground">
+                    {relatedServiceHubLinks.map((item) => (
+                      <li key={item.href}>
+                        <Link href={item.href} className="text-primary hover:underline">
+                          {item.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {relatedProblemPageLinks && relatedProblemPageLinks.length > 0 && (
+                <div className="mb-8 max-w-prose">
+                  <h2 className="mb-3 font-display text-xl font-bold">Related foundation issues</h2>
+                  <ul className="list-inside list-disc space-y-2 text-muted-foreground">
+                    {relatedProblemPageLinks.map((item) => (
+                      <li key={item.href}>
+                        <Link href={item.href} className="text-primary hover:underline">
+                          {item.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {neighbourLocationsForContext && neighbourLocationsForContext.length > 0 && (
                 <>
                   <LocationContext
@@ -1152,7 +1207,7 @@ export function LocationPage({
 
               <div className="rounded-lg bg-secondary p-6">
                 <p className="mb-2 text-sm text-muted-foreground">
-                  <Link href={`/${service.slug}`} className="text-primary hover:underline">
+                  <Link href={serviceHubHref(service.slug)} className="text-primary hover:underline">
                     View {displayTitle} overview
                   </Link>
                 </p>

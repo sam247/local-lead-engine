@@ -289,6 +289,10 @@ export interface ServiceDetailContentProps {
   problemLinksSectionTitle?: string;
   /** Optional internal link count for page tiering (service hubs are tier1 regardless). */
   inlinkCount?: number | null;
+  /** Large crawlable L4 link grid (e.g. service hub → location pages). Rendered below main grid, above FAQ schema. */
+  areasWeCoverLinks?: { href: string; label: string }[];
+  /** Intro for areasWeCoverLinks; default set in component when links are present. */
+  areasWeCoverIntro?: string;
 }
 
 export function ServiceDetailContent({
@@ -316,6 +320,8 @@ export function ServiceDetailContent({
   problemLinks = [],
   problemLinksSectionTitle,
   inlinkCount,
+  areasWeCoverLinks = [],
+  areasWeCoverIntro,
 }: ServiceDetailContentProps) {
   const seoPageType: PageType = "service";
   const pageTier = getPageTier({ inlinks: inlinkCount ?? null, pageType: seoPageType });
@@ -895,6 +901,31 @@ export function ServiceDetailContent({
               </QuoteFormPrimaryCta>
             </div>
           </div>
+
+          {areasWeCoverLinks.length > 0 && (
+            <div className="mt-12 border-t border-border pt-10">
+              <SectionIntro
+                title="Areas we cover"
+                description={
+                  areasWeCoverIntro ??
+                  "Browse locations where we provide this service — each link opens the local service page."
+                }
+                headingLevel="h2"
+              />
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                {areasWeCoverLinks.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm text-primary transition-all hover:border-primary hover:shadow-md hover:underline"
+                  >
+                    <span className="line-clamp-2">{item.label}</span>
+                    <ArrowRight className="h-4 w-4 shrink-0" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

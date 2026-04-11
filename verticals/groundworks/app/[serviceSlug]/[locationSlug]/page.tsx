@@ -39,6 +39,19 @@ export async function generateStaticParams() {
 }
 
 type Props = { params: { serviceSlug: string; locationSlug: string } };
+
+function canonicalizeLocationSlug(raw: string): { canonical: string; hasNumericSuffix: boolean } {
+  const hasNumericSuffix = /-(\d+)$/.test(raw);
+  const canonical = hasNumericSuffix ? raw.replace(/(-\d+)+$/, "") : raw;
+  return { canonical, hasNumericSuffix };
+}
+
+function logInvalidRoute(serviceSlug: string, locationSlug: string, reason?: string) {
+  if (process.env.NODE_ENV === "development") {
+    console.log("Invalid route:", serviceSlug, locationSlug, reason ?? "");
+  }
+}
+
 function trimSidebarBullet(input: string, maxWords = 8) {
   const cleaned = input.trim().replace(/\s+/g, " ");
   const words = cleaned.split(/\s+/);
@@ -52,10 +65,11 @@ function trimSidebarBullet(input: string, maxWords = 8) {
   return words.slice(0, maxWords).join(" ");
 }
 
+/** 3–5 related service hubs per L4 page; diversified to avoid A↔B-only loops. */
 const RELATED_SERVICE_SLUGS_BY_SERVICE: Record<string, string[]> = {
   "groundworks-contractors": [
+    "site-preparation-services",
     "excavation-contractors",
-    "site-clearance-contractors",
     "foundation-contractors",
     "enabling-works-contractors",
     "concrete-foundations",
@@ -65,120 +79,245 @@ const RELATED_SERVICE_SLUGS_BY_SERVICE: Record<string, string[]> = {
     "foundation-contractors",
     "mini-piling-contractors",
     "piling-contractors",
-    "concrete-foundations",
+    "structural-groundworks-consultation",
   ],
   "piling-contractors": [
     "mini-piling-contractors",
     "cfa-piling",
     "foundation-contractors",
-    "underpinning",
+    "ground-investigation-services",
     "concrete-foundations",
   ],
   "cfa-piling": [
     "piling-contractors",
     "mini-piling-contractors",
     "foundation-contractors",
-    "underpinning",
+    "ground-investigation-services",
     "concrete-foundations",
   ],
   "mini-piling-contractors": [
     "piling-contractors",
     "cfa-piling",
-    "underpinning",
     "foundation-contractors",
-    "concrete-foundations",
+    "underpinning",
+    "ground-investigation-services",
   ],
   "foundation-contractors": [
     "concrete-foundations",
     "piling-contractors",
-    "mini-piling-contractors",
+    "ground-investigation-services",
     "underpinning",
-    "foundation-repair",
+    "excavation-contractors",
   ],
   "foundation-repair": [
     "underpinning",
     "foundation-contractors",
     "concrete-repair",
+    "foundation-remedial-work",
+    "piling-contractors",
+  ],
+  "foundation-depth-issues": [
+    "foundation-repair",
+    "underpinning",
+    "foundation-contractors",
+    "ground-investigation-services",
+    "piling-contractors",
+  ],
+  "building-regs-foundation-compliance": [
+    "foundation-contractors",
+    "structural-groundworks-consultation",
+    "foundation-remedial-work",
+    "foundation-repair",
+    "enabling-works-contractors",
+  ],
+  "clay-soil-foundation-problems": [
+    "foundation-contractors",
+    "tree-impact-foundations",
+    "piling-contractors",
+    "underpinning",
+    "ground-investigation-services",
+  ],
+  "tree-impact-foundations": [
+    "clay-soil-foundation-problems",
+    "foundation-depth-issues",
+    "foundation-contractors",
+    "underpinning",
     "mini-piling-contractors",
+  ],
+  "foundation-remedial-work": [
+    "foundation-repair",
+    "underpinning",
+    "foundation-contractors",
+    "building-regs-foundation-compliance",
+    "concrete-repair",
+  ],
+  "underpinning-advice": [
+    "underpinning",
+    "foundation-depth-issues",
+    "foundation-contractors",
+    "foundation-repair",
+    "structural-groundworks-consultation",
+  ],
+  "structural-groundworks-consultation": [
+    "ground-investigation-services",
+    "foundation-contractors",
+    "piling-contractors",
+    "building-regs-foundation-compliance",
+    "enabling-works-contractors",
+  ],
+  "ground-investigation-services": [
+    "soil-bearing-capacity-testing",
+    "plate-load-testing",
+    "foundation-contractors",
+    "piling-contractors",
+    "structural-groundworks-consultation",
+  ],
+  "soil-bearing-capacity-testing": [
+    "plate-load-testing",
+    "ground-investigation-services",
+    "foundation-contractors",
+    "piling-contractors",
+    "mini-piling-contractors",
+  ],
+  "plate-load-testing": [
+    "incremental-plate-load-testing",
+    "soil-bearing-capacity-testing",
+    "ground-investigation-services",
+    "foundation-contractors",
+    "piling-contractors",
+  ],
+  "incremental-plate-load-testing": [
+    "plate-load-testing",
+    "soil-bearing-capacity-testing",
+    "ground-investigation-services",
+    "foundation-contractors",
     "piling-contractors",
   ],
   "concrete-repair": [
     "foundation-repair",
     "concrete-foundations",
     "foundation-contractors",
-    "underpinning",
+    "foundation-remedial-work",
     "groundworks-contractors",
   ],
   "excavation-contractors": [
     "site-clearance-contractors",
-    "groundworks-contractors",
+    "muck-away-services",
     "foundation-contractors",
     "enabling-works-contractors",
-    "concrete-foundations",
+    "bulk-earthworks",
   ],
   "site-clearance-contractors": [
+    "site-preparation-services",
+    "excavation-contractors",
+    "muck-away-services",
+    "enabling-works-contractors",
+    "groundworks-contractors",
+  ],
+  "muck-away-services": [
+    "excavation-contractors",
+    "site-clearance-contractors",
+    "bulk-earthworks",
+    "groundworks-contractors",
+    "enabling-works-contractors",
+  ],
+  "bulk-earthworks": [
+    "excavation-contractors",
+    "site-preparation-services",
+    "muck-away-services",
+    "groundworks-contractors",
+    "enabling-works-contractors",
+  ],
+  "site-preparation-services": [
+    "site-clearance-contractors",
+    "enabling-works-contractors",
     "groundworks-contractors",
     "excavation-contractors",
-    "enabling-works-contractors",
-    "foundation-contractors",
-    "concrete-foundations",
+    "bulk-earthworks",
   ],
   "concrete-foundations": [
     "foundation-contractors",
     "piling-contractors",
     "mini-piling-contractors",
     "underpinning",
-    "foundation-repair",
+    "excavation-contractors",
   ],
   "enabling-works-contractors": [
+    "site-preparation-services",
     "site-clearance-contractors",
-    "groundworks-contractors",
     "excavation-contractors",
     "foundation-contractors",
-    "concrete-foundations",
+    "groundworks-contractors",
   ],
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { serviceSlug, locationSlug } = params;
-  const hasNumericSuffix = /-(\d+)$/.test(locationSlug);
-  const canonicalLocationSlug = hasNumericSuffix
-    ? locationSlug.replace(/(-\d+)+$/, "")
-    : locationSlug;
+
+  if (!serviceSlug?.trim() || !locationSlug?.trim()) {
+    logInvalidRoute(serviceSlug ?? "", locationSlug ?? "", "empty slug");
+    notFound();
+  }
+
+  const { canonical: canonicalLocationSlug } = canonicalizeLocationSlug(locationSlug);
   const location = locations.find((l) => l.id === canonicalLocationSlug);
-  if (!location) return { title: "Not Found" };
+  if (!location) {
+    logInvalidRoute(serviceSlug, locationSlug, "unknown location");
+    notFound();
+  }
 
   if (isTopicLocationSlug(serviceSlug)) {
     if (isGlobalTopicSlugForLocation(serviceSlug)) {
       const canonicalTopicPath = getGlobalTopicCanonicalPath(serviceSlug);
-      if (!canonicalTopicPath) return { title: "Not Found" };
+      if (!canonicalTopicPath) {
+        logInvalidRoute(serviceSlug, locationSlug, "unknown global topic");
+        notFound();
+      }
       return {
         title: "Redirecting",
-        alternates: { canonical: `${verticalConfig.baseUrl}${canonicalTopicPath}` },
+        alternates: { canonical: `${verticalConfig.baseUrl.replace(/\/$/, "")}${canonicalTopicPath}` },
       };
     }
     const topic = getTopicForRouteSlug(serviceSlug);
-    if (!topic) return { title: "Not Found" };
+    if (!topic) {
+      logInvalidRoute(serviceSlug, locationSlug, "unknown topic");
+      notFound();
+    }
+    const baseUrl = verticalConfig.baseUrl.replace(/\/$/, "");
     const title = `${topic.title} in ${location.name} | ${verticalConfig.siteName}`;
     const description =
       topic.intro.slice(0, 120) +
       ` We provide ${topic.title.toLowerCase()} across ${location.name} and ${location.area}.`;
-    const canonical = `${verticalConfig.baseUrl}/${serviceSlug}/${canonicalLocationSlug}`;
+    const canonical = `${baseUrl}/${serviceSlug}/${canonicalLocationSlug}`;
     return { title, description, alternates: { canonical } };
   }
 
   const service = services.find((s) => s.slug === serviceSlug);
-  if (!service) return { title: "Not Found" };
+  if (!service) {
+    logInvalidRoute(serviceSlug, locationSlug, "unknown service");
+    notFound();
+  }
+
   const base = buildLocationMetadata(service, location, verticalConfig);
-  return { ...base, title: pickGroundworksL4MetaTitle(service, location) };
+  const withTitle = { ...base, title: pickGroundworksL4MetaTitle(service, location) };
+  const baseUrl = verticalConfig.baseUrl.replace(/\/$/, "");
+  const canonical = `${baseUrl}/${serviceSlug}/${canonicalLocationSlug}`;
+  return {
+    ...withTitle,
+    alternates: { ...withTitle.alternates, canonical },
+  };
 }
 
 export default async function LocationRoute({ params }: Props) {
   const { serviceSlug, locationSlug } = params;
-  const hasNumericSuffix = /-(\d+)$/.test(locationSlug);
-  const canonicalLocationSlug = hasNumericSuffix
-    ? locationSlug.replace(/(-\d+)+$/, "")
-    : locationSlug;
+
+  if (!serviceSlug?.trim() || !locationSlug?.trim()) {
+    logInvalidRoute(serviceSlug ?? "", locationSlug ?? "", "empty slug");
+    notFound();
+  }
+
+  const { canonical: canonicalLocationSlug, hasNumericSuffix } = canonicalizeLocationSlug(locationSlug);
+
   if (hasNumericSuffix) {
     const canonicalLocationExists = locations.some((l) => l.id === canonicalLocationSlug);
     if (canonicalLocationExists) {
@@ -193,17 +332,27 @@ export default async function LocationRoute({ params }: Props) {
       permanentRedirect(`/${serviceSlug}/${canonicalLocationSlug}`);
     }
   }
+
   const location = locations.find((l) => l.id === canonicalLocationSlug);
-  if (!location) notFound();
+  if (!location) {
+    logInvalidRoute(serviceSlug, locationSlug, "unknown location");
+    notFound();
+  }
 
   if (isTopicLocationSlug(serviceSlug)) {
     if (isGlobalTopicSlugForLocation(serviceSlug)) {
       const canonicalTopicPath = getGlobalTopicCanonicalPath(serviceSlug);
-      if (!canonicalTopicPath) notFound();
+      if (!canonicalTopicPath) {
+        logInvalidRoute(serviceSlug, locationSlug, "unknown global topic");
+        notFound();
+      }
       redirect(canonicalTopicPath);
     }
     const topic = getTopicForRouteSlug(serviceSlug);
-    if (!topic) notFound();
+    if (!topic) {
+      logInvalidRoute(serviceSlug, locationSlug, "unknown topic");
+      notFound();
+    }
     return (
       <>
         <div className="container">
@@ -254,7 +403,11 @@ export default async function LocationRoute({ params }: Props) {
   }
 
   const service = services.find((s) => s.slug === serviceSlug);
-  if (!service) notFound();
+  if (!service) {
+    logInvalidRoute(serviceSlug, locationSlug, "unknown service");
+    notFound();
+  }
+
   const strikingDistanceTarget = getL4StrikingDistanceTarget(service.slug, location.id);
 
   const sameAreaLocations = locations.filter(
@@ -341,6 +494,27 @@ export default async function LocationRoute({ params }: Props) {
     `We provide ${service.title} across ${location.name} and ${location.area}. Our team delivers piling, underpinning, foundation repair, concrete works and wider site preparation for commercial and residential projects, with free no-obligation quotes.`;
 
   const relatedTopicLinks = getRelevantTopicsForService(service.slug);
+  const relatedProblemPageLinks = (() => {
+    const links = relatedTopicLinks
+      .filter((l) => l.href.startsWith("/foundation-problems/"))
+      .slice(0, 2)
+      .map((l) => ({ href: l.href, title: l.title }));
+    return links.length > 0 ? links : undefined;
+  })();
+  const relatedServiceHubLinks = (() => {
+    const slugs = RELATED_SERVICE_SLUGS_BY_SERVICE[service.slug] ?? [];
+    const seen = new Set<string>();
+    const out: { href: string; title: string }[] = [];
+    for (const slug of slugs) {
+      if (out.length >= 5) break;
+      if (seen.has(slug)) continue;
+      const s = services.find((x) => x.slug === slug);
+      if (!s) continue;
+      seen.add(slug);
+      out.push({ title: s.title, href: `/services/${s.slug}` });
+    }
+    return out.length > 0 ? out : undefined;
+  })();
   const extraServiceLocationLinks = pickRelatedServiceLocationLinks({
     currentServiceSlug: service.slug,
     services,
@@ -383,6 +557,9 @@ export default async function LocationRoute({ params }: Props) {
         locationContextParagraph={locationContextParagraph}
         nearbyProjects={nearbyProjectsList.length > 0 ? nearbyProjectsList : undefined}
         relatedTopicLinks={relatedTopicLinks.length > 0 ? relatedTopicLinks : undefined}
+        serviceHubHref={(slug) => `/services/${slug}`}
+        relatedServiceHubLinks={relatedServiceHubLinks}
+        relatedProblemPageLinks={relatedProblemPageLinks}
         callTrackVertical={verticalConfig.verticalId}
         ctaVariants={verticalConfig.ctaVariants}
         conversionAsideBullets={sidebarBullets}

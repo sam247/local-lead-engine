@@ -426,6 +426,13 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
   const symptomLinks = [...guideLinks, ...costGuideLinks];
   const faqs = serviceFaqsBySlug[service.slug] ?? [];
   const heroImageSrc = getHeroImage({ serviceSlug: service.slug });
+  const displayTitle = service.titleSingular ?? service.title;
+  const sortedLocations = [...locations].sort((a, b) => a.id.localeCompare(b.id));
+  const areasWeCoverCount = Math.min(sortedLocations.length, 50);
+  const areasWeCoverLinks = sortedLocations.slice(0, areasWeCoverCount).map((loc) => ({
+    href: `/${service.slug}/${loc.id}`,
+    label: `${displayTitle} in ${loc.name}`,
+  }));
 
   return (
     <EngineServiceDetailContent
@@ -447,6 +454,7 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
       secondCtaHeading="Need a Groundworks Quote?"
       secondCtaBody="Contact us for a no-obligation quote for piling, underpinning, foundation repair, concrete work, excavation or full groundworks. We'll outline the scope and programme for your site."
       secondCtaButtonText="Get a Quote"
+      areasWeCoverLinks={areasWeCoverLinks}
       overviewExtra={
         <>
           <ServiceCrossLinks slug={service.slug} />
