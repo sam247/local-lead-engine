@@ -107,7 +107,7 @@ export function handleCallClick(
     // Swallow tracking errors; dial should proceed regardless.
   });
 
-  if (typeof window !== "undefined" && vertical === "groundworks") {
+  if (typeof window !== "undefined") {
     void fetch("/api/twilio/register-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -118,8 +118,8 @@ export function handleCallClick(
     });
   }
 
-  // Bridge intent_id to the Groundworks Twilio voice route so statusCallback can carry it (same-origin only).
-  if (typeof window !== "undefined" && vertical === "groundworks") {
+  // Bridge intent_id to the vertical Twilio voice endpoint (or proxy) so status callbacks can carry context.
+  if (typeof window !== "undefined") {
     void fetch(`/api/twilio/voice?intent_id=${encodeURIComponent(intentId)}`, {
       method: "POST",
       keepalive: true,
