@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const ROOT = process.cwd();
+const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(SCRIPT_DIR, "..");
 const MANIFEST_TS_PATH = path.join(ROOT, "engine/data/generated/serviceHeroManifest.ts");
 
 const VERTICALS = {
@@ -67,7 +69,7 @@ function parseArgs() {
 }
 
 function getUnsplashKey() {
-  return (process.env.UNSPLASH_ACCESS_KEY ?? process.env.UNSPLASH_API_KEY ?? "").trim();
+  return (process.env.UNSPLASH_API_KEY ?? "").trim();
 }
 
 function serviceBlockFromDataFile(content) {
@@ -157,7 +159,7 @@ async function main() {
   const { refresh } = parseArgs();
   const accessKey = getUnsplashKey();
   if (!accessKey) {
-    throw new Error("Missing UNSPLASH_ACCESS_KEY (or UNSPLASH_API_KEY) for build-time manifest generation.");
+    throw new Error("Missing UNSPLASH_API_KEY for build-time manifest generation.");
   }
 
   const existing = await readExistingManifest();

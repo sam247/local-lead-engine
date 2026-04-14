@@ -16,8 +16,7 @@ This project uses a deterministic build-time Unsplash manifest for service hero 
 
 ## Required environment variable
 
-- `UNSPLASH_ACCESS_KEY` (preferred)
-  - fallback supported: `UNSPLASH_API_KEY`
+- `UNSPLASH_API_KEY`
 
 Keep this server/build-side only. Do not expose via `NEXT_PUBLIC_*`.
 
