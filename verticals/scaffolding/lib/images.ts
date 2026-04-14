@@ -1,3 +1,4 @@
+import { resolveServiceHeroImage } from "engine";
 const base = "/images";
 
 const DEFAULT_HERO_SERVICE_SLUG = "scaffolding-contractors";
@@ -45,7 +46,8 @@ export const heroBg = `${base}/hero-bg.jpg`;
 export const aboutTeam = `${base}/about-team.jpg`;
 
 /**
- * Resolves hero image path by service slug, then by category map, then default.
+ * Resolves hero image path by service slug, then by category map, with deterministic
+ * build-time Unsplash manifest support and stable local fallback.
  */
 export function getHeroImage(options: {
   serviceSlug?: string;
@@ -53,12 +55,12 @@ export function getHeroImage(options: {
   categoryImagesMap?: Record<string, string>;
 }): string {
   const { serviceSlug, category, categoryImagesMap } = options;
-  if (serviceSlug && serviceImages[serviceSlug]) {
-    return serviceImages[serviceSlug];
-  }
-  if (category && categoryImagesMap) {
-    const slug = categoryImagesMap[category];
-    if (slug && serviceImages[slug]) return serviceImages[slug];
-  }
-  return serviceImages[DEFAULT_HERO_SERVICE_SLUG] ?? `${base}/services/${DEFAULT_HERO_SERVICE_SLUG}.jpg`;
+  const mappedSlug = category && categoryImagesMap ? categoryImagesMap[category] : undefined;
+  const candidateSlug = serviceSlug ?? mappedSlug;
+  return resolveServiceHeroImage({
+    verticalId: "scaffolding",
+    serviceSlug: candidateSlug,
+    defaultServiceSlug: DEFAULT_HERO_SERVICE_SLUG,
+    localServiceImages: serviceImages,
+  });
 }
