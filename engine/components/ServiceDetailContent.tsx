@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CheckCircle, ArrowRight, AlertTriangle, Phone } from "lucide-react";
+import { CheckCircle, ArrowRight, AlertTriangle } from "lucide-react";
 import { SchemaMarkup } from "../schema/SchemaMarkup";
 import { FAQSchema, type FAQItem } from "../schema/FAQSchema";
 import { BreadcrumbNav } from "./BreadcrumbNav";
@@ -13,7 +13,6 @@ import { ProcessTimeline } from "./ProcessTimeline";
 import { TrustStrip } from "./TrustStrip";
 import { ActionPanel } from "./ActionPanel";
 import { QuoteFormPrimaryCta } from "./QuoteFormPrimaryCta";
-import { TrackablePhoneLink } from "./TrackablePhoneLink";
 import { getImageAlt } from "../utils/imageAlt";
 import { KEY_SERVICE_DETAIL_LOCATION_IDS } from "../data/key-location-ids";
 import { getVariantIndex } from "../lib/contentVariants";
@@ -494,7 +493,7 @@ export function ServiceDetailContent({
         data={{ breadcrumbs }}
       />
 
-      <section className="relative bg-primary py-20 md:py-28" data-layout-variant={layoutVariant}>
+      <section className="relative bg-primary py-16 md:py-24" data-layout-variant={layoutVariant}>
         <div className="absolute inset-0">
           <img src={heroImageSrc} alt={heroImageAlt} className="h-full w-full object-cover opacity-20" />
           <div className="absolute inset-0 bg-primary/60" />
@@ -502,34 +501,10 @@ export function ServiceDetailContent({
         <div className="container relative">
           <div className="mx-auto max-w-3xl text-center">
             <BreadcrumbNav items={breadcrumbs} variant="inverse" />
-            <figure className="mt-5 mb-6 overflow-hidden rounded-2xl border border-primary-foreground/20 shadow-xl">
-              <img src={heroImageSrc} alt={heroImageAlt} className="h-[220px] w-full object-cover md:h-[280px]" />
-            </figure>
             <h1 className="mb-4 font-display text-4xl font-bold text-primary-foreground md:text-5xl">
               {displayTitle}
             </h1>
             <p className="text-lg text-primary-foreground/80">{service.shortDescription}</p>
-            <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <QuoteFormPrimaryCta
-                contactPath={contactPath}
-                variant="highlight"
-                size="default"
-                ctaText={quoteCtaLabel}
-                ctaSeed={quoteCtaSeed}
-              >
-                {quoteCtaLabel}
-              </QuoteFormPrimaryCta>
-              <TrackablePhoneLink
-                phone={verticalConfig.companyInfo.phone}
-                vertical={verticalConfig.verticalId}
-                serviceSlug={service.slug}
-                locationSlug={null}
-                source="cta"
-                className="inline-flex items-center gap-2 text-primary-foreground hover:underline"
-              >
-                <Phone className="h-4 w-4" /> Call now
-              </TrackablePhoneLink>
-            </div>
           </div>
         </div>
       </section>
@@ -544,7 +519,6 @@ export function ServiceDetailContent({
         <div className="container">
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6 md:p-8">
               <p className="mb-4 text-muted-foreground">{overviewDescriptions[overviewVariant]}</p>
               <p className="mb-4 text-muted-foreground">{service.description}</p>
               <p className="mb-4 text-muted-foreground">{openingLead}</p>
@@ -567,28 +541,6 @@ export function ServiceDetailContent({
                   {SERVICE_DETAIL_ABOUT_LABELS[aboutLinkVariant]}
                 </Link>
               </p>
-              <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <QuoteFormPrimaryCta
-                  contactPath={contactPath}
-                  variant="highlight"
-                  size="default"
-                  ctaText={quoteCtaLabel}
-                  ctaSeed={quoteCtaSeed}
-                >
-                  {quoteCtaLabel}
-                </QuoteFormPrimaryCta>
-                <TrackablePhoneLink
-                  phone={verticalConfig.companyInfo.phone}
-                  vertical={verticalConfig.verticalId}
-                  serviceSlug={service.slug}
-                  locationSlug={null}
-                  source="cta"
-                  className="inline-flex items-center gap-2 text-primary hover:underline"
-                >
-                  <Phone className="h-4 w-4" /> Call now
-                </TrackablePhoneLink>
-              </div>
-              </div>
               {overviewExtra && <div className="mb-8">{overviewExtra}</div>}
               {overviewImage && (
                 <figure className="mb-8 overflow-hidden rounded-lg border border-border shadow-sm">
@@ -604,8 +556,7 @@ export function ServiceDetailContent({
                 description={typicalSituationsSection.description}
                 headingLevel="h2"
               />
-              <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6 md:p-8">
-                <div className="space-y-4 text-muted-foreground">
+              <div className="mb-8 space-y-4 text-muted-foreground">
                 <p>{whenUsedParagraphs[0]}</p>
                 <p>
                   {whenUsedParagraphs[1]} At this stage, teams usually need clear commercial options before committing
@@ -653,7 +604,6 @@ export function ServiceDetailContent({
                   }
                   return null;
                 })()}
-                </div>
               </div>
 
               {serviceTypes.length > 0 && (
@@ -666,7 +616,7 @@ export function ServiceDetailContent({
                     }
                     headingLevel="h2"
                   />
-                  <ul className="mb-8 rounded-2xl border border-border bg-card/50 p-6 list-disc space-y-2 pl-6 text-muted-foreground">
+                  <ul className="mb-8 list-disc space-y-2 pl-6 text-muted-foreground">
                     {serviceTypes.map((type, i) => (
                       <li key={i}>{type}</li>
                     ))}
@@ -694,7 +644,7 @@ export function ServiceDetailContent({
                     description="If you notice these signs, acting early usually keeps costs down and reduces operational disruption."
                     headingLevel="h2"
                   />
-                  <ul className="mb-8 rounded-2xl border border-border bg-card/50 p-6 space-y-2">
+                  <ul className="mb-8 space-y-2">
                     {symptomLinks.map((s) => (
                       <li key={s.slug} className="flex items-center gap-2">
                         <AlertTriangle className="h-5 w-5 shrink-0 text-amber-500" />
@@ -714,7 +664,7 @@ export function ServiceDetailContent({
                     description="These related issues often lead to this service being commissioned as part of a complete fix."
                     headingLevel="h2"
                   />
-                  <ul className="mb-8 rounded-2xl border border-border bg-card/50 p-6 space-y-2">
+                  <ul className="mb-8 space-y-2">
                     {problemLinks.map((link) => (
                       <li key={link.path}>
                         <Link href={link.path} className="text-primary hover:underline">
@@ -729,7 +679,7 @@ export function ServiceDetailContent({
               <div className="mb-8 rounded-lg border border-border bg-secondary/40 p-4 text-sm text-muted-foreground">
                 {reassuranceCopy[reassuranceVariant]}
               </div>
-              <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6 md:p-8">
+              <div className="mb-8">
                 <h2 className="mb-3 font-display text-xl font-bold">
                   {SERVICE_EXTRA_HEADINGS[extraVariant]}
                 </h2>
@@ -745,7 +695,7 @@ export function ServiceDetailContent({
                 }
                 headingLevel="h2"
               />
-              <ul className="mb-8 rounded-2xl border border-border bg-card/50 p-6 list-disc space-y-2 pl-6 text-muted-foreground">
+              <ul className="mb-8 list-disc space-y-2 pl-6 text-muted-foreground">
                 {industries.map((ind, i) => (
                   <li key={i}>{ind}</li>
                 ))}
@@ -758,7 +708,7 @@ export function ServiceDetailContent({
                     description="We use proven systems and tools selected for reliability, maintainability, and suitability to each job."
                     headingLevel="h2"
                   />
-                  <ul className="mb-8 rounded-2xl border border-border bg-card/50 p-6 list-disc space-y-2 pl-6 text-muted-foreground">
+                  <ul className="mb-8 list-disc space-y-2 pl-6 text-muted-foreground">
                     {trustedEquipment.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
@@ -786,7 +736,7 @@ export function ServiceDetailContent({
                 }
                 headingLevel="h2"
               />
-              <ul className="mb-8 rounded-2xl border border-border bg-card/50 p-6 space-y-2">
+              <ul className="mb-8 space-y-2">
                 {service.benefits.map((b) => (
                   <li key={b} className="flex items-center gap-2">
                     <CheckCircle className="h-5 w-5 text-primary" />

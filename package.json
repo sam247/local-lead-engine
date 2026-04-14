@@ -20,7 +20,6 @@
     "images:sync-assets": "node scripts/sync-assets-from-public.mjs",
     "images:place-all": "npm run blog:place-images && node scripts/project-image-manifest.mjs > project-manifest.json && npm run project:place-images",
     "images:roundtrip-from-public": "npm run images:sync-assets && npm run images:place-all",
-    "images:service-heroes": "node scripts/generate-service-hero-manifest.mjs",
     "verify:public-images": "node scripts/verify-public-images.mjs",
     "verify:unique-project-images": "node scripts/verify-unique-project-images.mjs",
     "images:compress": "node scripts/compress-public-images.mjs",

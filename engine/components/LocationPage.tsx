@@ -638,7 +638,7 @@ export function LocationPage({
   );
 
   const whenNeededSection = (
-    <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6 md:p-8">
+    <div className="mb-8">
       <h2 className="mb-3 font-display text-xl font-bold">
         {`When you might need ${displayTitle}`}
       </h2>
@@ -656,9 +656,9 @@ export function LocationPage({
   const processStepsForPage = service.process.filter(Boolean).slice(0, 5);
   const processSection =
     processStepsForPage.length > 0 ? (
-      <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6 md:p-8">
+      <>
         <SectionIntro title={processIntroConfig.title} description={processIntroConfig.description} headingLevel="h2" />
-        <ol className="space-y-3">
+        <ol className="mb-8 space-y-3">
           {processStepsForPage.map((step, idx) => (
             <li key={`${step}-${idx}`} className="rounded-lg border border-border bg-secondary/40 p-4">
               <p className="font-medium">
@@ -670,7 +670,7 @@ export function LocationPage({
             </li>
           ))}
         </ol>
-      </div>
+      </>
     ) : null;
 
   if (process.env.NODE_ENV !== "production") {
@@ -730,7 +730,7 @@ export function LocationPage({
       />
 
       <section
-        className="relative overflow-hidden bg-primary pt-14 pb-16 md:pt-20 md:pb-28"
+        className="relative overflow-hidden bg-primary pt-10 pb-14 md:pt-16 md:pb-24"
         data-layout-variant={layoutVariant}
       >
         <div className="absolute inset-0">
@@ -743,7 +743,7 @@ export function LocationPage({
         </div>
         <div className="container relative">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="flex flex-col items-center gap-5">
+            <div className="flex flex-col items-center gap-4">
               <BreadcrumbNav
                 items={locationBreadcrumbs(
                   displayTitle,
@@ -755,13 +755,6 @@ export function LocationPage({
                 )}
                 variant="inverse"
               />
-              <figure className="w-full overflow-hidden rounded-2xl border border-primary-foreground/20 shadow-xl">
-                <img
-                  src={serviceImage}
-                  alt={`${displayTitle} in ${location.name}`}
-                  className="h-[220px] w-full object-cover md:h-[260px]"
-                />
-              </figure>
               <h1 className="font-display text-4xl font-bold text-primary-foreground md:text-5xl">
                 {displayTitle} in {location.name}
               </h1>
@@ -817,8 +810,7 @@ export function LocationPage({
         <div className="container">
           <div className="grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6 text-muted-foreground md:p-8">
-                <div className="max-w-prose space-y-5">
+              <div className="mb-6 max-w-prose space-y-5 text-muted-foreground">
                 {ukGroup && (
                   <p>
                     We cover the wider {ukGroup.regionName} area, including {ukGroup.countyName}.
@@ -900,39 +892,17 @@ export function LocationPage({
                     <p>{countyContextTemplates[countyLineVariant]}</p>
                   </>
                 )}
-                </div>
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <QuoteFormPrimaryCta
-                    contactPath={contactPath}
-                    variant="highlight"
-                    size="default"
-                    ctaText={quoteCtaLabel}
-                    ctaSeed={quoteCtaSeed}
-                  >
-                    {quoteCtaLabel}
-                  </QuoteFormPrimaryCta>
-                  <TrackablePhoneLink
-                    phone={companyInfo.phone}
-                    vertical={callTrackVertical}
-                    serviceSlug={service.slug}
-                    locationSlug={location.id}
-                    source="cta"
-                    className="inline-flex items-center gap-2 text-primary hover:underline"
-                  >
-                    <Phone className="h-4 w-4" /> Call Now
-                  </TrackablePhoneLink>
-                </div>
               </div>
               {relatedServiceHubLinks && relatedServiceHubLinks.length > 0 && (
-                <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6 md:p-8">
+                <div className="mb-8 max-w-prose">
                   <h2 className="mb-3 font-display text-xl font-bold">Related services</h2>
                   <p className="mb-3 text-sm text-muted-foreground">
                     Compare service overviews that are often scoped alongside this work.
                   </p>
-                  <ul className="grid grid-cols-1 gap-2 text-muted-foreground sm:grid-cols-2 lg:grid-cols-3">
+                  <ul className="list-inside list-disc space-y-2 text-muted-foreground">
                     {relatedServiceHubLinks.map((item) => (
-                      <li key={item.href} className="rounded-lg border border-border bg-background px-3 py-2">
-                        <Link href={item.href} className="text-sm text-primary hover:underline">
+                      <li key={item.href}>
+                        <Link href={item.href} className="text-primary hover:underline">
                           {item.title}
                         </Link>
                       </li>
@@ -941,12 +911,12 @@ export function LocationPage({
                 </div>
               )}
               {relatedProblemPageLinks && relatedProblemPageLinks.length > 0 && (
-                <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6 md:p-8">
+                <div className="mb-8 max-w-prose">
                   <h2 className="mb-3 font-display text-xl font-bold">Related foundation issues</h2>
-                  <ul className="grid grid-cols-1 gap-2 text-muted-foreground sm:grid-cols-2">
+                  <ul className="list-inside list-disc space-y-2 text-muted-foreground">
                     {relatedProblemPageLinks.map((item) => (
-                      <li key={item.href} className="rounded-lg border border-border bg-background px-3 py-2">
-                        <Link href={item.href} className="text-sm text-primary hover:underline">
+                      <li key={item.href}>
+                        <Link href={item.href} className="text-primary hover:underline">
                           {item.title}
                         </Link>
                       </li>
@@ -971,7 +941,7 @@ export function LocationPage({
                 </>
               )}
               {isWhenNeededEarly && whenNeededSection}
-              <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6 md:p-8">
+              <div className="mb-8">
                 <h2 className="mb-3 font-display text-xl font-bold">
                   {`Where ${displayTitle} is used`}
                 </h2>
@@ -990,7 +960,7 @@ export function LocationPage({
                   ))}
                 </ul>
               </div>
-              <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6 md:p-8">
+              <div className="mb-8">
                 <h2 className="mb-3 font-display text-xl font-bold">
                   {COST_COMPLEXITY_HEADINGS[extraVariantIndex]}
                 </h2>
@@ -1000,7 +970,7 @@ export function LocationPage({
                   and any compliance or operational requirements that affect delivery windows.
                 </p>
               </div>
-              <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6 md:p-8">
+              <div className="mb-8">
                 <h2 className="mb-3 font-display text-xl font-bold">Project context in {location.name}</h2>
                 <p className="text-muted-foreground">{activeLocationContext}</p>
               </div>
@@ -1282,12 +1252,12 @@ export function LocationPage({
               {relatedTopicsSectionIntro ??
                 "These guides explain common issues, planning considerations, and practical decisions related to this service."}
             </p>
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
               {remainingTopicLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="rounded-lg border border-border bg-background px-3 py-2 text-sm text-primary hover:underline"
+                  className="text-primary hover:underline"
                 >
                   {link.title}
                 </Link>
@@ -1308,12 +1278,12 @@ export function LocationPage({
             {nearbyAreasDescription ??
               `Compare ${displayTitle.toLowerCase()} options in nearby towns and cities around ${location.name}.`}
           </p>
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
             {mergedNearby.slice(0, 8).map((loc) => (
               <Link
                 key={loc.id}
                 href={`/${service.slug}/${loc.id}`}
-                className="rounded-lg border border-border bg-background px-3 py-2 text-sm text-primary hover:underline"
+                className="text-primary hover:underline"
               >
                 {displayTitle} in {loc.name}
               </Link>
@@ -1331,12 +1301,12 @@ export function LocationPage({
             <p className="mb-4 text-center text-sm text-muted-foreground">
               Explore related services that are often commissioned alongside this work in {location.name}.
             </p>
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
               {remainingOtherServices.map((s) => (
                 <Link
                   key={s.id}
                   href={`/${s.slug}/${location.id}`}
-                  className="rounded-lg border border-border bg-background px-3 py-2 text-sm text-primary hover:underline"
+                  className="text-primary hover:underline"
                 >
                   {s.title} in {location.name}
                 </Link>

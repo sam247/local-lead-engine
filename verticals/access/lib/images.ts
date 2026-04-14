@@ -1,4 +1,3 @@
-import { resolveServiceHeroImage } from "engine";
 const base = "/images";
 
 const DEFAULT_HERO_SERVICE_SLUG = "access-control-systems";
@@ -46,8 +45,8 @@ export const heroBg = `${base}/hero-bg.jpg`;
 export const aboutTeam = `${base}/about-team.jpg`;
 
 /**
- * Resolves hero image path by service slug, then by category map, with deterministic
- * build-time Unsplash manifest support and stable local fallback.
+ * Resolves hero image path by service slug, then by category (via categoryImages), then default.
+ * Use for location pages (serviceSlug), hub/info pages (category), or fallback.
  */
 export function getHeroImage(options: {
   serviceSlug?: string;
@@ -55,12 +54,12 @@ export function getHeroImage(options: {
   categoryImagesMap?: Record<string, string>;
 }): string {
   const { serviceSlug, category, categoryImagesMap } = options;
-  const mappedSlug = category && categoryImagesMap ? categoryImagesMap[category] : undefined;
-  const candidateSlug = serviceSlug ?? mappedSlug;
-  return resolveServiceHeroImage({
-    verticalId: "access",
-    serviceSlug: candidateSlug,
-    defaultServiceSlug: DEFAULT_HERO_SERVICE_SLUG,
-    localServiceImages: serviceImages,
-  });
+  if (serviceSlug && serviceImages[serviceSlug]) {
+    return serviceImages[serviceSlug];
+  }
+  if (category && categoryImagesMap) {
+    const slug = categoryImagesMap[category];
+    if (slug && serviceImages[slug]) return serviceImages[slug];
+  }
+  return serviceImages[DEFAULT_HERO_SERVICE_SLUG] ?? `${base}/services/${DEFAULT_HERO_SERVICE_SLUG}.jpg`;
 }
