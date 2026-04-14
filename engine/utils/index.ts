@@ -38,4 +38,3 @@ export {
   LAST_CTA_SEED_KEY,
   getLastCtaFromSession,
 } from "./quoteFormCta";
-export { resolveServiceHeroImage } from "./heroImages";
