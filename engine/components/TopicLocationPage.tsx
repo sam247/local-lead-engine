@@ -254,7 +254,7 @@ export function TopicLocationPage({
         ]}
       />
 
-      <section className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <section className="mb-8 grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <div
             className="relative min-h-[320px] overflow-hidden rounded-xl border border-border bg-muted"
@@ -282,7 +282,9 @@ export function TopicLocationPage({
         </div>
         <aside className="space-y-4 lg:sticky lg:top-24 lg:h-fit">
           <section className="rounded-xl border border-border bg-card p-4">
-            <h2 className="mb-3 font-display text-lg font-semibold">Map for {location.name}</h2>
+            <h2 className="mb-3 font-display text-lg font-semibold">
+              {topicTitle} in {location.name}
+            </h2>
             <MapEmbed lat={location.lat} lng={location.lng} height={220} title={`${topicTitle} in ${location.name}`} />
           </section>
           {semanticRelatedServiceLinks.length > 0 ? (

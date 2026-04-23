@@ -202,7 +202,7 @@ export function InfoPage({
       </section>
       <section className="section-padding" data-layout-variant={["A", "B", "C"][openingVariant]}>
         <div className="container">
-          <div className="grid gap-12 lg:grid-cols-3">
+          <div className="grid gap-12 lg:grid-cols-3 lg:items-start">
             <div className="lg:col-span-2">
               {primaryOpening ? (
                 <p className="mb-6 text-lg text-muted-foreground">{primaryOpening}</p>
@@ -406,7 +406,7 @@ export function InfoPage({
                 </div>
               </div>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-6 lg:sticky lg:top-24 h-fit">
               <RelatedLinks
                 relatedServices={page.relatedServices}
                 category={hub.category}

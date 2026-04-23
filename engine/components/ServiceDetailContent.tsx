@@ -517,7 +517,7 @@ export function ServiceDetailContent({
 
       <section className="section-padding">
         <div className="container">
-          <div className="grid gap-12 lg:grid-cols-3">
+          <div className="grid gap-12 lg:grid-cols-3 lg:items-start">
             <div className="lg:col-span-2">
               <p className="mb-4 text-muted-foreground">{overviewDescriptions[overviewVariant]}</p>
               <p className="mb-4 text-muted-foreground">{service.description}</p>
@@ -848,7 +848,7 @@ export function ServiceDetailContent({
               />
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-6 lg:sticky lg:top-24 h-fit">
               <div className="rounded-lg bg-secondary p-6">
                 <h3 className="mb-4 font-display text-lg font-bold">{relatedSidebarLabel}</h3>
                 <ul className="space-y-2">
