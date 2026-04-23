@@ -65,7 +65,7 @@ export function StickyCTA({ defaultText, issueMap, ctaPrimary }: StickyCtaConfig
         </span>
         <div className="flex w-full max-w-md shrink-0 justify-center gap-2 sm:max-w-none md:w-auto md:justify-end">
           <Button variant="highlight" asChild className="min-w-0 flex-1 sm:flex-none">
-            <a href={`tel:${digits}`} className="gap-2" onClick={onCallClick}>
+            <a href={`tel:${digits}`} className="inline-flex items-center justify-center gap-2 whitespace-nowrap" onClick={onCallClick}>
               <Phone className="h-4 w-4 shrink-0" />
               {ctaPrimary}
             </a>
@@ -79,8 +79,9 @@ export function StickyCTA({ defaultText, issueMap, ctaPrimary }: StickyCtaConfig
             ctaSeed={formCtaSeed}
             onBeforeNavigate={onFormClick}
           >
-            <span className="inline-flex items-center gap-2">
-              {formCtaLabel}
+            <span className="inline-flex min-w-0 items-center gap-2">
+              <span className="truncate sm:hidden">Get a quote</span>
+              <span className="hidden truncate sm:inline">{formCtaLabel}</span>
               <ArrowRight className="h-4 w-4 shrink-0" />
             </span>
           </QuoteFormPrimaryCta>
