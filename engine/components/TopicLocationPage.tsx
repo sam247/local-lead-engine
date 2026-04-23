@@ -339,7 +339,7 @@ export function TopicLocationPage({
         </aside>
       </section>
 
-      <section className="mb-8 rounded-xl border border-border bg-secondary/30 p-5">
+      <section className="mb-8 max-w-3xl rounded-xl border border-border bg-secondary/30 p-5">
         <h2 className="mb-2 font-display text-xl font-semibold">{localProofTitle}</h2>
         <p className="text-muted-foreground">{localProofText}</p>
       </section>

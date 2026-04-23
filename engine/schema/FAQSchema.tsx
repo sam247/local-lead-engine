@@ -44,20 +44,20 @@ export function FAQSchema({ items, title, subtitle, children }: FAQSchemaProps) 
         <section className="section-padding">
           <div className="container">
             <div className="mx-auto max-w-3xl">
-              <div className="mb-12 text-center">
-                <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
+              <div className="mb-4">
+                <h2 className="mb-2 font-display text-2xl font-bold text-foreground">
                   {title ?? "Frequently Asked Questions"}
                 </h2>
-                {subtitle && <p className="text-muted-foreground">{subtitle}</p>}
+                {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
               </div>
-              <dl className="space-y-4">
-                {items.map((item, index) => (
-                  <div key={index}>
-                    <dt className="font-display font-semibold text-foreground">{item.question}</dt>
-                    <dd className="mt-2 text-muted-foreground">{item.answer}</dd>
-                  </div>
+              <div className="space-y-3">
+                {items.map((item) => (
+                  <details key={item.question} className="rounded-lg border border-border bg-card p-4">
+                    <summary className="cursor-pointer font-medium">{item.question}</summary>
+                    <p className="mt-2 text-sm text-muted-foreground">{item.answer}</p>
+                  </details>
                 ))}
-              </dl>
+              </div>
             </div>
           </div>
         </section>

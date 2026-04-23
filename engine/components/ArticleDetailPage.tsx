@@ -197,13 +197,13 @@ export function ArticleDetailPage({
 
               {article.faq && article.faq.length > 0 ? (
                 <section className="mb-12 md:mb-14">
-                  <h2 className="mb-4 font-display text-xl font-bold text-foreground md:text-2xl">FAQ</h2>
-                  <div className="space-y-4">
+                  <h2 className="mb-4 font-display text-2xl font-bold text-foreground">Frequently asked questions</h2>
+                  <div className="space-y-3">
                     {article.faq.map((item) => (
-                      <div key={item.question} className="rounded-lg border border-border bg-card p-4">
-                        <h3 className="font-semibold text-foreground">{item.question}</h3>
+                      <details key={item.question} className="rounded-lg border border-border bg-card p-4">
+                        <summary className="cursor-pointer font-medium">{item.question}</summary>
                         <p className="mt-2 text-sm text-muted-foreground">{item.answer}</p>
-                      </div>
+                      </details>
                     ))}
                   </div>
                 </section>

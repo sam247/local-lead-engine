@@ -1,10 +1,4 @@
 import { faqs } from "@/lib/data";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 interface FAQProps {
   items?: typeof faqs;
@@ -26,18 +20,14 @@ const FAQ = ({ items = faqs, title = "Frequently Asked Questions", subtitle }: F
             {subtitle && <p className="text-muted-foreground">{subtitle}</p>}
           </div>
 
-          <Accordion type="single" collapsible className="w-full">
+          <div className="space-y-3">
             {homepageFaqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-left font-display font-semibold">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
+              <details key={index} className="rounded-lg border border-border bg-card p-4">
+                <summary className="cursor-pointer font-medium">{faq.question}</summary>
+                <p className="mt-2 text-sm text-muted-foreground">{faq.answer}</p>
+              </details>
             ))}
-          </Accordion>
+          </div>
         </div>
       </div>
     </section>
