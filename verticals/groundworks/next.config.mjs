@@ -12,6 +12,16 @@ const nextConfig = {
         destination: "/companies-cost",
         permanent: true,
       },
+      {
+        source: "/services/:serviceBase([^/]+)-:suffix(\\d+)",
+        destination: "/services/:serviceBase",
+        permanent: true,
+      },
+      {
+        source: "/:serviceSlug/:locationBase([^/]+)-:suffix(\\d+)",
+        destination: "/:serviceSlug/:locationBase",
+        permanent: true,
+      },
     ];
   },
 };

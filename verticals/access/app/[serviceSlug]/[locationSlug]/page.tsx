@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { services, locations, getRelevantTopicsForService } from "@/lib/data";
 import { projects } from "@/data/projects";
@@ -15,8 +14,6 @@ import { pickAccessL4MetaTitle } from "@/lib/accessL4TitleTemplates";
 import { getL4PriorityLocalLinks, getL4StrikingDistanceTarget } from "@/data/l4StrikingDistance";
 import type { Location } from "engine";
 import type { Metadata } from "next";
-import { Phone } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   isTopicLocationSlug,
   isGlobalTopicSlugForLocation,
@@ -27,7 +24,6 @@ import {
 } from "@/lib/topicLocationConfig";
 import { TopicLocationPage } from "@/app/components/TopicLocationPage";
 import CTABanner from "@/components/sections/CTABanner";
-import { TrackablePhoneLink } from "engine";
 
 export const dynamic = "force-static";
 export const revalidate = false;
@@ -170,53 +166,15 @@ export default async function LocationRoute({ params }: Props) {
     if (!topic) notFound();
     const topicHubPath = TOPIC_HUB_PATH[topic.slug] ?? "/cctv-guides";
 
-    const primaryServiceSlug = topic.relatedServiceSlugs[0] ?? null;
-    const sidebarBullets = topic.sectorUseCases
-      .slice(0, 5)
-      .map((point) => trimSidebarBullet(point, 8))
-      .slice(0, 5);
-
     return (
       <>
-        <div className="container">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            <div className="lg:col-span-2">
-              <TopicLocationPage
-                topic={topic}
-                location={location}
-                topicSlug={serviceSlug}
-                locationSlug={canonicalLocationSlug}
-                topicHubPath={topicHubPath}
-              />
-            </div>
-            <aside className="lg:col-span-1 lg:sticky lg:top-24">
-              <div className="space-y-4 rounded-xl border border-border bg-card p-5">
-                <h2 className="font-display text-lg font-semibold text-foreground">Get a quote</h2>
-                <Button asChild>
-                  <Link href="/contact">Get a quote</Link>
-                </Button>
-              <TrackablePhoneLink
-                phone={verticalConfig.companyInfo.phone}
-                vertical={verticalConfig.verticalId}
-                serviceSlug={primaryServiceSlug}
-                locationSlug={location.id}
-                source="cta"
-                className="flex items-center gap-2 text-primary hover:underline"
-              >
-                <Phone className="h-4 w-4" /> Call Now
-              </TrackablePhoneLink>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  {sidebarBullets.slice(0, 5).map((point) => (
-                    <li key={point} className="flex items-start gap-2">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </aside>
-          </div>
-        </div>
+        <TopicLocationPage
+          topic={topic}
+          location={location}
+          topicSlug={serviceSlug}
+          locationSlug={canonicalLocationSlug}
+          topicHubPath={topicHubPath}
+        />
         <CTABanner />
       </>
     );
