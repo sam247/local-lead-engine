@@ -279,6 +279,28 @@ export function TopicLocationPage({
               </li>
             ))}
           </ul>
+          <div className="mt-8 max-w-3xl space-y-3">
+            <p className="text-muted-foreground">{contextualOpening}</p>
+            <p className="text-muted-foreground">
+              {openingStructure}{" "}
+              For wider planning context, see the{" "}
+              <Link href={topicHubPath} className="text-primary hover:underline">
+                full {topicTitle.toLowerCase()} guide
+              </Link>
+              {firstServiceLink ? (
+                <>
+                  , or explore{" "}
+                  <Link
+                    href={`/${firstServiceLink.slug}/${locationSlug}`}
+                    className="text-primary hover:underline"
+                  >
+                    {firstServiceLink.title} in {location.name}
+                  </Link>
+                </>
+              ) : null}
+              .
+            </p>
+          </div>
         </div>
         <aside className="space-y-4 lg:sticky lg:top-24 lg:h-fit">
           <section className="rounded-xl border border-border bg-card p-4">
@@ -315,29 +337,6 @@ export function TopicLocationPage({
             </div>
           </section>
         </aside>
-      </section>
-
-      <section className="mb-8 max-w-3xl space-y-3">
-        <p className="text-muted-foreground">{contextualOpening}</p>
-        <p className="text-muted-foreground">
-          {openingStructure}{" "}
-          For wider planning context, see the{" "}
-          <Link href={topicHubPath} className="text-primary hover:underline">
-            full {topicTitle.toLowerCase()} guide
-          </Link>
-          {firstServiceLink ? (
-            <>
-              , or explore{" "}
-              <Link
-                href={`/${firstServiceLink.slug}/${locationSlug}`}
-                className="text-primary hover:underline"
-              >
-                {firstServiceLink.title} in {location.name}
-              </Link>
-            </>
-          ) : null}
-          .
-        </p>
       </section>
 
       <section className="mb-8 rounded-xl border border-border bg-secondary/30 p-5">
