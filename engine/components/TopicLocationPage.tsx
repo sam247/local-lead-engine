@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BreadcrumbNav } from "./BreadcrumbNav";
 import { Button } from "./ui/button";
 import { QuoteFormPrimaryCta } from "./QuoteFormPrimaryCta";
+import { MapEmbed } from "./MapEmbed";
 import type { Location } from "../types";
 import { getVariantIndex } from "../lib/contentVariants";
 import { getPageTier, pageSeoDataAttrs, type PageType } from "../lib/pageWeighting";
@@ -17,6 +18,8 @@ export interface TopicLocationPageProps {
   topicSlug: string;
   location: Location;
   locationSlug: string;
+  heroImageSrc: string;
+  heroImageAlt?: string;
   topicHubPath: string;
   contextualOpening: string;
   whenNeeded: string;
@@ -29,6 +32,11 @@ export interface TopicLocationPageProps {
   servicesHeading: string;
   servicesIntro: string;
   serviceLinks: Array<{ slug: string; title: string }>;
+  relatedServiceLinks?: Array<{ slug: string; title: string }>;
+  trustPoints?: string[];
+  localProofHeading?: string;
+  localProofBody?: string;
+  faqItems?: Array<{ question: string; answer: string }>;
   primaryCtaText: string;
   primaryCtaHref: string;
   secondaryCtaText?: string;
@@ -88,6 +96,8 @@ export function TopicLocationPage({
   topicSlug,
   location,
   locationSlug,
+  heroImageSrc,
+  heroImageAlt,
   topicHubPath,
   contextualOpening,
   whenNeeded,
@@ -100,6 +110,11 @@ export function TopicLocationPage({
   servicesHeading,
   servicesIntro,
   serviceLinks,
+  relatedServiceLinks,
+  trustPoints,
+  localProofHeading,
+  localProofBody,
+  faqItems,
   primaryCtaText,
   primaryCtaHref,
   secondaryCtaText,
@@ -147,6 +162,33 @@ export function TopicLocationPage({
   const h2UseCases = TL_H2_USE_CASES[getVariantIndex(`${h2Seed}:use`, TL_H2_USE_CASES.length)];
 
   const firstServiceLink = serviceLinks[0];
+  const trustPills = trustPoints?.length
+    ? trustPoints.slice(0, 4)
+    : ["Fast quotes", "UK coverage", "Vetted contractors", "Commercial & domestic"];
+  const semanticRelatedServiceLinks = (relatedServiceLinks?.length ? relatedServiceLinks : serviceLinks)
+    .slice(0, 5)
+    .map((service) => ({
+      href: `/${service.slug}/${locationSlug}`,
+      title: `${service.title} in ${location.name}`,
+    }));
+  const localProofTitle = localProofHeading || `Projects across ${location.area} and surrounding areas`;
+  const localProofText =
+    localProofBody ||
+    `Teams across ${location.name} and nearby areas use this route to keep programme and handover milestones moving with fewer downstream changes.`;
+  const renderedFaqItems = (faqItems?.length ? faqItems : [
+    {
+      question: `How do I plan ${topicTitle.toLowerCase()} in ${location.name}?`,
+      answer: `Start with scope, access, and constraints, then align method and sequencing early so delivery risk is reduced across ${location.area}.`,
+    },
+    {
+      question: `What affects cost and programme for ${topicTitle.toLowerCase()} in ${location.name}?`,
+      answer: `Ground conditions, access logistics, approvals, and dependencies with other trades are usually the main drivers in ${location.name}.`,
+    },
+    {
+      question: `Do you provide documentation and handover support in ${location.name}?`,
+      answer: `Yes. We provide the relevant project documentation and structured handover information for downstream teams in ${location.name}.`,
+    },
+  ]).slice(0, 6);
 
   const whenNeededSection = (
     <section className="mb-8">
@@ -212,9 +254,66 @@ export function TopicLocationPage({
         ]}
       />
 
-      <h1 className="mb-4 font-display text-3xl font-bold">
-        {topicTitle} in {location.name}
-      </h1>
+      <section className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          <div
+            className="relative min-h-[320px] overflow-hidden rounded-xl border border-border bg-muted"
+            style={{
+              backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url(${heroImageSrc})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+            role="img"
+            aria-label={heroImageAlt || `${topicTitle} in ${location.name}`}
+          >
+            <div className="flex min-h-[320px] items-center justify-center p-8 text-center">
+              <h1 className="font-display text-3xl font-bold text-white md:text-4xl">
+                {topicTitle} in {location.name}
+              </h1>
+            </div>
+          </div>
+          <ul className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {trustPills.map((item) => (
+              <li key={item} className="rounded-md border border-border bg-secondary/40 px-3 py-2 text-center text-sm">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <aside className="space-y-4 lg:sticky lg:top-24 lg:h-fit">
+          <section className="rounded-xl border border-border bg-card p-4">
+            <h2 className="mb-3 font-display text-lg font-semibold">Map for {location.name}</h2>
+            <MapEmbed lat={location.lat} lng={location.lng} height={220} title={`${topicTitle} in ${location.name}`} />
+          </section>
+          {semanticRelatedServiceLinks.length > 0 ? (
+            <section className="rounded-xl border border-border bg-card p-4">
+              <h2 className="mb-3 font-display text-lg font-semibold">Related services in {location.name}</h2>
+              <ul className="space-y-2 text-sm">
+                {semanticRelatedServiceLinks.map((service) => (
+                  <li key={service.href}>
+                    <Link href={service.href} className="text-primary hover:underline">
+                      {service.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+          <section className="rounded-xl border border-border bg-card p-4">
+            <h2 className="mb-3 font-display text-lg font-semibold">Get a quote</h2>
+            <div className="flex flex-col gap-2">
+              <Link href={primaryCtaHref}>
+                <Button className="w-full">{primaryCtaText}</Button>
+              </Link>
+              {secondaryCtaText && secondaryCtaHref ? (
+                <Link href={secondaryCtaHref}>
+                  <Button variant="outline" className="w-full">{secondaryCtaText}</Button>
+                </Link>
+              ) : null}
+            </div>
+          </section>
+        </aside>
+      </section>
 
       <section className="mb-8 max-w-3xl space-y-3">
         <p className="text-muted-foreground">{contextualOpening}</p>
@@ -237,6 +336,11 @@ export function TopicLocationPage({
           ) : null}
           .
         </p>
+      </section>
+
+      <section className="mb-8 rounded-xl border border-border bg-secondary/30 p-5">
+        <h2 className="mb-2 font-display text-xl font-semibold">{localProofTitle}</h2>
+        <p className="text-muted-foreground">{localProofText}</p>
       </section>
 
       {layoutVariant === "B" ? (
@@ -338,6 +442,18 @@ export function TopicLocationPage({
           </QuoteFormPrimaryCta>
           .
         </p>
+      </section>
+
+      <section className="mt-8 border-t pt-8">
+        <h2 className="mb-4 font-display text-2xl font-bold">Frequently asked questions</h2>
+        <div className="space-y-3">
+          {renderedFaqItems.map((faq, idx) => (
+            <details key={`${faq.question}-${idx}`} className="rounded-lg border border-border bg-card p-4">
+              <summary className="cursor-pointer font-medium">{faq.question}</summary>
+              <p className="mt-2 text-sm text-muted-foreground">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
       </section>
     </main>
   );
