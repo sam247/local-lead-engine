@@ -9,6 +9,14 @@ export const locationNeighbours: Record<string, string[]> = {
   london: ["camden", "islington", "westminster", "kensington", "fulham"],
   watford: ["st-albans", "hemel-hempstead", "bushey", "rickmansworth", "radlett"],
   manchester: ["salford", "trafford", "stockport", "oldham", "rochdale"],
+  chislehurst: ["sidcup", "bromley", "petts-wood", "bickley", "new-eltham", "mottingham"],
+  sidcup: ["new-eltham", "mottingham", "chislehurst", "bexley", "dartford", "bromley"],
+  bickley: ["petts-wood", "bromley", "chislehurst", "beckenham", "west-wickham", "orpington"],
+  mottingham: ["new-eltham", "sidcup", "chislehurst", "blackheath", "greenwich", "bromley"],
+  "new-eltham": ["mottingham", "sidcup", "chislehurst", "blackheath", "bexley", "greenwich"],
+  "petts-wood": ["bickley", "chislehurst", "bromley", "orpington", "beckenham", "west-wickham"],
+  blackheath: ["greenwich", "mottingham", "new-eltham", "beckenham", "bromley", "lewisham"],
+  "west-wickham": ["beckenham", "bromley", "petts-wood", "bickley", "orpington", "sidcup"],
 };
 
 const NEIGHBOUR_LOCATIONS_MAX = 8;

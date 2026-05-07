@@ -514,6 +514,33 @@ export function getTopicForRouteSlug(routeSlug: string): TopicLocationTopic | un
   return TOPIC_DATA[routeSlug as (typeof TOPIC_LOCATION_SLUGS)[number]];
 }
 
+const TOPIC_HUB_PATH_BY_ROUTE_SLUG: Partial<Record<(typeof TOPIC_LOCATION_SLUGS)[number], string>> = {
+  "foundation-settlement": "/foundation-problems",
+  "foundation-underpinning": "/foundation-problems",
+  "piling-foundations": "/ground-conditions",
+  "ground-investigation": "/ground-conditions",
+  "soil-testing-services": "/ground-conditions",
+  "retaining-wall-construction": "/site-preparation",
+  "site-clearance-muck-away": "/site-preparation",
+  "bulk-excavation-services": "/site-preparation",
+  "groundworks-for-extensions": "/guides",
+  "groundworks-for-developments": "/site-preparation",
+  "groundworks-for-new-builds": "/site-preparation",
+  "groundworks-and-enabling-works": "/site-preparation",
+  "site-preparation-contractors": "/site-preparation",
+  "soakaway-installation": "/construction-drainage",
+  "surface-water-drainage": "/construction-drainage",
+  "driveway-groundworks": "/driveway-groundworks",
+  "car-park-groundworks": "/site-preparation",
+  "concrete-hardstanding": "/site-preparation",
+};
+
+export function getTopicHubPathForRouteSlug(routeSlug: string): string {
+  return TOPIC_HUB_PATH_BY_ROUTE_SLUG[
+    routeSlug as (typeof TOPIC_LOCATION_SLUGS)[number]
+  ] ?? "/guides";
+}
+
 /** Services to list under "Groundworks services in {location}". */
 export const TOPIC_PAGE_SERVICES = services;
 

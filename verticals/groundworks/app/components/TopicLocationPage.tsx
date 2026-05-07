@@ -1,7 +1,7 @@
 import { TopicLocationPage as EngineTopicLocationPage } from "engine/components";
 import type { TopicLocationTopic } from "@/lib/topicLocationConfig";
 import type { Location } from "engine";
-import { TOPIC_PAGE_SERVICES } from "@/lib/topicLocationConfig";
+import { TOPIC_PAGE_SERVICES, getTopicHubPathForRouteSlug } from "@/lib/topicLocationConfig";
 import { verticalConfig } from "@/config";
 import { getHeroImage } from "@/lib/images";
 
@@ -33,6 +33,36 @@ export function TopicLocationPage({
     serviceSlug: heroServiceSlugByTopic[topicSlug] || topic.primaryServiceSlug || "groundworks-contractors",
   });
   const relatedClusterByTopic: Record<string, string[]> = {
+    "foundation-underpinning": [
+      "foundation-contractors",
+      "mini-piling-contractors",
+      "piling-contractors",
+      "foundation-repair",
+    ],
+    "piling-foundations": [
+      "piling-contractors",
+      "mini-piling-contractors",
+      "cfa-piling",
+      "foundation-contractors",
+    ],
+    "bulk-excavation-services": [
+      "excavation-contractors",
+      "groundworks-contractors",
+      "foundation-contractors",
+      "enabling-works-contractors",
+    ],
+    "groundworks-for-developments": [
+      "groundworks-contractors",
+      "enabling-works-contractors",
+      "foundation-contractors",
+      "excavation-contractors",
+    ],
+    "groundworks-and-enabling-works": [
+      "enabling-works-contractors",
+      "groundworks-contractors",
+      "site-preparation-services",
+      "excavation-contractors",
+    ],
     "retaining-wall-construction": [
       "groundworks-contractors",
       "excavation-contractors",
@@ -57,6 +87,76 @@ export function TopicLocationPage({
     .filter((service): service is NonNullable<typeof service> => Boolean(service))
     .map((service) => ({ slug: service.slug, title: service.title }));
   const faqByTopic: Record<string, Array<{ question: string; answer: string }>> = {
+    "foundation-underpinning": [
+      {
+        question: `Can you quote foundation underpinning packages for structural movement in ${location.name}?`,
+        answer: `Yes. We quote underpinning as a scoped structural package in ${location.name}, including sequencing, temporary support assumptions, and integration with related excavation or piling where needed.`,
+      },
+      {
+        question: `Is underpinning in ${location.name} suitable for extension and basement projects?`,
+        answer: `It can be. Where extension or basement works affect existing support, underpinning may be specified to maintain structural stability and programme certainty.`,
+      },
+      {
+        question: `Do you deliver underpinning for commercial properties in ${location.name}?`,
+        answer: `Yes. We support both residential and commercial underpinning works where structural design calls for deeper or strengthened foundations.`,
+      },
+    ],
+    "piling-foundations": [
+      {
+        question: `Do you provide piling foundation packages for constrained sites in ${location.name}?`,
+        answer: `Yes. We deliver piling foundation packages in ${location.name} for restricted-access, basement-adjacent, and structurally complex sites where shallow foundations are unsuitable.`,
+      },
+      {
+        question: `Can piling in ${location.name} be combined with excavation and enabling works?`,
+        answer: `Yes. For commercial and development projects, we coordinate piling with excavation, temporary works assumptions, and enabling scopes to protect programme outcomes.`,
+      },
+      {
+        question: `How do you choose between mini piling and other piling types in ${location.name}?`,
+        answer: `The structural design, load requirements, and site constraints determine the method. We align delivery with the engineer's specification and site logistics.`,
+      },
+    ],
+    "bulk-excavation-services": [
+      {
+        question: `Do you handle basement excavation packages in ${location.name}?`,
+        answer: `Yes. We deliver bulk and basement excavation in ${location.name} with spoil strategy, sequence planning, and formation handover aligned to structural follow-on works.`,
+      },
+      {
+        question: `Can bulk excavation be procured as part of a full commercial groundworks package?`,
+        answer: `Yes. We regularly bundle bulk excavation with enabling works, foundations, and drainage for commercial and development programmes.`,
+      },
+      {
+        question: `What typically affects excavation programme risk in ${location.name}?`,
+        answer: `Access, disposal logistics, temporary support constraints, and downstream structural interfaces are the main programme variables.`,
+      },
+    ],
+    "groundworks-for-developments": [
+      {
+        question: `Do you deliver phased commercial groundworks packages in ${location.name}?`,
+        answer: `Yes. We deliver phased development groundworks in ${location.name}, covering enabling, excavation, foundations, and drainage with coordinated handover points.`,
+      },
+      {
+        question: `Can you support extension and remodelling-led development sites in ${location.name}?`,
+        answer: `Yes. We support extension-led and mixed-use remodelling schemes where structural package sequencing and ground risk control are key.`,
+      },
+      {
+        question: `How do you manage programme certainty for multi-plot works in ${location.name}?`,
+        answer: `We use phased delivery planning, interface control, and clear documentation so each plot or phase can progress without avoidable groundworks bottlenecks.`,
+      },
+    ],
+    "groundworks-and-enabling-works": [
+      {
+        question: `Can enabling works in ${location.name} be integrated with structural groundworks delivery?`,
+        answer: `Yes. We run enabling and structural groundworks as a coordinated package where project teams need one delivery path from early works through foundations and excavation.`,
+      },
+      {
+        question: `Do you provide commercial enabling works for programme-critical starts in ${location.name}?`,
+        answer: `Yes. We support commercial programme starts with access, temporary drainage, site setup, and early structural groundwork sequencing.`,
+      },
+      {
+        question: `Can you quote a single package for enabling, excavation, and foundations in ${location.name}?`,
+        answer: `Yes. We provide single-package scopes for aligned commercial projects to simplify procurement and improve handover certainty.`,
+      },
+    ],
     "retaining-wall-construction": [
       {
         question: `Do I need building control approval for retaining walls in ${location.name}?`,
@@ -135,6 +235,7 @@ export function TopicLocationPage({
       outcome: "Completed work is verified so downstream construction can proceed with confidence.",
     },
   ];
+  const topicHubPath = getTopicHubPathForRouteSlug(topicSlug);
 
   return (
     <EngineTopicLocationPage
@@ -144,7 +245,7 @@ export function TopicLocationPage({
       locationSlug={locationSlug}
       heroImageSrc={heroImageSrc}
       heroImageAlt={`${topic.title} in ${location.name}`}
-      topicHubPath="/guides"
+      topicHubPath={topicHubPath}
       contextualOpening={`${topic.intro} In ${location.name} and ${location.area}, this is most relevant when projects need a clear technical route before construction sequencing is finalised.`}
       whenNeeded={`This is typically required during early planning, redevelopment, or remedial phases where site constraints and design decisions directly affect delivery risk, programme certainty, and commercial outcomes.`}
       workInvolves={topic.howSolved}

@@ -49,10 +49,25 @@ type EnquiryData = z.infer<typeof enquirySchema>;
 function getPathMetadata() {
   const pagePath = window.location.pathname || "";
   const segments = pagePath.split("/").filter(Boolean);
+  const sourceQueryTheme = (() => {
+    const text = `${segments[0] ?? ""} ${pagePath}`.toLowerCase();
+    if (text.includes("basement")) return "basement_excavation";
+    if (text.includes("retaining")) return "retaining_walls";
+    if (text.includes("piling")) return "piling_foundations";
+    if (text.includes("foundation") || text.includes("underpin")) return "foundations_structural";
+    if (text.includes("enabling") || text.includes("development")) return "commercial_packages";
+    if (text.includes("bulk-excavation") || text.includes("excavation")) return "bulk_excavation";
+    return "generic_informational";
+  })();
   return {
     page_path: pagePath,
     service_slug: segments[0] ?? "",
     location_slug: segments[1] ?? "",
+    source_page_path: pagePath,
+    source_service_slug: segments[0] ?? "",
+    source_location_slug: segments[1] ?? "",
+    source_vertical: "groundworks",
+    source_query_theme: sourceQueryTheme,
   };
 }
 
@@ -62,6 +77,7 @@ export default function ContactForm() {
   const [errors, setErrors] = useState<Partial<Record<keyof EnquiryData, string>>>({});
   const [formData, setFormData] = useState<Partial<EnquiryData>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [formStarted, setFormStarted] = useState(false);
 
   useEffect(() => {
     try {
@@ -74,6 +90,13 @@ export default function ContactForm() {
   }, []);
 
   const updateField = (field: keyof EnquiryData, value: string) => {
+    if (!formStarted) {
+      setFormStarted(true);
+      trackEvent("form_start", {
+        source_vertical: "groundworks",
+        source_page_path: typeof window !== "undefined" ? window.location.pathname : "",
+      });
+    }
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
@@ -92,6 +115,7 @@ export default function ContactForm() {
       return;
     }
     trackEvent("lead_form_submit");
+    trackEvent("form_submit");
     try {
       const res = await fetch("/api/leads", {
         method: "POST",
@@ -122,6 +146,15 @@ export default function ContactForm() {
       }
       setFormData({});
       setErrors({});
+      trackEvent("generate_lead", {
+        source_vertical: "groundworks",
+        source_page_path: typeof window !== "undefined" ? window.location.pathname : "",
+      });
+      trackEvent("thank_you_page_view", {
+        source_vertical: "groundworks",
+        source_page_path: typeof window !== "undefined" ? window.location.pathname : "",
+      });
+      setFormStarted(false);
       toast({
         title: "Thanks for your enquiry.",
         description: "A groundworks specialist will contact you shortly.",

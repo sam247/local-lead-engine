@@ -6,6 +6,7 @@ import { groundworksCostsPages } from "@/data/groundworksCostsPages";
 import { sitePreparationPages } from "@/data/sitePreparationPages";
 import { drivewayGroundworksPages } from "@/data/drivewayGroundworksPages";
 import { constructionDrainagePages } from "@/data/constructionDrainagePages";
+import { getCommercialOpportunityScore } from "@/lib/commercialOpportunity";
 
 // Company info – used by config and layout (public Twilio inbound; set NEXT_PUBLIC_PHONE_NUMBER in deploy)
 const publicPhone = (process.env.NEXT_PUBLIC_PHONE_NUMBER ?? "").trim();
@@ -486,7 +487,14 @@ export function getRelevantTopicsForService(serviceSlug: string): { title: strin
     const hub = getHubData(category);
     const pages = getCategoryPages(category);
     if (!hub || !pages.length) continue;
-    const taken = pages.slice(0, MAX_PER_CATEGORY);
+    // Phase 3: bias link reinforcement toward high-intent structural/commercial topics first.
+    const taken = [...pages]
+      .sort((a, b) => {
+        const aScore = getCommercialOpportunityScore(`${a.title} ${a.slug} ${hub.basePath}`);
+        const bScore = getCommercialOpportunityScore(`${b.title} ${b.slug} ${hub.basePath}`);
+        return bScore - aScore;
+      })
+      .slice(0, MAX_PER_CATEGORY);
     for (const page of taken) {
       out.push({ title: page.title, href: `${hub.basePath}/${page.slug}` });
       if (out.length >= MAX_TOPIC_LINKS) return out;

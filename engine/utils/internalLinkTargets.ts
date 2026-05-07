@@ -27,9 +27,18 @@ export function pickRelatedServiceLocationLinks({
   maxLinks?: number;
 }): InternalLinkTarget[] {
   const selected = new Set<string>([currentServiceSlug]);
+  const commercialWeight = (slug: string) => {
+    const input = slug.toLowerCase();
+    if (/foundation|underpin|piling|structural|excavation|retaining|enabling/.test(input)) return 3;
+    if (/groundworks|site-clearance|muck-away|bulk/.test(input)) return 2;
+    return 1;
+  };
+  const weightedServiceSlugs = [...services.map((service) => service.slug)].sort(
+    (a, b) => commercialWeight(b) - commercialWeight(a)
+  );
   const orderedCandidates = [
     ...(priorityByService[currentServiceSlug] ?? []),
-    ...services.map((service) => service.slug),
+    ...weightedServiceSlugs,
   ];
 
   return orderedCandidates.reduce<InternalLinkTarget[]>((links, slug) => {

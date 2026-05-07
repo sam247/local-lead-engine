@@ -39,6 +39,16 @@ export function handleCallClick(
     typeof window !== "undefined"
       ? String(window.location?.pathname ?? "").trim()
       : String(context.page_path ?? "").trim();
+  const sourceQueryTheme = (() => {
+    const text = `${service_slug} ${page_path}`.toLowerCase();
+    if (text.includes("basement")) return "basement_excavation";
+    if (text.includes("retaining")) return "retaining_walls";
+    if (text.includes("piling")) return "piling_foundations";
+    if (text.includes("foundation") || text.includes("underpin")) return "foundations_structural";
+    if (text.includes("enabling") || text.includes("development")) return "commercial_packages";
+    if (text.includes("bulk-excavation") || text.includes("excavation")) return "bulk_excavation";
+    return "generic_informational";
+  })();
   const utm_source =
     typeof window !== "undefined"
       ? String(new URLSearchParams(window.location?.search ?? "").get("utm_source") ?? "").trim()
@@ -55,6 +65,14 @@ export function handleCallClick(
         service_slug,
         location_slug,
         page_path,
+      });
+      (window as { gtag: (...args: unknown[]) => void }).gtag("event", "tel_click", {
+        vertical,
+        source_page_path: page_path,
+        source_service_slug: service_slug,
+        source_location_slug: location_slug,
+        source_vertical: vertical,
+        source_query_theme: sourceQueryTheme,
       });
     }
   } catch {
@@ -97,6 +115,11 @@ export function handleCallClick(
       location_slug,
       utm_source,
       source,
+      source_page_path: page_path,
+      source_service_slug: service_slug,
+      source_location_slug: location_slug,
+      source_vertical: vertical,
+      source_query_theme: sourceQueryTheme,
       intent_id: intentId,
       click_timestamp: clickTimestamp,
       cta_text: ctaText,

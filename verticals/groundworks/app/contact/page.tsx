@@ -2,6 +2,7 @@ import { companyInfo } from "@/lib/data";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import ContactForm from "@/components/sections/ContactForm";
+import TrackableEmailLink from "@/components/ui/TrackableEmailLink";
 import { TrackablePhoneLink, QuoteFormHashHandler } from "engine";
 import { verticalConfig } from "@/config";
 import type { Metadata } from "next";
@@ -62,7 +63,14 @@ export default function ContactPage() {
                   <Mail className="h-5 w-5 shrink-0 text-primary" />
                   <div>
                     <h3 className="font-display font-semibold">Email</h3>
-                    <a href={`mailto:${companyInfo.email}`} className="text-sm text-muted-foreground hover:text-primary">{companyInfo.email}</a>
+                    <TrackableEmailLink
+                      email={companyInfo.email}
+                      sourcePagePath="/contact"
+                      sourceVertical={verticalConfig.verticalId}
+                      className="text-sm text-muted-foreground hover:text-primary"
+                    >
+                      {companyInfo.email}
+                    </TrackableEmailLink>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 rounded-lg border p-5">

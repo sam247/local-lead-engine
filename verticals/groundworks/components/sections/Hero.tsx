@@ -115,6 +115,7 @@ const Hero = () => {
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState<Partial<Record<HeroErrorKey, string>>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [formStarted, setFormStarted] = useState(false);
 
   useEffect(() => {
     try {
@@ -129,14 +130,36 @@ const Hero = () => {
   const getPathMetadata = () => {
     const pagePath = window.location.pathname || "";
     const segments = pagePath.split("/").filter(Boolean);
+    const sourceQueryTheme = (() => {
+      const text = `${segments[0] ?? ""} ${pagePath}`.toLowerCase();
+      if (text.includes("basement")) return "basement_excavation";
+      if (text.includes("retaining")) return "retaining_walls";
+      if (text.includes("piling")) return "piling_foundations";
+      if (text.includes("foundation") || text.includes("underpin")) return "foundations_structural";
+      if (text.includes("enabling") || text.includes("development")) return "commercial_packages";
+      if (text.includes("bulk-excavation") || text.includes("excavation")) return "bulk_excavation";
+      return "generic_informational";
+    })();
     return {
       page_path: pagePath,
       service_slug: segments[0] ?? "",
       location_slug: segments[1] ?? "",
+      source_page_path: pagePath,
+      source_service_slug: segments[0] ?? "",
+      source_location_slug: segments[1] ?? "",
+      source_vertical: verticalConfig.verticalId,
+      source_query_theme: sourceQueryTheme,
     };
   };
 
   const patchForm = (patch: Partial<typeof formData>) => {
+    if (!formStarted) {
+      setFormStarted(true);
+      trackEvent("form_start", {
+        source_vertical: verticalConfig.verticalId,
+        source_page_path: typeof window !== "undefined" ? window.location.pathname : "",
+      });
+    }
     setFormData((p) => ({ ...p, ...patch }));
     setErrors((prev) => {
       const next = { ...prev };
@@ -186,6 +209,7 @@ const Hero = () => {
     setSubmitting(true);
     try {
       trackEvent("lead_form_submit");
+      trackEvent("form_submit");
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -220,6 +244,15 @@ const Hero = () => {
       setFormData(initialForm);
       setErrors({});
       setStep(1);
+      trackEvent("generate_lead", {
+        source_vertical: verticalConfig.verticalId,
+        source_page_path: typeof window !== "undefined" ? window.location.pathname : "",
+      });
+      trackEvent("thank_you_page_view", {
+        source_vertical: verticalConfig.verticalId,
+        source_page_path: typeof window !== "undefined" ? window.location.pathname : "",
+      });
+      setFormStarted(false);
       toast({
         title: "Thanks for your enquiry.",
         description: "A groundworks specialist will contact you shortly.",

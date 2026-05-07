@@ -41,6 +41,12 @@ export function StickyCTA({ defaultText, issueMap, ctaPrimary }: StickyCtaConfig
       message: displayText,
       vertical: verticalId,
     });
+    window.gtag?.("event", "sticky_cta_click", {
+      type: "call",
+      source_page_path: page_path,
+      source_vertical: verticalId,
+      source_query_theme: inferServiceSlugForCtaBias(pathname, services) ?? "generic_informational",
+    });
     handleCallClick(e, digits, callContext);
   };
 
@@ -51,6 +57,12 @@ export function StickyCTA({ defaultText, issueMap, ctaPrimary }: StickyCtaConfig
       issue_slug: selectedIssue || "none",
       message: displayText,
       vertical: verticalId,
+    });
+    window.gtag?.("event", "sticky_cta_click", {
+      type: "form",
+      source_page_path: page_path,
+      source_vertical: verticalId,
+      source_query_theme: inferServiceSlugForCtaBias(pathname, services) ?? "generic_informational",
     });
   };
 

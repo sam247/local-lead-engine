@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
 import { companyInfo, services, locations } from "@/lib/data";
 import { verticalConfig } from "@/config";
+import TrackableEmailLink from "@/components/ui/TrackableEmailLink";
 import { FooterServiceAreaGroups, GroupFooter, getServiceUrl } from "engine";
 import { mainlineGroupLinksForSite } from "engine/data/mainline-group";
 
@@ -105,9 +106,14 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400" />
-                <a href={`mailto:${companyInfo.email}`} className="text-sm text-neutral-300 transition-colors hover:text-white">
+                <TrackableEmailLink
+                  email={companyInfo.email}
+                  sourceVertical={verticalConfig.verticalId}
+                  sourcePagePath="/"
+                  className="text-sm text-neutral-300 transition-colors hover:text-white"
+                >
                   {companyInfo.email}
-                </a>
+                </TrackableEmailLink>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400" />

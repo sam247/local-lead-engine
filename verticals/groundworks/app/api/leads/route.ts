@@ -3,6 +3,7 @@ import { z } from "zod";
 import { Resend } from "resend";
 import { google } from "googleapis";
 import { leadEmailField, leadPhoneField, leadPostcodeField } from "engine";
+import { deriveSourceQueryTheme, getCommercialOpportunityScore } from "@/lib/commercialOpportunity";
 
 const SERVICE_OPTIONS = [
   "Groundworks Contractors",
@@ -43,10 +44,107 @@ const EXPECTED_SHEET_HEADERS = [
   "quote_sent",
   "cta_text",
   "cta_seed",
+  "source_page_path",
+  "source_service_slug",
+  "source_location_slug",
+  "source_vertical",
+  "source_query_theme",
+  "lead_class",
+  "lead_score",
+  "classification_reason",
+  "supplier_id",
+  "supplier_name",
+  "supplier_fit_tier",
+  "supplier_fit_reason",
+  "supplier_preferred_services",
+  "supplier_preferred_lead_types",
+  "supplier_preferred_project_sizes",
+  "supplier_preferred_territories",
+  "supplier_response_speed_rating",
+  "supplier_performance_bucket",
+  "supplier_win_rate_tracking",
+  "assignment_method",
+  "assignment_priority_score",
+  "territory_cluster",
 ] as const;
 const PROJECT_STAGE_OPTIONS = new Set(["planning", "ready", "exploring"]);
 const ASSIGNED_TO = "Jamie";
 const VERTICAL = "groundworks";
+
+type LeadClass =
+  | "residential"
+  | "commercial"
+  | "structural"
+  | "foundations"
+  | "piling"
+  | "retaining_walls"
+  | "basement_excavation"
+  | "enabling_works"
+  | "low_fit";
+
+type SupplierProfile = {
+  id: string;
+  name: string;
+  assignee: string;
+  preferredServices: string[];
+  preferredLeadTypes: LeadClass[];
+  preferredProjectSizes: Array<"small" | "medium" | "large">;
+  preferredTerritories: string[];
+  responseSpeedRating: number;
+  performanceBucket: "strong" | "stable" | "developing";
+  winRateTracking: string;
+};
+
+const SUPPLIER_PROFILES: SupplierProfile[] = [
+  {
+    id: "supplier-kent-structural-01",
+    name: "Kent Structural Groundworks Partner",
+    assignee: "Kent Structural Desk",
+    preferredServices: [
+      "foundation-contractors",
+      "mini-piling-contractors",
+      "piling-contractors",
+      "excavation-contractors",
+      "enabling-works-contractors",
+    ],
+    preferredLeadTypes: ["commercial", "structural", "foundations", "piling", "basement_excavation", "enabling_works"],
+    preferredProjectSizes: ["medium", "large"],
+    preferredTerritories: ["ashford", "maidstone", "sevenoaks", "tunbridge-wells", "tonbridge", "dartford", "rochester", "gravesend", "canterbury", "dover", "folkestone", "sidcup", "chislehurst", "bickley", "mottingham", "new-eltham"],
+    responseSpeedRating: 5,
+    performanceBucket: "strong",
+    winRateTracking: "ready",
+  },
+  {
+    id: "supplier-surrey-foundations-01",
+    name: "Surrey Foundations Partner",
+    assignee: "Surrey Foundations Desk",
+    preferredServices: [
+      "foundation-contractors",
+      "foundation-repair",
+      "underpinning",
+      "mini-piling-contractors",
+      "piling-contractors",
+    ],
+    preferredLeadTypes: ["commercial", "structural", "foundations", "piling"],
+    preferredProjectSizes: ["small", "medium", "large"],
+    preferredTerritories: ["guildford", "woking", "reigate", "dorking", "epsom", "weybridge", "esher", "leatherhead", "staines"],
+    responseSpeedRating: 4,
+    performanceBucket: "stable",
+    winRateTracking: "ready",
+  },
+  {
+    id: "supplier-residential-drainage-01",
+    name: "Residential Drainage Partner",
+    assignee: "Residential Routing Desk",
+    preferredServices: ["site-clearance-contractors", "muck-away-services", "groundworks-contractors", "advice"],
+    preferredLeadTypes: ["residential", "low_fit"],
+    preferredProjectSizes: ["small", "medium"],
+    preferredTerritories: [],
+    responseSpeedRating: 3,
+    performanceBucket: "developing",
+    winRateTracking: "baseline",
+  },
+];
 
 const LeadInputSchema = z.object({
   first_name: z.string().trim().min(1).max(50),
@@ -192,6 +290,114 @@ function normalizeProjectStage(value: string): string {
   return PROJECT_STAGE_OPTIONS.has(normalized) ? normalized : "";
 }
 
+function inferProjectSize(description: string): "small" | "medium" | "large" {
+  const value = description.toLowerCase();
+  if (/(multi|development|commercial|phase|block|plot|scheme|package)/.test(value)) return "large";
+  if (/(extension|basement|underpinning|retaining|piling|foundation)/.test(value)) return "medium";
+  return "small";
+}
+
+function classifyLead(serviceSlug: string, description: string, projectStage: string): {
+  leadClass: LeadClass;
+  leadScore: string;
+  classificationReason: string;
+} {
+  const input = `${serviceSlug} ${description}`.toLowerCase();
+  const commercialScore = getCommercialOpportunityScore(input);
+  const isCommercial = /commercial|development|contractor|package|structural/.test(input);
+  if (/basement|bulk-excavation/.test(input)) {
+    return { leadClass: "basement_excavation", leadScore: String(commercialScore), classificationReason: "Basement or bulk excavation pattern" };
+  }
+  if (/retaining-wall|retaining wall/.test(input)) {
+    return { leadClass: "retaining_walls", leadScore: String(commercialScore), classificationReason: "Retaining wall pattern" };
+  }
+  if (/piling|cfa|mini-piling/.test(input)) {
+    return { leadClass: "piling", leadScore: String(commercialScore), classificationReason: "Piling-related service pattern" };
+  }
+  if (/foundation|underpinning|settlement|structural/.test(input)) {
+    return { leadClass: "foundations", leadScore: String(commercialScore), classificationReason: "Foundation/underpinning structural pattern" };
+  }
+  if (/enabling/.test(input)) {
+    return { leadClass: "enabling_works", leadScore: String(commercialScore), classificationReason: "Enabling works pattern" };
+  }
+  if (isCommercial || projectStage === "ready") {
+    return { leadClass: "commercial", leadScore: String(commercialScore), classificationReason: "Commercial or ready-to-procure signal" };
+  }
+  if (projectStage === "exploring" || /quote|advice|budget only|just looking/.test(input)) {
+    return { leadClass: "low_fit", leadScore: String(Math.max(15, commercialScore - 25)), classificationReason: "Exploratory low-fit signal" };
+  }
+  return { leadClass: "residential", leadScore: String(Math.max(20, commercialScore - 10)), classificationReason: "Default residential fit" };
+}
+
+function resolveSupplierAssignment(input: {
+  serviceSlug: string;
+  locationSlug: string;
+  leadClass: LeadClass;
+  projectSize: "small" | "medium" | "large";
+  sourceQueryTheme: string;
+}): {
+  assignedTo: string;
+  assignmentMethod: string;
+  assignmentPriorityScore: string;
+  supplier: SupplierProfile | null;
+  supplierFitTier: "high" | "medium" | "low";
+  supplierFitReason: string;
+} {
+  let best: { supplier: SupplierProfile; score: number; reason: string } | null = null;
+  for (const supplier of SUPPLIER_PROFILES) {
+    let score = 0;
+    const reasons: string[] = [];
+    if (supplier.preferredServices.includes(input.serviceSlug)) {
+      score += 35;
+      reasons.push("service_match");
+    }
+    if (supplier.preferredLeadTypes.includes(input.leadClass)) {
+      score += 25;
+      reasons.push("lead_type_match");
+    }
+    if (supplier.preferredProjectSizes.includes(input.projectSize)) {
+      score += 15;
+      reasons.push("project_size_match");
+    }
+    if (
+      supplier.preferredTerritories.length === 0 ||
+      supplier.preferredTerritories.includes(input.locationSlug)
+    ) {
+      score += supplier.preferredTerritories.length === 0 ? 8 : 20;
+      reasons.push("territory_match");
+    }
+    score += supplier.responseSpeedRating * 3;
+    if (/foundations|piling|basement|retaining/.test(input.sourceQueryTheme) && supplier.performanceBucket === "strong") {
+      score += 8;
+      reasons.push("territory_reinforcement_bias");
+    }
+    if (!best || score > best.score) {
+      best = { supplier, score, reason: reasons.join("|") || "fallback" };
+    }
+  }
+
+  if (!best) {
+    return {
+      assignedTo: ASSIGNED_TO,
+      assignmentMethod: "fallback_default",
+      assignmentPriorityScore: "0",
+      supplier: null,
+      supplierFitTier: "low",
+      supplierFitReason: "No supplier profile candidates",
+    };
+  }
+
+  const fitTier: "high" | "medium" | "low" = best.score >= 85 ? "high" : best.score >= 60 ? "medium" : "low";
+  return {
+    assignedTo: best.supplier.assignee,
+    assignmentMethod: "deterministic_weighted_v1",
+    assignmentPriorityScore: String(best.score),
+    supplier: best.supplier,
+    supplierFitTier: fitTier,
+    supplierFitReason: best.reason,
+  };
+}
+
 function getRequestDomain(req: Request): string {
   try {
     const url = new URL(req.url);
@@ -211,6 +417,19 @@ function normalizeLeadData(input: LeadInput, req: Request): LeadRecord {
 
   const serviceSlug = derivedFromPath.service_slug || providedServiceSlug || slugifyText(normalizedService) || "";
   const locationSlug = derivedFromPath.location_slug || providedLocationSlug || slugifyText(normalizedTown) || "";
+  const projectStage = normalizeProjectStage(trimToString(input.project_stage));
+  const sourceQueryTheme = deriveSourceQueryTheme(`${serviceSlug} ${pagePath} ${trimToString(input.description)}`);
+  const { leadClass, leadScore, classificationReason } = classifyLead(serviceSlug, trimToString(input.description), projectStage);
+  const projectSize = inferProjectSize(trimToString(input.description));
+  const assignment = resolveSupplierAssignment({
+    serviceSlug,
+    locationSlug,
+    leadClass,
+    projectSize,
+    sourceQueryTheme,
+  });
+  const territoryCluster =
+    assignment.supplier?.preferredTerritories.includes(locationSlug) ? "supplier_primary_territory" : "general_territory";
 
   const lead: LeadRecord = {
     first_name: trimToString(input.first_name),
@@ -225,18 +444,40 @@ function normalizeLeadData(input: LeadInput, req: Request): LeadRecord {
     page_path: pagePath || "",
     service_slug: serviceSlug,
     location_slug: locationSlug,
-    project_stage: normalizeProjectStage(trimToString(input.project_stage)),
+    project_stage: projectStage,
     source_site: getRequestDomain(req),
     status: "new",
-    assigned_to: ASSIGNED_TO,
+    assigned_to: assignment.assignedTo,
     date_sent_to_contractor: "",
     response_received: "no",
-    lead_quality: "",
+    lead_quality: leadClass,
     estimated_value: "",
     won: "",
     quote_sent: "",
     cta_text: trimToString(input.cta_text),
     cta_seed: trimToString(input.cta_seed),
+    source_page_path: pagePath || "",
+    source_service_slug: serviceSlug,
+    source_location_slug: locationSlug,
+    source_vertical: VERTICAL,
+    source_query_theme: sourceQueryTheme,
+    lead_class: leadClass,
+    lead_score: leadScore,
+    classification_reason: classificationReason,
+    supplier_id: assignment.supplier?.id ?? "",
+    supplier_name: assignment.supplier?.name ?? "",
+    supplier_fit_tier: assignment.supplierFitTier,
+    supplier_fit_reason: assignment.supplierFitReason,
+    supplier_preferred_services: assignment.supplier?.preferredServices.join("|") ?? "",
+    supplier_preferred_lead_types: assignment.supplier?.preferredLeadTypes.join("|") ?? "",
+    supplier_preferred_project_sizes: assignment.supplier?.preferredProjectSizes.join("|") ?? "",
+    supplier_preferred_territories: assignment.supplier?.preferredTerritories.join("|") ?? "",
+    supplier_response_speed_rating: assignment.supplier ? String(assignment.supplier.responseSpeedRating) : "",
+    supplier_performance_bucket: assignment.supplier?.performanceBucket ?? "",
+    supplier_win_rate_tracking: assignment.supplier?.winRateTracking ?? "",
+    assignment_method: assignment.assignmentMethod,
+    assignment_priority_score: assignment.assignmentPriorityScore,
+    territory_cluster: territoryCluster,
   };
 
   if (process.env.NODE_ENV !== "production" && (!lead.service_slug || !lead.location_slug || lead.page_path === "/")) {

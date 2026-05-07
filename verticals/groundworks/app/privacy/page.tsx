@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { verticalConfig } from "@/config";
+import TrackableEmailLink from "@/components/ui/TrackableEmailLink";
 
 export const dynamic = "force-static";
 export const revalidate = false;
@@ -52,9 +53,9 @@ export default function PrivacyPage() {
           <h2 className="mb-4 font-display text-xl font-semibold">Contact</h2>
           <p className="mb-4 text-muted-foreground">
             For questions about this privacy policy or your personal data, please contact us at{" "}
-            <a href={`mailto:${email}`} className="text-primary hover:underline">
+            <TrackableEmailLink email={email} sourcePagePath="/privacy" sourceVertical={verticalConfig.verticalId} className="text-primary hover:underline">
               {email}
-            </a>
+            </TrackableEmailLink>
             . {siteName} is the data controller for the data collected through this website.
           </p>
         </section>

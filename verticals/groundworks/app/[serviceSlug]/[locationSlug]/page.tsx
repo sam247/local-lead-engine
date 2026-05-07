@@ -20,17 +20,55 @@ import {
   getGlobalTopicCanonicalPath,
   getTopicForRouteSlug,
   getTopicLocationStaticParams,
+  getLocationScalableTopicSlugs,
 } from "@/lib/topicLocationConfig";
 import { TopicLocationPage } from "@/app/components/TopicLocationPage";
+import { getCommercialOpportunityTier } from "@/lib/commercialOpportunity";
 
 export const dynamic = "force-static";
 export const revalidate = false;
 
+const STRATEGIC_MICRO_LOCATION_IDS = new Set([
+  "chislehurst",
+  "sidcup",
+  "bickley",
+  "mottingham",
+  "new-eltham",
+]);
+
+const STRATEGIC_MICRO_SERVICE_SLUGS = new Set([
+  "excavation-contractors",
+  "foundation-contractors",
+  "mini-piling-contractors",
+  "piling-contractors",
+  "enabling-works-contractors",
+]);
+
+const STRATEGIC_MICRO_TOPIC_SLUGS = new Set([
+  "bulk-excavation-services",
+  "piling-foundations",
+  "foundation-underpinning",
+  "retaining-wall-construction",
+  "groundworks-for-extensions",
+  "groundworks-for-developments",
+  "groundworks-and-enabling-works",
+]);
+
 export async function generateStaticParams() {
-  const serviceLocationParams = services.flatMap((s) =>
-    locations.map((l) => ({ serviceSlug: s.slug, locationSlug: l.id }))
-  );
-  const topicLocationParams = getTopicLocationStaticParams(locations);
+  const serviceLocationParams = locations.flatMap((location) => {
+    const isStrategicMicroLocation = STRATEGIC_MICRO_LOCATION_IDS.has(location.id);
+    const eligibleServices = isStrategicMicroLocation
+      ? services.filter((service) => STRATEGIC_MICRO_SERVICE_SLUGS.has(service.slug))
+      : services;
+    return eligibleServices.map((service) => ({
+      serviceSlug: service.slug,
+      locationSlug: location.id,
+    }));
+  });
+  const topicLocationParams = getTopicLocationStaticParams(locations).filter((param) => {
+    if (!STRATEGIC_MICRO_LOCATION_IDS.has(param.locationSlug)) return true;
+    return STRATEGIC_MICRO_TOPIC_SLUGS.has(param.serviceSlug);
+  });
   return [...serviceLocationParams, ...topicLocationParams];
 }
 
@@ -247,6 +285,26 @@ const RELATED_SERVICE_SLUGS_BY_SERVICE: Record<string, string[]> = {
   ],
 };
 
+const COMMERCIAL_TOPIC_SLUGS_BY_SERVICE: Record<string, string[]> = {
+  "groundworks-contractors": [
+    "groundworks-for-developments",
+    "groundworks-and-enabling-works",
+    "bulk-excavation-services",
+    "retaining-wall-construction",
+  ],
+  "foundation-contractors": [
+    "foundation-underpinning",
+    "piling-foundations",
+    "foundation-settlement",
+    "groundworks-for-extensions",
+  ],
+  "mini-piling-contractors": ["piling-foundations", "foundation-underpinning", "groundworks-for-extensions"],
+  "piling-contractors": ["piling-foundations", "foundation-underpinning", "groundworks-for-developments"],
+  "cfa-piling": ["piling-foundations", "groundworks-for-developments"],
+  "enabling-works-contractors": ["groundworks-and-enabling-works", "groundworks-for-developments", "bulk-excavation-services"],
+  "excavation-contractors": ["bulk-excavation-services", "groundworks-for-developments", "retaining-wall-construction"],
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { serviceSlug, locationSlug } = params;
 
@@ -454,8 +512,21 @@ export default async function LocationRoute({ params }: Props) {
     `We provide ${service.title} across ${location.name} and ${location.area}. Our team delivers piling, underpinning, foundation repair, concrete works and wider site preparation for commercial and residential projects, with free no-obligation quotes.`;
 
   const relatedTopicLinks = getRelevantTopicsForService(service.slug);
+  const allowedTopicSlugs = new Set(getLocationScalableTopicSlugs());
+  const commercialTopicLocationLinks = (COMMERCIAL_TOPIC_SLUGS_BY_SERVICE[service.slug] ?? [])
+    .filter((topicSlug) => allowedTopicSlugs.has(topicSlug))
+    .map((topicSlug) => ({
+      title: `${topicSlug
+        .split("-")
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ")} in ${location.name}`,
+      href: `/${topicSlug}/${location.id}`,
+    }));
+  const mergedRelatedTopicLinks = [...relatedTopicLinks, ...commercialTopicLocationLinks].filter(
+    (item, index, arr) => arr.findIndex((x) => x.href === item.href) === index
+  );
   const relatedProblemPageLinks = (() => {
-    const links = relatedTopicLinks
+    const links = mergedRelatedTopicLinks
       .filter((l) => l.href.startsWith("/foundation-problems/"))
       .slice(0, 2)
       .map((l) => ({ href: l.href, title: l.title }));
@@ -489,6 +560,28 @@ export default async function LocationRoute({ params }: Props) {
   );
 
   const sidebarBullets = trustPoints.map((point) => trimSidebarBullet(point, 8)).slice(0, 5);
+  const isKentSurreyPriorityArea =
+    /kent|surrey|south london|south east london/i.test(location.area) ||
+    ["chislehurst", "sidcup", "bickley", "mottingham", "new-eltham"].includes(location.id);
+  const opportunityTier = getCommercialOpportunityTier(`${service.slug} ${location.area} ${location.name}`);
+  const reinforcedIntroParagraph =
+    isKentSurreyPriorityArea && (opportunityTier === "very_high" || opportunityTier === "high")
+      ? `${introParagraph} We prioritise structural and commercial groundworks in ${location.name}, including basement excavation, foundation and piling packages, retaining wall scopes, and enabling works for extension or development-led projects.`
+      : introParagraph;
+
+  if (
+    isKentSurreyPriorityArea &&
+    (service.slug === "excavation-contractors" ||
+      service.slug === "foundation-contractors" ||
+      service.slug === "mini-piling-contractors" ||
+      service.slug === "piling-contractors" ||
+      service.slug === "enabling-works-contractors")
+  ) {
+    localFaqs.unshift({
+      question: `Can you quote structural groundworks packages in ${location.name} for extensions or development sites?`,
+      answer: `Yes. We can scope excavation, foundations, piling, retaining structures, and enabling works as a coordinated contractor package in ${location.name} to support quote-ready commercial decisions.`,
+    });
+  }
 
   return (
     <>
@@ -508,7 +601,7 @@ export default async function LocationRoute({ params }: Props) {
         trustSectionTitle={`Trusted Groundworks Contractors in ${location.name}`}
         trustPoints={trustPoints}
         diagnosisGuidePath="/guides/groundworks-process"
-        introParagraph={introParagraph}
+        introParagraph={reinforcedIntroParagraph}
         extraServiceLocationLinks={extraServiceLocationLinks}
         priorityLocalLinks={priorityLocalLinks}
         supplementalSections={strikingDistanceTarget?.supplementalSections}
@@ -516,7 +609,7 @@ export default async function LocationRoute({ params }: Props) {
         neighbourLocationsForContext={neighbourLocationsForContext}
         locationContextParagraph={locationContextParagraph}
         nearbyProjects={nearbyProjectsList.length > 0 ? nearbyProjectsList : undefined}
-        relatedTopicLinks={relatedTopicLinks.length > 0 ? relatedTopicLinks : undefined}
+        relatedTopicLinks={mergedRelatedTopicLinks.length > 0 ? mergedRelatedTopicLinks : undefined}
         serviceHubHref={(slug) => `/services/${slug}`}
         relatedServiceHubLinks={relatedServiceHubLinks}
         relatedProblemPageLinks={relatedProblemPageLinks}

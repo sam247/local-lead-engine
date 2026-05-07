@@ -2,6 +2,7 @@ import Link from "next/link";
 import { services, locations, companyInfo } from "@/lib/data";
 import { getHeroImage } from "@/lib/images";
 import { Button } from "@/components/ui/button";
+import TrackableEmailLink from "@/components/ui/TrackableEmailLink";
 import { CheckCircle, Phone, Mail, ArrowRight } from "lucide-react";
 import InspectionCTA from "@/components/sections/InspectionCTA";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
@@ -198,9 +199,16 @@ export default function LocationPageContent({ service, location, serviceSlug, lo
                 >
                   <Phone className="h-4 w-4" /> Call Now
                 </TrackablePhoneLink>
-                  <a href={`mailto:${companyInfo.email}`} className="flex items-center gap-2 text-primary hover:underline">
+                  <TrackableEmailLink
+                    email={companyInfo.email}
+                    sourcePagePath={`/${serviceSlug}/${locationSlug}`}
+                    sourceServiceSlug={serviceSlug}
+                    sourceLocationSlug={locationSlug}
+                    sourceVertical={verticalConfig.verticalId}
+                    className="flex items-center gap-2 text-primary hover:underline"
+                  >
                     <Mail className="h-4 w-4" /> {companyInfo.email}
-                  </a>
+                  </TrackableEmailLink>
                 </div>
                 <Button asChild className="mt-4 w-full" variant="highlight">
                   <Link href="/contact">Get a Free Quote</Link>

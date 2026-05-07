@@ -4,6 +4,7 @@ import {
   locations,
   type LocationPageSupplementalSection,
 } from "engine";
+import { getCommercialOpportunityScore } from "@/lib/commercialOpportunity";
 
 interface L4StrikingDistanceTarget {
   serviceSlug: string;
@@ -106,10 +107,109 @@ const TARGETS: Record<string, L4StrikingDistanceTarget> = {
       },
     ],
   },
+  "cfa-piling/tunbridge-wells": {
+    serviceSlug: "cfa-piling",
+    locationSlug: "tunbridge-wells",
+    serviceTitle: "CFA Piling",
+    locationName: "Tunbridge Wells",
+    metaTitleOverride: "CFA Piling Tunbridge Wells - Structural Foundation Packages & Contractor Quotes",
+    introOverride:
+      "CFA piling in Tunbridge Wells is commonly procured where projects need structurally reliable foundations with tighter site access control and cleaner programme sequencing than standard excavation-only solutions.",
+    supplementalSections: [
+      {
+        heading: "Where CFA piling is commercially preferred",
+        paragraphs: [
+          "Developers and high-value extension teams in Tunbridge Wells often choose CFA piling where ground variability or neighbour sensitivity increases structural risk. The decision is usually made to protect foundation certainty, not just to satisfy minimum compliance.",
+          "For commercial programme performance, piling scope should be aligned early with excavation, pile cap sequencing, and follow-on structural trades to avoid idle time and cost drift.",
+        ],
+        bullets: [
+          "Use CFA piling where structural certainty outweighs shallow-foundation risk",
+          "Align piling with excavation and foundation package sequencing",
+          "Scope as a contractor package, not an isolated line item",
+        ],
+      },
+    ],
+  },
+  "cfa-piling/maidstone": {
+    serviceSlug: "cfa-piling",
+    locationSlug: "maidstone",
+    serviceTitle: "CFA Piling",
+    locationName: "Maidstone",
+    metaTitleOverride: "CFA Piling Maidstone - Contractor-Led Structural Foundation Delivery",
+    introOverride:
+      "CFA piling in Maidstone is often specified on structurally sensitive sites where project teams need predictable foundation delivery, reduced disruption, and clear handover into the wider groundworks package.",
+    supplementalSections: [
+      {
+        heading: "Commercial scope and risk controls",
+        paragraphs: [
+          "On Maidstone projects, CFA piling usually carries the greatest value when framed as part of a broader structural package with excavation and foundation interfaces already mapped.",
+          "Programme reliability improves when access assumptions, rig logistics, and concrete supply are resolved before mobilisation.",
+        ],
+      },
+    ],
+  },
+  "mini-piling-contractors/ashford": {
+    serviceSlug: "mini-piling-contractors",
+    locationSlug: "ashford",
+    serviceTitle: "Mini Piling Contractors",
+    locationName: "Ashford",
+    metaTitleOverride: "Mini Piling Contractors Ashford - Structural Extensions & Basement Foundation Support",
+    introOverride:
+      "Mini piling contractors in Ashford are typically engaged where extension, remodelling, or basement-adjacent work needs structural support on constrained sites with limited access and high programme sensitivity.",
+    supplementalSections: [
+      {
+        heading: "Best-fit scenarios for Ashford projects",
+        paragraphs: [
+          "Mini piling is often preferred where extension loads, restricted access, or uncertain strata make conventional shallow foundations commercially risky.",
+          "Where needed, mini piling can be coordinated with underpinning and excavation to deliver a complete structural package rather than fragmented procurement.",
+        ],
+      },
+    ],
+  },
+  "piling-contractors/tonbridge": {
+    serviceSlug: "piling-contractors",
+    locationSlug: "tonbridge",
+    serviceTitle: "Piling Contractors",
+    locationName: "Tonbridge",
+    metaTitleOverride: "Piling Contractors Tonbridge - Commercial & Structural Foundation Packages",
+    introOverride:
+      "Piling contractors in Tonbridge are often selected for structurally complex builds where programme certainty depends on reliable deep foundation delivery and integrated package sequencing.",
+    supplementalSections: [
+      {
+        heading: "How to scope piling commercially",
+        paragraphs: [
+          "For Tonbridge developments and structural remodelling jobs, piling scope should be defined with excavation and foundation interfaces from the outset.",
+          "A package-first approach reduces handover friction and protects budget against mid-programme ground surprises.",
+        ],
+      },
+    ],
+  },
+  "bulk-earthworks/reigate": {
+    serviceSlug: "bulk-earthworks",
+    locationSlug: "reigate",
+    serviceTitle: "Bulk Earthworks",
+    locationName: "Reigate",
+    metaTitleOverride: "Bulk Earthworks Reigate - Commercial Groundworks & Structural Site Preparation",
+    introOverride:
+      "Bulk earthworks in Reigate are most valuable when scoped as part of commercial structural groundworks, especially where enabling works, retaining elements, and foundation interfaces need coordinated delivery.",
+    supplementalSections: [
+      {
+        heading: "From earthworks to structural readiness",
+        paragraphs: [
+          "Teams in Reigate commonly need earthworks tied directly to foundation and retaining wall requirements rather than treated as isolated volume movement.",
+          "Groundworks value rises when cut/fill, access, and downstream package dependencies are managed under one delivery sequence.",
+        ],
+      },
+    ],
+  },
 };
 
 function getTargetEntries() {
-  return Object.values(TARGETS);
+  return Object.values(TARGETS).sort((a, b) => {
+    const aScore = getCommercialOpportunityScore(`${a.serviceSlug} ${a.metaTitleOverride} ${a.introOverride}`);
+    const bScore = getCommercialOpportunityScore(`${b.serviceSlug} ${b.metaTitleOverride} ${b.introOverride}`);
+    return bScore - aScore;
+  });
 }
 
 export function getL4StrikingDistanceTarget(serviceSlug: string, locationSlug: string) {
