@@ -10,6 +10,7 @@ export const revalidate = false;
 
 const serviceSlug = "groundworks-contractors";
 const pagePath = "/groundworks-contractors-near-me";
+const WAVE1_MICRO_LOCATION_IDS = new Set(["chislehurst", "sidcup", "bickley", "mottingham", "new-eltham"]);
 
 export async function generateMetadata(): Promise<Metadata> {
   const service = services.find((s) => s.slug === serviceSlug);
@@ -28,10 +29,16 @@ export default function NearMeRoute() {
   const serviceImage = getHeroImage({ serviceSlug: service.slug });
   const nearMeIntro =
     "We cover piling (including CFA), underpinning, foundation repair and concrete works nationwide — pick your area below for local coverage and contact options.";
+  const orderedLocations = [...locations].sort((a, b) => {
+    const aWave1 = WAVE1_MICRO_LOCATION_IDS.has(a.id) ? 1 : 0;
+    const bWave1 = WAVE1_MICRO_LOCATION_IDS.has(b.id) ? 1 : 0;
+    if (aWave1 !== bWave1) return aWave1 - bWave1;
+    return a.name.localeCompare(b.name);
+  });
   return (
     <NearMePage
       service={service}
-      locations={locations}
+      locations={orderedLocations}
       companyInfo={verticalConfig.companyInfo}
       serviceImage={serviceImage}
       otherServices={otherServices}

@@ -6,6 +6,7 @@ export const dynamic = "force-static";
 export const revalidate = false;
 
 const PRIMARY_SERVICE_SLUG = "groundworks-contractors";
+const WAVE1_MICRO_LOCATION_IDS = new Set(["chislehurst", "sidcup", "bickley", "mottingham", "new-eltham"]);
 
 export const metadata: Metadata = {
   title: "Service Areas | Mainline Groundworks",
@@ -15,10 +16,16 @@ export const metadata: Metadata = {
 };
 
 export default function ServiceAreasPage() {
+  const orderedLocations = [...locations].sort((a, b) => {
+    const aWave1 = WAVE1_MICRO_LOCATION_IDS.has(a.id) ? 1 : 0;
+    const bWave1 = WAVE1_MICRO_LOCATION_IDS.has(b.id) ? 1 : 0;
+    if (aWave1 !== bWave1) return aWave1 - bWave1;
+    return a.name.localeCompare(b.name);
+  });
   return (
     <ServiceAreasHub
       primaryServiceSlug={PRIMARY_SERVICE_SLUG}
-      locations={locations}
+      locations={orderedLocations}
       heroTitle="Groundworks & Civil Engineering Across the UK"
       heroSubtitle="Piling, excavation, foundations, site clearance and enabling works in major towns and cities."
       introTitle="Coverage by region"

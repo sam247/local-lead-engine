@@ -66,7 +66,7 @@ const UK_REGIONS: readonly RegionDef[] = [
   {
     regionName: "South East",
     counties: [
-      { countyName: "Kent", countySlug: "kent", locationIds: ["ashford", "canterbury", "dartford", "dover", "folkestone", "gravesend", "maidstone", "rochester", "sevenoaks", "tonbridge", "tunbridge-wells"] },
+      { countyName: "Kent", countySlug: "kent", locationIds: ["ashford", "bickley", "canterbury", "chislehurst", "dartford", "dover", "folkestone", "gravesend", "maidstone", "mottingham", "new-eltham", "rochester", "sevenoaks", "sidcup", "tonbridge", "tunbridge-wells"] },
       { countyName: "Surrey", countySlug: "surrey", locationIds: ["epsom", "esher", "guildford", "leatherhead", "reigate", "staines", "weybridge", "woking"] },
       { countyName: "East Sussex", countySlug: "east-sussex", locationIds: ["brighton", "eastbourne", "hastings"] },
       { countyName: "West Sussex", countySlug: "west-sussex", locationIds: ["chichester", "crawley", "horsham", "worthing"] },

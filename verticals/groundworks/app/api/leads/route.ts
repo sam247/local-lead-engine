@@ -4,6 +4,7 @@ import { Resend } from "resend";
 import { google } from "googleapis";
 import { leadEmailField, leadPhoneField, leadPostcodeField } from "engine";
 import { deriveSourceQueryTheme, getCommercialOpportunityScore } from "@/lib/commercialOpportunity";
+import { serviceCommercialMetadataBySlug } from "@/lib/data";
 
 const SERVICE_OPTIONS = [
   "Groundworks Contractors",
@@ -14,6 +15,10 @@ const SERVICE_OPTIONS = [
   "Foundation Contractors",
   "Concrete Foundations",
   "Enabling Works Contractors",
+  "Commercial Groundworks",
+  "Earthworks Contractors",
+  "Roads and Sewers Contractors",
+  "Attenuation Systems Installation",
   "Advice",
 ] as const;
 const EXPECTED_SHEET_HEADERS = [
@@ -90,6 +95,8 @@ type SupplierProfile = {
   preferredLeadTypes: LeadClass[];
   preferredProjectSizes: Array<"small" | "medium" | "large">;
   preferredTerritories: string[];
+  preferredCounties: Array<"kent" | "surrey">;
+  minimumPackageTier?: "premium" | "high" | "medium";
   responseSpeedRating: number;
   performanceBucket: "strong" | "stable" | "developing";
   winRateTracking: string;
@@ -110,6 +117,8 @@ const SUPPLIER_PROFILES: SupplierProfile[] = [
     preferredLeadTypes: ["commercial", "structural", "foundations", "piling", "basement_excavation", "enabling_works"],
     preferredProjectSizes: ["medium", "large"],
     preferredTerritories: ["ashford", "maidstone", "sevenoaks", "tunbridge-wells", "tonbridge", "dartford", "rochester", "gravesend", "canterbury", "dover", "folkestone", "sidcup", "chislehurst", "bickley", "mottingham", "new-eltham"],
+    preferredCounties: ["kent"],
+    minimumPackageTier: "high",
     responseSpeedRating: 5,
     performanceBucket: "strong",
     winRateTracking: "ready",
@@ -128,6 +137,8 @@ const SUPPLIER_PROFILES: SupplierProfile[] = [
     preferredLeadTypes: ["commercial", "structural", "foundations", "piling"],
     preferredProjectSizes: ["small", "medium", "large"],
     preferredTerritories: ["guildford", "woking", "reigate", "dorking", "epsom", "weybridge", "esher", "leatherhead", "staines"],
+    preferredCounties: ["surrey"],
+    minimumPackageTier: "medium",
     responseSpeedRating: 4,
     performanceBucket: "stable",
     winRateTracking: "ready",
@@ -140,6 +151,7 @@ const SUPPLIER_PROFILES: SupplierProfile[] = [
     preferredLeadTypes: ["residential", "low_fit"],
     preferredProjectSizes: ["small", "medium"],
     preferredTerritories: [],
+    preferredCounties: [],
     responseSpeedRating: 3,
     performanceBucket: "developing",
     winRateTracking: "baseline",
@@ -290,6 +302,50 @@ function normalizeProjectStage(value: string): string {
   return PROJECT_STAGE_OPTIONS.has(normalized) ? normalized : "";
 }
 
+const KENT_LOCATION_SLUGS = new Set([
+  "ashford",
+  "canterbury",
+  "dartford",
+  "dover",
+  "folkestone",
+  "gravesend",
+  "maidstone",
+  "rochester",
+  "sevenoaks",
+  "tonbridge",
+  "tunbridge-wells",
+  "chislehurst",
+  "sidcup",
+  "bickley",
+  "mottingham",
+  "new-eltham",
+]);
+
+const SURREY_LOCATION_SLUGS = new Set([
+  "epsom",
+  "esher",
+  "guildford",
+  "leatherhead",
+  "reigate",
+  "staines",
+  "weybridge",
+  "woking",
+  "dorking",
+]);
+
+function getCountyForLocationSlug(locationSlug: string): "kent" | "surrey" | "other" {
+  if (KENT_LOCATION_SLUGS.has(locationSlug)) return "kent";
+  if (SURREY_LOCATION_SLUGS.has(locationSlug)) return "surrey";
+  return "other";
+}
+
+function packageTierToScore(value?: "premium" | "high" | "medium" | "lower"): number {
+  if (value === "premium") return 4;
+  if (value === "high") return 3;
+  if (value === "medium") return 2;
+  return 1;
+}
+
 function inferProjectSize(description: string): "small" | "medium" | "large" {
   const value = description.toLowerCase();
   if (/(multi|development|commercial|phase|block|plot|scheme|package)/.test(value)) return "large";
@@ -335,6 +391,7 @@ function resolveSupplierAssignment(input: {
   leadClass: LeadClass;
   projectSize: "small" | "medium" | "large";
   sourceQueryTheme: string;
+  servicePackageTier?: "premium" | "high" | "medium" | "lower";
 }): {
   assignedTo: string;
   assignmentMethod: string;
@@ -365,6 +422,22 @@ function resolveSupplierAssignment(input: {
     ) {
       score += supplier.preferredTerritories.length === 0 ? 8 : 20;
       reasons.push("territory_match");
+    }
+    const leadCounty = getCountyForLocationSlug(input.locationSlug);
+    if (supplier.preferredCounties.includes(leadCounty as "kent" | "surrey")) {
+      score += 10;
+      reasons.push(`county_bias_${leadCounty}`);
+    }
+    if (supplier.minimumPackageTier && input.servicePackageTier) {
+      const supplierTierScore = packageTierToScore(supplier.minimumPackageTier);
+      const leadTierScore = packageTierToScore(input.servicePackageTier);
+      if (leadTierScore >= supplierTierScore) {
+        score += 10;
+        reasons.push("package_tier_match");
+      } else {
+        score += 2;
+        reasons.push("package_tier_below_preference");
+      }
     }
     score += supplier.responseSpeedRating * 3;
     if (/foundations|piling|basement|retaining/.test(input.sourceQueryTheme) && supplier.performanceBucket === "strong") {
@@ -427,6 +500,7 @@ function normalizeLeadData(input: LeadInput, req: Request): LeadRecord {
     leadClass,
     projectSize,
     sourceQueryTheme,
+    servicePackageTier: serviceCommercialMetadataBySlug[serviceSlug]?.packageValueTier,
   });
   const territoryCluster =
     assignment.supplier?.preferredTerritories.includes(locationSlug) ? "supplier_primary_territory" : "general_territory";

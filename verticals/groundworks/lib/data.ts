@@ -1,4 +1,4 @@
-import type { HubData, InfoPageData } from "engine";
+import type { HubData, InfoPageData, Service } from "engine";
 import { guidesPages } from "@/data/guides";
 import { foundationProblems } from "@/data/foundationProblems";
 import { groundConditionsPages } from "@/data/groundConditionsPages";
@@ -23,8 +23,25 @@ export const companyInfo = {
   },
 };
 
+type GroundworksCommercialIntentLevel = "very_high" | "high" | "medium" | "lower";
+type GroundworksPreferredLeadType = "commercial" | "structural" | "residential" | "infrastructure";
+type GroundworksPackageValueTier = "premium" | "high" | "medium" | "lower";
+type GroundworksSupplierFitTag =
+  | "kent_structural"
+  | "surrey_foundations"
+  | "commercial_groundworks"
+  | "infrastructure_delivery"
+  | "residential_general";
+
+export type GroundworksService = Service & {
+  commercialIntentLevel?: GroundworksCommercialIntentLevel;
+  preferredLeadType?: GroundworksPreferredLeadType;
+  packageValueTier?: GroundworksPackageValueTier;
+  supplierFitTags?: GroundworksSupplierFitTag[];
+};
+
 // Services (order: high-intent / core first for footer and list slices)
-export const services = [
+export const services: GroundworksService[] = [
   {
     id: "groundworks-contractors",
     slug: "groundworks-contractors",
@@ -35,6 +52,74 @@ export const services = [
     benefits: ["Single point of contact for all groundworks", "Programme-driven delivery", "Fully insured and accredited", "Experienced teams and plant", "Quality assured work"],
     process: ["Site assessment and design coordination", "Setting out and excavation", "Piling and foundations as required", "Utilities and services", "Reinstatement and handover"],
     icon: "Shovel",
+    commercialIntentLevel: "high",
+    preferredLeadType: "commercial",
+    packageValueTier: "high",
+    supplierFitTags: ["kent_structural", "commercial_groundworks"],
+  },
+  {
+    id: "commercial-groundworks",
+    slug: "commercial-groundworks",
+    title: "Commercial Groundworks",
+    titleSingular: "Commercial Groundworks Contractor",
+    shortDescription: "Commercial groundworks packages for development, logistics, and mixed-use schemes.",
+    description:
+      "We deliver commercial groundworks packages for development-led projects, industrial estates, logistics yards, and mixed-use sites. Scopes include enabling works coordination, excavation, structural foundations, drainage interfaces, and handover planning around programme milestones.",
+    benefits: ["Single-package procurement", "Commercial programme coordination", "Structural and enabling scope alignment", "Site-logistics aware delivery"],
+    process: ["Commercial scope review", "Programme and sequencing alignment", "Package mobilisation and delivery", "Quality control and handover"],
+    icon: "Building2",
+    commercialIntentLevel: "very_high",
+    preferredLeadType: "commercial",
+    packageValueTier: "premium",
+    supplierFitTags: ["kent_structural", "commercial_groundworks", "infrastructure_delivery"],
+  },
+  {
+    id: "earthworks",
+    slug: "earthworks",
+    title: "Earthworks Contractors",
+    titleSingular: "Earthworks Contractor",
+    shortDescription: "Cut, fill, regrading and formation works for commercial and infrastructure sites.",
+    description:
+      "Our earthworks teams deliver cut and fill operations, site regrading, and engineered formation preparation for commercial and infrastructure projects. We coordinate bulk movement, levels strategy, and sequencing so later structural packages can progress reliably.",
+    benefits: ["Earthworks planning around levels strategy", "Bulk cut/fill coordination", "Supports infrastructure and development programmes", "Formation readiness for structural follow-on works"],
+    process: ["Levels and volume appraisal", "Earthworks sequencing plan", "Cut/fill execution and compaction", "Formation verification"],
+    icon: "Mountain",
+    commercialIntentLevel: "high",
+    preferredLeadType: "infrastructure",
+    packageValueTier: "high",
+    supplierFitTags: ["kent_structural", "commercial_groundworks", "infrastructure_delivery"],
+  },
+  {
+    id: "roads-and-sewers",
+    slug: "roads-and-sewers",
+    title: "Roads and Sewers Contractors",
+    titleSingular: "Roads and Sewers Contractor",
+    shortDescription: "Adoptable roads and sewers groundworks for development infrastructure.",
+    description:
+      "We deliver roads and sewers packages for commercial and residential developments, including formation, drainage runs, and coordinated handover preparation. Work is sequenced to support broader infrastructure delivery and programme certainty.",
+    benefits: ["Road and sewer package coordination", "Infrastructure sequencing support", "Development-phase delivery control", "Clear handover readiness"],
+    process: ["Infrastructure package review", "Road and sewer sequencing plan", "Drainage and formation delivery", "Handover and records"],
+    icon: "Layers",
+    commercialIntentLevel: "very_high",
+    preferredLeadType: "infrastructure",
+    packageValueTier: "premium",
+    supplierFitTags: ["kent_structural", "commercial_groundworks", "infrastructure_delivery"],
+  },
+  {
+    id: "attenuation-systems",
+    slug: "attenuation-systems",
+    title: "Attenuation Systems Installation",
+    titleSingular: "Attenuation Systems Contractor",
+    shortDescription: "Surface water attenuation systems for commercial and infrastructure developments.",
+    description:
+      "We install attenuation systems for commercial and infrastructure projects where surface water control needs to be integrated into groundworks delivery. Packages include excavation, crate or tank install coordination, and connection readiness for downstream drainage interfaces.",
+    benefits: ["Integrated attenuation package delivery", "Supports roads and sewers programmes", "Commercial drainage interface coordination", "Buildability-led sequencing"],
+    process: ["Attenuation design coordination", "Excavation and install prep", "System install and interface works", "Testing and handover support"],
+    icon: "Droplets",
+    commercialIntentLevel: "high",
+    preferredLeadType: "infrastructure",
+    packageValueTier: "high",
+    supplierFitTags: ["kent_structural", "commercial_groundworks", "infrastructure_delivery"],
   },
   {
     id: "underpinning",
@@ -57,6 +142,10 @@ export const services = [
       "Structural stabilisation",
     ],
     icon: "Anchor",
+    commercialIntentLevel: "very_high",
+    preferredLeadType: "structural",
+    packageValueTier: "high",
+    supplierFitTags: ["kent_structural", "surrey_foundations"],
   },
   {
     id: "piling-contractors",
@@ -69,6 +158,10 @@ export const services = [
     benefits: ["Handles complex soil conditions", "Suitable for restricted access", "Tailored foundation solutions"],
     process: ["Site assessment", "Method selection", "Installation", "Structural integration"],
     icon: "Layers",
+    commercialIntentLevel: "very_high",
+    preferredLeadType: "structural",
+    packageValueTier: "high",
+    supplierFitTags: ["kent_structural", "surrey_foundations"],
   },
   {
     id: "cfa-piling",
@@ -92,6 +185,10 @@ export const services = [
     benefits: ["Low headroom capability", "Minimal spoil", "Quick to install", "Suitable for domestic and commercial", "Reduced disruption"],
     process: ["Site survey and access check", "Pile design and layout", "Installation with mini piling rig", "Pile caps and ground beams", "Testing and records"],
     icon: "CircleDot",
+    commercialIntentLevel: "very_high",
+    preferredLeadType: "structural",
+    packageValueTier: "high",
+    supplierFitTags: ["kent_structural", "surrey_foundations"],
   },
   {
     id: "foundation-contractors",
@@ -103,6 +200,10 @@ export const services = [
     benefits: ["Design or design-and-build", "All foundation types", "Engineered solutions", "Programme certainty", "Quality and compliance"],
     process: ["Ground review and design", "Setting out and excavation", "Reinforcement and concrete", "Curing and protection", "Handover and as-built"],
     icon: "Building2",
+    commercialIntentLevel: "very_high",
+    preferredLeadType: "structural",
+    packageValueTier: "premium",
+    supplierFitTags: ["kent_structural", "surrey_foundations", "commercial_groundworks"],
   },
   {
     id: "foundation-repair",
@@ -270,6 +371,10 @@ export const services = [
     benefits: ["Programme-led excavation", "Support and temporary works", "Spoil management", "Quality formation levels", "Safe working practices"],
     process: ["Setting out and levels", "Excavation to design", "Support and edge protection", "Formation preparation", "Backfill and compaction"],
     icon: "Mountain",
+    commercialIntentLevel: "high",
+    preferredLeadType: "commercial",
+    packageValueTier: "high",
+    supplierFitTags: ["kent_structural", "commercial_groundworks"],
   },
   {
     id: "site-clearance-contractors",
@@ -339,8 +444,30 @@ export const services = [
     benefits: ["Site access and logistics", "Temporary drainage and services", "Fencing and security", "Early programme certainty", "Main contractor ready"],
     process: ["Site logistics plan", "Access and hardstanding", "Temporary drainage", "Fencing and hoardings", "Handover to main works"],
     icon: "HardHat",
+    commercialIntentLevel: "high",
+    preferredLeadType: "commercial",
+    packageValueTier: "high",
+    supplierFitTags: ["kent_structural", "commercial_groundworks", "infrastructure_delivery"],
   },
 ];
+
+export const serviceCommercialMetadataBySlug: Record<
+  string,
+  Pick<
+    GroundworksService,
+    "commercialIntentLevel" | "preferredLeadType" | "packageValueTier" | "supplierFitTags"
+  >
+> = Object.fromEntries(
+  services.map((service) => [
+    service.slug,
+    {
+      commercialIntentLevel: service.commercialIntentLevel,
+      preferredLeadType: service.preferredLeadType,
+      packageValueTier: service.packageValueTier,
+      supplierFitTags: service.supplierFitTags,
+    },
+  ])
+);
 
 // Locations: single source of truth in engine; do not redefine in verticals.
 import { locations } from "../../../engine/data/locations";
@@ -450,6 +577,10 @@ export const getHubData = (category: string): HubData | undefined => {
 const GROUNDWORKS_SERVICE_TO_TOPIC_CATEGORIES: Record<string, string[]> = {
   "foundation-contractors": ["foundation-problems", "ground-conditions", "groundworks-costs"],
   "groundworks-contractors": ["groundworks-costs", "site-preparation", "guides"],
+  "commercial-groundworks": ["site-preparation", "groundworks-costs", "construction-drainage"],
+  earthworks: ["site-preparation", "groundworks-costs", "ground-conditions"],
+  "roads-and-sewers": ["construction-drainage", "site-preparation", "groundworks-costs"],
+  "attenuation-systems": ["construction-drainage", "groundworks-costs", "site-preparation"],
   "piling-contractors": ["ground-conditions", "groundworks-costs", "guides"],
   "cfa-piling": ["ground-conditions", "groundworks-costs", "guides"],
   "mini-piling-contractors": ["ground-conditions", "groundworks-costs", "guides"],
@@ -545,6 +676,10 @@ function buildRelatedGuideLinksByService(): Record<string, { slug: string; path:
   const map: Record<string, { slug: string; path: string; title: string }[]> = {};
   const serviceToGuides: Record<string, string[]> = {
     "groundworks-contractors": ["groundworks-process", "construction-site-preparation", "what-are-enabling-works"],
+    "commercial-groundworks": ["what-are-enabling-works", "groundworks-process", "construction-site-preparation"],
+    earthworks: ["groundworks-process", "construction-site-preparation", "muck-away-and-disposal"],
+    "roads-and-sewers": ["construction-site-preparation", "what-are-enabling-works", "groundworks-process"],
+    "attenuation-systems": ["construction-site-preparation", "groundworks-process", "what-are-enabling-works"],
     "piling-contractors": ["piling-cost", "types-of-piling", "when-is-piling-required"],
     "cfa-piling": ["types-of-piling", "piling-cost", "when-is-piling-required"],
     "mini-piling-contractors": ["mini-piling-cost", "types-of-piling", "when-is-piling-required"],
@@ -589,6 +724,22 @@ export const relatedCostGuideLinksByService: Record<string, { slug: string; path
   "groundworks-contractors": [
     { slug: "groundworks-cost-overview", path: "/groundworks-costs/groundworks-cost-overview", title: "Groundworks cost overview" },
     { slug: "budgeting-for-groundworks", path: "/groundworks-costs/budgeting-for-groundworks", title: "Budgeting for groundworks" },
+  ],
+  "commercial-groundworks": [
+    { slug: "groundworks-cost-overview", path: "/groundworks-costs/groundworks-cost-overview", title: "Groundworks cost overview" },
+    { slug: "budgeting-for-groundworks", path: "/groundworks-costs/budgeting-for-groundworks", title: "Budgeting for groundworks" },
+  ],
+  earthworks: [
+    { slug: "excavation-cost-per-cubic-metre", path: "/groundworks-costs/excavation-cost-per-cubic-metre", title: "Excavation cost per cubic metre" },
+    { slug: "groundworks-cost-overview", path: "/groundworks-costs/groundworks-cost-overview", title: "Groundworks cost overview" },
+  ],
+  "roads-and-sewers": [
+    { slug: "groundworks-cost-overview", path: "/groundworks-costs/groundworks-cost-overview", title: "Groundworks cost overview" },
+    { slug: "budgeting-for-groundworks", path: "/groundworks-costs/budgeting-for-groundworks", title: "Budgeting for groundworks" },
+  ],
+  "attenuation-systems": [
+    { slug: "groundworks-cost-overview", path: "/groundworks-costs/groundworks-cost-overview", title: "Groundworks cost overview" },
+    { slug: "groundworks-contingency-budget", path: "/groundworks-costs/groundworks-contingency-budget", title: "Groundworks contingency budget" },
   ],
   "foundation-contractors": [
     { slug: "foundation-cost-per-metre", path: "/groundworks-costs/foundation-cost-per-metre", title: "Foundation cost per metre" },
@@ -682,6 +833,34 @@ export const serviceFaqsBySlug: Record<string, { question: string; answer: strin
       question: "What is included in a groundworks package?",
       answer:
         "A full groundworks package typically includes site clearance, excavation, piling or foundations, utility and service runs, and enabling works such as access and temporary site services. We tailor the scope to your project.",
+    },
+  ],
+  "commercial-groundworks": [
+    {
+      question: "Can you deliver commercial groundworks as a single package?",
+      answer:
+        "Yes. We can deliver commercial groundworks as a coordinated package including enabling works, excavation, foundations and drainage interfaces with clear programme sequencing.",
+    },
+  ],
+  earthworks: [
+    {
+      question: "What is included in an earthworks package?",
+      answer:
+        "Earthworks typically includes cut and fill operations, site regrading, formation preparation, and compaction to the required levels for downstream construction.",
+    },
+  ],
+  "roads-and-sewers": [
+    {
+      question: "Do you take on roads and sewers packages for developments?",
+      answer:
+        "Yes. We deliver roads and sewers packages for development projects, coordinating drainage runs, formation works, and handover requirements.",
+    },
+  ],
+  "attenuation-systems": [
+    {
+      question: "Do you install attenuation systems as part of wider groundworks?",
+      answer:
+        "Yes. We install attenuation systems alongside excavation and enabling works so surface water control is integrated into the wider groundworks programme.",
     },
   ],
   "piling-contractors": [

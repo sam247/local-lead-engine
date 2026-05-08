@@ -37,6 +37,10 @@ const STRATEGIC_MICRO_LOCATION_IDS = new Set([
 ]);
 
 const STRATEGIC_MICRO_SERVICE_SLUGS = new Set([
+  "commercial-groundworks",
+  "earthworks",
+  "roads-and-sewers",
+  "attenuation-systems",
   "excavation-contractors",
   "foundation-contractors",
   "mini-piling-contractors",
@@ -102,11 +106,41 @@ function trimSidebarBullet(input: string, maxWords = 8) {
 /** 3–5 related service hubs per L4 page; diversified to avoid A↔B-only loops. */
 const RELATED_SERVICE_SLUGS_BY_SERVICE: Record<string, string[]> = {
   "groundworks-contractors": [
+    "commercial-groundworks",
+    "earthworks",
     "site-preparation-services",
     "excavation-contractors",
     "foundation-contractors",
     "enabling-works-contractors",
     "concrete-foundations",
+  ],
+  "commercial-groundworks": [
+    "groundworks-contractors",
+    "enabling-works-contractors",
+    "roads-and-sewers",
+    "earthworks",
+    "foundation-contractors",
+  ],
+  earthworks: [
+    "commercial-groundworks",
+    "bulk-earthworks",
+    "excavation-contractors",
+    "roads-and-sewers",
+    "groundworks-contractors",
+  ],
+  "roads-and-sewers": [
+    "commercial-groundworks",
+    "attenuation-systems",
+    "enabling-works-contractors",
+    "earthworks",
+    "groundworks-contractors",
+  ],
+  "attenuation-systems": [
+    "roads-and-sewers",
+    "commercial-groundworks",
+    "enabling-works-contractors",
+    "excavation-contractors",
+    "groundworks-contractors",
   ],
   underpinning: [
     "foundation-repair",
@@ -303,6 +337,15 @@ const COMMERCIAL_TOPIC_SLUGS_BY_SERVICE: Record<string, string[]> = {
   "cfa-piling": ["piling-foundations", "groundworks-for-developments"],
   "enabling-works-contractors": ["groundworks-and-enabling-works", "groundworks-for-developments", "bulk-excavation-services"],
   "excavation-contractors": ["bulk-excavation-services", "groundworks-for-developments", "retaining-wall-construction"],
+  "commercial-groundworks": [
+    "groundworks-for-developments",
+    "groundworks-and-enabling-works",
+    "bulk-excavation-services",
+    "retaining-wall-construction",
+  ],
+  earthworks: ["bulk-excavation-services", "groundworks-for-developments", "groundworks-and-enabling-works"],
+  "roads-and-sewers": ["groundworks-and-enabling-works", "groundworks-for-developments", "soakaway-installation"],
+  "attenuation-systems": ["soakaway-installation", "groundworks-and-enabling-works", "groundworks-for-developments"],
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -600,7 +643,6 @@ export default async function LocationRoute({ params }: Props) {
         contactPath="/contact"
         trustSectionTitle={`Trusted Groundworks Contractors in ${location.name}`}
         trustPoints={trustPoints}
-        diagnosisGuidePath="/guides/groundworks-process"
         introParagraph={reinforcedIntroParagraph}
         extraServiceLocationLinks={extraServiceLocationLinks}
         priorityLocalLinks={priorityLocalLinks}
