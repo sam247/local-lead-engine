@@ -4,6 +4,7 @@ const DEFAULT_HERO_SERVICE_SLUG = "topographical-survey";
 
 export const serviceImages: Record<string, string> = {
   "topographical-survey": `${base}/services/topographical-survey.jpg`,
+  "building-surveys": `${base}/services/measured-building-survey.jpg`,
   "measured-building-survey": `${base}/services/measured-building-survey.jpg`,
   "utility-survey": `${base}/services/utility-survey.jpg`,
   "utility-mapping-survey": `${base}/services/utility-survey.jpg`,

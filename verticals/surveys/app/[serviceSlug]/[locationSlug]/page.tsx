@@ -15,17 +15,26 @@ import { hasNumericDuplicateSuffix, stripNumericDuplicateSuffix } from "@/lib/nu
 import { getL4PriorityLocalLinks, getL4StrikingDistanceTarget } from "@/data/l4StrikingDistance";
 import type { Metadata } from "next";
 import CTABanner from "@/components/sections/CTABanner";
+import { generateSurveysServiceLocationStaticParams, surveysAllowsServiceForLocation } from "@/lib/alignedTerritoryGeneration";
+import { getSurveysEcosystemExternalLinks } from "@/lib/mainlineEcosystemLinks";
 
 export const dynamic = "force-static";
 export const revalidate = false;
 
 export async function generateStaticParams() {
-  return services.flatMap((s) =>
-    locations.map((l) => ({ serviceSlug: s.slug, locationSlug: l.id }))
-  );
+  return generateSurveysServiceLocationStaticParams(locations, services);
 }
 
 type Props = { params: { serviceSlug: string; locationSlug: string } };
+
+function filterSurveysServiceL4LinksForLocation(locationId: string, links: Array<{ href: string }>) {
+  return links.filter((link) => {
+    const m = link.href.match(/^\/([^/]+)\/([^/]+)$/);
+    if (!m || m[2] !== locationId) return true;
+    return surveysAllowsServiceForLocation(locationId, m[1]);
+  });
+}
+
 function trimSidebarBullet(input: string, maxWords = 8) {
   const cleaned = input.trim().replace(/\s+/g, " ");
   const words = cleaned.split(/\s+/);
@@ -142,6 +151,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const service = services.find((s) => s.slug === serviceSlug);
   const location = locations.find((l) => l.id === canonicalLocationSlug);
   if (!service || !location) return { title: "Not Found" };
+  if (!surveysAllowsServiceForLocation(canonicalLocationSlug, service.slug)) {
+    return { title: "Not Found" };
+  }
   const base = buildLocationMetadata(service, location, verticalConfig);
   return { ...base, title: pickSurveysL4MetaTitle(service, location) };
 }
@@ -169,6 +181,7 @@ export default async function LocationRoute({ params }: Props) {
   }
   const location = locations.find((l) => l.id === canonicalLocationSlug);
   if (!service || !location) notFound();
+  if (!surveysAllowsServiceForLocation(canonicalLocationSlug, service.slug)) notFound();
   const strikingDistanceTarget = getL4StrikingDistanceTarget(service.slug, location.id);
 
   const sameAreaLocations = locations.filter(
@@ -218,7 +231,9 @@ export default async function LocationRoute({ params }: Props) {
     "CAD and BIM deliverables",
   ];
 
-  const otherServices = services.filter((s) => s.id !== service.id);
+  const otherServices = services.filter(
+    (s) => s.id !== service.id && surveysAllowsServiceForLocation(location.id, s.slug)
+  );
   const serviceImage = getHeroImage({ serviceSlug: service.slug });
 
   const neighbourIds = getNeighbourLocationIds(location.id, locations.map((l) => l.id));
@@ -259,17 +274,19 @@ export default async function LocationRoute({ params }: Props) {
     `We provide ${service.title} across ${location.name} and ${location.area}. Our survey partners deliver accurate, planning-ready data for residential and commercial projects, with free no-obligation quotes.`;
 
   const relatedTopicLinks = getRelevantTopicsForService(service.slug);
-  const extraServiceLocationLinks = pickRelatedServiceLocationLinks({
-    currentServiceSlug: service.slug,
-    services,
-    location,
-    priorityByService: RELATED_SERVICE_SLUGS_BY_SERVICE,
-    maxLinks: 3,
-  }).map((link) => ({ href: link.href, children: link.label }));
-  const priorityLocalLinks = getL4PriorityLocalLinks(
-    service.slug,
+  const extraServiceLocationLinks = filterSurveysServiceL4LinksForLocation(
     location.id,
-    RELATED_SERVICE_SLUGS_BY_SERVICE
+    pickRelatedServiceLocationLinks({
+      currentServiceSlug: service.slug,
+      services,
+      location,
+      priorityByService: RELATED_SERVICE_SLUGS_BY_SERVICE,
+      maxLinks: 3,
+    }).map((link) => ({ href: link.href, children: link.label }))
+  );
+  const priorityLocalLinks = filterSurveysServiceL4LinksForLocation(
+    location.id,
+    getL4PriorityLocalLinks(service.slug, location.id, RELATED_SERVICE_SLUGS_BY_SERVICE)
   );
 
   const sidebarBullets = trustPoints.map((point) => trimSidebarBullet(point, 8)).slice(0, 5);
@@ -304,6 +321,13 @@ export default async function LocationRoute({ params }: Props) {
         callTrackVertical={verticalConfig.verticalId}
         ctaVariants={verticalConfig.ctaVariants}
         conversionAsideBullets={sidebarBullets}
+        ecosystemExternalLinks={
+          getSurveysEcosystemExternalLinks({
+            locationId: canonicalLocationSlug,
+            locationName: location.name,
+            serviceSlug: service.slug,
+          }) ?? undefined
+        }
       />
       <CTABanner />
     </>

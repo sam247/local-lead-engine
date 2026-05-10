@@ -24,59 +24,37 @@ import {
 } from "@/lib/topicLocationConfig";
 import { TopicLocationPage } from "@/app/components/TopicLocationPage";
 import { getCommercialOpportunityTier } from "@/lib/commercialOpportunity";
+import {
+  generateGroundworksServiceLocationStaticParams,
+  groundworksAllowsServiceSlugForLocation,
+  groundworksAllowsTopicSlugForLocation,
+  isGroundworksStructuralClusterLocation,
+} from "@/lib/controlledTerritoryGeneration";
+import { getGroundworksEcosystemExternalLinks } from "@/lib/mainlineEcosystemLinks";
 
 export const dynamic = "force-static";
 export const revalidate = false;
 
-const STRATEGIC_MICRO_LOCATION_IDS = new Set([
-  "chislehurst",
-  "sidcup",
-  "bickley",
-  "mottingham",
-  "new-eltham",
-]);
-
-const STRATEGIC_MICRO_SERVICE_SLUGS = new Set([
-  "commercial-groundworks",
-  "earthworks",
-  "roads-and-sewers",
-  "attenuation-systems",
-  "excavation-contractors",
-  "foundation-contractors",
-  "mini-piling-contractors",
-  "piling-contractors",
-  "enabling-works-contractors",
-]);
-
-const STRATEGIC_MICRO_TOPIC_SLUGS = new Set([
-  "bulk-excavation-services",
-  "piling-foundations",
-  "foundation-underpinning",
-  "retaining-wall-construction",
-  "groundworks-for-extensions",
-  "groundworks-for-developments",
-  "groundworks-and-enabling-works",
-]);
-
 export async function generateStaticParams() {
-  const serviceLocationParams = locations.flatMap((location) => {
-    const isStrategicMicroLocation = STRATEGIC_MICRO_LOCATION_IDS.has(location.id);
-    const eligibleServices = isStrategicMicroLocation
-      ? services.filter((service) => STRATEGIC_MICRO_SERVICE_SLUGS.has(service.slug))
-      : services;
-    return eligibleServices.map((service) => ({
-      serviceSlug: service.slug,
-      locationSlug: location.id,
-    }));
-  });
-  const topicLocationParams = getTopicLocationStaticParams(locations).filter((param) => {
-    if (!STRATEGIC_MICRO_LOCATION_IDS.has(param.locationSlug)) return true;
-    return STRATEGIC_MICRO_TOPIC_SLUGS.has(param.serviceSlug);
-  });
+  const serviceLocationParams = generateGroundworksServiceLocationStaticParams(locations, services);
+  const topicLocationParams = getTopicLocationStaticParams(locations).filter((param) =>
+    groundworksAllowsTopicSlugForLocation(param.locationSlug, param.serviceSlug)
+  );
   return [...serviceLocationParams, ...topicLocationParams];
 }
 
 type Props = { params: { serviceSlug: string; locationSlug: string } };
+
+/** Avoid linking to service/topic × location pairs we do not statically generate on constrained towns. */
+function filterGroundworksL4LinksForLocation(locationId: string, links: Array<{ href: string }>) {
+  return links.filter((link) => {
+    const m = link.href.match(/^\/([^/]+)\/([^/]+)$/);
+    if (!m || m[2] !== locationId) return true;
+    const first = m[1];
+    if (isTopicLocationSlug(first)) return groundworksAllowsTopicSlugForLocation(locationId, first);
+    return groundworksAllowsServiceSlugForLocation(locationId, first);
+  });
+}
 
 function canonicalizeLocationSlug(raw: string): { canonical: string; hasNumericSuffix: boolean } {
   const hasNumericSuffix = /-(\d+)$/.test(raw);
@@ -380,6 +358,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       logInvalidRoute(serviceSlug, locationSlug, "unknown topic");
       notFound();
     }
+    if (!groundworksAllowsTopicSlugForLocation(canonicalLocationSlug, serviceSlug)) {
+      logInvalidRoute(serviceSlug, locationSlug, "topic not generated for location");
+      notFound();
+    }
     const baseUrl = verticalConfig.baseUrl.replace(/\/$/, "");
     const title = `${topic.title} in ${location.name} | ${verticalConfig.siteName}`;
     const description =
@@ -392,6 +374,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const service = services.find((s) => s.slug === serviceSlug);
   if (!service) {
     logInvalidRoute(serviceSlug, locationSlug, "unknown service");
+    notFound();
+  }
+  if (!groundworksAllowsServiceSlugForLocation(canonicalLocationSlug, service.slug)) {
+    logInvalidRoute(serviceSlug, locationSlug, "service not generated for location");
     notFound();
   }
 
@@ -450,6 +436,10 @@ export default async function LocationRoute({ params }: Props) {
       logInvalidRoute(serviceSlug, locationSlug, "unknown topic");
       notFound();
     }
+    if (!groundworksAllowsTopicSlugForLocation(canonicalLocationSlug, serviceSlug)) {
+      logInvalidRoute(serviceSlug, locationSlug, "topic not generated for location");
+      notFound();
+    }
     return (
       <>
         <TopicLocationPage
@@ -466,6 +456,10 @@ export default async function LocationRoute({ params }: Props) {
   const service = services.find((s) => s.slug === serviceSlug);
   if (!service) {
     logInvalidRoute(serviceSlug, locationSlug, "unknown service");
+    notFound();
+  }
+  if (!groundworksAllowsServiceSlugForLocation(canonicalLocationSlug, service.slug)) {
+    logInvalidRoute(serviceSlug, locationSlug, "service not generated for location");
     notFound();
   }
 
@@ -514,7 +508,9 @@ export default async function LocationRoute({ params }: Props) {
     "Quality assured and certified",
   ];
 
-  const otherServices = services.filter((s) => s.id !== service.id);
+  const otherServices = services.filter(
+    (s) => s.id !== service.id && groundworksAllowsServiceSlugForLocation(location.id, s.slug)
+  );
   const serviceImage = getHeroImage({ serviceSlug: service.slug });
 
   const neighbourIds = getNeighbourLocationIds(location.id, locations.map((l) => l.id));
@@ -557,7 +553,10 @@ export default async function LocationRoute({ params }: Props) {
   const relatedTopicLinks = getRelevantTopicsForService(service.slug);
   const allowedTopicSlugs = new Set(getLocationScalableTopicSlugs());
   const commercialTopicLocationLinks = (COMMERCIAL_TOPIC_SLUGS_BY_SERVICE[service.slug] ?? [])
-    .filter((topicSlug) => allowedTopicSlugs.has(topicSlug))
+    .filter(
+      (topicSlug) =>
+        allowedTopicSlugs.has(topicSlug) && groundworksAllowsTopicSlugForLocation(location.id, topicSlug)
+    )
     .map((topicSlug) => ({
       title: `${topicSlug
         .split("-")
@@ -589,31 +588,31 @@ export default async function LocationRoute({ params }: Props) {
     }
     return out.length > 0 ? out : undefined;
   })();
-  const extraServiceLocationLinks = pickRelatedServiceLocationLinks({
-    currentServiceSlug: service.slug,
-    services,
-    location,
-    priorityByService: RELATED_SERVICE_SLUGS_BY_SERVICE,
-    maxLinks: 3,
-  }).map((link) => ({ href: link.href, children: link.label }));
-  const priorityLocalLinks = getL4PriorityLocalLinks(
-    service.slug,
+  const extraServiceLocationLinks = filterGroundworksL4LinksForLocation(
     location.id,
-    RELATED_SERVICE_SLUGS_BY_SERVICE
+    pickRelatedServiceLocationLinks({
+      currentServiceSlug: service.slug,
+      services,
+      location,
+      priorityByService: RELATED_SERVICE_SLUGS_BY_SERVICE,
+      maxLinks: 3,
+    }).map((link) => ({ href: link.href, children: link.label }))
+  );
+  const priorityLocalLinks = filterGroundworksL4LinksForLocation(
+    location.id,
+    getL4PriorityLocalLinks(service.slug, location.id, RELATED_SERVICE_SLUGS_BY_SERVICE)
   );
 
   const sidebarBullets = trustPoints.map((point) => trimSidebarBullet(point, 8)).slice(0, 5);
-  const isKentSurreyPriorityArea =
-    /kent|surrey|south london|south east london/i.test(location.area) ||
-    ["chislehurst", "sidcup", "bickley", "mottingham", "new-eltham"].includes(location.id);
+  const isStructuralClusterArea = isGroundworksStructuralClusterLocation(location);
   const opportunityTier = getCommercialOpportunityTier(`${service.slug} ${location.area} ${location.name}`);
   const reinforcedIntroParagraph =
-    isKentSurreyPriorityArea && (opportunityTier === "very_high" || opportunityTier === "high")
+    isStructuralClusterArea && (opportunityTier === "very_high" || opportunityTier === "high")
       ? `${introParagraph} We prioritise structural and commercial groundworks in ${location.name}, including basement excavation, foundation and piling packages, retaining wall scopes, and enabling works for extension or development-led projects.`
       : introParagraph;
 
   if (
-    isKentSurreyPriorityArea &&
+    isStructuralClusterArea &&
     (service.slug === "excavation-contractors" ||
       service.slug === "foundation-contractors" ||
       service.slug === "mini-piling-contractors" ||
@@ -658,6 +657,13 @@ export default async function LocationRoute({ params }: Props) {
         callTrackVertical={verticalConfig.verticalId}
         ctaVariants={verticalConfig.ctaVariants}
         conversionAsideBullets={sidebarBullets}
+        ecosystemExternalLinks={
+          getGroundworksEcosystemExternalLinks({
+            locationId: canonicalLocationSlug,
+            locationName: location.name,
+            serviceSlug: service.slug,
+          }) ?? undefined
+        }
       />
       <CTABanner />
     </>

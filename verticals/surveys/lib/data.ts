@@ -335,8 +335,14 @@ export const services = [
   }
 ];
 
-// Locations: single source of truth in engine; do not redefine in verticals.
-export { locations } from "../../../engine/data/locations";
+import { locations as engineLocations } from "../../../engine/data/locations";
+import { alignedContractorTerritoryLocations } from "../../../engine/data/aligned-contractor-territory-locations";
+
+const engineLocationIdsSurveys = new Set(engineLocations.map((l) => l.id));
+export const locations = [
+  ...engineLocations,
+  ...alignedContractorTerritoryLocations.filter((loc) => !engineLocationIdsSurveys.has(loc.id)),
+];
 
 // Stats
 export const stats = [
@@ -2144,6 +2150,7 @@ export const getHubData = (category: string): HubData | undefined => {
 
 const SURVEYS_SERVICE_TO_TOPIC_CATEGORIES: Record<string, string[]> = {
   "topographical-survey": ["survey", "inspection", "costs", "guides"],
+  "building-surveys": ["survey", "inspection", "costs", "guides"],
   "measured-building-survey": ["survey", "inspection", "costs", "property-types"],
   "utility-survey": ["inspection", "survey", "costs"],
   "utility-mapping-survey": ["inspection", "survey", "costs"],

@@ -14,6 +14,11 @@ export const serviceImages: Record<string, string> = {
   "drain-unblocking": `${base}/services/drain-unblocking.jpg`,
   "drain-pipe-replacement": `${base}/services/drain-pipe-replacement.jpg`,
   "commercial-drainage": `${base}/services/commercial-drainage.jpg`,
+  "soakaway-installation": `${base}/services/commercial-drainage.jpg`,
+  "attenuation-systems": `${base}/services/commercial-drainage.jpg`,
+  "site-drainage": `${base}/services/commercial-drainage.jpg`,
+  "surface-water-drainage": `${base}/services/commercial-drainage.jpg`,
+  "suds-drainage": `${base}/services/commercial-drainage.jpg`,
 };
 
 const projectImagePaths = [

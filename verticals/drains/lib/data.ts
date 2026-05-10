@@ -2,8 +2,16 @@ import type { InfoPageData } from "engine";
 import { legalPages } from "@/data/legal";
 import { buyerPages } from "@/data/buyer";
 import { guidesPages } from "@/data/guides";
+import { locations as engineLocationsDrain } from "../../../engine/data/locations";
+import { alignedContractorTerritoryLocations } from "../../../engine/data/aligned-contractor-territory-locations";
 
 export type { InfoPageData };
+
+const engineDrainLocationIds = new Set(engineLocationsDrain.map((l) => l.id));
+export const locations = [
+  ...engineLocationsDrain,
+  ...alignedContractorTerritoryLocations.filter((loc) => !engineDrainLocationIds.has(loc.id)),
+];
 
 // Services data
 export const services = [
@@ -270,11 +278,133 @@ export const services = [
       "Ongoing maintenance scheduling"
     ],
     icon: "Building2"
+  },
+  {
+    id: "soakaway-installation",
+    slug: "soakaway-installation",
+    title: "Soakaway Installation",
+    titleSingular: "Soakaway Installation",
+    shortDescription:
+      "Design-led soakaway installs for schemes where surface water must be dispersed into the ground compliantly.",
+    description:
+      "We deliver soakaway installation for developments and refurbishment projects needing controlled infiltration away from overstressed mains. Packages cover investigation-led sizing, excavation, granular or crate systems, inlet detail and commissioning records coordinated with broader groundworks and enabling works schedules.",
+    benefits: [
+      "Supports compliant surface water discharge where suitable ground allows",
+      "Coordinated excavation and drainage interfaces around programme milestones",
+      "Sizing guidance aligned with project impermeable areas and geology",
+      "Records suitable for highways, warranty and third-party inspectors",
+      "Integrates cleanly with attenuation crates and downstream sewers packages"
+    ],
+    process: [
+      "Interpret drawings, catchment modelling and geology constraints",
+      "Set out excavations with safe temporary works sequencing",
+      "Install soakaway crates or granular trenches with inlet and vent detail",
+      "Backfill and reinstate with agreed inspection and compaction records",
+      "Capture red-line photos and snag close-out for handing over downstream"
+    ],
+    icon: "Droplets"
+  },
+  {
+    id: "attenuation-systems",
+    slug: "attenuation-systems",
+    title: "Attenuation Systems",
+    titleSingular: "Attenuation Systems",
+    shortDescription:
+      "Attenuation crate and modular tank packages for regulated discharge on developments and redevelopment sites.",
+    description:
+      "Attenuation systems hold back runoff before controlled release — essential on sites where mains capacity is constrained. Our teams fabricate trenches, crates and interconnecting pipework alongside roads-and-sewers or plot drainage packages while maintaining safe construction sequencing.",
+    benefits: [
+      "Programme-aligned install around roads, sewers and plot drainage",
+      "Experience with crate and bundled modular tank configurations",
+      "Clean interfaces between geocellular systems and adoptable mains",
+      "Documentation ready for inspectors, warranties and commissioning",
+      "Works packaged with excavation, backfill and surface reinstatement control"
+    ],
+    process: [
+      "Stakeholder review of modelling, constraints and crane or plant lanes",
+      "Excavate and stabilise trenches with bedding to specification",
+      "Install crates or tanks with manhole, vent and surcharge detail",
+      "Pressure test sections and progressively backfill where allowed",
+      "Issue handover dossier with QA records and snag resolution"
+    ],
+    icon: "Layers"
+  },
+  {
+    id: "site-drainage",
+    slug: "site-drainage",
+    title: "Site Drainage Contractors",
+    titleSingular: "Site Drainage Contractor",
+    shortDescription:
+      "Plot and platform drainage installs for phased developments, retrofit yards and logistic schemes.",
+    description:
+      "Site drainage bundles cover carrier drains, lateral connections and manholes that join attenuation zones to adoptable mains or discharge points. We programme installation around enabling works priorities so excavation, formation and paving packages advance without clashes.",
+    benefits: [
+      "Single contractor stack for trenches, chambers and attenuation tails",
+      "Programme choreography with groundworks contractors and paving teams",
+      "Quality-tested pipework gradients and airtight chamber detail",
+      "Clear liaison with clerks-of-works, warranty providers and inspectors",
+      "Works documented for QA, warranty and commissioning handover"
+    ],
+    process: [
+      "Interpret civils sequencing and phased setting-out grids",
+      "Excavate, bed and clip carrier routes with compaction testing",
+      "Install manholes with safe access detailing and airtight frames",
+      "Progressive pressure test regimes where specifications demand",
+      "Hand over As-Builts alongside enabling sign-off trackers"
+    ],
+    icon: "Wrench"
+  },
+  {
+    id: "surface-water-drainage",
+    slug: "surface-water-drainage",
+    title: "Surface Water Drainage",
+    titleSingular: "Surface Water Drainage",
+    shortDescription:
+      "Linear drainage, highways gullies and plot-level rainwater networks for highways and redevelopment schemes.",
+    description:
+      "Surface water drainage installation keeps carriageways, yards and courtyards free from ponding risk. Packages include trench runs for linear drains, highways gullies, slot drainage and rainwater leaders tied into crates or mains with adoptable QA compliance.",
+    benefits: [
+      "Design coordination with paving, highways and SuDS hierarchies",
+      "Robust trench support and temporary diversion planning",
+      "Clean tie-ins to crates, separators and onward sewers packages",
+      "Testing regimes aligned with warranty and inspecting authorities",
+      "Programme-aligned delivery beside surfacing crews"
+    ],
+    process: [
+      "Interpret civils sequencing and phased setting-out grids",
+      "Deliver trench excavation with temporary works as required",
+      "Install carriers, gradients and chambers with airtight detail",
+      "Clean, flush and progressively test discharge sections",
+      "Coordinate reinstatement approvals with paving and commissioning teams"
+    ],
+    icon: "Waves"
+  },
+  {
+    id: "suds-drainage",
+    slug: "suds-drainage",
+    title: "SuDS Drainage Contractors",
+    titleSingular: "SuDS Drainage Contractor",
+    shortDescription:
+      "SuDS-led networks combining filtration, attenuation and discharge pathways for constrained sites.",
+    description:
+      "Sustainable Drainage Systems package surface water attenuation with treatment stages before discharge. We assemble geocellular systems, separators, perforated carriers and porous surfacing integrations so enabling works milestones stay achievable while complying with QA expectations.",
+    benefits: [
+      "Holistic sequencing with roads, crates and porous surfacing teams",
+      "Experience bundling separators, crates and perforated carrier detail",
+      "Works documented for inspecting engineers and warranty gateways",
+      "Less reactive firefighting when programmes compress around handover",
+      "Aligns cleanly with surveying, ground modelling and mains adoption"
+    ],
+    process: [
+      "Interpret SuDS cascade and safeguarding constraints from design teams",
+      "Install separators, perforated carriers or crate stacks to detail",
+      "Coordinate hydrostatic or air testing where specifications require",
+      "Progress progressive commissioning with inspection sign-off trackers",
+      "Bundle As-Builts for adoption, QA and onward maintenance teams"
+    ],
+    icon: "Droplets"
   }
 ];
-
-// Locations: single source of truth in engine; do not redefine in verticals.
-export { locations } from "../../../engine/data/locations";
 
 // Stats
 export const stats = [
@@ -2091,6 +2221,11 @@ const DRAINS_SERVICE_TO_TOPIC_CATEGORIES: Record<string, string[]> = {
   "drain-unblocking": ["problems", "emergency", "repair-methods"],
   "drain-pipe-replacement": ["repair-methods", "collapse", "costs"],
   "commercial-drainage": ["commercial", "problems", "repair-methods"],
+  "soakaway-installation": ["commercial", "repair-methods", "costs"],
+  "attenuation-systems": ["commercial", "repair-methods", "costs"],
+  "site-drainage": ["commercial", "repair-methods", "guides"],
+  "surface-water-drainage": ["commercial", "repair-methods", "causes"],
+  "suds-drainage": ["commercial", "repair-methods", "guides"],
 };
 
 const MAX_TOPIC_LINKS = 6;

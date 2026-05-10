@@ -450,6 +450,8 @@ export interface LocationPageProps {
   relatedTopicsSectionIntro?: string;
   /** Optional page-specific content sections for L4 strengthening. */
   supplementalSections?: LocationPageSupplementalSection[];
+  /** Optional cross-domain links (e.g. sibling Mainline division L4 URLs). Rendered sparingly below helpful guidance when set. */
+  ecosystemExternalLinks?: { label: string; href: string }[];
   /** Vertical id for call-click analytics (e.g. verticalConfig.verticalId). */
   callTrackVertical: string;
   /** Deterministic A/B copy pool for primary quote CTAs on this page. */
@@ -497,6 +499,7 @@ export function LocationPage({
   relatedTopicsSectionTitle,
   relatedTopicsSectionIntro,
   supplementalSections,
+  ecosystemExternalLinks,
   callTrackVertical,
   ctaVariants,
   inlinkCount,
@@ -1263,6 +1266,31 @@ export function LocationPage({
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {ecosystemExternalLinks && ecosystemExternalLinks.length > 0 && (
+        <section className="py-10">
+          <div className="container max-w-2xl text-center">
+            <h2 className="mb-3 font-display text-lg font-bold text-foreground">Related capability in {location.name}</h2>
+            <p className="mb-4 text-sm text-muted-foreground">
+              Other Mainline divisions may support pre-construction and drainage packages in the same area.
+            </p>
+            <ul className="space-y-2 text-sm">
+              {ecosystemExternalLinks.map((item) => (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       )}

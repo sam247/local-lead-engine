@@ -469,9 +469,15 @@ export const serviceCommercialMetadataBySlug: Record<
   ])
 );
 
-// Locations: single source of truth in engine; do not redefine in verticals.
-import { locations } from "../../../engine/data/locations";
-export { locations };
+// Core locations plus aligned contractor appendix (Groundworks/Surveys/Drains only — not in default engine list).
+import { locations as engineLocations } from "../../../engine/data/locations";
+import { alignedContractorTerritoryLocations } from "../../../engine/data/aligned-contractor-territory-locations";
+
+const engineLocationIds = new Set(engineLocations.map((l) => l.id));
+export const locations = [
+  ...engineLocations,
+  ...alignedContractorTerritoryLocations.filter((loc) => !engineLocationIds.has(loc.id)),
+];
 
 // Level 2 = service hubs (/services, /services/[slug]). Level 3 = topic hubs (e.g. /foundation-problems, /ground-conditions). Level 4 = service×location (/[serviceSlug]/[locationId]).
 export const hubPages: HubData[] = [

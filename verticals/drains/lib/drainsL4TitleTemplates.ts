@@ -53,6 +53,26 @@ const DRAIN_L4_TITLE_TEMPLATES: Record<DrainServiceSlug, [string, string]> = {
     `Commercial Drainage {location} - Reliable Support & Fast Response`,
     `Commercial Drainage {location} - Planned Works & Clear Pricing`,
   ],
+  "soakaway-installation": [
+    `Soakaway Installation {location} - Design-Led Builds & Reliable Records`,
+    `Soakaway Installation {location} - Programmable Delivery & QA Handover`,
+  ],
+  "attenuation-systems": [
+    `Attenuation Systems {location} - Controlled Rainwater Releases`,
+    `Attenuation Crate Install {location} - Programmable QA Records`,
+  ],
+  "site-drainage": [
+    `Site Drainage Contractors {location} - Phased Platforms & Adoption Ready`,
+    `Site Drainage {location} - Trenches Chambers & Tester Records`,
+  ],
+  "surface-water-drainage": [
+    `Surface Water Drainage {location} - Gullies Trenches Linear Drains`,
+    `Surface Drainage Contractors {location} - Highways Interfaces Coordinated`,
+  ],
+  "suds-drainage": [
+    `SuDS Drainage Contractors {location} - Attenuation & Treatment Sequenced`,
+    `SuDS Contractors {location} - Coordinated Crate & Separator Packages`,
+  ],
 };
 
 export function pickDrainsL4MetaTitle(service: Service, location: Location): string {
