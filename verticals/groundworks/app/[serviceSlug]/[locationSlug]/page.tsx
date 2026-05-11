@@ -46,7 +46,7 @@ export async function generateStaticParams() {
 type Props = { params: { serviceSlug: string; locationSlug: string } };
 
 /** Avoid linking to service/topic × location pairs we do not statically generate on constrained towns. */
-function filterGroundworksL4LinksForLocation(locationId: string, links: Array<{ href: string }>) {
+function filterGroundworksL4LinksForLocation<T extends { href: string }>(locationId: string, links: Array<T>): T[] {
   return links.filter((link) => {
     const m = link.href.match(/^\/([^/]+)\/([^/]+)$/);
     if (!m || m[2] !== locationId) return true;
