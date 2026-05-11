@@ -26,7 +26,7 @@ export async function generateStaticParams() {
 
 type Props = { params: { serviceSlug: string; locationSlug: string } };
 
-function filterDrainsServiceL4LinksForLocation(locationId: string, links: Array<{ href: string }>) {
+function filterDrainsServiceL4LinksForLocation<T extends { href: string }>(locationId: string, links: Array<T>): T[] {
   return links.filter((link) => {
     const m = link.href.match(/^\/([^/]+)\/([^/]+)$/);
     if (!m || m[2] !== locationId) return true;
