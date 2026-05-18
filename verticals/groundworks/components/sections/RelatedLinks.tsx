@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { services, locations, hubPages, getCategoryPages } from "@/lib/data";
 import { getServiceUrl } from "engine";
+import { filterLocationsForService } from "@/lib/groundworksDiscoveryLinks";
 
 interface RelatedLinksProps {
   relatedServices?: string[];
@@ -12,7 +13,7 @@ interface RelatedLinksProps {
 const RelatedLinks = ({ relatedServices = [], category, currentSlug }: RelatedLinksProps) => {
   const matchedServices = services.filter((s) => relatedServices.includes(s.slug));
   const firstServiceSlug = relatedServices[0] || "groundworks-contractors";
-  const featuredLocations = locations.slice(0, 6);
+  const featuredLocations = filterLocationsForService(firstServiceSlug, locations).slice(0, 6);
 
   const relatedHubs = hubPages.filter(
     (h) => h.category !== category && getCategoryPages(h.category).length > 0

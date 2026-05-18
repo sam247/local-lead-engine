@@ -34,6 +34,8 @@ export interface HubPageProps {
   /** Optional links to major pillar guides (e.g. Collapsed Drains Complete Guide). */
   pillarGuides?: PillarGuideLink[];
   featuredLocations?: Location[];
+  /** When set, used instead of building early location links from featuredLocations. */
+  earlyLocationLinks?: { href: string; label: string }[];
   /** Optional heading/body override for service CTA block above topic cards. */
   serviceCtaHeading?: string;
   serviceCtaBody?: string;
@@ -56,6 +58,7 @@ export function HubPage({
   contactPath = "/contact",
   pillarGuides,
   featuredLocations = [],
+  earlyLocationLinks,
   serviceCtaHeading,
   serviceCtaBody,
   serviceCtaText,
@@ -73,14 +76,18 @@ export function HubPage({
 
   const featuredPages = pages.slice(0, 3);
   const remainingPages = pages.slice(3);
-  const earlyLocationLinks = keyServices.flatMap((service, index) =>
-    buildFeaturedServiceLocationLinks({
-      service,
-      locations: featuredLocations,
-      seed: `hub:${hub.category}:${service.slug}:${index}`,
-      maxLinks: 1,
-    })
-  ).slice(0, 3);
+  const resolvedEarlyLocationLinks =
+    earlyLocationLinks ??
+    keyServices
+      .flatMap((service, index) =>
+        buildFeaturedServiceLocationLinks({
+          service,
+          locations: featuredLocations,
+          seed: `hub:${hub.category}:${service.slug}:${index}`,
+          maxLinks: 1,
+        })
+      )
+      .slice(0, 3);
 
   return (
     <>
@@ -136,12 +143,12 @@ export function HubPage({
                 and then return here for planning detail.
               </p>
             )}
-            {earlyLocationLinks.length > 0 && (
+            {resolvedEarlyLocationLinks.length > 0 && (
               <p>
                 For local examples, review{" "}
-                {earlyLocationLinks.map((link, index) => (
+                {resolvedEarlyLocationLinks.map((link, index) => (
                   <span key={link.href}>
-                    {index > 0 && (index === earlyLocationLinks.length - 1 ? " and " : ", ")}
+                    {index > 0 && (index === resolvedEarlyLocationLinks.length - 1 ? " and " : ", ")}
                     <Link href={link.href} className="text-primary hover:underline">
                       {link.label}
                     </Link>

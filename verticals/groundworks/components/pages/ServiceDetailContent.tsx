@@ -3,6 +3,8 @@ import { services, locations, relatedGuideLinksByService, relatedCostGuideLinksB
 import { getHeroImage } from "@/lib/images";
 import { verticalConfig, partnerBaseUrl, partnerTopographicalSurveyPath } from "@/config";
 import { ServiceDetailContent as EngineServiceDetailContent } from "engine";
+import { groundworksAllowsServiceSlugForLocation } from "@/lib/controlledTerritoryGeneration";
+import { groundworksServiceLocationHrefWithFallback } from "@/lib/groundworksDiscoveryLinks";
 
 interface ServiceDetailContentProps {
   service: (typeof services)[number];
@@ -427,7 +429,10 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
   const faqs = serviceFaqsBySlug[service.slug] ?? [];
   const heroImageSrc = getHeroImage({ serviceSlug: service.slug });
   const displayTitle = service.titleSingular ?? service.title;
-  const sortedLocations = [...locations].sort((a, b) => a.id.localeCompare(b.id));
+  const locationsForService = locations.filter((loc) =>
+    groundworksAllowsServiceSlugForLocation(loc.id, service.slug)
+  );
+  const sortedLocations = [...locationsForService].sort((a, b) => a.id.localeCompare(b.id));
   const areasWeCoverCount = Math.min(sortedLocations.length, 50);
   const areasWeCoverLinks = sortedLocations.slice(0, areasWeCoverCount).map((loc) => ({
     href: `/${service.slug}/${loc.id}`,
@@ -438,13 +443,13 @@ export default function ServiceDetailContent({ service }: ServiceDetailContentPr
     <EngineServiceDetailContent
       service={service}
       services={services}
-      locations={locations}
+      locations={locationsForService}
       verticalConfig={verticalConfig}
       heroImageSrc={heroImageSrc}
       contactPath="/contact"
       servicesPath="/services"
       servicePageHref={(slug) => `/${slug}`}
-      locationLinkPath={(slug, id) => `/${slug}/${id}`}
+      locationLinkPath={(slug, id) => groundworksServiceLocationHrefWithFallback(slug, id, service.slug)}
       symptomLinks={symptomLinks}
       faqs={faqs}
       overviewImage={{ src: heroImageSrc, alt: `${service.title} – ${verticalConfig.siteName}` }}

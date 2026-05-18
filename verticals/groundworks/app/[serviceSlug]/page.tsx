@@ -9,6 +9,7 @@ import {
   getTopicForRouteSlug,
   TOPIC_LOCATION_SLUGS,
 } from "@/lib/topicLocationConfig";
+import { parseCanonicalSlug } from "@/lib/canonicalSlug";
 
 export const dynamic = "force-static";
 export const revalidate = false;
@@ -40,7 +41,28 @@ export default async function RootServiceHubPage({
 }: {
   params: Promise<{ serviceSlug: string }>;
 }) {
-  const { serviceSlug } = await params;
+  const { serviceSlug: rawServiceSlug } = await params;
+  const { canonical: serviceSlug, hasNumericSuffix } = parseCanonicalSlug(rawServiceSlug);
+  if (hasNumericSuffix) {
+    const staticPaths = new Set([
+      "homeowners",
+      "about",
+      "contact",
+      "projects",
+      "blog",
+      "guides",
+      "companies",
+    ]);
+    if (staticPaths.has(serviceSlug)) {
+      permanentRedirect(`/${serviceSlug}`);
+    }
+    const service = services.find((s) => s.slug === serviceSlug);
+    if (service) permanentRedirect(`/${serviceSlug}`);
+    if (isTopicLocationSlug(serviceSlug)) {
+      const topic = getTopicForRouteSlug(serviceSlug);
+      if (topic?.primaryServiceSlug) permanentRedirect(`/${topic.primaryServiceSlug}`);
+    }
+  }
   const service = services.find((s) => s.slug === serviceSlug);
   if (service) {
     return <ServiceDetailContent service={service} />;

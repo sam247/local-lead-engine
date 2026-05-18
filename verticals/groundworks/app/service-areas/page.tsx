@@ -1,12 +1,14 @@
 import { ServiceAreasHub } from "engine";
 import { locations } from "@/lib/data";
+import { filterLocationsForService } from "@/lib/groundworksDiscoveryLinks";
+import { PRIMARY_NEAR_ME_SERVICE_SLUG } from "@/lib/primaryNearMeLocations";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
 export const revalidate = false;
 
-const PRIMARY_SERVICE_SLUG = "groundworks-contractors";
 const WAVE1_MICRO_LOCATION_IDS = new Set(["chislehurst", "sidcup", "bickley", "mottingham", "new-eltham"]);
+const serviceAreasLocations = filterLocationsForService(PRIMARY_NEAR_ME_SERVICE_SLUG, locations);
 
 export const metadata: Metadata = {
   title: "Service Areas | Mainline Groundworks",
@@ -16,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default function ServiceAreasPage() {
-  const orderedLocations = [...locations].sort((a, b) => {
+  const orderedLocations = [...serviceAreasLocations].sort((a, b) => {
     const aWave1 = WAVE1_MICRO_LOCATION_IDS.has(a.id) ? 1 : 0;
     const bWave1 = WAVE1_MICRO_LOCATION_IDS.has(b.id) ? 1 : 0;
     if (aWave1 !== bWave1) return aWave1 - bWave1;
@@ -24,7 +26,7 @@ export default function ServiceAreasPage() {
   });
   return (
     <ServiceAreasHub
-      primaryServiceSlug={PRIMARY_SERVICE_SLUG}
+      primaryServiceSlug={PRIMARY_NEAR_ME_SERVICE_SLUG}
       locations={orderedLocations}
       heroTitle="Groundworks & Civil Engineering Across the UK"
       heroSubtitle="Piling, excavation, foundations, site clearance and enabling works in major towns and cities."

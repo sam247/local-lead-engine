@@ -10,6 +10,7 @@ import {
 import { getHeroImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
 import type { CrossSection } from "engine";
+import { buildGroundworksFeaturedServiceLocationLinks } from "@/lib/groundworksDiscoveryLinks";
 
 function categorisePages(category: string): CrossSection[] {
   return hubPages
@@ -38,6 +39,16 @@ export function getHubPageProps(category: string) {
   const heroAlt =
     categoryAltText[category] || `${hub.title} - groundworks services`;
   const crossSections = categorisePages(category);
+  const earlyLocationLinks = keyServices
+    .flatMap((service, index) =>
+      buildGroundworksFeaturedServiceLocationLinks({
+        service,
+        locations,
+        seed: `hub:${hub.category}:${service.slug}:${index}`,
+        maxLinks: 1,
+      })
+    )
+    .slice(0, 3);
   const pillarGuides = [
     { title: "Groundworks process", href: "/guides/groundworks-process" },
     { title: "Foundation cost guide", href: "/guides/foundation-cost" },
@@ -51,6 +62,7 @@ export function getHubPageProps(category: string) {
     crossSections,
     keyServices,
     featuredLocations: locations,
+    earlyLocationLinks,
     companyInfo: verticalConfig.companyInfo,
     baseUrl: verticalConfig.baseUrl,
     pillarGuides,

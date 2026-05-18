@@ -3,6 +3,8 @@ import { services, locations } from "@/lib/data";
 import { groundworksProblemPages, getGroundworksProblemPageBySlug } from "@/data/problemPages";
 import { ProblemPage, buildProblemMetadata } from "engine";
 import { verticalConfig } from "@/config";
+import { groundworksLocationLinkPath } from "@/lib/groundworksDiscoveryLinks";
+import { resolveCanonicalInfoSlug, resolveInfoSlugForMetadata } from "@/lib/infoSlugPage";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -15,14 +17,20 @@ export async function generateStaticParams() {
 type Props = { params: { slug: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const problem = getGroundworksProblemPageBySlug(params.slug);
+  const slug = resolveInfoSlugForMetadata(params.slug, (canonical) =>
+    Boolean(getGroundworksProblemPageBySlug(canonical))
+  );
+  const problem = getGroundworksProblemPageBySlug(slug);
   if (!problem) return { title: "Not Found" };
   const base = verticalConfig.baseUrl.replace(/\/$/, "");
   return buildProblemMetadata(problem, verticalConfig, `${base}/foundation-problems/${problem.slug}`);
 }
 
 export default function FoundationProblemSlugPage({ params }: Props) {
-  const problem = getGroundworksProblemPageBySlug(params.slug);
+  const slug = resolveCanonicalInfoSlug("/foundation-problems", params.slug, (canonical) =>
+    Boolean(getGroundworksProblemPageBySlug(canonical))
+  );
+  const problem = getGroundworksProblemPageBySlug(slug);
   if (!problem) notFound();
 
   return (
@@ -44,7 +52,7 @@ export default function FoundationProblemSlugPage({ params }: Props) {
       primaryServiceSlug={problem.primaryServiceSlug}
       primaryServiceLabel={problem.primaryServiceLabel}
       ctaVariants={verticalConfig.ctaVariants}
-      locationLinkPath={(slug, id) => `/${slug}/${id}`}
+      locationLinkPath={groundworksLocationLinkPath(problem.primaryServiceSlug)}
       servicesNearYouTitle="Groundworks services near you"
       servicesNearYouIntro="Our teams deliver foundation, piling, and excavation services across the area. See a local service route below."
     />

@@ -9,8 +9,12 @@ import {
 } from "@/lib/data";
 import { getHeroImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
-import { buildFeaturedServiceLocationLinks, getServiceUrl, type RelatedPageLink } from "engine";
+import { getServiceUrl, type RelatedPageLink } from "engine";
 import { getL4GuideTargetLinksForServices } from "@/data/l4StrikingDistance";
+import {
+  buildGroundworksFeaturedServiceLocationLinks,
+  filterGroundworksServiceLocationLinks,
+} from "@/lib/groundworksDiscoveryLinks";
 
 export function getInfoPageProps(category: string, slug: string) {
   const hub = getHubData(category);
@@ -59,7 +63,7 @@ export function getInfoPageProps(category: string, slug: string) {
     ? services.find((service) => service.slug === page.relatedServices[1])
     : undefined;
   const featuredPrimaryLinks = primaryRelatedService
-    ? buildFeaturedServiceLocationLinks({
+    ? buildGroundworksFeaturedServiceLocationLinks({
         service: primaryRelatedService,
         locations,
         seed: `groundworks:info:${category}:${page.slug}:primary`,
@@ -67,14 +71,16 @@ export function getInfoPageProps(category: string, slug: string) {
       })
     : [];
   const featuredSecondaryLinks = secondaryRelatedService
-    ? buildFeaturedServiceLocationLinks({
+    ? buildGroundworksFeaturedServiceLocationLinks({
         service: secondaryRelatedService,
         locations,
         seed: `groundworks:info:${category}:${page.slug}:secondary`,
         maxLinks: 1,
       })
     : [];
-  const strikingDistanceGuideLinks = getL4GuideTargetLinksForServices(page.relatedServices).slice(0, 2);
+  const strikingDistanceGuideLinks = filterGroundworksServiceLocationLinks(
+    getL4GuideTargetLinksForServices(page.relatedServices).slice(0, 2)
+  );
   const primaryServiceLocationLink = featuredPrimaryLinks[0]
     ? { href: featuredPrimaryLinks[0].href, linkText: featuredPrimaryLinks[0].label }
     : page.serviceLocationLink;

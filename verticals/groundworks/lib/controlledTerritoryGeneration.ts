@@ -1,5 +1,9 @@
 import { alignedContractorTerritoryLocationIds } from "../../../engine/data/aligned-contractor-territory-locations";
 import type { Location, Service } from "engine";
+import {
+  KENT_NEAR_ME_LOCATION_IDS,
+  PRIMARY_NEAR_ME_SERVICE_SLUG,
+} from "@/lib/primaryNearMeLocations";
 
 export const STRATEGIC_MICRO_LOCATION_IDS = new Set([
   "chislehurst",
@@ -10,6 +14,8 @@ export const STRATEGIC_MICRO_LOCATION_IDS = new Set([
 ]);
 
 const STRATEGIC_MICRO_SERVICE_SLUGS = new Set([
+  // Primary near-me / service-areas hub slug — must exist for every listed town.
+  "groundworks-contractors",
   "commercial-groundworks",
   "earthworks",
   "roads-and-sewers",
@@ -33,6 +39,7 @@ const STRATEGIC_MICRO_TOPIC_SLUGS = new Set([
 
 /** Groundworks commercial/structural L4 slugs permitted on appendix territory IDs. */
 const ALIGNED_CONTRACTOR_SERVICE_SLUGS = new Set([
+  "groundworks-contractors",
   "foundation-contractors",
   "underpinning",
   "piling-contractors",
@@ -44,6 +51,10 @@ const ALIGNED_CONTRACTOR_SERVICE_SLUGS = new Set([
   "roads-and-sewers",
   "attenuation-systems",
   "ground-investigation-services",
+  // Structural investigation cluster (appendix territories only).
+  "plate-load-testing",
+  "incremental-plate-load-testing",
+  "foundation-depth-issues",
 ]);
 
 const ALIGNED_CONTRACTOR_TOPIC_SLUGS = new Set([
@@ -90,6 +101,31 @@ export function generateGroundworksServiceLocationStaticParams(locations: Locati
       locationSlug: location.id,
     }));
   });
+}
+
+/** Belt-and-braces: every Kent near-me town must pre-render the primary hub slug. */
+export function generateGroundworksPrimaryNearMeStaticParams(locations: Location[]) {
+  const knownIds = new Set(locations.map((l) => l.id));
+  return KENT_NEAR_ME_LOCATION_IDS.filter(
+    (id) =>
+      knownIds.has(id) &&
+      groundworksAllowsServiceSlugForLocation(id, PRIMARY_NEAR_ME_SERVICE_SLUG)
+  ).map((locationSlug) => ({
+    serviceSlug: PRIMARY_NEAR_ME_SERVICE_SLUG,
+    locationSlug,
+  }));
+}
+
+export function mergeGroundworksL4StaticParams(
+  ...paramGroups: Array<Array<{ serviceSlug: string; locationSlug: string }>>
+) {
+  const byKey = new Map<string, { serviceSlug: string; locationSlug: string }>();
+  for (const group of paramGroups) {
+    for (const param of group) {
+      byKey.set(`${param.serviceSlug}/${param.locationSlug}`, param);
+    }
+  }
+  return [...byKey.values()];
 }
 
 /** Structural / reinforced commercial-copy cluster (Kent/Surrey/London fringe + appendix + adjacent counties). */

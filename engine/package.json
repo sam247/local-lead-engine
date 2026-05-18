@@ -11,6 +11,7 @@
     "./components/NearMeLocationList": "./components/NearMeLocationList.tsx",
     "./components/navigation/ResourcesMenu": "./components/navigation/ResourcesMenu.tsx",
     "./components/navigation/resources-menu-utils": "./components/navigation/resources-menu-utils.ts",
+    "./components/navigation": "./components/navigation/index.ts",
     "./data/locations": "./data/locations.ts",
     "./data/uk-location-hierarchy": "./data/uk-location-hierarchy.ts",
     "./data/key-location-ids": "./data/key-location-ids.ts",
@@ -37,6 +38,8 @@
     "zod": "^4.3.6",
     "lucide-react": "^0.577.0",
     "tailwind-merge": "^3.5.0",
+    "@radix-ui/react-collapsible": "^1.1.12",
+    "@radix-ui/react-navigation-menu": "^1.2.14",
     "@radix-ui/react-slot": "^1.2.4",
     "class-variance-authority": "^0.7.1"
   },

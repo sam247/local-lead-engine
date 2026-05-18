@@ -7,6 +7,8 @@ import { sitePreparationPages } from "@/data/sitePreparationPages";
 import { drivewayGroundworksPages } from "@/data/drivewayGroundworksPages";
 import { constructionDrainagePages } from "@/data/constructionDrainagePages";
 import { getCommercialOpportunityScore } from "@/lib/commercialOpportunity";
+import { filterLocationsForService } from "@/lib/groundworksDiscoveryLinks";
+import { PRIMARY_NEAR_ME_SERVICE_SLUG } from "@/lib/primaryNearMeLocations";
 
 // Company info – used by config and layout (public Twilio inbound; set NEXT_PUBLIC_PHONE_NUMBER in deploy)
 const publicPhone = (process.env.NEXT_PUBLIC_PHONE_NUMBER ?? "").trim();
@@ -812,7 +814,7 @@ export const relatedCostGuideLinksByService: Record<string, { slug: string; path
     { slug: "excavation-cost-per-cubic-metre", path: "/groundworks-costs/excavation-cost-per-cubic-metre", title: "Excavation cost per cubic metre" },
   ],
   "site-preparation-services": [
-    { slug: "enabling-works-cost", path: "/guides/enabling-works-cost", title: "Enabling works cost" },
+    { slug: "enabling-works-cost", path: "/groundworks-costs/enabling-works-cost", title: "Enabling works cost" },
     { slug: "site-clearance-muck-away-price", path: "/groundworks-costs/site-clearance-muck-away-price", title: "Site clearance and muck-away price" },
   ],
   "excavation-contractors": [
@@ -824,7 +826,7 @@ export const relatedCostGuideLinksByService: Record<string, { slug: string; path
     { slug: "site-clearance-muck-away-price", path: "/groundworks-costs/site-clearance-muck-away-price", title: "Site clearance and muck-away price" },
   ],
   "enabling-works-contractors": [
-    { slug: "enabling-works-cost", path: "/guides/enabling-works-cost", title: "Enabling works cost" },
+    { slug: "enabling-works-cost", path: "/groundworks-costs/enabling-works-cost", title: "Enabling works cost" },
     { slug: "groundworks-cost-overview", path: "/groundworks-costs/groundworks-cost-overview", title: "Groundworks cost overview" },
   ],
   "concrete-foundations": [
@@ -1022,10 +1024,15 @@ export const guidesIndexFeatured: { title: string; description: string; href: st
   { title: "Groundworks process", description: "How a typical groundworks project runs.", href: "/guides/groundworks-process", iconKey: "HelpCircle" },
 ];
 
-export const guidesIndexNearMe: { title: string; href: string }[] = locations.slice(0, 8).map((loc) => ({
-  title: `Groundworks in ${loc.name}`,
-  href: `/groundworks-contractors/${loc.id}`,
-}));
+export const guidesIndexNearMe: { title: string; href: string }[] = filterLocationsForService(
+  PRIMARY_NEAR_ME_SERVICE_SLUG,
+  locations
+)
+  .slice(0, 8)
+  .map((loc) => ({
+    title: `Groundworks in ${loc.name}`,
+    href: `/${PRIMARY_NEAR_ME_SERVICE_SLUG}/${loc.id}`,
+  }));
 
 export const categoryAltText: Record<string, string> = {
   guides: "Groundworks guides and cost advice",

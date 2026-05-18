@@ -3,6 +3,7 @@ import { projects } from "@/data/projects";
 import { services } from "@/lib/data";
 import { getProjectImage } from "@/lib/images";
 import { ProjectCardWithLinks, getServiceUrl } from "engine";
+import { groundworksServiceLocationHrefWithFallback } from "@/lib/groundworksDiscoveryLinks";
 import CTABanner from "@/components/sections/CTABanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import type { Metadata } from "next";
@@ -64,7 +65,9 @@ export default function ProjectsPage() {
                 imageSrc={getProjectImage(project, index)}
                 imageAlt={project.title}
                 services={services}
-                locationLinkPath={(slug, locId) => `/${slug}/${locId}`}
+                locationLinkPath={(slug, locId) =>
+                  groundworksServiceLocationHrefWithFallback(slug, locId, project.serviceSlug)
+                }
                 servicesPath="/services"
                 projectHref={`/projects/${project.slug}`}
               />

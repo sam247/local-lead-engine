@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { services, locations } from "@/lib/data";
+import { filterLocationsForService } from "@/lib/groundworksDiscoveryLinks";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, AlertTriangle, Layers, Camera, Shovel, Siren, Ban, Droplets, TreeDeciduous, Wrench, Replace, Building2 } from "lucide-react";
 import CTABanner from "@/components/sections/CTABanner";
@@ -23,12 +24,6 @@ export const metadata: Metadata = {
 const WAVE1_MICRO_LOCATION_IDS = new Set(["chislehurst", "sidcup", "bickley", "mottingham", "new-eltham"]);
 
 export default function ServicesPage() {
-  const orderedFeaturedLocations = [...locations].sort((a, b) => {
-    const aWave1 = WAVE1_MICRO_LOCATION_IDS.has(a.id) ? 1 : 0;
-    const bWave1 = WAVE1_MICRO_LOCATION_IDS.has(b.id) ? 1 : 0;
-    if (aWave1 !== bWave1) return aWave1 - bWave1;
-    return a.name.localeCompare(b.name);
-  });
   return (
     <>
       <SchemaMarkup type="BreadcrumbList" data={{ breadcrumbs: [{ name: "Home", url: "/" }, { name: "Services", url: "/services" }] }} />
@@ -45,6 +40,13 @@ export default function ServicesPage() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => {
               const Icon = iconMap[service.icon] || AlertTriangle;
+              const serviceLocations = filterLocationsForService(service.slug, locations);
+              const featuredForCard = [...serviceLocations].sort((a, b) => {
+                const aWave1 = WAVE1_MICRO_LOCATION_IDS.has(a.id) ? 1 : 0;
+                const bWave1 = WAVE1_MICRO_LOCATION_IDS.has(b.id) ? 1 : 0;
+                if (aWave1 !== bWave1) return aWave1 - bWave1;
+                return a.name.localeCompare(b.name);
+              });
               return (
                 <Card key={service.id} className="group border-border transition-all hover:shadow-lg">
                   <CardHeader>
@@ -62,12 +64,14 @@ export default function ServicesPage() {
                     <div className="mt-4 border-t pt-4">
                       <p className="mb-2 text-xs font-medium text-muted-foreground">Available in:</p>
                       <div className="flex flex-wrap gap-1">
-                        {orderedFeaturedLocations.slice(0, 5).map((loc) => (
+                        {featuredForCard.slice(0, 5).map((loc) => (
                           <Link key={loc.id} href={`/${service.slug}/${loc.id}`} className="text-xs text-primary hover:underline">
                             {loc.name}
                           </Link>
                         ))}
-                        <span className="text-xs text-muted-foreground">+{orderedFeaturedLocations.length - 5} more</span>
+                        {featuredForCard.length > 5 && (
+                          <span className="text-xs text-muted-foreground">+{featuredForCard.length - 5} more</span>
+                        )}
                       </div>
                     </div>
                   </CardContent>

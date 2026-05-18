@@ -4,6 +4,7 @@ import { ProjectDetailPage } from "engine";
 import { verticalConfig } from "@/config";
 import { services, locations, getRelevantTopicsForService } from "@/lib/data";
 import { projects } from "@/data/projects";
+import { groundworksServiceLocationHref } from "@/lib/groundworksDiscoveryLinks";
 
 export const dynamic = "force-static";
 export const revalidate = false;
@@ -43,11 +44,16 @@ export default async function ProjectPage({ params }: Props) {
   }));
   const relatedServiceLinks = services
     .filter((entry) => entry.slug !== service.slug)
-    .slice(0, 3)
-    .map((entry) => ({
-      href: `/${entry.slug}/${location.id}`,
-      label: `${entry.title} in ${location.name}`,
-    }));
+    .map((entry) => {
+      const href = groundworksServiceLocationHref(entry.slug, location.id);
+      if (!href) return null;
+      return {
+        href,
+        label: `${entry.title} in ${location.name}`,
+      };
+    })
+    .filter((link): link is NonNullable<typeof link> => link != null)
+    .slice(0, 3);
 
   return (
     <ProjectDetailPage

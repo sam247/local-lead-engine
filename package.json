@@ -23,7 +23,9 @@
     "verify:public-images": "node scripts/verify-public-images.mjs",
     "verify:unique-project-images": "node scripts/verify-unique-project-images.mjs",
     "images:compress": "node scripts/compress-public-images.mjs",
-    "seo:striking-distance": "node scripts/gsc-striking-distance.mjs"
+    "seo:striking-distance": "node scripts/gsc-striking-distance.mjs",
+    "seo:gsc-404-groundworks": "node scripts/analyze-gsc-404s.mjs",
+    "verify:groundworks-discovery": "node scripts/verify-groundworks-discovery.mjs"
   },
   "devDependencies": {
     "sharp": "^0.34.5"

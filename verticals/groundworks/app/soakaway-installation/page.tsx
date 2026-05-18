@@ -7,6 +7,7 @@ import { verticalConfig } from "@/config";
 import { TrackablePhoneLink } from "engine";
 import CTABanner from "@/components/sections/CTABanner";
 import { getTopicForRouteSlug } from "@/lib/topicLocationConfig";
+import { isGroundworksServiceLocationAllowed } from "@/lib/groundworksDiscoveryLinks";
 
 export const dynamic = "force-static";
 export const revalidate = false;
@@ -79,11 +80,13 @@ const linkCandidates = uniqueServicePriority
     const service = serviceConfigBySlug.get(slug);
     if (!service) return [];
     const preferredLocationOrder = orderedLocationIds.slice(0, 3);
-    return preferredLocationOrder.map((locationId) => ({
-      href: `/${slug}/${locationId}`,
-      label: `${service.title} in ${locationNameById.get(locationId)}`,
-      key: `${slug}-${locationId}`,
-    }));
+    return preferredLocationOrder
+      .filter((locationId) => isGroundworksServiceLocationAllowed(locationId, slug))
+      .map((locationId) => ({
+        href: `/${slug}/${locationId}`,
+        label: `${service.title} in ${locationNameById.get(locationId)}`,
+        key: `${slug}-${locationId}`,
+      }));
   });
 
 const internalLinks = linkCandidates.slice(0, 5);

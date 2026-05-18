@@ -18,8 +18,9 @@ export const metadata: Metadata = {
   title: "Mainline Groundworks | Piling, Excavation & Foundation Contractors UK",
   description: "Commercial groundworks contractors providing piling, excavation, site clearance and foundation construction across the UK.",
   icons: {
-    icon: "/favicon.ico",
-    apple: "/favicon.ico",
+    icon: [{ url: "/favicon.ico", type: "image/x-icon" }],
+    shortcut: [{ url: "/favicon.ico", type: "image/x-icon" }],
+    apple: [{ url: "/favicon.ico", type: "image/x-icon" }],
   },
 };
 
@@ -38,6 +39,10 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+      </head>
       <body className="min-h-screen flex flex-col antialiased">
         <GoogleAnalytics />
         <script

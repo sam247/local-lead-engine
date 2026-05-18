@@ -1,4 +1,5 @@
 import { locations, services } from "@/lib/data";
+import { isGroundworksServiceLocationAllowed } from "@/lib/groundworksDiscoveryLinks";
 
 type CostBand = {
   label: string;
@@ -64,6 +65,7 @@ export function getCompaniesCostLinks(maxLinks = 5): RelatedLink[] {
 
   for (const service of orderedServices) {
     for (const location of orderedLocations) {
+      if (!isGroundworksServiceLocationAllowed(location.id, service.slug)) continue;
       const href = `/${service.slug}/${location.id}`;
       if (seen.has(href)) continue;
       seen.add(href);

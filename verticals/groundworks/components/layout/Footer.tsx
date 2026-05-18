@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Mail, MapPin, Clock, Linkedin, Twitter, Facebook } from "lucide-react";
 import { companyInfo, services, locations } from "@/lib/data";
+import { filterLocationsForService } from "@/lib/groundworksDiscoveryLinks";
+import { PRIMARY_NEAR_ME_SERVICE_SLUG } from "@/lib/primaryNearMeLocations";
 import { verticalConfig } from "@/config";
 import TrackableEmailLink from "@/components/ui/TrackableEmailLink";
 import { FooterServiceAreaGroups, GroupFooter, getServiceUrl } from "engine";
@@ -12,6 +14,10 @@ const FOOTER_LOGO_WIDTH = 210;
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const groupLinks = mainlineGroupLinksForSite(verticalConfig.baseUrl);
+  const footerServiceAreaLocations = filterLocationsForService(
+    PRIMARY_NEAR_ME_SERVICE_SLUG,
+    locations
+  );
 
   return (
     <footer className="bg-charcoal pb-14 text-neutral-50">
@@ -130,8 +136,8 @@ const Footer = () => {
         {/* Location Links Row */}
         <div className="mt-10 border-t border-white/10 pt-6">
           <FooterServiceAreaGroups
-            primaryServiceSlug="groundworks-contractors"
-            locations={locations}
+            primaryServiceSlug={PRIMARY_NEAR_ME_SERVICE_SLUG}
+            locations={footerServiceAreaLocations}
             variant="onPrimary"
             viewAllAreasHref="/groundworks-contractors-near-me"
           />

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { services, locations } from "@/lib/data";
 import { getHeroImage } from "@/lib/images";
 import { verticalConfig } from "@/config";
+import { groundworksAllowsServiceSlugForLocation } from "@/lib/controlledTerritoryGeneration";
 import { NearMePage } from "engine";
 import type { Metadata } from "next";
 
@@ -29,7 +30,10 @@ export default function NearMeRoute() {
   const serviceImage = getHeroImage({ serviceSlug: service.slug });
   const nearMeIntro =
     "We cover piling (including CFA), underpinning, foundation repair and concrete works nationwide — pick your area below for local coverage and contact options.";
-  const orderedLocations = [...locations].sort((a, b) => {
+  const nearMeLocations = locations.filter((loc) =>
+    groundworksAllowsServiceSlugForLocation(loc.id, serviceSlug)
+  );
+  const orderedLocations = [...nearMeLocations].sort((a, b) => {
     const aWave1 = WAVE1_MICRO_LOCATION_IDS.has(a.id) ? 1 : 0;
     const bWave1 = WAVE1_MICRO_LOCATION_IDS.has(b.id) ? 1 : 0;
     if (aWave1 !== bWave1) return aWave1 - bWave1;

@@ -29,6 +29,19 @@ export * from "./data/location-neighbours";
 export { locations } from "./data/locations";
 export * from "./data/projects";
 
+export {
+  ResponsiveNavShell,
+  MegaMenuContent,
+  MobileAccordionMenu,
+  isPathActiveForNavigationConfig,
+} from "./components/navigation";
+export type {
+  NavigationConfig,
+  NavGroup,
+  NavServiceLink,
+  ResponsiveNavShellProps,
+} from "./components/navigation";
+
 export { ScrollToTop } from "./components/ScrollToTop";
 export { BreadcrumbNav, type BreadcrumbNavProps, type BreadcrumbItem } from "./components/BreadcrumbNav";
 export { LocationContext, type LocationContextProps } from "./components/LocationContext";

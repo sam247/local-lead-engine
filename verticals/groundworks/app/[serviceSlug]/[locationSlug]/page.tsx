@@ -26,6 +26,8 @@ import { TopicLocationPage } from "@/app/components/TopicLocationPage";
 import { getCommercialOpportunityTier } from "@/lib/commercialOpportunity";
 import {
   generateGroundworksServiceLocationStaticParams,
+  generateGroundworksPrimaryNearMeStaticParams,
+  mergeGroundworksL4StaticParams,
   groundworksAllowsServiceSlugForLocation,
   groundworksAllowsTopicSlugForLocation,
   isGroundworksStructuralClusterLocation,
@@ -37,10 +39,15 @@ export const revalidate = false;
 
 export async function generateStaticParams() {
   const serviceLocationParams = generateGroundworksServiceLocationStaticParams(locations, services);
+  const primaryNearMeParams = generateGroundworksPrimaryNearMeStaticParams(locations);
   const topicLocationParams = getTopicLocationStaticParams(locations).filter((param) =>
     groundworksAllowsTopicSlugForLocation(param.locationSlug, param.serviceSlug)
   );
-  return [...serviceLocationParams, ...topicLocationParams];
+  return mergeGroundworksL4StaticParams(
+    serviceLocationParams,
+    primaryNearMeParams,
+    topicLocationParams
+  );
 }
 
 type Props = { params: { serviceSlug: string; locationSlug: string } };
@@ -437,6 +444,13 @@ export default async function LocationRoute({ params }: Props) {
       notFound();
     }
     if (!groundworksAllowsTopicSlugForLocation(canonicalLocationSlug, serviceSlug)) {
+      const fallbackService = topic.primaryServiceSlug;
+      if (
+        fallbackService &&
+        groundworksAllowsServiceSlugForLocation(canonicalLocationSlug, fallbackService)
+      ) {
+        permanentRedirect(`/${fallbackService}/${canonicalLocationSlug}`);
+      }
       logInvalidRoute(serviceSlug, locationSlug, "topic not generated for location");
       notFound();
     }
@@ -465,8 +479,10 @@ export default async function LocationRoute({ params }: Props) {
 
   const strikingDistanceTarget = getL4StrikingDistanceTarget(service.slug, location.id);
 
+  const allowsNearby = (l: (typeof locations)[number]) =>
+    groundworksAllowsServiceSlugForLocation(l.id, service.slug);
   const sameAreaLocations = locations.filter(
-    (l) => l.id !== location.id && l.area === location.area
+    (l) => l.id !== location.id && l.area === location.area && allowsNearby(l)
   );
   const nearbyLocations =
     sameAreaLocations.length >= 4
@@ -474,7 +490,7 @@ export default async function LocationRoute({ params }: Props) {
       : [
           ...sameAreaLocations,
           ...locations.filter(
-            (l) => l.id !== location.id && l.area !== location.area
+            (l) => l.id !== location.id && l.area !== location.area && allowsNearby(l)
           ),
         ].slice(0, 8);
 
