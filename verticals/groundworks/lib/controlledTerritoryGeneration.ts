@@ -125,7 +125,7 @@ export function mergeGroundworksL4StaticParams(
       byKey.set(`${param.serviceSlug}/${param.locationSlug}`, param);
     }
   }
-  return [...byKey.values()];
+  return Array.from(byKey.values());
 }
 
 /** Structural / reinforced commercial-copy cluster (Kent/Surrey/London fringe + appendix + adjacent counties). */
