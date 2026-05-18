@@ -14,7 +14,7 @@ import {
 import { MegaMenuContent } from "./MegaMenuContent";
 import { MobileAccordionMenu } from "./MobileAccordionMenu";
 import type { NavigationConfig } from "./types";
-import { isPathActiveForNavigationConfig } from "./navActiveUtils";
+import { isPathActiveForNavigationConfig, isPrefixPathActive } from "./navActiveUtils";
 
 export type ResponsiveNavShellMobileResourceLink = { href: string; label: string };
 
@@ -29,6 +29,13 @@ export interface ResponsiveNavShellProps {
   mobileFooterCTAs: React.ReactNode | ((closeMenu: () => void) => React.ReactNode);
   servicesTriggerLabel?: string;
   aboutHref?: string;
+  /** Optional Sectors dropdown (Groundworks): full NavigationMenu subtree. */
+  sectorsDesktopMenu?: React.ReactNode;
+  /** Mobile flat links under a “Sectors” accordion. */
+  sectorsMobileLinks?: ResponsiveNavShellMobileResourceLink[];
+  /** Prefix for highlighting Sectors trigger (default `/sectors` when sectors links exist). */
+  sectorsPathPrefix?: string;
+  sectorsTriggerLabel?: string;
 }
 
 export function ResponsiveNavShell({
@@ -41,13 +48,19 @@ export function ResponsiveNavShell({
   mobileFooterCTAs,
   servicesTriggerLabel = "Services",
   aboutHref = "/about",
+  sectorsDesktopMenu,
+  sectorsMobileLinks,
+  sectorsPathPrefix,
+  sectorsTriggerLabel = "Sectors",
 }: ResponsiveNavShellProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [resourcesOpen, setResourcesOpen] = React.useState(false);
+  const [sectorsOpen, setSectorsOpen] = React.useState(false);
 
   const closeMobile = React.useCallback(() => {
     setMobileMenuOpen(false);
     setResourcesOpen(false);
+    setSectorsOpen(false);
   }, []);
 
   const mobileFooter =
@@ -55,6 +68,11 @@ export function ResponsiveNavShell({
   const mobilePanelId = React.useId();
   const servicesActive = isPathActiveForNavigationConfig(pathname, navigationConfig);
   const aboutActive = pathname === aboutHref;
+  const sectorsPrefix = sectorsPathPrefix ?? "/sectors";
+  const sectorsNavActive =
+    sectorsMobileLinks?.length || sectorsDesktopMenu
+      ? isPrefixPathActive(pathname, sectorsPrefix)
+      : false;
 
   React.useEffect(() => {
     if (!mobileMenuOpen) return;
@@ -62,6 +80,7 @@ export function ResponsiveNavShell({
       if (e.key === "Escape") {
         setMobileMenuOpen(false);
         setResourcesOpen(false);
+        setSectorsOpen(false);
       }
     };
     window.addEventListener("keydown", onKey);
@@ -91,6 +110,8 @@ export function ResponsiveNavShell({
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
+
+          {sectorsDesktopMenu}
 
           <Link
             href={aboutHref}
@@ -136,8 +157,49 @@ export function ResponsiveNavShell({
               onNavigate={() => {
                 setMobileMenuOpen(false);
                 setResourcesOpen(false);
+                setSectorsOpen(false);
               }}
             />
+
+            {sectorsMobileLinks && sectorsMobileLinks.length > 0 ? (
+              <div className="mt-1 border-t border-border pt-2">
+                <button
+                  type="button"
+                  className={cn(
+                    "flex min-h-[44px] w-full items-center justify-between text-sm font-medium",
+                    sectorsNavActive ? "text-primary" : "text-foreground",
+                  )}
+                  onClick={() => {
+                    setSectorsOpen(!sectorsOpen);
+                    if (!sectorsOpen) setResourcesOpen(false);
+                  }}
+                  aria-expanded={sectorsOpen}
+                >
+                  {sectorsTriggerLabel}
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 transition-transform motion-reduce:transition-none",
+                      sectorsOpen && "rotate-180"
+                    )}
+                    aria-hidden
+                  />
+                </button>
+                {sectorsOpen ? (
+                  <div className="ml-4 border-l border-border pl-4">
+                    {sectorsMobileLinks.map((item) => (
+                      <Link
+                        key={`${item.href}-${item.label}`}
+                        href={item.href}
+                        className="block py-2 text-sm text-muted-foreground"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
 
             <Link
               href={aboutHref}
@@ -151,7 +213,10 @@ export function ResponsiveNavShell({
               <button
                 type="button"
                 className="flex min-h-[44px] w-full items-center justify-between text-sm font-medium text-foreground"
-                onClick={() => setResourcesOpen(!resourcesOpen)}
+                onClick={() => {
+                  setResourcesOpen(!resourcesOpen);
+                  if (!resourcesOpen) setSectorsOpen(false);
+                }}
                 aria-expanded={resourcesOpen}
               >
                 Resources

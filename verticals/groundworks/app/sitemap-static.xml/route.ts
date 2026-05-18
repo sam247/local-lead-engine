@@ -3,6 +3,7 @@ import { verticalConfig } from "@/config";
 import { buildUrlset } from "@/lib/sitemapXml";
 import { projects } from "@/data/projects";
 import { blogPosts } from "@/lib/blogData";
+import { groundworksSectors } from "@/data/sectors";
 
 export const dynamic = "force-static";
 export const revalidate = false;
@@ -29,9 +30,11 @@ const staticPaths = [
   "/projects",
   "/blog",
   "/contractors",
+  "/sectors",
   "/privacy",
   "/terms",
   ...standardGuidePaths,
+  ...groundworksSectors.map((s) => `/sectors/${s.slug}`),
 ];
 
 export async function GET() {

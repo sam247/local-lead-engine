@@ -34,11 +34,14 @@ export {
   MegaMenuContent,
   MobileAccordionMenu,
   isPathActiveForNavigationConfig,
+  isPrefixPathActive,
 } from "./components/navigation";
 export type {
   NavigationConfig,
   NavGroup,
   NavServiceLink,
+  NavigationPlanningSection,
+  NavLinkCommercialTier,
   ResponsiveNavShellProps,
 } from "./components/navigation";
 

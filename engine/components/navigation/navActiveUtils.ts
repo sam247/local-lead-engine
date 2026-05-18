@@ -6,6 +6,7 @@ function collectHrefs(config: NavigationConfig): string[] {
     for (const l of g.links) hrefs.push(l.href);
   }
   for (const l of config.featuredLinks ?? []) hrefs.push(l.href);
+  for (const l of config.planningSection?.links ?? []) hrefs.push(l.href);
   return hrefs;
 }
 
@@ -26,4 +27,11 @@ export function isPathActiveForNavigationConfig(pathname: string | null, config:
     }
   }
   return false;
+}
+
+/** Active when pathname is exactly `prefix` or under `prefix/` (prefix must start with `/`). */
+export function isPrefixPathActive(pathname: string | null, prefix: string): boolean {
+  if (!pathname || !prefix.startsWith("/")) return false;
+  const base = prefix.replace(/\/$/, "");
+  return pathname === base || pathname.startsWith(`${base}/`);
 }

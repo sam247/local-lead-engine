@@ -18,13 +18,20 @@ import {
   QuoteFormPrimaryCta,
   getCtaVariant,
   inferServiceSlugForCtaBias,
+  isPrefixPathActive,
 } from "engine";
+import { cn } from "@/lib/utils";
+import { groundworksSectors } from "@/data/sectors";
 import { navigationConfig } from "@/lib/navigationGroups";
 import { services } from "@/lib/data";
 import { verticalConfig } from "@/config";
 
 const resourceLabels = getDefaultResourcesMenuLabels(verticalConfig.siteName);
 const mobileResourceLinks = getResourcesMenuFlatLinks(verticalConfig.siteName);
+const sectorsMobileLinks = [
+  { href: "/sectors", label: "All sectors" },
+  ...groundworksSectors.map((s) => ({ href: `/sectors/${s.slug}`, label: s.shortTitle })),
+];
 const HEADER_LOGO_WIDTH = 210;
 
 const Header = () => {
@@ -39,6 +46,8 @@ const Header = () => {
     voiceWebhookPath: "/api/twilio/voice",
     vertical: verticalConfig.verticalId,
   };
+
+  const sectorsNavActive = isPrefixPathActive(pathname, "/sectors");
 
   const desktopCTAs = (
     <>
@@ -109,6 +118,48 @@ const Header = () => {
           </QuoteFormPrimaryCta>
         </>
       )}
+      sectorsDesktopMenu={
+        <NavigationMenu delayDuration={180}>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger
+                className={cn(
+                  "bg-transparent text-muted-foreground hover:text-primary",
+                  sectorsNavActive && "text-primary",
+                )}
+              >
+                Sectors
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <div className="w-[min(100vw-2rem,420px)] p-4">
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Markets & delivery
+                  </p>
+                  <ul className="grid max-h-[min(70vh,28rem)] gap-0.5 overflow-y-auto overscroll-y-contain pr-1">
+                    {groundworksSectors.map((s) => (
+                      <li key={s.slug}>
+                        <Link
+                          href={`/sectors/${s.slug}`}
+                          className="block rounded-md px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted"
+                        >
+                          {s.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="/sectors"
+                    className="mt-3 inline-block text-sm font-semibold text-primary hover:underline"
+                  >
+                    View all sectors →
+                  </Link>
+                </div>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      }
+      sectorsMobileLinks={sectorsMobileLinks}
       resourcesDesktopMenu={
         <NavigationMenu delayDuration={180}>
           <NavigationMenuList>
